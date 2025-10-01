@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static ProjectOrbitalRing.Utils.RandomUtils;
 
 namespace ProjectOrbitalRing.Patches.Logic.ModifyUpgradeTech
 {
@@ -121,7 +122,7 @@ namespace ProjectOrbitalRing.Patches.Logic.ModifyUpgradeTech
 
         private static int ECMUpgradeLevel = 0;
 
-        private static int AntiMatterOutCounts = 2;
+        public static int AntiMatterOutCounts = 2;
 
         private static int[] UniverseObserveBuilding = { 0, 0, 0 };
 
@@ -753,33 +754,21 @@ namespace ProjectOrbitalRing.Patches.Logic.ModifyUpgradeTech
             }
         }
 
-        static void AntiMatterOutCountsTech(int techId)
-        {
-            if (techId == 1959)
-            {
-                DotNet35Random DotNet35Random = new DotNet35Random();
-                double Random = DotNet35Random.NextDouble();
+        public static readonly double[] AntiMatterOutCountsUpgrades = { 0.6, 0.4, 0.2 };
+
+        static void AntiMatterOutCountsTech(int techId) {
+            if (techId == 1959) {
                 RecipeProto recipeProto = LDB.recipes.Select(74);
-                if (Random > 0.00001 && Random <= 0.20001)
-                {
-                    recipeProto.ResultCounts = new int[] { 1, 1 };
-                    AntiMatterOutCounts = 1;
+                if (AntiMatterOutCounts < 4) {
+                    double randDouble = GetRandDouble();
+                    if (randDouble >= AntiMatterOutCountsUpgrades[AntiMatterOutCounts - 1]) {
+                        AntiMatterOutCounts++;
+                    } else if (AntiMatterOutCounts > 1) {
+                        AntiMatterOutCounts--;
+                    }
                 }
-                else if (Random > 0.20001 && Random <= 0.60001)
-                {
-                    recipeProto.ResultCounts = new int[] { 2, 2 };
-                    AntiMatterOutCounts = 2;
-                }
-                else if (Random > 0.60001 && Random <= 0.90001)
-                {
-                    recipeProto.ResultCounts = new int[] { 3, 3 };
-                    AntiMatterOutCounts = 3;
-                }
-                else if (Random > 0.90001 && Random <= 0.99999)
-                {
-                    recipeProto.ResultCounts = new int[] { 4, 4 };
-                    AntiMatterOutCounts = 4;
-                }
+                recipeProto.ResultCounts[0] = AntiMatterOutCounts;
+                recipeProto.ResultCounts[1] = AntiMatterOutCounts;
             }
         }
 
@@ -963,8 +952,12 @@ namespace ProjectOrbitalRing.Patches.Logic.ModifyUpgradeTech
                 itemProto.HpMax += ECMUpgradeLevel * 5;
 
                 AntiMatterOutCounts = r.ReadInt32();
+                if (AntiMatterOutCounts < 1 || AntiMatterOutCounts > 4) {
+                    AntiMatterOutCounts = 2;
+                }
                 recipeProto = LDB.recipes.Select(74);
-                recipeProto.ResultCounts = new int[] { AntiMatterOutCounts, AntiMatterOutCounts };
+                recipeProto.ResultCounts[0] = AntiMatterOutCounts;
+                recipeProto.ResultCounts[1] = AntiMatterOutCounts;
 
                 for (int i = 0; i < 3; i++)
                 {
@@ -993,7 +986,9 @@ namespace ProjectOrbitalRing.Patches.Logic.ModifyUpgradeTech
             }
         }
 
-
+        internal static void IntoOtherSave() {
+            AntiMatterOutCounts = 2;
+        }
 
         public static void AddUniverseObserveBuilding(int itemId)
         {

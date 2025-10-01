@@ -110,51 +110,6 @@ namespace ProjectOrbitalRing.Patches.Logic.OrbitalRing
             return matcher.InstructionEnumeration();
         }
 
-        [HarmonyPatch(typeof(FactorySystem), nameof(FactorySystem.GameTick), typeof(long), typeof(bool), typeof(int), typeof(int),
-            typeof(int))]
-        [HarmonyTranspiler]
-        public static IEnumerable<CodeInstruction> FactorySystem_isParticleColliderRunning4_Transpiler(IEnumerable<CodeInstruction> instructions)
-        {
-            var matcher = new CodeMatcher(instructions);
-
-            matcher.MatchForward(false, new CodeMatch(OpCodes.Ldfld, AccessTools.Field(typeof(FactorySystem), nameof(FactorySystem.assemblerPool))));
-            object V_30 = matcher.Advance(1).Operand; // 变量索引
-
-            matcher.MatchForward(false, new CodeMatch(OpCodes.Call, AccessTools.Method(typeof(AssemblerComponent), nameof(AssemblerComponent.UpdateNeeds))));
-            object V_34 = matcher.Advance(2).Operand; // 变量索引
-
-            matcher.Advance(-3).InsertAndAdvance(new CodeInstruction(OpCodes.Ldarg_0),
-                new CodeInstruction(OpCodes.Ldloc_S, V_30),
-                new CodeInstruction(OpCodes.Ldloca_S, V_34),
-                new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(OrbitalAssembler), nameof(CheckParticleColliderShouldRunning),
-                new System.Type[] {
-                    typeof(FactorySystem),
-                    typeof(int),    // ref int
-                    typeof(float).MakeByRefType(),  // ref float
-                }
-            )));
-
-            matcher.Advance(10);
-
-
-            matcher.MatchForward(false, new CodeMatch(OpCodes.Call, AccessTools.Method(typeof(AssemblerComponent), nameof(AssemblerComponent.UpdateNeeds))));
-            object V_35 = matcher.Advance(3).Operand; // 变量索引
-            object V_37 = matcher.Advance(2).Operand; // 变量索引
-
-            matcher.Advance(-9).InsertAndAdvance(new CodeInstruction(OpCodes.Ldarg_0),
-                new CodeInstruction(OpCodes.Ldloc_S, V_35),
-                new CodeInstruction(OpCodes.Ldloca_S, V_37),
-                new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(OrbitalAssembler), nameof(CheckParticleColliderShouldRunning),
-                new System.Type[] {
-                    typeof(FactorySystem),
-                    typeof(int),    // ref int
-                    typeof(float).MakeByRefType(),  // ref float
-                }
-            )));
-
-            //matcher.LogInstructionEnumeration();
-            return matcher.InstructionEnumeration();
-        }
         public static void OrbitalAssemblerInternalUpdate(ref AssemblerComponent __instance, int planetId)
         {
             var planetOrbitalRingData = OrbitalStationManager.Instance.GetPlanetOrbitalRingData(planetId);

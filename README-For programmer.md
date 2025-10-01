@@ -28,7 +28,7 @@ If you have any problems, please open a issue via [github](https://github.com/Pr
 2. 打开本项目，将`DefaultPath.props.example`复制到`DefaultPath.props`。
 3. 修改`DefaultPath.props`中的BepinExPath和DSPAssemblyPath，使其与您的实际路径一致，然后关闭/卸载项目。
 4. 在R2中打开与上一步一致的Profile，在ConfigEditor中搜索`BepInEx.cfg`，修改Preloader-DumpAssemblies为true。
-5. 通过R2启动一次游戏（需要启用创世之书），将会自动生成`BepInEx\DumpedAssemblies\DSPGAME\Assembly-CSharp.dll`。
+5. 通过R2启动一次游戏（需要启用星环），将会自动生成`BepInEx\DumpedAssemblies\DSPGAME\Assembly-CSharp.dll`。
 6. 重新打开本项目，会自动在项目内生成`lib\Assembly-CSharp-publicized.dll`。至此，准备工作已经完成。现在项目不应有任何报错。
 
 ## How to start
@@ -49,7 +49,7 @@ If you have any problems, please open a issue via [github](https://github.com/Pr
    close/uninstall the project.
 4. Open a Profile in R2 that matches the previous step, search for `BepInEx.cfg` in the ConfigEditor, and change
    Preloader-DumpAssemblies to true.
-5. Launch the game once through R2 (need to enable Genesis Book), it will automatically generate
+5. Launch the game once through R2 (need to enable Orbital Ring), it will automatically generate
    `BepInEx\DumpedAssemblies\DSPGAME\Assembly-CSharp.dll`.
 6. Re-open the project, it will automatically generate `lib\Assembly-CSharp-publicized.dll` in the project. So, the
    preparation work has been completed. The project should not report any errors now.

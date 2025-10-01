@@ -62,7 +62,7 @@ namespace ProjectOrbitalRing
     {
         public const string MODGUID = "org.ProfessorCat305.OrbitalRing";
         public const string MODNAME = "OrbitalRing";
-        public const string VERSION = "0.8.14";
+        public const string VERSION = "0.8.15";
         public const string DEBUGVERSION = "";
 
         public static bool LoadCompleted;
@@ -225,6 +225,7 @@ namespace ProjectOrbitalRing
             QuantumStoragePatches.IntoOtherSave();
             AdvancedLaserPatches.IntoOtherSave();
             GlobalPowerSupplyPatches.IntoOtherSave();
+            Unlock_Save_Load.IntoOtherSave();
         }
 
         public string Version => VERSION;
@@ -281,7 +282,7 @@ namespace ProjectOrbitalRing
             {
                 GameMain.instance.CreateGPUInstancing();
                 GameMain.instance.CreateBPGPUInstancing();
-                GameMain.instance.CreateMultithreadSystem();
+                // GameMain.instance.CreateMultithreadSystem();
             }
 
             PrefabDescPostFix();
@@ -348,11 +349,7 @@ namespace ProjectOrbitalRing
 
             foreach (JournalPatternProto journalPattern in LDB.journalPatterns.dataArray) journalPattern.Preload();
 
-            foreach (VeinProto proto in LDB.veins.dataArray)
-            {
-                proto.Preload();
-                proto.name = proto.Name.Translate();
-            }
+            foreach (VeinProto proto in LDB.veins.dataArray) proto.Preload();
 
             foreach (TechProto proto in LDB.techs.dataArray) proto.Preload();
 
@@ -385,6 +382,8 @@ namespace ProjectOrbitalRing
         }
 
         internal static void LogInfo(object data) => logger.LogInfo(data);
+        internal static void LogWarning(object data) => logger.LogWarning(data);
+        internal static void LogError(object data) => logger.LogError(data);
 
         internal static int VersionNumber()
         {

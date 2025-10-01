@@ -83,41 +83,43 @@ namespace ProjectOrbitalRing.Patches.UI
 
         public static int Set_ProjectileId_Method(int index) => -index;
 
-        [HarmonyPatch(typeof(TurretComponent), nameof(TurretComponent.Shoot_Laser))]
-        [HarmonyTranspiler]
-        public static IEnumerable<CodeInstruction> TurretComponent_Shoot_Laser_Transpiler(IEnumerable<CodeInstruction> instructions,
-            ILGenerator generator)
-        {
-            var matcher = new CodeMatcher(instructions, generator);
-            matcher.MatchForward(true, new CodeMatch(OpCodes.Ldarg_1),
-                new CodeMatch(OpCodes.Ldfld, AccessTools.Field(typeof(PlanetFactory), nameof(PlanetFactory.skillSystem))),
-                new CodeMatch(OpCodes.Ldfld));
+        //todo:fix TurretComponent_Shoot_Laser_Transpiler
 
-            matcher.Advance(1).CreateLabel(out Label label1);
-
-            matcher.InsertAndAdvance(new CodeInstruction(OpCodes.Br, label1));
-            matcher.Insert(new CodeInstruction(OpCodes.Call,
-                AccessTools.Method(typeof(AdvancedLaserPatches), nameof(Patch_Result_Method))));
-            matcher.CreateLabel(out Label label2);
-
-            matcher.Advance(-3).InsertAndAdvance(new CodeInstruction(OpCodes.Ldarg_0),
-                new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(AdvancedLaserPatches), nameof(Patch_Condition_Method))),
-                new CodeInstruction(OpCodes.Brtrue, label2), new CodeInstruction(OpCodes.Ldarg_1));
-
-            matcher.MatchForward(false, new CodeMatch(OpCodes.Ldarg_0), new CodeMatch(OpCodes.Ldfld, TurretComponent_projectileId_Field),
-                new CodeMatch(OpCodes.Br), new CodeMatch(OpCodes.Ldloc_S));
-
-            matcher.Advance(2).InsertAndAdvance(new CodeInstruction(OpCodes.Ldarg_1), new CodeInstruction(OpCodes.Ldarg_0),
-                new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(AdvancedLaserPatches), nameof(Patch_ProjectileId_Method))));
-
-            matcher.MatchForward(true, new CodeMatch(OpCodes.Ldarg_0), new CodeMatch(OpCodes.Ldloc_S),
-                new CodeMatch(OpCodes.Stfld, TurretComponent_projectileId_Field));
-
-            matcher.InsertAndAdvance(new CodeInstruction(OpCodes.Ldarg_1), new CodeInstruction(OpCodes.Ldarg_0),
-                new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(AdvancedLaserPatches), nameof(Patch_ProjectileId_Method))));
-
-            return matcher.InstructionEnumeration();
-        }
+        // [HarmonyPatch(typeof(TurretComponent), nameof(TurretComponent.Shoot_Laser))]
+        // [HarmonyTranspiler]
+        // public static IEnumerable<CodeInstruction> TurretComponent_Shoot_Laser_Transpiler(IEnumerable<CodeInstruction> instructions,
+        //     ILGenerator generator)
+        // {
+        //     var matcher = new CodeMatcher(instructions, generator);
+        //     matcher.MatchForward(true, new CodeMatch(OpCodes.Ldarg_1),
+        //         new CodeMatch(OpCodes.Ldfld, AccessTools.Field(typeof(PlanetFactory), nameof(PlanetFactory.skillSystem))),
+        //         new CodeMatch(OpCodes.Ldfld));
+        //
+        //     matcher.Advance(1).CreateLabel(out Label label1);
+        //
+        //     matcher.InsertAndAdvance(new CodeInstruction(OpCodes.Br, label1));
+        //     matcher.Insert(new CodeInstruction(OpCodes.Call,
+        //         AccessTools.Method(typeof(AdvancedLaserPatches), nameof(Patch_Result_Method))));
+        //     matcher.CreateLabel(out Label label2);
+        //
+        //     matcher.Advance(-3).InsertAndAdvance(new CodeInstruction(OpCodes.Ldarg_0),
+        //         new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(AdvancedLaserPatches), nameof(Patch_Condition_Method))),
+        //         new CodeInstruction(OpCodes.Brtrue, label2), new CodeInstruction(OpCodes.Ldarg_1));
+        //
+        //     matcher.MatchForward(false, new CodeMatch(OpCodes.Ldarg_0), new CodeMatch(OpCodes.Ldfld, TurretComponent_projectileId_Field),
+        //         new CodeMatch(OpCodes.Br), new CodeMatch(OpCodes.Ldloc_S));
+        //
+        //     matcher.Advance(2).InsertAndAdvance(new CodeInstruction(OpCodes.Ldarg_1), new CodeInstruction(OpCodes.Ldarg_0),
+        //         new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(AdvancedLaserPatches), nameof(Patch_ProjectileId_Method))));
+        //
+        //     matcher.MatchForward(true, new CodeMatch(OpCodes.Ldarg_0), new CodeMatch(OpCodes.Ldloc_S),
+        //         new CodeMatch(OpCodes.Stfld, TurretComponent_projectileId_Field));
+        //
+        //     matcher.InsertAndAdvance(new CodeInstruction(OpCodes.Ldarg_1), new CodeInstruction(OpCodes.Ldarg_0),
+        //         new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(AdvancedLaserPatches), nameof(Patch_ProjectileId_Method))));
+        //
+        //     return matcher.InstructionEnumeration();
+        // }
 
         [HarmonyPatch(typeof(TurretComponent), nameof(TurretComponent.InternalUpdate))]
         [HarmonyTranspiler]
@@ -197,7 +199,7 @@ namespace ProjectOrbitalRing.Patches.UI
 
             PlanetFactory planetFactory = __instance.planet.factory;
 
-            planetFactory.defenseSystem.turrets.buffer[turretId].StopContinuousSkill(planetFactory.skillSystem);
+            planetFactory.defenseSystem.turrets.buffer[turretId].StopContinuousSkill(planetFactory.skillSystem, false);
         }
 
 

@@ -34,44 +34,46 @@ namespace ProjectOrbitalRing.Patches.Logic.PlanetFocus
             if (ContainsFocus(__instance.factory.planetId, 6534)) __result *= 0.8f;
         }
 
-        [HarmonyPatch(typeof(SkillSystem), nameof(SkillSystem.AddGroundEnemyHatred),
-            new Type[]
-            {
-                typeof(DFGBaseComponent), typeof(EnemyData), typeof(ETargetType), typeof(int),
-            }, new ArgumentType[]
-            {
-                ArgumentType.Normal, ArgumentType.Ref, ArgumentType.Normal, ArgumentType.Normal,
-            })]
-        [HarmonyPatch(typeof(SkillSystem), nameof(SkillSystem.AddGroundEnemyHatred),
-            new Type[]
-            {
-                typeof(DFGBaseComponent), typeof(EnemyData), typeof(ETargetType), typeof(int),
-                typeof(int),
-            }, new ArgumentType[]
-            {
-                ArgumentType.Normal, ArgumentType.Ref, ArgumentType.Normal, ArgumentType.Normal,
-                ArgumentType.Normal,
-            })]
-        [HarmonyTranspiler]
-        public static IEnumerable<CodeInstruction> SkillSystem_AddGroundEnemyHatred_Transpiler(IEnumerable<CodeInstruction> instructions)
-        {
-            var matcher = new CodeMatcher(instructions);
+        //todo: 确认星环是否不需要此功能（星球加成-中继信号干扰）
 
-            matcher.MatchForward(false, new CodeMatch(OpCodes.Ldflda, EvolveData_threatshr_Field));
-
-            matcher.MatchForward(false, new CodeMatch(OpCodes.Conv_I4), new CodeMatch(OpCodes.Add), new CodeMatch(OpCodes.Stind_I4));
-
-            matcher.InsertAndAdvance(new CodeInstruction(OpCodes.Ldarg_1),
-                new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(PlanetFocusPatches), nameof(threatshr_Method))));
-
-            return matcher.InstructionEnumeration();
-        }
-
-        public static double threatshr_Method(double value, DFGBaseComponent component)
-        {
-            if (ContainsFocus(component.groundSystem.factory.planetId, 6532)) value *= 0.8f;
-
-            return value;
-        }
+        // [HarmonyPatch(typeof(SkillSystem), nameof(SkillSystem.AddGroundEnemyHatred),
+        //     new Type[]
+        //     {
+        //         typeof(DFGBaseComponent), typeof(EnemyData), typeof(ETargetType), typeof(int),
+        //     }, new ArgumentType[]
+        //     {
+        //         ArgumentType.Normal, ArgumentType.Ref, ArgumentType.Normal, ArgumentType.Normal,
+        //     })]
+        // [HarmonyPatch(typeof(SkillSystem), nameof(SkillSystem.AddGroundEnemyHatred),
+        //     new Type[]
+        //     {
+        //         typeof(DFGBaseComponent), typeof(EnemyData), typeof(ETargetType), typeof(int),
+        //         typeof(int),
+        //     }, new ArgumentType[]
+        //     {
+        //         ArgumentType.Normal, ArgumentType.Ref, ArgumentType.Normal, ArgumentType.Normal,
+        //         ArgumentType.Normal,
+        //     })]
+        // [HarmonyTranspiler]
+        // public static IEnumerable<CodeInstruction> SkillSystem_AddGroundEnemyHatred_Transpiler(IEnumerable<CodeInstruction> instructions)
+        // {
+        //     var matcher = new CodeMatcher(instructions);
+        //
+        //     matcher.MatchForward(false, new CodeMatch(OpCodes.Ldflda, EvolveData_threatshr_Field));
+        //
+        //     matcher.MatchForward(false, new CodeMatch(OpCodes.Conv_I4), new CodeMatch(OpCodes.Add), new CodeMatch(OpCodes.Stind_I4));
+        //
+        //     matcher.InsertAndAdvance(new CodeInstruction(OpCodes.Ldarg_1),
+        //         new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(PlanetFocusPatches), nameof(threatshr_Method))));
+        //
+        //     return matcher.InstructionEnumeration();
+        // }
+        //
+        // public static double threatshr_Method(double value, DFGBaseComponent component)
+        // {
+        //     if (ContainsFocus(component.groundSystem.factory.planetId, 6532)) value *= 0.8f;
+        //
+        //     return value;
+        // }
     }
 }

@@ -6414,8 +6414,7 @@
             7
         ],
         "UnlockValues": [
-            0.1,
-            1
+            0.5
         ],
         "Published": true,
         "Level": 1,
@@ -6677,6 +6676,7 @@
         "IsLabTech": true,
         "PreTechsMax": false,
         "AddItems": [],
+        "AddItems": [],
         "AddItemCounts": [],
         "PropertyOverrideItems": [],
         "PropertyItemCounts": []
@@ -6899,7 +6899,7 @@
         "Name": "开弦修正",
         "IconPath": "Assets/texpack/反物质飞弹",
         "Desc": "T开弦修正",
-        "Conclusion": "T开弦修正",
+        "Conclusion": "开弦修正结果",
         "IsHiddenTech": true,
         "PreItem": [
             6228

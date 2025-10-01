@@ -6,14 +6,14 @@ namespace ProjectOrbitalRing.Patches.UI
 {
     internal class HarmonyLogListener : ILogListener
     {
-        internal static readonly Queue<string> LogData = new Queue<string>();
+        internal static readonly List<string> LogData = new List<string>();
 
         public void LogEvent(object sender, LogEventArgs eventArgs)
         {
             var s = eventArgs.Data.ToString();
 
             if ((eventArgs.Source.SourceName == "HarmonyX" || s.Contains("InvalidProgramException")) && eventArgs.Level == LogLevel.Error)
-                LogData.Enqueue(s);
+                LogData.Add(s);
         }
 
         public void Dispose() {}
@@ -29,8 +29,11 @@ namespace ProjectOrbitalRing.Patches.UI
         {
             if (_finished) return;
 
-            while (HarmonyLogListener.LogData.Count > 0)
-                UIFatalErrorTip.instance.ShowError("Harmony throws an error when patching!", HarmonyLogListener.LogData.Dequeue());
+            while (HarmonyLogListener.LogData.Count > 0) {
+                var error = HarmonyLogListener.LogData[0];
+                HarmonyLogListener.LogData.RemoveAt(0);
+                UIFatalErrorTip.instance.ShowError("Harmony throws an error when patching!", error);
+            }
 
             _finished = true;
         }
