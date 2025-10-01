@@ -62,7 +62,7 @@ namespace ProjectOrbitalRing
     {
         public const string MODGUID = "org.ProfessorCat305.OrbitalRing";
         public const string MODNAME = "OrbitalRing";
-        public const string VERSION = "0.8.15";
+        public const string VERSION = "0.8.16";
         public const string DEBUGVERSION = "";
 
         public static bool LoadCompleted;
@@ -226,6 +226,8 @@ namespace ProjectOrbitalRing
             AdvancedLaserPatches.IntoOtherSave();
             GlobalPowerSupplyPatches.IntoOtherSave();
             Unlock_Save_Load.IntoOtherSave();
+            StarGate.IntoOtherSave();
+            OrbitalStationManager.IntoOtherSave();
         }
 
         public string Version => VERSION;
@@ -257,9 +259,9 @@ namespace ProjectOrbitalRing
 
             LabComponent.matrixIds = new[]
             {
-                ProtoID.I电磁矩阵, ProtoID.I能量矩阵, ProtoID.I结构矩阵, ProtoID.I信息矩阵,
-                ProtoID.I引力矩阵, ProtoID.I宇宙矩阵, ProtoID.I通量矩阵, ProtoID.I张量矩阵,
-                ProtoID.I奇点矩阵,
+                ProtoID.I电气矩阵, ProtoID.I能量矩阵, ProtoID.I结构矩阵, ProtoID.I粒子矩阵,
+                ProtoID.I引力矩阵, ProtoID.I宇宙矩阵, ProtoID.I信息矩阵, ProtoID.I电磁矩阵,
+                //ProtoID.I奇点矩阵,
             };
 
             LabComponent.matrixShaderStates = new[]

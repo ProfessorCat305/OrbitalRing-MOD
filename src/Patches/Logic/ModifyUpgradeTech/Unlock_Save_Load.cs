@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using static ProjectOrbitalRing.Utils.RandomUtils;
+using static ProjectOrbitalRing.Patches.Logic.ModifyUpgradeTech.ModifyUpgradeTech;
 
 namespace ProjectOrbitalRing.Patches.Logic.ModifyUpgradeTech
 {
@@ -42,93 +43,69 @@ namespace ProjectOrbitalRing.Patches.Logic.ModifyUpgradeTech
             new float [] { 2f, 0.3f, 0.4f, 0.3f, 1.4f, 0.4f, },
             new float [] { 2f, 0.4f, 1.5f, 0.3f, 0.3f, },
         };
-        private static readonly int[] unlockWreckFallingItemIdLevel2 =
+
+        private static int WreckFallingLevel;
+
+        private static int UAVHPAndfiringRateUpgradeLevel;
+
+        private static bool isUnlockRecipesHandcraft;
+
+        private static bool isUnlockCrackingRay;
+
+        private static int vanillaTechSpeed;
+        private static int synapticLatheTechSpeed;
+
+        private static bool isItemGetHashUnlock;
+
+        private static int[] WhichFleetUpgradeChoose;
+
+        private static int whichTechChoose;
+
+        private static int[] NewGameCompletionTech;
+        private static int NewGameCompletionLevel;
+
+        private static int ECMUpgradeLevel;
+
+        public static int AntiMatterOutCounts;
+
+        private static int[] UniverseObserveBuilding;
+
+        private static bool isOrbitalTurretUnlock;
+
+        public static int PilerEjectorLevel;
+
+        private static void InitData()
         {
-            1103, 1105, 1111, 1131, 1203, 1401,
-        };
-        private static readonly float[] unlockWreckFallingItemDropCountLevel2 =
-        {
-            1.56f, 1.8f, 1.4f, 2.0f, 1.2f, 1.3f
-        };
+            WreckFallingLevel = 0;
 
-        private static readonly int[] unlockWreckFallingItemIdLevel3 =
-        {
-            1106, 1115, 1123, 1204, 1404, 1407,
-        };
-        private static readonly float[] unlockWreckFallingItemDropCountLevel3 =
-        {
-            2.2f, 1.0f, 1.0f, 0.8f, 1.4f, 1.0f
-        };
-        private static readonly int[] unlockWreckFallingItemIdLevel4 =
-        {
-            1107, 1113, 1119, 1124, 1205, 1405, 5201
-        };
-        private static readonly float[] unlockWreckFallingItemDropCountLevel4 =
-        {
-            1.1f, 1.2f, 1.4f, 0.8f, 0.5f, 0.6f, 2.5f
-        };
-        private static readonly int[] unlockWreckFallingItemIdLevel5 =
-        {
-            1118, 1126, 1303, 5203, 6277, 7804,
-        };
-        private static readonly float[] unlockWreckFallingItemDropCountLevel5 =
-        {
-            0.8f, 0.55f, 0.75f, 0.3f, 1.2f, 0.7f,
-        };
-        private static readonly int[] unlockWreckFallingItemIdLevel6 =
-        {
-            1125, 1127, 1206, 1402, 5202, 6201,
-        };
-        private static readonly float[] unlockWreckFallingItemDropCountLevel6 =
-        {
-            0.4f, 0.4f, 0.4f, 0.25f, 1.5f, 0.6f,
-        };
-        private static readonly int[] unlockWreckFallingItemIdLevel7 =
-        {
-            1014, 1210, 1304, 1406, 5204, 6243,
-        };
-        private static readonly float[] unlockWreckFallingItemDropCountLevel7 =
-        {
-            2f, 0.3f, 0.4f, 0.3f, 1.4f, 0.4f,
-        };
-        private static readonly int[] unlockWreckFallingItemIdLevel8 =
-        {
-            1016, 1209, 5205, 6271, 7805,
-        };
-        private static readonly float[] unlockWreckFallingItemDropCountLevel8 =
-        {
-            2f, 0.4f, 1.5f, 0.3f, 0.3f,
-        };
+            UAVHPAndfiringRateUpgradeLevel = 0;
 
-        private static int WreckFallingLevel = 0;
+            isUnlockRecipesHandcraft = false;
 
-        private static int UAVHPAndfiringRateUpgradeLevel = 0;
+            isUnlockCrackingRay = false;
 
-        private static bool isUnlockRecipesHandcraft = false;
+            vanillaTechSpeed = 1;
+            synapticLatheTechSpeed = 1;
 
-        private static bool isUnlockCrackingRay = false;
+            isItemGetHashUnlock = false;
 
-        private static int vanillaTechSpeed = 1;
-        private static int synapticLatheTechSpeed = 1;
+            WhichFleetUpgradeChoose = new int[]{ 0, 0, 0 };
 
-        private static bool isItemGetHashUnlock = false;
+            whichTechChoose = 0;
 
-        private static int[] WhichFleetUpgradeChoose = { 0, 0, 0 };
+            NewGameCompletionTech = new int[]{ 1508, 1802, 1952, 1960 };
+            NewGameCompletionLevel = 0;
 
-        private static int whichTechChoose = 0;
+            ECMUpgradeLevel = 0;
 
-        private static int[] NewGameCompletionTech = { 1508, 1802, 1952, 1960 };
-        private static int NewGameCompletionLevel = 0;
+            AntiMatterOutCounts = 2;
 
-        private static int ECMUpgradeLevel = 0;
+            UniverseObserveBuilding = new int[]{ 0, 0, 0 };
 
-        public static int AntiMatterOutCounts = 2;
+            isOrbitalTurretUnlock = false;
 
-        private static int[] UniverseObserveBuilding = { 0, 0, 0 };
-
-        private static bool isOrbitalTurretUnlock = false;
-
-        public static int PilerEjectorLevel = 1;
+            PilerEjectorLevel = 1;
+        }
 
         public static int GetPilerEjectorLevel()
         {
@@ -161,16 +138,15 @@ namespace ProjectOrbitalRing.Patches.Logic.ModifyUpgradeTech
             ItemProto itemProto;
             RecipeProto recipeProto;
 
-            if (level == 0)
-            {
+            if (level == 0) {
                 recipeProto = LDB.recipes.Select(147);
-                recipeProto.Items = new int[] {1103, 1407, 1301, 1401};
+                recipeProto.Items = new int[] { 1103, 1407, 1301, 1401 };
                 recipeProto.Type = ERecipeType.None;
                 recipeProto = LDB.recipes.Select(148);
                 recipeProto.Items = new int[] { 5101, 1405, 1404, 6256 };
                 recipeProto.Type = ERecipeType.None;
                 recipeProto = LDB.recipes.Select(149);
-                recipeProto.Items = new int[] { 5101, 1303, 1404, 6256};
+                recipeProto.Items = new int[] { 5101, 1303, 1404, 6256 };
                 recipeProto.Type = ERecipeType.None;
 
                 itemProto = LDB.items.Select(5102);
@@ -182,8 +158,7 @@ namespace ProjectOrbitalRing.Patches.Logic.ModifyUpgradeTech
                 itemProto.Name = "精准无人机";
                 itemProto.Description = "I精准无人机";
                 itemProto.RefreshTranslation();
-            } else if (level == 1)
-            {
+            } else if (level == 1) {
                 recipeProto = LDB.recipes.Select(147);
                 recipeProto.Items = new int[] { 1103, 1407, 1303, 1401 };
                 recipeProto.Type = ERecipeType.None;
@@ -203,9 +178,7 @@ namespace ProjectOrbitalRing.Patches.Logic.ModifyUpgradeTech
                 itemProto.Name = "精准无人机A型";
                 itemProto.Description = "I精准无人机A型";
                 itemProto.RefreshTranslation();
-            }
-            else if (level == 2)
-            {
+            } else if (level == 2) {
                 recipeProto = LDB.recipes.Select(147);
                 recipeProto.Items = new int[] { 1107, 1407, 1303, 1126 };
                 recipeProto.Type = ERecipeType.None;
@@ -219,9 +192,7 @@ namespace ProjectOrbitalRing.Patches.Logic.ModifyUpgradeTech
                 itemProto.Name = "精准无人机B型";
                 itemProto.Description = "I精准无人机B型";
                 itemProto.RefreshTranslation();
-            }
-            else if (level == 3)
-            {
+            } else if (level == 3) {
                 recipeProto = LDB.recipes.Select(147);
                 recipeProto.Items = new int[] { 6225, 1407, 1303, 1126 };
                 recipeProto.Type = ERecipeType.None;
@@ -241,9 +212,7 @@ namespace ProjectOrbitalRing.Patches.Logic.ModifyUpgradeTech
                 itemProto.Name = "精准无人机C型";
                 itemProto.Description = "I精准无人机C型";
                 itemProto.RefreshTranslation();
-            }
-            else if (level == 4)
-            {
+            } else if (level == 4) {
                 recipeProto = LDB.recipes.Select(147);
                 recipeProto.Items = new int[] { 6225, 1407, 1303, 1126 };
                 recipeProto.Type = ERecipeType.Assemble;
@@ -263,9 +232,7 @@ namespace ProjectOrbitalRing.Patches.Logic.ModifyUpgradeTech
                 itemProto.Name = "精准无人机D型";
                 itemProto.Description = "I精准无人机D型";
                 itemProto.RefreshTranslation();
-            }
-            else if (level == 5)
-            {
+            } else if (level == 5) {
                 recipeProto = LDB.recipes.Select(147);
                 recipeProto.Items = new int[] { 6225, 1407, 1303, 1126 };
                 recipeProto.Type = ERecipeType.Assemble;
@@ -290,28 +257,19 @@ namespace ProjectOrbitalRing.Patches.Logic.ModifyUpgradeTech
 
         static void CombatDroneMotify(int techId)
         {
-            if (techId == 5601)
-            {
+            if (techId == 5601) {
                 UAVHPAndfiringRateUpgrade(1);
                 UAVHPAndfiringRateUpgradeLevel = 1;
-            }
-            else if (techId == 5602)
-            {
+            } else if (techId == 5602) {
                 UAVHPAndfiringRateUpgrade(2);
                 UAVHPAndfiringRateUpgradeLevel = 2;
-            }
-            else if (techId == 5603)
-            {
+            } else if (techId == 5603) {
                 UAVHPAndfiringRateUpgrade(3);
                 UAVHPAndfiringRateUpgradeLevel = 3;
-            }
-            else if (techId == 5604)
-            {
+            } else if (techId == 5604) {
                 UAVHPAndfiringRateUpgrade(4);
                 UAVHPAndfiringRateUpgradeLevel = 4;
-            }
-            else if (techId == 5605)
-            {
+            } else if (techId == 5605) {
                 UAVHPAndfiringRateUpgrade(5);
                 UAVHPAndfiringRateUpgradeLevel = 5;
             }
@@ -322,10 +280,8 @@ namespace ProjectOrbitalRing.Patches.Logic.ModifyUpgradeTech
             ItemProto itemProto;
             if (unlockLevel == 0) // 传入0重置黑雾掉落为0
             {
-                for (int z = 0; z < unlockWreckFallingItemIdLevel.Length; z++)
-                {
-                    for (int i = 0; i < unlockWreckFallingItemIdLevel[z].Length; i++)
-                    {
+                for (int z = 0; z < unlockWreckFallingItemIdLevel.Length; z++) {
+                    for (int i = 0; i < unlockWreckFallingItemIdLevel[z].Length; i++) {
                         itemProto = LDB.items.Select(unlockWreckFallingItemIdLevel[z][i]);
                         itemProto.EnemyDropCount = 0;
                     }
@@ -334,8 +290,7 @@ namespace ProjectOrbitalRing.Patches.Logic.ModifyUpgradeTech
                 return;
             }
 
-            for (int i = 0; i < unlockWreckFallingItemIdLevel[unlockLevel - 1].Length; i++)
-            {
+            for (int i = 0; i < unlockWreckFallingItemIdLevel[unlockLevel - 1].Length; i++) {
                 itemProto = LDB.items.Select(unlockWreckFallingItemIdLevel[unlockLevel - 1][i]);
                 itemProto.EnemyDropCount = unlockWreckFallingItemDropCountLevel[unlockLevel - 1][i];
             }
@@ -344,50 +299,35 @@ namespace ProjectOrbitalRing.Patches.Logic.ModifyUpgradeTech
 
         static void WreckFalling(int techId)
         {
-            if (techId == 5301)
-            {
+            if (techId == 5301) {
                 // 解锁3级的黑雾掉落
                 UnlockWreckFalling(1);
                 WreckFallingLevel = 1;
-            }
-            else if (techId == 5302)
-            {
+            } else if (techId == 5302) {
                 // 解锁6级的黑雾掉落
                 UnlockWreckFalling(2);
                 WreckFallingLevel = 2;
-            }
-            else if (techId == 5303)
-            {
+            } else if (techId == 5303) {
                 // 解锁9级的黑雾掉落
                 UnlockWreckFalling(3);
                 WreckFallingLevel = 3;
-            }
-            else if (techId == 5304)
-            {
+            } else if (techId == 5304) {
                 // 解锁12级的黑雾掉落
                 UnlockWreckFalling(4);
                 WreckFallingLevel = 4;
-            }
-            else if (techId == 5305)
-            {
+            } else if (techId == 5305) {
                 // 解锁15级的黑雾掉落
                 UnlockWreckFalling(5);
                 WreckFallingLevel = 5;
-            }
-            else if (techId == 5306)
-            {
+            } else if (techId == 5306) {
                 // 解锁18级的黑雾掉落
                 UnlockWreckFalling(6);
                 WreckFallingLevel = 6;
-            }
-            else if (techId == 5307)
-            {
+            } else if (techId == 5307) {
                 // 解锁21级的黑雾掉落
                 UnlockWreckFalling(7);
                 WreckFallingLevel = 7;
-            }
-            else if (techId == 5308)
-            {
+            } else if (techId == 5308) {
                 // 解锁24级的黑雾掉落
                 UnlockWreckFalling(8);
                 WreckFallingLevel = 8;
@@ -426,8 +366,7 @@ namespace ProjectOrbitalRing.Patches.Logic.ModifyUpgradeTech
 
         static void CrackingRayTechAndItemModify(int techId)
         {
-            if (techId == 1945)
-            {
+            if (techId == 1945) {
                 UnlockCrackingRayTech();
                 isUnlockCrackingRay = true;
             }
@@ -436,10 +375,8 @@ namespace ProjectOrbitalRing.Patches.Logic.ModifyUpgradeTech
         static void UnlockRecipesHandcraft(int techId, bool isUnlock)
         {
             RecipeProto recipeProto;
-            if (techId == 1945)
-            {
-                for (int i = 0; i < unlockHandcraftRecipes.Length; i++)
-                {
+            if (techId == 1945) {
+                for (int i = 0; i < unlockHandcraftRecipes.Length; i++) {
                     recipeProto = LDB.recipes.Select(unlockHandcraftRecipes[i]);
                     recipeProto.Handcraft = isUnlock;
                 }
@@ -451,8 +388,7 @@ namespace ProjectOrbitalRing.Patches.Logic.ModifyUpgradeTech
         {
             TechProto techProto = LDB.techs.Select(techId);
 
-            if (techProto.UnlockFunctions.Length > 0 && techProto.UnlockFunctions[0] == 22)
-            {
+            if (techProto.UnlockFunctions.Length > 0 && techProto.UnlockFunctions[0] == 22) {
                 vanillaTechSpeed++;
             }
         }
@@ -462,17 +398,13 @@ namespace ProjectOrbitalRing.Patches.Logic.ModifyUpgradeTech
         [HarmonyPrefix]
         public static bool TryAddItemToPackagePatch(ref Player __instance, int itemId, int count, ref int __result)
         {
-            if (itemId == 6254 && count > 0)
-            {
+            if (itemId == 6254 && count > 0) {
                 RecipeProto recipeProto;
 
-                if (__instance.mecha.gameData.history.currentTech > 0)
-                {
-                    if (LDB.techs.Select(__instance.mecha.gameData.history.currentTech).IsLabTech == false)
-                    {
+                if (__instance.mecha.gameData.history.currentTech > 0) {
+                    if (LDB.techs.Select(__instance.mecha.gameData.history.currentTech).IsLabTech == false) {
                         recipeProto = LDB.recipes.Select(642);
-                        if (recipeProto.ItemCounts[0] == 2)
-                        {
+                        if (recipeProto.ItemCounts[0] == 2) {
                             synapticLatheTechSpeed = 1;
                             vanillaTechSpeed = __instance.mecha.gameData.history.techSpeed;
                         }
@@ -481,9 +413,7 @@ namespace ProjectOrbitalRing.Patches.Logic.ModifyUpgradeTech
                         __instance.mecha.gameData.history.techSpeed = vanillaTechSpeed + synapticLatheTechSpeed;
                         __result = 0;
                         return false;
-                    }
-                    else
-                    {
+                    } else {
                         recipeProto = LDB.recipes.Select(642);
                         recipeProto.ItemCounts[0] = 2;
                         synapticLatheTechSpeed = 1;
@@ -491,12 +421,9 @@ namespace ProjectOrbitalRing.Patches.Logic.ModifyUpgradeTech
                         __result = 0;
                         return false;
                     }
-                }
-                else
-                {
+                } else {
                     recipeProto = LDB.recipes.Select(642);
-                    if (recipeProto.ItemCounts[0] == 2)
-                    {
+                    if (recipeProto.ItemCounts[0] == 2) {
                         synapticLatheTechSpeed = 1;
                         vanillaTechSpeed = __instance.mecha.gameData.history.techSpeed;
                     }
@@ -506,9 +433,7 @@ namespace ProjectOrbitalRing.Patches.Logic.ModifyUpgradeTech
                     __result = 0;
                     return false;
                 }
-            }
-            else if (itemId == 6255 && count > 0)
-            {
+            } else if (itemId == 6255 && count > 0) {
                 __instance.mecha.gameData.history.AddTechHash(count * 1200000);
                 return false;
             }
@@ -520,8 +445,7 @@ namespace ProjectOrbitalRing.Patches.Logic.ModifyUpgradeTech
         [HarmonyPrefix]
         public static void RemoveTechInQueuePatch(GameHistoryData __instance, int index)
         {
-            if (index == 0)
-            {
+            if (index == 0) {
                 RecipeProto recipeProto;
                 recipeProto = LDB.recipes.Select(642);
                 recipeProto.ItemCounts[0] = 2;
@@ -546,10 +470,8 @@ namespace ProjectOrbitalRing.Patches.Logic.ModifyUpgradeTech
         [HarmonyPrefix]
         public static void EnqueueTechPatch(GameHistoryData __instance, int techId)
         {
-            if (__instance.techQueue[0] == 0)
-            {
-                if (LDB.techs.Select(techId).IsLabTech == true)
-                {
+            if (__instance.techQueue[0] == 0) {
+                if (LDB.techs.Select(techId).IsLabTech == true) {
                     RecipeProto recipeProto;
                     recipeProto = LDB.recipes.Select(642);
                     recipeProto.ItemCounts[0] = 2;
@@ -561,8 +483,7 @@ namespace ProjectOrbitalRing.Patches.Logic.ModifyUpgradeTech
 
         static void ItemGetHash(int techId)
         {
-            if (techId == 1962)
-            {
+            if (techId == 1962) {
                 ItemProto itemProto = LDB.items.Select(6234);
                 itemProto.Name = "十七公斤重的文明";
                 itemProto.Description = "I十七公斤重的文明";
@@ -641,19 +562,14 @@ namespace ProjectOrbitalRing.Patches.Logic.ModifyUpgradeTech
         static void AorB(int techId)
         {
             RecipeProto recipeProto;
-            if (techId == 1937)
-            {
-                if (whichTechChoose == 0)
-                {
+            if (techId == 1937) {
+                if (whichTechChoose == 0) {
                     whichTechChoose = 1937;
                     recipeProto = LDB.recipes.Select(26); // 碳纳米管（粒子打印）
                     recipeProto.TimeSpend = 120;
                 }
-            }
-            else if (techId == 1954)
-            {
-                if (whichTechChoose == 0)
-                {
+            } else if (techId == 1954) {
+                if (whichTechChoose == 0) {
 
                     recipeProto = LDB.recipes.Select(97); // 电动机
                     recipeProto.TimeSpend = 60;
@@ -774,8 +690,7 @@ namespace ProjectOrbitalRing.Patches.Logic.ModifyUpgradeTech
 
         static void OrbitalTurretTech(int techId)
         {
-            if (techId == 1811)
-            {
+            if (techId == 1811) {
                 ItemProto itemProto = LDB.items.Select(6273);
                 itemProto.Name = "轨道炮座";
                 itemProto.Description = "I轨道炮座";
@@ -810,16 +725,14 @@ namespace ProjectOrbitalRing.Patches.Logic.ModifyUpgradeTech
             w.Write(vanillaTechSpeed);
             w.Write(synapticLatheTechSpeed);
             w.Write(isItemGetHashUnlock);
-            for (int i = 0; i < 3; i++)
-            {
+            for (int i = 0; i < 3; i++) {
                 w.Write(WhichFleetUpgradeChoose[i]);
             }
             w.Write(whichTechChoose);
             w.Write(NewGameCompletionLevel);
             w.Write(ECMUpgradeLevel);
             w.Write(AntiMatterOutCounts);
-            for (int i = 0; i < 3; i++)
-            {
+            for (int i = 0; i < 3; i++) {
                 w.Write(UniverseObserveBuilding[i]);
             }
             w.Write(isOrbitalTurretUnlock);
@@ -828,41 +741,28 @@ namespace ProjectOrbitalRing.Patches.Logic.ModifyUpgradeTech
 
         internal static void Import(BinaryReader r)
         {
-            try
-            {
+            IntoOtherSave();
+            try {
                 ItemProto itemProto;
                 TechProto techProto;
                 RecipeProto recipeProto;
                 WreckFallingLevel = r.ReadInt32();
-                UnlockWreckFalling(0);
-                for (int i = 1; i <= WreckFallingLevel; i++)
-                {
+                for (int i = 1; i <= WreckFallingLevel; i++) {
                     UnlockWreckFalling(i);
                 }
 
                 isUnlockCrackingRay = r.ReadBoolean();
-                if (isUnlockCrackingRay)
-                {
+                if (isUnlockCrackingRay) {
                     UnlockCrackingRayTech();
-                }
-                else
-                {
-                    NotUnlockCrackingRayTech();
                 }
 
                 isUnlockRecipesHandcraft = r.ReadBoolean();
-                if (isUnlockRecipesHandcraft)
-                {
+                if (isUnlockRecipesHandcraft) {
                     UnlockRecipesHandcraft(1945, true);
-                } else
-                {
-                    UnlockRecipesHandcraft(1945, false);
                 }
 
                 UAVHPAndfiringRateUpgradeLevel = r.ReadInt32();
-                UAVHPAndfiringRateUpgrade(0);
-                for (int i = 1; i <= UAVHPAndfiringRateUpgradeLevel; i++)
-                {
+                for (int i = 1; i <= UAVHPAndfiringRateUpgradeLevel; i++) {
                     UAVHPAndfiringRateUpgrade(i);
                 }
 
@@ -870,29 +770,19 @@ namespace ProjectOrbitalRing.Patches.Logic.ModifyUpgradeTech
                 synapticLatheTechSpeed = r.ReadInt32();
 
                 isItemGetHashUnlock = r.ReadBoolean();
-                if (isUnlockRecipesHandcraft)
-                {
+                if (isUnlockRecipesHandcraft) {
                     itemProto = LDB.items.Select(6234);
                     itemProto.Name = "十七公斤重的文明";
                     itemProto.Description = "I十七公斤重的文明";
                     itemProto.RefreshTranslation();
-                } else
-                {
-                    itemProto = LDB.items.Select(6234);
-                    itemProto.Name = "文明遗物";
-                    itemProto.Description = "I文明遗物";
-                    itemProto.RefreshTranslation();
                 }
 
-                for (int i = 0; i < 3; i++)
-                {
+                for (int i = 0; i < 3; i++) {
                     WhichFleetUpgradeChoose[i] = r.ReadInt32();
-                    if (WhichFleetUpgradeChoose[i] != 0)
-                    {
+                    if (WhichFleetUpgradeChoose[i] != 0) {
                         techProto = LDB.techs.Select(WhichFleetUpgradeChoose[i]);
                         techProto.UnlockValues = new double[] { 0, 0 };
-                        if (i == 2 && WhichFleetUpgradeChoose[i] == 5403)
-                        {
+                        if (i == 2 && WhichFleetUpgradeChoose[i] == 5403) {
                             ModelProto modelProto;
                             modelProto = LDB.models.Select(451); // 护卫
                             modelProto.prefabDesc.craftUnitAttackRange0 = 4000f;
@@ -906,18 +796,11 @@ namespace ProjectOrbitalRing.Patches.Logic.ModifyUpgradeTech
                 }
 
                 whichTechChoose = r.ReadInt32();
-                if (whichTechChoose == 1937)
-                {
+                if (whichTechChoose == 1937) {
                     recipeProto = LDB.recipes.Select(26); // 碳纳米管（粒子打印）
                     recipeProto.TimeSpend = 120;
                 }
-                else
-                {
-                    recipeProto = LDB.recipes.Select(26); // 碳纳米管（粒子打印）
-                    recipeProto.TimeSpend = 240;
-                }
-                if (whichTechChoose == 1954)
-                {
+                if (whichTechChoose == 1954) {
                     recipeProto = LDB.recipes.Select(97); // 电动机
                     recipeProto.TimeSpend = 60;
 
@@ -927,28 +810,16 @@ namespace ProjectOrbitalRing.Patches.Logic.ModifyUpgradeTech
                     techProto = LDB.techs.Select(1937);
                     techProto.UnlockRecipes = new int[] { }; // 删除 石墨烯（碳解离）配方的解锁
                 }
-                else
-                {
-                    recipeProto = LDB.recipes.Select(97); // 电动机
-                    recipeProto.TimeSpend = 120;
-
-                    recipeProto = LDB.recipes.Select(98); // 电磁涡轮
-                    recipeProto.TimeSpend = 120;
-                }
 
                 NewGameCompletionLevel = r.ReadInt32();
-                lockBecauseItIsThere();
-                for (int i = 1; i <= NewGameCompletionLevel; i++)
-                {
+                for (int i = 1; i <= NewGameCompletionLevel; i++) {
                     BecauseItIsThere(NewGameCompletionTech[NewGameCompletionLevel - 1]);
                 }
 
                 ECMUpgradeLevel = r.ReadInt32();
                 itemProto = LDB.items.Select(1612);
-                itemProto.HpMax = 60;
                 itemProto.HpMax += ECMUpgradeLevel * 5;
                 itemProto = LDB.items.Select(1613);
-                itemProto.HpMax = 60;
                 itemProto.HpMax += ECMUpgradeLevel * 5;
 
                 AntiMatterOutCounts = r.ReadInt32();
@@ -959,23 +830,15 @@ namespace ProjectOrbitalRing.Patches.Logic.ModifyUpgradeTech
                 recipeProto.ResultCounts[0] = AntiMatterOutCounts;
                 recipeProto.ResultCounts[1] = AntiMatterOutCounts;
 
-                for (int i = 0; i < 3; i++)
-                {
+                for (int i = 0; i < 3; i++) {
                     UniverseObserveBuilding[i] = r.ReadInt32();
                 }
 
                 isOrbitalTurretUnlock = r.ReadBoolean();
-                if (isOrbitalTurretUnlock)
-                {
+                if (isOrbitalTurretUnlock) {
                     itemProto = LDB.items.Select(6273);
                     itemProto.Name = "轨道炮座";
                     itemProto.Description = "I轨道炮座";
-                    itemProto.RefreshTranslation();
-                } else
-                {
-                    itemProto = LDB.items.Select(6273);
-                    itemProto.Name = "轨道观测站";
-                    itemProto.Description = "I轨道观测站";
                     itemProto.RefreshTranslation();
                 }
                 PilerEjectorLevel = r.ReadInt32();
@@ -986,38 +849,64 @@ namespace ProjectOrbitalRing.Patches.Logic.ModifyUpgradeTech
             }
         }
 
-        internal static void IntoOtherSave() {
-            AntiMatterOutCounts = 2;
+        internal static void IntoOtherSave()
+        {
+            InitData();
+            if (DSPGame.IsMenuDemo || GameMain.mainPlayer == null) {
+                return;
+            }
+            UnlockWreckFalling(0);
+            NotUnlockCrackingRayTech();
+            UnlockRecipesHandcraft(1945, false);
+            UAVHPAndfiringRateUpgrade(0);
+
+            ItemProto itemProto;
+            itemProto = LDB.items.Select(6234);
+            itemProto.Name = "文明遗物";
+            itemProto.Description = "I文明遗物";
+            itemProto.RefreshTranslation();
+
+            ModifyFleetUpgradeTechs();
+
+            RecipeProto recipeProto;
+            recipeProto = LDB.recipes.Select(26); // 碳纳米管（粒子打印）
+            recipeProto.TimeSpend = 240;
+            recipeProto = LDB.recipes.Select(97); // 电动机
+            recipeProto.TimeSpend = 120;
+            recipeProto = LDB.recipes.Select(98); // 电磁涡轮
+            recipeProto.TimeSpend = 120;
+
+            lockBecauseItIsThere();
+
+            itemProto = LDB.items.Select(1612);
+            itemProto.HpMax = 60;
+            itemProto = LDB.items.Select(1613);
+            itemProto.HpMax = 60;
+
+            itemProto = LDB.items.Select(6273);
+            itemProto.Name = "轨道观测站";
+            itemProto.Description = "I轨道观测站";
+            itemProto.RefreshTranslation();
         }
 
         public static void AddUniverseObserveBuilding(int itemId)
         {
-            if (itemId == 3009)
-            {
+            if (itemId == 3009) {
                 UniverseObserveBuilding[0]++;
-            }
-            else if (itemId == 6266)
-            {
+            } else if (itemId == 6266) {
                 UniverseObserveBuilding[1]++;
-            }
-            else if (itemId == 6273)
-            {
+            } else if (itemId == 6273) {
                 UniverseObserveBuilding[2]++;
             }
         }
 
         public static void DelUniverseObserveBuilding(int itemId)
         {
-            if (itemId == 3009)
-            {
+            if (itemId == 3009) {
                 UniverseObserveBuilding[0]--;
-            }
-            else if (itemId == 6266)
-            {
+            } else if (itemId == 6266) {
                 UniverseObserveBuilding[1]--;
-            }
-            else if (itemId == 6273)
-            {
+            } else if (itemId == 6273) {
                 UniverseObserveBuilding[2]--;
             }
         }

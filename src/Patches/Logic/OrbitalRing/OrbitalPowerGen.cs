@@ -20,36 +20,26 @@ namespace ProjectOrbitalRing.Patches.Logic.OrbitalRing
             if (__instance.fuelCount >= 10) return;
             var planetOrbitalRingData = OrbitalStationManager.Instance.GetPlanetOrbitalRingData(planetId);
             if (planetOrbitalRingData == null) return;
-            for (int i = 0; i < planetOrbitalRingData.Rings.Count; i++)
-            {
+            for (int i = 0; i < planetOrbitalRingData.Rings.Count; i++) {
                 EquatorRing ring = planetOrbitalRingData.Rings[i];
-                for (int j = 0; j < ring.Capacity; j++)
-                {
+                for (int j = 0; j < ring.Capacity; j++) {
                     var pair = ring.GetPair(j);
-                    if (pair.stationType == StationType.PowerGenCore && pair.elevatorPoolId != -1 && pair.OrbitalCorePoolId == __instance.id)
-                    {
+                    if (pair.stationType == StationType.PowerGenCore && pair.elevatorPoolId != -1 && pair.OrbitalCorePoolId == __instance.id) {
                         var storage = ring.GetElevatorStorage(j);
-                        for (int k = 0; k < storage.Length; k++)
-                        {
-                            if (storage[k].itemId == __instance.fuelId && storage[k].count >= 1)
-                            {
+                        for (int k = 0; k < storage.Length; k++) {
+                            if (storage[k].itemId == __instance.fuelId && storage[k].count >= 1) {
                                 __instance.fuelCount += 1;
                                 //storage[k].count -= 1;
                                 int inc = OrbitalStationManager.Instance.split_inc(ref storage[k].count, ref storage[k].inc, 1);
                                 __instance.fuelInc += (short)inc;
                                 //storage[k].inc -= inc;
-                            }
-                            else if (__instance.fuelId == 0)
-                            {
+                            } else if (__instance.fuelId == 0) {
                                 int[] array = ItemProto.fuelNeeds[(int)__instance.fuelMask];
-                                if (array == null || array.Length == 0)
-                                {
+                                if (array == null || array.Length == 0) {
                                     return;
                                 }
-                                for (int z = 0; z < array.Length; z++)
-                                {
-                                    if (array[z] == storage[k].itemId && storage[k].count >= 1)
-                                    {
+                                for (int z = 0; z < array.Length; z++) {
+                                    if (array[z] == storage[k].itemId && storage[k].count >= 1) {
                                         int inc = OrbitalStationManager.Instance.split_inc(ref storage[k].count, ref storage[k].inc, 1);
                                         __instance.SetNewFuel(storage[k].itemId, 1, (short)inc);
                                         //storage[k].count -= 1;
@@ -58,7 +48,7 @@ namespace ProjectOrbitalRing.Patches.Logic.OrbitalRing
                             }
                         }
                     }
-                    
+
                 }
             }
         }
@@ -67,14 +57,12 @@ namespace ProjectOrbitalRing.Patches.Logic.OrbitalRing
         [HarmonyPrefix]
         public static void GameTickPatch(ref PowerSystem __instance)
         {
-            for (int i = 0; i < __instance.genPool.Length; i++)
-            {
-                if (__instance.factory.entityPool[__instance.genPool[i].entityId].protoId == 6261)
-                {
+            for (int i = 0; i < __instance.genPool.Length; i++) {
+                if (__instance.factory.entityPool[__instance.genPool[i].entityId].protoId == 6261) {
                     OrbitalPowerGenInternalUpdate(ref __instance.genPool[i], __instance.planet.id);
                 }
             }
-            
+
         }
 
         [HarmonyPatch(typeof(PlanetFactory), nameof(PlanetFactory.CreateEntityLogicComponents))]
@@ -82,20 +70,16 @@ namespace ProjectOrbitalRing.Patches.Logic.OrbitalRing
         public static void CreateEntityLogicComponentsPatch(ref PlanetFactory __instance, int entityId)
         {
             int modelId = __instance.entityPool[entityId].modelIndex;
-            if (modelId == ProtoID.M轨道反物质堆基座 || modelId == ProtoID.M星环电网枢纽)
-            {
+            if (modelId == ProtoID.M轨道反物质堆基座 || modelId == ProtoID.M星环电网枢纽) {
                 Vector3 thisPos = __instance.entityPool[entityId].pos;
                 int position = IsBuildingPosXZCorrect(thisPos.x, thisPos.z);
                 int ringIndex = isBuildingPosYCorrect(thisPos);
                 OrbitalStationManager.Instance.AddPlanetId(__instance.planet.id);
                 var planetOrbitalRingData = OrbitalStationManager.Instance.GetPlanetOrbitalRingData(__instance.planet.id);
                 // 在赤道上/下圈？号位置添加轨道设施
-                if (modelId == ProtoID.M轨道反物质堆基座)
-                {
+                if (modelId == ProtoID.M轨道反物质堆基座) {
                     planetOrbitalRingData.Rings[ringIndex].AddOrbitalStation(position, entityId, StationType.PowerGenBase);
-                }
-                else if (modelId == ProtoID.M星环电网枢纽)
-                {
+                } else if (modelId == ProtoID.M星环电网枢纽) {
                     planetOrbitalRingData.Rings[ringIndex].AddOrbitalStation(position, entityId, StationType.GlobalPower);
                 }
             }
@@ -105,8 +89,7 @@ namespace ProjectOrbitalRing.Patches.Logic.OrbitalRing
         [HarmonyPostfix]
         public static void NewGeneratorComponentPatch(ref PowerSystem __instance, int entityId, int __result)
         {
-            if (__instance.factory.entityPool[entityId].protoId == 6261)
-            {
+            if (__instance.factory.entityPool[entityId].protoId == 6261) {
                 Vector3 thisPos = __instance.factory.entityPool[entityId].pos;
                 int position = IsBuildingPosXZCorrect(thisPos.x, thisPos.z);
                 int ringIndex = isBuildingPosYCorrect(thisPos);

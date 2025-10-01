@@ -18,34 +18,24 @@ namespace ProjectOrbitalRing.Patches.Logic.OrbitalRing
             if (__instance.itemCount >= 5) return;
             var planetOrbitalRingData = OrbitalStationManager.Instance.GetPlanetOrbitalRingData(planetId);
             if (planetOrbitalRingData == null) return;
-            for (int i = 0; i < planetOrbitalRingData.Rings.Count; i++)
-            {
+            for (int i = 0; i < planetOrbitalRingData.Rings.Count; i++) {
                 EquatorRing ring = planetOrbitalRingData.Rings[i];
-                for (int j = 0; j < ring.Capacity; j++)
-                {
+                for (int j = 0; j < ring.Capacity; j++) {
                     var pair = ring.GetPair(j);
-                    if (pair.stationType == StationType.TurretCore && pair.elevatorPoolId != -1 && pair.OrbitalCorePoolId == __instance.id)
-                    {
+                    if (pair.stationType == StationType.TurretCore && pair.elevatorPoolId != -1 && pair.OrbitalCorePoolId == __instance.id) {
                         var storage = ring.GetElevatorStorage(j);
-                        for (int k = 0; k < storage.Length; k++)
-                        {
-                            if (storage[k].itemId == __instance.itemId && storage[k].count >= 1)
-                            {
+                        for (int k = 0; k < storage.Length; k++) {
+                            if (storage[k].itemId == __instance.itemId && storage[k].count >= 1) {
                                 __instance.itemCount += 1;
                                 int inc = OrbitalStationManager.Instance.split_inc(ref storage[k].count, ref storage[k].inc, 1);
                                 __instance.itemInc += (short)inc;
-                            }
-                            else if (__instance.itemId == 0)
-                            {
+                            } else if (__instance.itemId == 0) {
                                 int[] array = ItemProto.turretNeeds[(int)__instance.ammoType];
-                                if (array == null || array.Length == 0)
-                                {
+                                if (array == null || array.Length == 0) {
                                     return;
                                 }
-                                for (int z = 0; z < array.Length; z++)
-                                {
-                                    if (array[z] == storage[k].itemId && storage[k].count >= 1)
-                                    {
+                                for (int z = 0; z < array.Length; z++) {
+                                    if (array[z] == storage[k].itemId && storage[k].count >= 1) {
                                         int inc = OrbitalStationManager.Instance.split_inc(ref storage[k].count, ref storage[k].inc, 1);
                                         __instance.SetNewItem(storage[k].itemId, 1, (short)inc);
                                     }
@@ -62,10 +52,8 @@ namespace ProjectOrbitalRing.Patches.Logic.OrbitalRing
         [HarmonyPrefix]
         public static void GameTickPatch(ref DefenseSystem __instance)
         {
-            for (int i = 0; i < __instance.turrets.buffer.Length; i++)
-            {
-                if (__instance.factory.entityPool[__instance.turrets.buffer[i].entityId].protoId == 3004)
-                {
+            for (int i = 0; i < __instance.turrets.buffer.Length; i++) {
+                if (__instance.factory.entityPool[__instance.turrets.buffer[i].entityId].protoId == 3004) {
                     OrbitalTurretInternalUpdate(ref __instance.turrets.buffer[i], __instance.planet.id);
                 }
             }
@@ -76,8 +64,7 @@ namespace ProjectOrbitalRing.Patches.Logic.OrbitalRing
         public static void CreateEntityLogicComponentsPatch(ref PlanetFactory __instance, int entityId)
         {
             int modelId = __instance.entityPool[entityId].modelIndex;
-            if (modelId == ProtoID.M轨道观测站)
-            {
+            if (modelId == ProtoID.M轨道观测站) {
                 Vector3 thisPos = __instance.entityPool[entityId].pos;
                 int position = IsBuildingPosXZCorrect(thisPos.x, thisPos.z);
                 int ringIndex = isBuildingPosYCorrect(thisPos);
@@ -97,7 +84,7 @@ namespace ProjectOrbitalRing.Patches.Logic.OrbitalRing
             var planetOrbitalRingData = OrbitalStationManager.Instance.GetPlanetOrbitalRingData(__instance.planet.id);
             // 在赤道上/下圈？号位置添加轨道设施
             planetOrbitalRingData.Rings[ringIndex].AddOrbitalCore(position, thisTurretId, StationType.TurretCore);
-            
+
         }
 
         [HarmonyPatch(typeof(DefenseSystem), nameof(DefenseSystem.NewTurretComponent))]
@@ -105,8 +92,7 @@ namespace ProjectOrbitalRing.Patches.Logic.OrbitalRing
         public static void NewTurretComponentPatch(ref DefenseSystem __instance, int entityId, PrefabDesc desc, int __result)
         {
             var itemId = __instance.factory.entityPool[entityId].protoId;
-            if (itemId == 3004)
-            {
+            if (itemId == 3004) {
                 BuildOrbitalTurret(__instance, __result, entityId, itemId);
             }
         }

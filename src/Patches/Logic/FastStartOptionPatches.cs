@@ -134,7 +134,7 @@ namespace ProjectOrbitalRing.Patches.Logic
                 {
                     case ProtoID.I结构矩阵:
                     case ProtoID.I信息矩阵:
-                    case ProtoID.I张量矩阵:
+                    case ProtoID.I电磁矩阵:
                     case ProtoID.I引力矩阵:
                     case ProtoID.I奇点矩阵:
                     case ProtoID.I宇宙矩阵:

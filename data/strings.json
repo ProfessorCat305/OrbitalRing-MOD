@@ -1495,6 +1495,16 @@
         "ENUS": "The use of plastic wrapped fiber cores with good optical guiding media enables low loss transmission of optical signals internally. Fiber optics can transmit signals at the speed of light, and with modulation and demodulation interfaces, it is the foundation of long-distance low latency communication."
     },
     {
+        "Name": "光纤（重水除羟基）",
+        "ZHCN": "光纤（重水除羟基）",
+        "ENUS": "Fiber Optic (Heavy Water Hydroxyl Removal)"
+    },
+    {
+        "Name": "R光纤（重水除羟基）",
+        "ZHCN": "普通水分子会在光纤的石英纤维中形成羟基，导致光纤损耗显著增加。通过注入重水蒸气在光纤内部形成稳定层，阻碍普通水分子的重新侵入，从而削弱羟基的生成，保护光纤。",
+        "ENUS": "Ordinary water molecules will form hydroxyl groups in the quartz fibers of optical fibers, leading to a significant increase in fiber loss. By injecting heavy water vapor to form a stable layer inside the optical fiber, it hinders the re-entry of ordinary water molecules, thereby weakening the generation of hydroxyl groups and protecting the optical fiber."
+    },
+    {
         "Name": "量子计算机550MAGI",
         "ZHCN": "量子计算机550MAGI",
         "ENUS": "Quantum Computer 550MAGI"

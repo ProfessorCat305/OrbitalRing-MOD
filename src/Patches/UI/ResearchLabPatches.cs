@@ -18,7 +18,7 @@ namespace ProjectOrbitalRing.Patches.UI {
             __instance.GetComponent<RectTransform>().sizeDelta = new Vector2(640, 430);
             __instance.transform.Find("matrix-group/lines").gameObject.SetActive(false);
 
-            const int len = 9;
+            const int len = 8;
 
             Array.Resize(ref __instance.itemButtons, len);
             Array.Resize(ref __instance.itemIcons, len);
@@ -344,23 +344,23 @@ namespace ProjectOrbitalRing.Patches.UI {
             TechProto techProto = LDB.techs.Select(techId);
             foreach (int item in techProto.Items) {
                 switch (item) {
-                    case ProtoID.I通量矩阵:
+                    case ProtoID.I信息矩阵:
                         labMatrixEffect.techMatUse[0] = true;
                         labMatrixEffect.techMatUse[1] = true;
                         break;
 
-                    case ProtoID.I张量矩阵:
+                    case ProtoID.I电磁矩阵:
                         labMatrixEffect.techMatUse[2] = true;
                         labMatrixEffect.techMatUse[3] = true;
                         break;
 
-                    case ProtoID.I奇点矩阵:
-                        labMatrixEffect.techMatUse[0] = true;
-                        labMatrixEffect.techMatUse[1] = true;
-                        labMatrixEffect.techMatUse[2] = true;
-                        labMatrixEffect.techMatUse[3] = true;
-                        labMatrixEffect.techMatUse[4] = true;
-                        break;
+                    //case ProtoID.I奇点矩阵:
+                    //    labMatrixEffect.techMatUse[0] = true;
+                    //    labMatrixEffect.techMatUse[1] = true;
+                    //    labMatrixEffect.techMatUse[2] = true;
+                    //    labMatrixEffect.techMatUse[3] = true;
+                    //    labMatrixEffect.techMatUse[4] = true;
+                    //    break;
 
                     default:
                         labMatrixEffect.techMatUse[item - LabComponent.matrixIds[0]] = true;
@@ -374,9 +374,9 @@ namespace ProjectOrbitalRing.Patches.UI {
 
         public static int ChangeMatrixIds(int itemId) {
             switch (itemId) {
-                case ProtoID.I通量矩阵: return 6007;
-                case ProtoID.I张量矩阵: return 6008;
-                case ProtoID.I奇点矩阵: return 6009;
+                case ProtoID.I信息矩阵: return 6007;
+                case ProtoID.I电磁矩阵: return 6008;
+                //case ProtoID.I奇点矩阵: return 6009;
                 default: return itemId;
             }
         }
@@ -391,9 +391,9 @@ namespace ProjectOrbitalRing.Patches.UI {
                     index1 |= 12;
                     break;
 
-                case 8://ProtoID.I奇点矩阵:
-                    index1 |= 31;
-                    break;
+                //case 8://ProtoID.I奇点矩阵:
+                //    index1 |= 31;
+                //    break;
             }
 
             return index1;
@@ -466,23 +466,23 @@ namespace ProjectOrbitalRing.Patches.UI {
                 int num = (int)(hashNeeded * proto.ItemPoints[index]) / 3600;
 
                 switch (item) {
-                    case ProtoID.I通量矩阵:
+                    case ProtoID.I信息矩阵:
                         AddCount(ProtoID.I电磁矩阵, num);
                         AddCount(ProtoID.I能量矩阵, num);
                         break;
 
-                    case ProtoID.I张量矩阵:
+                    case ProtoID.I电磁矩阵:
                         AddCount(ProtoID.I结构矩阵, num);
                         AddCount(ProtoID.I信息矩阵, num);
                         break;
 
-                    case ProtoID.I奇点矩阵:
-                        AddCount(ProtoID.I电磁矩阵, num);
-                        AddCount(ProtoID.I能量矩阵, num);
-                        AddCount(ProtoID.I结构矩阵, num);
-                        AddCount(ProtoID.I信息矩阵, num);
-                        AddCount(ProtoID.I引力矩阵, num);
-                        break;
+                    //case ProtoID.I奇点矩阵:
+                    //    AddCount(ProtoID.I电磁矩阵, num);
+                    //    AddCount(ProtoID.I能量矩阵, num);
+                    //    AddCount(ProtoID.I结构矩阵, num);
+                    //    AddCount(ProtoID.I信息矩阵, num);
+                    //    AddCount(ProtoID.I引力矩阵, num);
+                    //    break;
 
                     default:
                         AddCount(item, num);

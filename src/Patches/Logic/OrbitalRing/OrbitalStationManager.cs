@@ -55,20 +55,17 @@ namespace ProjectOrbitalRing.Patches.Logic.OrbitalRing
         internal static void Export(BinaryWriter w)
         {
             w.Write(AllplanetsOrbitalRings.Count);
-            foreach (var outerPair in AllplanetsOrbitalRings)
-            {
+            foreach (var outerPair in AllplanetsOrbitalRings) {
                 // 写入planetId
                 w.Write(outerPair.Key);
                 // 写入PlanetOrbitalRingData里Rings个数
                 w.Write(outerPair.Value.Rings.Count);
 
-                for (int i = 0; i < outerPair.Value.Rings.Count; i++)
-                {
+                for (int i = 0; i < outerPair.Value.Rings.Count; i++) {
                     w.Write(outerPair.Value.Rings[i].Capacity);
                     w.Write(outerPair.Value.Rings[i].isParticleCollider);
                     //w.Write(outerPair.Value.Rings[i].SpaceStationCount);
-                    for (int j = 0; j < outerPair.Value.Rings[i].Capacity; j++)
-                    {
+                    for (int j = 0; j < outerPair.Value.Rings[i].Capacity; j++) {
                         var pair = outerPair.Value.Rings[i].GetPair(j);
                         w.Write(pair.elevatorPoolId);
                         w.Write(pair.OrbitalStationPoolId);
@@ -80,25 +77,22 @@ namespace ProjectOrbitalRing.Patches.Logic.OrbitalRing
         }
         internal static void Import(BinaryReader r)
         {
-            try
-            {
+            IntoOtherSave();
+            try {
                 // 读取外层字典条目数
                 int AllplanetsOrbitalRingsCount = r.ReadInt32();
 
-                for (int i = 0; i < AllplanetsOrbitalRingsCount; i++)
-                {
+                for (int i = 0; i < AllplanetsOrbitalRingsCount; i++) {
                     int planetId = r.ReadInt32();
                     PlanetOrbitalRingData data = new PlanetOrbitalRingData(planetId);
                     // 读取内层字典条目数
                     int OnePlanetRingsCount = r.ReadInt32();
-                    for (var j = 0; j < OnePlanetRingsCount; j++)
-                    {
+                    for (var j = 0; j < OnePlanetRingsCount; j++) {
                         EquatorRing OnePlanetOneRing = new EquatorRing(r.ReadInt32(), planetId);
                         //OnePlanetOneRingnew.spaceStationCount = r.ReadInt32();
                         OnePlanetOneRing.isParticleCollider = r.ReadBoolean();
 
-                        for (int k = 0; k < OnePlanetOneRing.Capacity; k++)
-                        {
+                        for (int k = 0; k < OnePlanetOneRing.Capacity; k++) {
                             int elevatorPoolId = r.ReadInt32();
                             int OrbitalStationPoolId = r.ReadInt32();
                             EquatorRing.StationType stationType = (EquatorRing.StationType)r.ReadInt32();
@@ -111,17 +105,19 @@ namespace ProjectOrbitalRing.Patches.Logic.OrbitalRing
                     }
                     AllplanetsOrbitalRings[planetId] = data;
                 }
-            }
-            catch (EndOfStreamException)
-            {
+            } catch (EndOfStreamException) {
                 // ignored
             }
         }
 
+        internal static void IntoOtherSave()
+        {
+            AllplanetsOrbitalRings.Clear();
+        }
+
         public int split_inc(ref int n, ref int m, int p)
         {
-            if (n == 0)
-            {
+            if (n == 0) {
                 return 0;
             }
             int num = m / n;
@@ -158,10 +154,8 @@ namespace ProjectOrbitalRing.Patches.Logic.OrbitalRing
 
         public bool IsRingFull()
         {
-            for (int ringIndex = 0; ringIndex < Rings.Count; ringIndex++)
-            {
-                if (Rings[ringIndex].IsFull())
-                {
+            for (int ringIndex = 0; ringIndex < Rings.Count; ringIndex++) {
+                if (Rings[ringIndex].IsFull()) {
                     return true;
                 }
             }
@@ -170,15 +164,11 @@ namespace ProjectOrbitalRing.Patches.Logic.OrbitalRing
 
         public bool IsGlobalPowerActive()
         {
-            for (int ringIndex = 0; ringIndex < Rings.Count; ringIndex++)
-            {
-                if (Rings[ringIndex].IsFull())
-                {
-                    for (int i = 0; i < Rings[ringIndex].Capacity; i++)
-                    {
+            for (int ringIndex = 0; ringIndex < Rings.Count; ringIndex++) {
+                if (Rings[ringIndex].IsFull()) {
+                    for (int i = 0; i < Rings[ringIndex].Capacity; i++) {
                         var pair = Rings[ringIndex].GetPair(i);
-                        if (pair.stationType == EquatorRing.StationType.GlobalPower)
-                        {
+                        if (pair.stationType == EquatorRing.StationType.GlobalPower) {
                             return true;
                         }
                     }
@@ -205,13 +195,11 @@ namespace ProjectOrbitalRing.Patches.Logic.OrbitalRing
 
         public EquatorRing(int capacity, int planetId)
         {
-            lock (_lock)
-            {
+            lock (_lock) {
                 this.planetId = planetId;
                 Capacity = capacity;
                 positions = new Position[capacity];
-                for (int i = 0; i < capacity; i++)
-                {
+                for (int i = 0; i < capacity; i++) {
                     positions[i] = new Position(-1, -1, StationType.None, -1);
                 }
             }
@@ -221,8 +209,7 @@ namespace ProjectOrbitalRing.Patches.Logic.OrbitalRing
         {
             if (GameMain.history == null) { return; }
             if (GameMain.history.TechUnlocked(1951)) { return; }
-            if (IsFull())
-            {
+            if (IsFull()) {
                 Debug.LogFormat("scpppppppppppppppppppp spaceStationCount {0} Capacity {1}", spaceStationCount, Capacity);
                 GameMain.history.UnlockTech(1951);
             }
@@ -232,8 +219,7 @@ namespace ProjectOrbitalRing.Patches.Logic.OrbitalRing
         {
             if (position < 0 || position >= Capacity) return false;
 
-            lock (_lock)
-            {
+            lock (_lock) {
                 positions[position].ElevatorPoolId = elevatorId;
                 //elevatorToPosition[elevatorId] = position;
             }
@@ -246,10 +232,8 @@ namespace ProjectOrbitalRing.Patches.Logic.OrbitalRing
         {
             if (position < 0 || position >= Capacity) return false;
 
-            lock (_lock)
-            {
-                if (positions[position].OrbitalStationType == StationType.None && !OrbitalStationManager.StationTypeIsBase(stationType))
-                {
+            lock (_lock) {
+                if (positions[position].OrbitalStationType == StationType.None && !OrbitalStationManager.StationTypeIsBase(stationType)) {
                     spaceStationCount++;
                 }
                 positions[position].OrbitalStationPoolId = stationId;
@@ -257,12 +241,9 @@ namespace ProjectOrbitalRing.Patches.Logic.OrbitalRing
                 //stationToPosition[stationId] = position;
 
                 isOrbitalRingTechunlock();
-                if (IsFull())
-                {
-                    for (int i = 0; i < Capacity; i++)
-                    {
-                        if (positions[i].OrbitalStationType == StationType.GlobalPower)
-                        {
+                if (IsFull()) {
+                    for (int i = 0; i < Capacity; i++) {
+                        if (positions[i].OrbitalStationType == StationType.GlobalPower) {
                             GlobalPowerActive(planetId);
                         }
                     }
@@ -274,23 +255,18 @@ namespace ProjectOrbitalRing.Patches.Logic.OrbitalRing
         public bool AddOrbitalCore(int position, int stationId, StationType type)
         {
             if (position < 0 || position >= Capacity) return false;
-            lock (_lock)
-            {
+            lock (_lock) {
 
-                if (OrbitalStationManager.StationTypeIsBase(positions[position].OrbitalStationType))
-                {
+                if (OrbitalStationManager.StationTypeIsBase(positions[position].OrbitalStationType)) {
                     spaceStationCount++;
                 }
                 positions[position].OrbitalCorePoolId = stationId;
                 positions[position].OrbitalStationType = type;
 
                 isOrbitalRingTechunlock();
-                if (IsFull())
-                {
-                    for (int i = 0; i < Capacity; i++)
-                    {
-                        if (positions[i].OrbitalStationType == StationType.GlobalPower)
-                        {
+                if (IsFull()) {
+                    for (int i = 0; i < Capacity; i++) {
+                        if (positions[i].OrbitalStationType == StationType.GlobalPower) {
                             GlobalPowerActive(planetId);
                             break;
                         }
@@ -304,8 +280,7 @@ namespace ProjectOrbitalRing.Patches.Logic.OrbitalRing
         {
             if (position < 0 || position >= Capacity) return false;
 
-            lock (_lock)
-            {
+            lock (_lock) {
                 positions[position].ElevatorPoolId = -1;
                 SetElevatorStorage(position, null);
             }
@@ -315,18 +290,15 @@ namespace ProjectOrbitalRing.Patches.Logic.OrbitalRing
         public bool RemoveOrbitalStation(int position)
         {
             if (position < 0 || position >= Capacity) return false;
-            lock (_lock)
-            {
+            lock (_lock) {
                 positions[position].OrbitalStationPoolId = -1;
-                if (!OrbitalStationManager.StationTypeIsBase(positions[position].OrbitalStationType))
-                {
+                if (!OrbitalStationManager.StationTypeIsBase(positions[position].OrbitalStationType)) {
                     spaceStationCount--;
                 }
                 positions[position].OrbitalStationType = StationType.None;
 
                 bool flag = OrbitalStationManager.Instance.GetPlanetOrbitalRingData(planetId).IsGlobalPowerActive();
-                if (!flag)
-                {
+                if (!flag) {
                     GlobalPowerInActive(planetId);
                 }
             }
@@ -336,14 +308,12 @@ namespace ProjectOrbitalRing.Patches.Logic.OrbitalRing
         public bool RemoveOrbitalCore(int position)
         {
             if (position < 0 || position >= Capacity) return false;
-            lock (_lock)
-            {
+            lock (_lock) {
                 positions[position].OrbitalCorePoolId = -1;
                 positions[position].OrbitalStationType = (positions[position].OrbitalStationType - 1); // core的枚举减一就是对应的base
                 spaceStationCount--;
                 bool flag = OrbitalStationManager.Instance.GetPlanetOrbitalRingData(planetId).IsGlobalPowerActive();
-                if (!flag)
-                {
+                if (!flag) {
                     GlobalPowerInActive(planetId);
                 }
             }
@@ -353,8 +323,7 @@ namespace ProjectOrbitalRing.Patches.Logic.OrbitalRing
         public void SetElevatorStorage(int position, StationStore[] storage)
         {
             if (position < 0 || position >= Capacity) return;
-            lock (_lock)
-            {
+            lock (_lock) {
                 positions[position].ElevatorStorage = storage;
             }
         }

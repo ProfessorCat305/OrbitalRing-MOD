@@ -127,28 +127,25 @@ namespace ProjectOrbitalRing.Patches.Logic.ModifyUpgradeTech
 
         internal static void ModifyAllUpgradeTechs()
         {
-            foreach (TechProto techProto in LDB.techs.dataArray)
-            {
-                if (techProto.ID < 2000) continue;
+            foreach (TechProto techProto in LDB.techs.dataArray) {
+                if (techProto.ID < 2000)
+                    continue;
 
                 int[] items = techProto.Items;
 
-                if (items.SequenceEqual(Items5))
-                {
+                if (items.SequenceEqual(Items5)) {
                     techProto.Items = new[] { 6279, 6004 };
                     techProto.ItemPoints = new[] { techProto.ItemPoints[0], techProto.ItemPoints[0] };
                     continue;
                 }
 
-                if (items.SequenceEqual(Items4))
-                {
+                if (items.SequenceEqual(Items4)) {
                     techProto.Items = new int[] { 6003, 6278 };
                     techProto.ItemPoints = new int[] { techProto.ItemPoints[0], techProto.ItemPoints[0] };
                     continue;
                 }
 
-                if (items.SequenceEqual(Items3))
-                {
+                if (items.SequenceEqual(Items3)) {
                     techProto.Items = new[] { 6003, };
                     techProto.ItemPoints = new[] { techProto.ItemPoints[0] };
                     continue;
@@ -159,23 +156,17 @@ namespace ProjectOrbitalRing.Patches.Logic.ModifyUpgradeTech
         internal static void ModifyObservedTechs()
         {
             TechProto techProto;
-            for (int i = ProtoID.T宇宙探索1; i <= ProtoID.T宇宙探索3; i++)
-            {
+            for (int i = ProtoID.T宇宙探索1; i <= ProtoID.T宇宙探索3; i++) {
                 techProto = LDB.techs.Select(i);
-                if (i == ProtoID.T宇宙探索1)
-                {
+                if (i == ProtoID.T宇宙探索1) {
                     techProto.Items = new[] { 6507, };
                     techProto.Desc = "T宇宙探索1";
                     techProto.RefreshTranslation();
-                }
-                else if (i == ProtoID.T宇宙探索2)
-                {
+                } else if (i == ProtoID.T宇宙探索2) {
                     techProto.Items = new[] { 6508, };
                     techProto.Desc = "T宇宙探索2";
                     techProto.RefreshTranslation();
-                }
-                else if (i == ProtoID.T宇宙探索3)
-                {
+                } else if (i == ProtoID.T宇宙探索3) {
                     techProto.Items = new[] { 6509, };
                     techProto.Desc = "T宇宙探索3";
                     techProto.RefreshTranslation();
@@ -197,15 +188,13 @@ namespace ProjectOrbitalRing.Patches.Logic.ModifyUpgradeTech
         {
             TechProto techProto;
             double coreNenergy = 0;
-            for (int i = 2101; i <= 2105; i++)
-            {
+            for (int i = 2101; i <= 2105; i++) {
                 techProto = LDB.techs.Select(i);
                 coreNenergy = techProto.UnlockValues[0];
                 techProto.UnlockFunctions = new[] { 6, 82, 83, };
                 techProto.UnlockValues = new double[] { coreNenergy, 4d, 1000d, };
 
-                switch (i)
-                {
+                switch (i) {
                     case 2101:
                         techProto.Items = new int[] { 6001 };
                         techProto.ItemPoints = new int[] { techProto.ItemPoints[0] };
@@ -239,14 +228,12 @@ namespace ProjectOrbitalRing.Patches.Logic.ModifyUpgradeTech
         {
             TechProto techProto;
             double moveSpped = 0;
-            for (int i = 2201; i <= 2208; i++)
-            {
+            for (int i = 2201; i <= 2208; i++) {
                 techProto = LDB.techs.Select(i);
                 moveSpped = techProto.UnlockValues[0];
                 techProto.UnlockFunctions = new int[] { 3, 81 };
                 techProto.UnlockValues = new double[] { moveSpped, moveSpped * 75000 };
-                switch (i)
-                {
+                switch (i) {
                     case 2201:
                         techProto.Items = new int[] { 6001 };
                         techProto.ItemPoints = new int[] { techProto.ItemPoints[0] };
@@ -287,11 +274,9 @@ namespace ProjectOrbitalRing.Patches.Logic.ModifyUpgradeTech
         internal static void ModifyPackageUpgradeTechs()
         {
             TechProto techProto;
-            for (int i = 2301; i <= 2307; i++)
-            {
+            for (int i = 2301; i <= 2307; i++) {
                 techProto = LDB.techs.Select(i);
-                switch (i)
-                {
+                switch (i) {
                     case 2301:
                         techProto.Items = new int[] { 6001 };
                         techProto.ItemPoints = new int[] { techProto.ItemPoints[0] };
@@ -328,11 +313,9 @@ namespace ProjectOrbitalRing.Patches.Logic.ModifyUpgradeTech
         internal static void ModifyBuilderNumberUpgradeTechs()
         {
             TechProto techProto;
-            for (int i = 2404; i <= 2406; i++)
-            {
+            for (int i = 2404; i <= 2406; i++) {
                 techProto = LDB.techs.Select(i);
-                switch (i)
-                {
+                switch (i) {
                     case 2404:
                         techProto.Items = new int[] { 6003 };
                         techProto.ItemPoints = new int[] { techProto.ItemPoints[0] };
@@ -354,12 +337,10 @@ namespace ProjectOrbitalRing.Patches.Logic.ModifyUpgradeTech
         internal static void ModifyReBuildUpgradeTechs()
         {
             TechProto techProto;
-            for (int i = 2953; i <= 2956; i++)
-            {
+            for (int i = 2953; i <= 2956; i++) {
                 techProto = LDB.techs.Select(i);
 
-                switch (i)
-                {
+                switch (i) {
                     case 2953:
                         techProto.Items = new int[] { 6003 };
                         techProto.ItemPoints = new int[] { techProto.ItemPoints[0] };
@@ -385,13 +366,11 @@ namespace ProjectOrbitalRing.Patches.Logic.ModifyUpgradeTech
         internal static void ModifyCombustionPowerUpgradeTechs()
         {
             TechProto techProto;
-            for (int i = 2501; i <= 2506; i++)
-            {
+            for (int i = 2501; i <= 2506; i++) {
                 techProto = LDB.techs.Select(i);
                 techProto.UnlockValues = new double[] { techProto.UnlockValues[0] * 2 };
 
-                switch (i)
-                {
+                switch (i) {
                     case 2501:
                         techProto.Items = new int[] { 6001 };
                         techProto.ItemPoints = new int[] { techProto.ItemPoints[0] };
@@ -469,8 +448,7 @@ namespace ProjectOrbitalRing.Patches.Logic.ModifyUpgradeTech
         internal static void ModifySolarSailingAdsorbSpeedUpgradeTechs()
         {
             TechProto techProto;
-            for (int i = 4201; i <= 4206; i++)
-            {
+            for (int i = 4201; i <= 4206; i++) {
                 techProto = LDB.techs.Select(i);
                 techProto.Items = new int[] { 6279, 6004, 6005 };
                 techProto.ItemPoints = new int[] { techProto.ItemPoints[0], techProto.ItemPoints[0], techProto.ItemPoints[0] };
@@ -487,8 +465,7 @@ namespace ProjectOrbitalRing.Patches.Logic.ModifyUpgradeTech
         internal static void ModifyWhiteGrabUpgradeTechs()
         {
             TechProto techProto;
-            for (int i = 3313; i <= 3314; i++)
-            {
+            for (int i = 3313; i <= 3314; i++) {
                 techProto = LDB.techs.Select(i);
                 techProto.Items = new int[] { 6003, 6278 };
                 techProto.ItemPoints = new int[] { techProto.ItemPoints[0], techProto.ItemPoints[0] };
@@ -552,8 +529,7 @@ namespace ProjectOrbitalRing.Patches.Logic.ModifyUpgradeTech
         internal static void ModifyDamageUpgradeTechs()
         {
             TechProto techProto;
-            for (int i = 5004; i <= 5005; i++)
-            {
+            for (int i = 5004; i <= 5005; i++) {
                 techProto = LDB.techs.Select(i);
                 techProto.UnlockValues = new double[] { 0.2 };
             }
@@ -566,8 +542,7 @@ namespace ProjectOrbitalRing.Patches.Logic.ModifyUpgradeTech
             techProto.Desc = "T动能武器伤害无限";
             techProto.RefreshTranslation();
 
-            for (int i = 5104; i <= 5105; i++)
-            {
+            for (int i = 5104; i <= 5105; i++) {
                 techProto = LDB.techs.Select(i);
                 techProto.UnlockValues = new double[] { 0.2 };
             }
@@ -580,8 +555,7 @@ namespace ProjectOrbitalRing.Patches.Logic.ModifyUpgradeTech
             techProto.Desc = "T能量武器伤害无限";
             techProto.RefreshTranslation();
 
-            for (int i = 5204; i <= 5205; i++)
-            {
+            for (int i = 5204; i <= 5205; i++) {
                 techProto = LDB.techs.Select(i);
                 techProto.UnlockValues = new double[] { 0.2 };
             }
@@ -601,16 +575,14 @@ namespace ProjectOrbitalRing.Patches.Logic.ModifyUpgradeTech
         internal static void ModifyWreckageRecoveryUpgradeTechs()
         {
             TechProto techProto;
-            for (int i = 5301; i <= 5305; i++)
-            {
+            for (int i = 5301; i <= 5305; i++) {
                 techProto = LDB.techs.Select(i);
                 techProto.Name = "残骸回收分析";
                 techProto.Desc = "T残骸回收分析";
                 techProto.RefreshTranslation();
                 techProto.IconPath = "Assets/texpack/回收科技";
 
-                switch (i)
-                {
+                switch (i) {
                     case 5301:
                         techProto.Items = new int[] { 6001 };
                         techProto.ItemPoints = new int[] { 10 };
@@ -663,11 +635,9 @@ namespace ProjectOrbitalRing.Patches.Logic.ModifyUpgradeTech
         internal static void ModifyFleetUpgradeTechs()
         {
             TechProto techProto;
-            for (int i = 5401; i <= 5405; i++)
-            {
+            for (int i = 5401; i <= 5405; i++) {
                 techProto = LDB.techs.Select(i);
-                switch (i)
-                {
+                switch (i) {
                     case 5401:
                         techProto.Name = "太空舰队结构优化";
                         techProto.Desc = "T太空舰队结构优化";
@@ -739,11 +709,9 @@ namespace ProjectOrbitalRing.Patches.Logic.ModifyUpgradeTech
         internal static void ModifyUAVHPAndfiringRateUpgradeTechs()
         {
             TechProto techProto;
-            for (int i = 5601; i <= 5605; i++)
-            {
+            for (int i = 5601; i <= 5605; i++) {
                 techProto = LDB.techs.Select(i);
-                switch (i)
-                {
+                switch (i) {
                     case 5601:
                         techProto.Name = "机兵升级计划";
                         techProto.Desc = "T机兵升级计划";
@@ -804,14 +772,12 @@ namespace ProjectOrbitalRing.Patches.Logic.ModifyUpgradeTech
         internal static void ModifySpaceFormationExpansionUpgradeTechs()
         {
             TechProto techProto;
-            for (int i = 5901; i <= 5903; i++)
-            {
+            for (int i = 5901; i <= 5903; i++) {
                 techProto = LDB.techs.Select(i);
                 techProto.Items = new int[] { 6279, 6004, };
                 techProto.ItemPoints = new int[] { techProto.ItemPoints[0], techProto.ItemPoints[0] };
             }
-            for (int i = 5904; i <= 5905; i++)
-            {
+            for (int i = 5904; i <= 5905; i++) {
                 techProto = LDB.techs.Select(i);
                 techProto.Items = new int[] { 6279, 6004, 6005 };
                 techProto.ItemPoints = new int[] { techProto.ItemPoints[0], techProto.ItemPoints[0], techProto.ItemPoints[0] };
@@ -837,8 +803,7 @@ namespace ProjectOrbitalRing.Patches.Logic.ModifyUpgradeTech
         internal static void ModifyECMUpgradeTechs()
         {
             TechProto techProto;
-            for (int i = 6101; i <= 6106; i++)
-            {
+            for (int i = 6101; i <= 6106; i++) {
                 techProto = LDB.techs.Select(i);
                 techProto.UnlockFunctions = new int[] { };
             }
@@ -849,40 +814,25 @@ namespace ProjectOrbitalRing.Patches.Logic.ModifyUpgradeTech
         [HarmonyPostfix]
         public static void BeforeGameTickPatch(DysonSphere __instance)
         {
-            if (__instance.starData.type == EStarType.BlackHole)
-            {
-                if (!GameMain.history.TechUnlocked(1952))
-                {
-                    if (__instance.energyGenCurrentTick > 8000000)
-                    {
+            if (__instance.starData.type == EStarType.BlackHole) {
+                if (!GameMain.history.TechUnlocked(1952)) {
+                    if (__instance.energyGenCurrentTick > 8000000) {
                         GameMain.history.UnlockTech(1952);
                     }
-                }
-                else if (LDB.techs.Select(1934).IsHiddenTech == true)
-                {
-                    if (__instance.energyGenCurrentTick > 10000000)
-                    {
+                } else if (LDB.techs.Select(1934).IsHiddenTech == true) {
+                    if (__instance.energyGenCurrentTick > 10000000) {
                         LDB.techs.Select(1934).IsHiddenTech = false;
                     }
-                }
-                else if (LDB.techs.Select(1959).IsHiddenTech == true)
-                {
-                    if (__instance.energyGenCurrentTick > 10000000)
-                    {
+                } else if (LDB.techs.Select(1959).IsHiddenTech == true) {
+                    if (__instance.energyGenCurrentTick > 10000000) {
                         LDB.techs.Select(1959).IsHiddenTech = false;
                     }
-                }
-                else if (!GameMain.history.TechUnlocked(1960))
-                {
-                    if (__instance.energyGenCurrentTick > 40000000)
-                    {
+                } else if (!GameMain.history.TechUnlocked(1960)) {
+                    if (__instance.energyGenCurrentTick > 40000000) {
                         GameMain.history.UnlockTech(1960);
                     }
-                }
-                else if (!GameMain.history.TechUnlocked(1814))
-                {
-                    if (__instance.energyGenCurrentTick > 80000000)
-                    {
+                } else if (!GameMain.history.TechUnlocked(1814)) {
+                    if (__instance.energyGenCurrentTick > 80000000) {
                         GameMain.history.UnlockTech(1814);
                     }
                 }

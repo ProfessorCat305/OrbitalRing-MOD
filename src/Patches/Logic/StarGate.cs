@@ -422,6 +422,7 @@ namespace ProjectOrbitalRing.Patches.Logic
 
         internal static void Import(BinaryReader r)
         {
+            IntoOtherSave();
             try
             {
                 int count = 0;
@@ -435,6 +436,11 @@ namespace ProjectOrbitalRing.Patches.Logic
             {
                 // ignored
             }
+        }
+
+        internal static void IntoOtherSave()
+        {
+            starGateList.Clear();
         }
     }
 }

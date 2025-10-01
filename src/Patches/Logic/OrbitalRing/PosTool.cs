@@ -15,8 +15,7 @@ namespace ProjectOrbitalRing.Patches.Logic.OrbitalRing
 
         public static void InitializeMarkerAngles()
         {
-            for (int i = 0; i < 40; i++)
-            {
+            for (int i = 0; i < 40; i++) {
                 MarkerAngles[i] = (i * 9.0) % 360.0; // 每9度一个标记
             }
         }
@@ -27,12 +26,10 @@ namespace ProjectOrbitalRing.Patches.Logic.OrbitalRing
             double angle = (Math.Atan2(y, x) * 180.0 / Math.PI + 360.0) % 360.0;
 
             // 检查是否接近任意标记
-            for (int i = 0; i < MarkerAngles.Length; i++)
-            {
+            for (int i = 0; i < MarkerAngles.Length; i++) {
                 double diff = Math.Abs(angle - MarkerAngles[i]);
                 diff = Math.Min(diff, 360.0 - diff); // 处理环形差值
-                if (diff <= AngleTolerance)
-                {
+                if (diff <= AngleTolerance) {
                     return i;
                 }
             }
@@ -46,13 +43,11 @@ namespace ProjectOrbitalRing.Patches.Logic.OrbitalRing
             double angle = (Math.Atan2(vector.z, vector.x) * 180.0 / Math.PI + 360.0) % 360.0;
             double minDiff = double.MaxValue;
             double closest = 0;
-            foreach (double marker in MarkerAngles)
-            {
+            foreach (double marker in MarkerAngles) {
                 double diff = Math.Abs(angle - marker);
                 diff = Math.Min(diff, 360 - diff); // 环形差值处理
 
-                if (diff < minDiff)
-                {
+                if (diff < minDiff) {
                     minDiff = diff;
                     closest = marker;
                 }
@@ -74,8 +69,7 @@ namespace ProjectOrbitalRing.Patches.Logic.OrbitalRing
             double latitudeRad = Math.Asin(normalized.y);
             double latitudeDeg = latitudeRad * (180.0 / Math.PI);
             double border = 20 * 0.36 + 0.18;
-            if (-border <= latitudeDeg && latitudeDeg <= border)
-            {
+            if (-border <= latitudeDeg && latitudeDeg <= border) {
                 // 确定目标纬度方向（保持原始符号）
                 double targetLatDeg = Math.Sign(latitudeDeg) * 3.6;
                 double targetLatRad = targetLatDeg * Math.PI / 180;
@@ -95,8 +89,7 @@ namespace ProjectOrbitalRing.Patches.Logic.OrbitalRing
                 );
 
                 return (adjusted, true);
-            } else
-            {
+            } else {
                 return (vector, false);
             }
         }
@@ -109,12 +102,9 @@ namespace ProjectOrbitalRing.Patches.Logic.OrbitalRing
             // 计算纬度角度（使用asin直接获取极角）
             double latitudeRad = Math.Asin(normalized.y);
             double latitudeDeg = latitudeRad * (180.0 / Math.PI);
-            if (latitudeDeg >= 0)
-            {
+            if (latitudeDeg >= 0) {
                 ret = 0;
-            }
-            else
-            {
+            } else {
                 ret = 1;
             }
             latitudeDeg = Math.Abs(latitudeDeg);
@@ -124,12 +114,9 @@ namespace ProjectOrbitalRing.Patches.Logic.OrbitalRing
             double upper = 10 * 0.36 + 0.18;
 
             // 包含边界检查
-            if (latitudeDeg > lower && latitudeDeg < upper)
-            {
+            if (latitudeDeg > lower && latitudeDeg < upper) {
                 return ret;
-            }
-            else
-            {
+            } else {
                 return -1;
             }
         }
