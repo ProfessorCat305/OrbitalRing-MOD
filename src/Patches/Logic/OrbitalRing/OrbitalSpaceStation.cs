@@ -14,11 +14,13 @@ using static ProjectOrbitalRing.Patches.Logic.OrbitalRing.EquatorRing;
 using System.Reflection;
 using static ProjectOrbitalRing.ProjectOrbitalRing;
 using ProjectOrbitalRing.Utils;
+using System.Numerics;
 
 namespace ProjectOrbitalRing.Patches.Logic.OrbitalRing
 {
     internal class OrbitalSpaceStation
     {
+        // <planetId, HashSet<(ringIndex, position, isCore)>>
         private static Dictionary<int, HashSet<(int, int, bool)>> PreBuild = new Dictionary<int, HashSet<(int, int, bool)>>();
 
         [HarmonyPostfix]
@@ -425,8 +427,7 @@ namespace ProjectOrbitalRing.Patches.Logic.OrbitalRing
             for (int i = 0; i < count; i++) {
                 BuildPreview buildPreview = __instance.bpPool[i];
                 if (buildPreview.item == null) continue;
-                if (IsBuildingItemIdisOrbitalStation(buildPreview.item.ID, false) || IsBuildingItemIdisOrbitalCore(buildPreview.item.ID) || 
-                    buildPreview.item.ID == ProtoID.I轨道连接组件 || buildPreview.item.ID == ProtoID.I星环电网组件 || buildPreview.item.ID == ProtoID.I粒子加速轨道) {
+                if (IsBuildingItemIdisOrbitalStation(buildPreview.item.ID, false) || IsBuildingItemIdisOrbitalCore(buildPreview.item.ID)) {
                     if (buildPreview.condition == EBuildCondition.OutOfReach || buildPreview.condition == EBuildCondition.OutOfVerticalConstructionHeight ||
                         buildPreview.condition == EBuildCondition.NeedGround) {
                         buildPreview.condition = EBuildCondition.Ok;

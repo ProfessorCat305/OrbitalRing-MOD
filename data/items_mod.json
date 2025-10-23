@@ -3393,7 +3393,7 @@
         "Name": "星环护盾组件",
         "Description": "I星环护盾组件",
         "IconPath": "Icons/ItemRecipe/turret-shield",
-        "GridIndex": 2713,
+        "GridIndex": 2712,
         "StackSize": 10,
         "Type": 7,
         "PreTechOverride": 1,

@@ -1,5 +1,8 @@
 ﻿using HarmonyLib;
+using ProjectOrbitalRing.Patches.Logic.AddVein;
 using ProjectOrbitalRing.Utils;
+using System.Collections.Generic;
+using System.Reflection.Emit;
 using UnityEngine;
 using WinAPI;
 using static ProjectOrbitalRing.Patches.Logic.OrbitalRing.PosTool;
@@ -7,7 +10,7 @@ using static ProjectOrbitalRing.ProjectOrbitalRing;
 
 namespace ProjectOrbitalRing.Patches.Logic.OrbitalRing
 {
-    internal class OrbitalConnect
+    public static class OrbitalConnect
     {
         static Vector3 startPos = new Vector3(0, 0, 0);
         [HarmonyPostfix]
@@ -44,7 +47,7 @@ namespace ProjectOrbitalRing.Patches.Logic.OrbitalRing
                 BuildPreview preview = __instance.buildPreviews[i];
 
                 if (preview.item.ID == ProtoID.I轨道连接组件 || __instance.handItem.ID == ProtoID.I粒子加速轨道 || __instance.handItem.ID == ProtoID.I星环电网组件) {
-                    Vector3 pos = new Vector3(0,0,0);
+                    Vector3 pos = new Vector3(0, 0, 0);
                     if (preview.item.ID == ProtoID.I轨道连接组件) {
                         pos = BeltShouldBeAdsorb(preview.lpos, startPos, 0);
                     } else if (preview.item.ID == ProtoID.I粒子加速轨道) {
@@ -71,6 +74,234 @@ namespace ProjectOrbitalRing.Patches.Logic.OrbitalRing
 
             }
         }
+
+        public static bool isOrbitalBelt(BuildPreview buildPreview2)
+        {
+            int id = buildPreview2.item.ID;
+            switch (id) {
+                case ProtoID.I轨道连接组件:
+                case ProtoID.I粒子加速轨道:
+                case ProtoID.I星环电网组件:
+                    return true;
+            }
+            return false;
+        }
+
+        [HarmonyTranspiler]
+        [HarmonyPatch(typeof(BuildTool_BlueprintPaste), nameof(BuildTool_BlueprintPaste.CheckBuildConditions))]
+        public static IEnumerable<CodeInstruction> BuildTool_BlueprintPaste_CheckBuildConditions_Transpiler(IEnumerable<CodeInstruction> instructions)
+        {
+            var matcher = new CodeMatcher(instructions);
+            // 跳过蓝图轨道连接组件太高不造的判定
+            matcher.MatchForward(false, new CodeMatch(OpCodes.Ldloc_S), new CodeMatch(OpCodes.Ldloc_S),
+                new CodeMatch(OpCodes.Mul)
+                );
+            object IL_0ABA = matcher.Advance(3).Operand;
+            object V_9 = matcher.Advance(1).Operand;
+
+            matcher.Advance(-6).InsertAndAdvance(new CodeInstruction(OpCodes.Ldloc_S, V_9),
+                new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(OrbitalConnect), nameof(isOrbitalBelt))),
+                new CodeInstruction(OpCodes.Brtrue_S, IL_0ABA)
+            );
+            // ===============
+            // 跳过蓝图轨道设施碰撞检测的判定
+            matcher.MatchForward(false, new CodeMatch(OpCodes.Call, AccessTools.Method(typeof(BuildTool), nameof(BuildTool.GetPrefabDesc))));
+            object V_78 = matcher.Advance(1).Operand; // prefabDesc2变量索引
+            CodeMatcher matcher2 = matcher.Clone();
+            matcher2.MatchForward(false, new CodeMatch(OpCodes.Brtrue));
+            object IL_1A89 = matcher2.Operand; // prefabDesc2变量索引
+
+            matcher.Advance(1).InsertAndAdvance(
+                new CodeInstruction(OpCodes.Ldloc_S, V_78),
+                new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(OrbitalConnect), nameof(isCollideShouldIgnore)
+                )),
+                new CodeInstruction(OpCodes.Brtrue_S, IL_1A89)
+            );
+
+            matcher.MatchForward(false, new CodeMatch(OpCodes.Brfalse), new CodeMatch(OpCodes.Ldarg_0),
+                new CodeMatch(OpCodes.Ldloc_S),
+                new CodeMatch(OpCodes.Call, AccessTools.Method(typeof(BuildTool), nameof(BuildTool.GetPrefabDesc))));
+            object IL_1CE3 = matcher.Operand;
+            object V_116 = matcher.Advance(4).Operand; // prefabDesc2变量索引
+
+
+            matcher.Advance(1).InsertAndAdvance(
+                new CodeInstruction(OpCodes.Ldloc_S, V_9),
+                new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(OrbitalConnect), nameof(isCollideShouldIgnore)
+                )),
+                new CodeInstruction(OpCodes.Brtrue_S, IL_1CE3)
+            );
+
+            //matcher.MatchForward(false, new CodeMatch(OpCodes.Ldc_I4_2), new CodeMatch(OpCodes.Call),
+            //    new CodeMatch(OpCodes.Stloc_S), new CodeMatch(OpCodes.Ldloc_S), new CodeMatch(OpCodes.Ldc_I4_0));
+            //object IL_1E57 = matcher.Advance(5).Operand;
+
+
+            //matcher.Advance(-2).InsertAndAdvance(
+            //    new CodeInstruction(OpCodes.Ldloc_S, V_9),
+            //    new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(OrbitalConnect), nameof(isOrbitalBelt)
+            //    )),
+            //    new CodeInstruction(OpCodes.Brtrue_S, IL_1E57)
+            //);
+
+            matcher.MatchForward(false, new CodeMatch(OpCodes.Callvirt, AccessTools.Method(typeof(PlanetData), nameof(PlanetData.realRadius))),
+                new CodeMatch(OpCodes.Ldc_R4),
+                new CodeMatch(OpCodes.Add),
+                new CodeMatch(OpCodes.Bge_Un));
+            object IL_354F = matcher.Advance(3).Operand;
+            //object V_116 = matcher.Advance(4).Operand; // prefabDesc2变量索引
+
+
+            matcher.Advance(1).InsertAndAdvance(
+                new CodeInstruction(OpCodes.Ldloc_S, V_116),
+                new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(OrbitalConnect), nameof(isOrbitalBelt)
+                )),
+                new CodeInstruction(OpCodes.Brtrue_S, IL_354F)
+            );
+            //matcher.LogInstructionEnumeration();
+            return matcher.InstructionEnumeration();
+        }
+
+        public static bool isCollideShouldIgnore(PrefabDesc prefabDesc2)
+        {
+            int modelindex = prefabDesc2.modelIndex;
+            switch (modelindex) {
+                case ProtoID.M轨道熔炼站:
+                case ProtoID.M太空物流港:
+                case ProtoID.M天枢座:
+                case ProtoID.M太空船坞:
+                case ProtoID.M深空物流港:
+                case ProtoID.M轨道反物质堆基座:
+                case ProtoID.M轨道观测站:
+                case ProtoID.M星环对撞机:
+                    return true;
+            }
+            return false;
+        }
+
+        [HarmonyTranspiler]
+        [HarmonyPatch(typeof(BuildTool_Path), nameof(BuildTool_Path.CheckBuildConditions))]
+        public static IEnumerable<CodeInstruction> BuildTool_Path_CheckBuildConditions_Transpiler(IEnumerable<CodeInstruction> instructions)
+        {
+            var matcher = new CodeMatcher(instructions);
+
+            matcher.MatchForward(false, new CodeMatch(OpCodes.Br), new CodeMatch(OpCodes.Ldarg_0), new CodeMatch(OpCodes.Ldfld), new CodeMatch(OpCodes.Brfalse));
+            object label = matcher.Advance(3).Operand;
+            //matcher.Advance(-5).InsertAndAdvance(new CodeInstruction(OpCodes.Br_S, label));
+
+            matcher.Advance(12).InsertAndAdvance(new CodeInstruction(OpCodes.Br_S, label));
+
+            //matcher.Advance(10);
+
+            matcher.MatchForward(false, new CodeMatch(OpCodes.Add), new CodeMatch(OpCodes.Ldarg_0), new CodeMatch(OpCodes.Ldfld), new CodeMatch(OpCodes.Callvirt));
+
+            object label1 = matcher.Advance(11).Operand;
+
+            matcher.Advance(-5).InsertAndAdvance(new CodeInstruction(OpCodes.Br_S, label1));
+            // 上面两个修改解除传送带的高度受科技限制，为了适配小塔刚解锁时17层接口就可以用和轨道连接组件
+
+            // 下面修改是为了让轨道熔炼站等同步轨道设施不参与碰撞检测
+            matcher.MatchForward(false, new CodeMatch(OpCodes.Call, AccessTools.Method(typeof(BuildTool), nameof(BuildTool.GetPrefabDesc))),
+                new CodeMatch(OpCodes.Stloc_S));
+            object V_64 = matcher.Advance(1).Operand; // prefabDesc2变量索引
+            //CodeMatcher matcher2 = matcher.Clone();
+            //matcher2.MatchForward(false, new CodeMatch(OpCodes.Call, AccessTools.Method(typeof(BuildTool), nameof(BuildTool.GetObjectPose))));
+            //object V_67 = matcher2.Advance(3).Operand; // prefabDesc2变量索引
+
+            object IL_1001 = matcher.Advance(5).Operand; // IL_1001变量索引
+
+            matcher.Advance(-4);
+            matcher.InsertAndAdvance(
+                new CodeInstruction(OpCodes.Ldloc_S, V_64),
+                new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(OrbitalConnect), nameof(isCollideShouldIgnore)
+                //new System.Type[] {
+                //    typeof(PrefabDesc),
+                //}
+                )),
+                //new CodeInstruction(OpCodes.Stloc_S, V_67),
+                //new CodeInstruction(OpCodes.Ldloc_S, V_67),
+                new CodeInstruction(OpCodes.Brtrue_S, IL_1001)
+            );
+
+
+            return matcher.InstructionEnumeration();
+        }
+
+        public static bool xxx(BuildTool_Path instance, ref int num2)
+        {
+            int modelIndex = instance.GetPrefabDesc(num2).modelIndex;
+            if (instance.handItem.ID == ProtoID.I轨道连接组件) {
+                if (modelIndex != ProtoID.M轨道连接组件) {
+                    num2 = 0;
+                    return true;
+                }
+            } else if (instance.handItem.ID == ProtoID.I粒子加速轨道) {
+                if (modelIndex != ProtoID.M粒子加速轨道) {
+                    num2 = 0;
+                    return true;
+                }
+            } else if (instance.handItem.ID == ProtoID.I星环电网组件) {
+                if (modelIndex != ProtoID.M星环电网组件) {
+                    num2 = 0;
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        [HarmonyTranspiler]
+        [HarmonyPatch(typeof(BuildTool_Path), nameof(BuildTool_Path.UpdateRaycast))]
+        public static IEnumerable<CodeInstruction> BuildTool_Path_UpdateRaycast_Transpiler(IEnumerable<CodeInstruction> instructions)
+        {
+            var matcher = new CodeMatcher(instructions);
+
+            matcher.MatchForward(false, new CodeMatch(OpCodes.Ldelema), new CodeMatch(OpCodes.Ldfld), new CodeMatch(OpCodes.Stloc_S), new CodeMatch(OpCodes.Br));
+            object IL_0451 = matcher.Advance(-14).Operand;
+            object V_10 = matcher.Advance(16).Operand;
+            //matcher.Advance(-5).InsertAndAdvance(new CodeInstruction(OpCodes.Br_S, label));
+
+            matcher.Advance(1).InsertAndAdvance(
+                new CodeInstruction(OpCodes.Ldarg_0),
+                new CodeInstruction(OpCodes.Ldloca_S, V_10),
+                new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(OrbitalConnect), nameof(xxx),
+                    new System.Type[] {
+                        typeof(BuildTool_Path),
+                        typeof(int).MakeByRefType(),
+                    }
+                )),
+                new CodeInstruction(OpCodes.Brtrue_S, IL_0451)
+            );
+            matcher.LogInstructionEnumeration();
+            return matcher.InstructionEnumeration();
+        }
+
+        //[HarmonyPostfix]
+        //[HarmonyPatch(typeof(BuildTool_Path), "UpdateRaycast")]
+        //public static void UpdateRaycastPatch(BuildTool_Path __instance)
+        //{
+        //    bool flag = false;
+        //    if (__instance.castObject == false) {
+        //        return;
+        //    }
+        //    if (__instance.handItem.ID == ProtoID.I轨道连接组件) {
+        //        if (__instance.GetPrefabDesc(__instance.castObjectId).modelIndex != ProtoID.M轨道连接组件) {
+        //            flag = true;
+        //        }
+        //    } else if (__instance.handItem.ID == ProtoID.I粒子加速轨道) {
+        //        if (__instance.GetPrefabDesc(__instance.castObjectId).modelIndex != ProtoID.M粒子加速轨道) {
+        //            flag = true;
+        //        }
+        //    } else if (__instance.handItem.ID == ProtoID.I星环电网组件) {
+        //        if (__instance.GetPrefabDesc(__instance.castObjectId).modelIndex != ProtoID.M星环电网组件) {
+        //            flag = true;
+        //        }
+        //    }
+        //    if (flag) {
+        //        __instance.castObject = false;
+        //        __instance.castObjectId = 0;
+        //        __instance.castObjectPos = Vector3.zero;
+        //    }
+        //}
 
         [HarmonyPatch(typeof(PlanetTransport), nameof(PlanetTransport.SetStationStorage))]
         [HarmonyPostfix]

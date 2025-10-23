@@ -137,7 +137,7 @@ namespace ProjectOrbitalRing.Patches.Logic
                 for (int i = 0; i < __instance.buildPreviews.Count; i++)
                 {
                     BuildPreview buildPreview = __instance.buildPreviews[i];
-                    if (buildPreview.item.ID == 6281)
+                    if (buildPreview.item.ID == ProtoID.I超空间中继器基座)
                     {
                         buildPreview.condition = EBuildCondition.Failure;
                         __result = false;
@@ -165,7 +165,7 @@ namespace ProjectOrbitalRing.Patches.Logic
                         __instance.actionBuild.model.cursorText = "点击鼠标建造".Translate() + text;
                     }
                 }
-                if (buildPreview.item.ID == 6281)
+                if (buildPreview.item.ID == ProtoID.I超空间中继器基座)
                 {
                     if (buildPreview.lpos.y != 0)
                     {

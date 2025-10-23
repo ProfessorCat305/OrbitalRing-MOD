@@ -72,6 +72,7 @@ namespace ProjectOrbitalRing.Utils
                            I信息矩阵 = 6278,
                            I电磁矩阵 = 6279,
                            I奇点矩阵 = 6280,
+                           I超空间中继器基座 = 6281,
                            I燃油燃料棒 = 6217,
                            I轨道熔炼站 = 6501,
                            I轨道反物质堆基座 = 6506,
@@ -116,7 +117,7 @@ namespace ProjectOrbitalRing.Utils
                            R海水淡化 = 801;
 
         internal const int M物流立交 = 49,
-                           M星际物流运输站 = 50,
+                           M太空物流港 = 50,
                            M矩阵研究站 = 70,
                            M射线接收站 = 73,
                            M负熵熔炉 = 457,
