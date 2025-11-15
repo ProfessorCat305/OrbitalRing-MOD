@@ -19,7 +19,7 @@ namespace ProjectOrbitalRing.Utils
         Research = 15,
         高分子化工 = 16,
         所有化工 = 17, // 2 + 3 + 16 
-        复合制造 = 18, // 4 + 9
+        黑盒 = 18, // 4 + 9
         所有熔炉 = 19, // 1 + 11
     }
 }

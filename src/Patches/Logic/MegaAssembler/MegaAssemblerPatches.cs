@@ -125,6 +125,12 @@ namespace ProjectOrbitalRing.Patches.Logic.MegaAssembler
                 ShareStorageForOrbitalAssembler(ref __instance, factory.factorySystem);
                 OrbitalAssemblerInternalUpdate(ref __instance, factory.planetId);
             }
+            if (buildIngItemId == ProtoID.I轨道熔炼站) {
+                CheckRecipeCount(ref __instance, false);
+            }
+            if (buildIngItemId == ProtoID.I星环对撞机) {
+                CheckRecipeCount(ref __instance, factory.planet.radius == 100f);
+            }
 
             bool b = power >= 0.1f;
 
@@ -175,11 +181,11 @@ namespace ProjectOrbitalRing.Patches.Logic.MegaAssembler
             {
                 flag = true;
             }
-            if (factory.entityPool[__instance.entityId].protoId == 6501 && __instance.replicating)
-            {
-                if (__instance.recipeId == 66 || __instance.recipeId == 37 || __instance.recipeId == 62)
-                    flag = true;
-            }
+            //if (factory.entityPool[__instance.entityId].protoId == 6501 && __instance.replicating)
+            //{
+            //    if (__instance.recipeId == 66 || __instance.recipeId == 37 || __instance.recipeId == 62)
+            //        flag = true;
+            //}
 
             if (flag)
             {

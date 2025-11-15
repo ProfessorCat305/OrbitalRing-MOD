@@ -485,12 +485,12 @@ namespace ProjectOrbitalRing.Compatibility
 
             if (theme.GasItems[0] == ProtoID.I可燃冰 && theme.GasItems[1] == ProtoID.I氢)
             {
-                theme.GasItems = new[] { ProtoID.I可燃冰, ProtoID.I氢, ProtoID.I氨, };
+                theme.GasItems = new[] { ProtoID.I可燃冰, ProtoID.I氢, ProtoID.I气云, };
                 theme.GasSpeeds = new float[] { theme.GasSpeeds[0], theme.GasSpeeds[1], theme.GasSpeeds[1] * 0.7f, };
             }
             else if (theme.GasItems[0] == ProtoID.I氢 && theme.GasItems[1] == ProtoID.I重氢)
             {
-                theme.GasItems = new[] { ProtoID.I氢, ProtoID.I重氢, ProtoID.I氦, };
+                theme.GasItems = new[] { ProtoID.I氢, ProtoID.I重氢, ProtoID.I气云, };
                 theme.GasSpeeds = new float[] { theme.GasSpeeds[0], theme.GasSpeeds[1], theme.GasSpeeds[1] * 0.5f, };
             }
         }

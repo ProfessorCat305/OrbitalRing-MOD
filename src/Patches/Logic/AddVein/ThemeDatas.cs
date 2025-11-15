@@ -19,17 +19,17 @@ namespace ProjectOrbitalRing.Patches.Logic.AddVein
             //8 金伯利
             //9 莫桑石
             //10 有机
-            //11 光栅
+            //11 光栅 12
             //12 刺笋
             //13 单极磁石
-            //14 石墨
-            //15 深层岩浆
+            //14 辉银矿 15
+            //15 深层岩浆 16
             //16 铀 17
             //17 黄铁 18
             //18 冰 19
             {
                 1, // 地中海
-                new ThemeData(new[] { 1, 14 }, new[] { 5, 2 }, new[] { 0.5f, 0.2f }, new[] { 0.4f, 1.0f },
+                new ThemeData(new[] { 1, 14 }, new[] { 5, 6 }, new[] { 0.5f, 0.3f }, new[] { 0.4f, 0.1f },
                     Array.Empty<int>(), Array.Empty<float>(), new[] { 18 }, new[]
                 {
                     1.0f, 1.0f, 0.67f, 0.3f
@@ -37,10 +37,11 @@ namespace ProjectOrbitalRing.Patches.Logic.AddVein
             },
             {
                 6, // 干旱荒漠
-                new ThemeData(new[] { 0, 2, 5, 14, }, new[] { 8, 14, 0, 2, }, new[] { 0.7f, 0.5f, 0, 0.3f, }, new[] { 0.6f, 1.0f, 0, 0.3f, },
-                    Array.Empty<int>(), Array.Empty<float>(), new[] { 12, 17, 18, 19 }, new[]
+                new ThemeData(new[] { 0, 2, 5, }, new[] { 8, 14, 0, }, new[] { 0.7f, 0.5f, 0, }, new[] { 0.3f, 0.7f, 0,},
+                    Array.Empty<int>(), Array.Empty<float>(), new[] { 12, 15, 17, 18, 19 }, new[]
                 {
                     0.0f, 0.3f, 0.3f, 0.15f,
+                    0.0f, 0.2f, 0.4f, 0.4f,
                     0.0f, 0.15f, 0.88f, 0.1f,
                     0.0f, 0.2f, 0.75f, 0.3f,
                     0.0f, 0.1f, 0.75f, 0.4f, //
@@ -48,12 +49,13 @@ namespace ProjectOrbitalRing.Patches.Logic.AddVein
             },
             {
                 7, // 灰烬冻土
-                new ThemeData(new[] { 1, 2, 5, 14 }, new[] { 6, 8, 0, 2 }, new[] { 0.4f, 0.5f, 0, 0.3f }, new[] { 0.6f, 0.3f, 0, 0.3f },
+                new ThemeData(new[] { 1, 2, 5 }, new[] { 6, 8, 0, 4 }, new[] { 0.4f, 0.5f, 0, 0.3f }, new[] { 0.6f, 0.3f, 0, 0.1f },
                     new[] { 0 }, new[]
                 {
                     1.0f, 0.5f, 0.7f, 0.5f,
-                }, new[] { 17, 18, 19 }, new[]
+                }, new[] { 15, 17, 18, 19 }, new[]
                 {
+                    0.0f, 0.3f, 0.6f, 0.2f,
                     1.0f, 0.4f, 0.8f, 0.2f,
                     1.0f, 0.3f, 0.83f, 0.2f, //
                     1.0f, 0.6f, 0.75f, 0.7f, //
@@ -61,29 +63,31 @@ namespace ProjectOrbitalRing.Patches.Logic.AddVein
             },
             {
                 8, // 海洋丛林
-                new ThemeData(new[] { 0, 1, 2, 3, 4, 14 }, new[] { 6, 6, 5, 6, 8, 2 }, new[] { 0.1f, 0.5f, 0.2f, 0.1f, 0.6f, 0.2f }, new[] { 0.6f, 0.6f, 0.6f, 0.6f, 0.5f, 1.0f },
-                    Array.Empty<int>(), Array.Empty<float>(), new[] { 17, 18, }, new[]
+                new ThemeData(new[] { 0, 1, 2, 3, 4 }, new[] { 6, 6, 5, 6, 8 }, new[] { 0.3f, 0.5f, 0.2f, 0.3f, 0.6f }, new[] { 0.3f, 0.3f, 0.3f, 0.2f, 0.5f },
+                    Array.Empty<int>(), Array.Empty<float>(), new[] { 15, 17, 18, }, new[]
                 {
+                    0.0f, 0.2f, 0.5f, 0.3f, //
                     0.0f, 0.2f, 0.8f, 0.1f,
-                    0.0f, 0.4f, 0.8f, 0.2f, //
+                    0.0f, 0.8f, 0.6f, 0.4f, //
                 })
             },
             {
                 9, // 熔岩
-                new ThemeData(new[] { 0, 1, 2, 3, 5, 14, 15 }, new[] { 2, 2, 3, 6, 0, 6, 22 }, new[] { 0.2f, 0.2f, 0.3f, 0.4f, 0, 0.3f, 1.0f }, new[] { 0.6f, 0.6f, 0.6f, 0.7f, 0, 0.3f, 1.0f },
+                new ThemeData(new[] { 0, 1, 2, 3, 5, 15 }, new[] { 2, 2, 3, 6, 0, 22 }, new[] { 0.2f, 0.2f, 0.3f, 0.4f, 0, 1.0f }, new[] { 0.6f, 0.6f, 0.6f, 0.7f, 0, 1.0f },
                     new[] { 0, 1, }, new[]
                 {
                     0.0f, 0.5f, 0.8f, 0.3f,
                     0.0f, 0.8f, 0.6f, 0.7f,
-                }, new[] { 17, 18, }, new[]
+                }, new[] { 15, 17, 18, }, new[]
                 {
+                    1.0f, 0.3f, 0.7f, 0.2f,
                     1.0f, 1.0f, 1.0f, 0.2f, //
                     1.0f, 0.8f, 0.5f, 0.5f, //
                 })
             },
             {
                 10, // 冰原冻土
-                new ThemeData(new[] { 0, 1, 4, 5, 14 }, new[] { 7, 6, 4, 0, 4 }, new[] { 1f, 0.5f, 0.6f, 0, 0.3f }, new[] { 1f, 0.5f, 1f, 0, 0.3f },
+                new ThemeData(new[] { 0, 1, 4, 5, 14 }, new[] { 7, 6, 4, 0, 4 }, new[] { 1f, 0.5f, 0.6f, 0, 0.4f }, new[] { 1f, 0.5f, 1f, 0, 0.3f },
                     new[] { 0 }, new[]
                 {
                     1.0f, 1f, 0.9f, 0.3f,
@@ -97,7 +101,7 @@ namespace ProjectOrbitalRing.Patches.Logic.AddVein
             },
             {
                 11, // 贫瘠荒漠
-                new ThemeData(new[] { 3, 14 }, new[] { 9, 2 }, new[] { 0.1f, 0.3f }, new[] { 0.9f, 0.3f },
+                new ThemeData(new[] { 2, 3 }, new[] { 6, 4 }, new[] { 0.25f, 0.2f }, new[] { 0.4f, 0.7f },
                     new[] { 1 }, new[]
                 {
                     0.0f, 0.0f, 0.0f, 0.0f,
@@ -109,7 +113,7 @@ namespace ProjectOrbitalRing.Patches.Logic.AddVein
             },
             {
                 12, // 戈壁
-                new ThemeData(new[] { 0, 3, 5, 14, 15 }, new[] { 7, 4, 0, 3, 12 }, new[] { 0.4f, 0.4f, 0, 0.7f, 1.0f }, new[] { 0.8f, 1f, 0, 0.7f, 0.9f },
+                new ThemeData(new[] { 0, 3, 5, 14, 15 }, new[] { 7, 4, 0, 6, 12 }, new[] { 0.4f, 0.4f, 0, 0.6f, 1.0f }, new[] { 0.4f, 0.6f, 0, 0.6f, 0.9f },
                     new[] { 0 }, new[]
                 {
                     0.0f, 0.8f, 0.6f, 0.6f,
@@ -122,7 +126,7 @@ namespace ProjectOrbitalRing.Patches.Logic.AddVein
             },
             {
                 13, // 火山灰
-                new ThemeData(new[] { 2, 3, 5, 14, 15 }, new[] { 10, 5, 0, 6, 18 }, new[] { 0.6f, 0.5f, 0, 0.5f, 1.0f }, new[] { 0.6f, 0.6f, 0, 0.3f, 1.0f },
+                new ThemeData(new[] { 2, 3, 5, 14, 15 }, new[] { 10, 5, 0, 8, 18 }, new[] { 0.6f, 0.5f, 0, 0.5f, 1.0f }, new[] { 0.6f, 0.6f, 0, 0.7f, 1.0f },
                     Array.Empty<int>(), Array.Empty<float>(), new[] { 9, 17, 18}, new[]
                 {
                     0.0f, 1.0f, 0.6f, 0.4f, //
@@ -132,7 +136,7 @@ namespace ProjectOrbitalRing.Patches.Logic.AddVein
             },
             {
                 14, // 红石
-                new ThemeData(new[] { 0, 1, 2, 3, 14 }, new[] { 8, 5, 6, 4, 4 }, new[] { 0.75f, 0.2f, 0.1f, 0.2f, 0.1f }, new[] { 0.5f, 0.6f, 0.3f, 0.6f, 1.0f },
+                new ThemeData(new[] { 0, 1, 2, 3, 14 }, new[] { 8, 5, 6, 4, 4 }, new[] { 0.75f, 0.2f, 0.1f, 0.2f, 0.5f }, new[] { 0.5f, 0.6f, 0.3f, 0.6f, 0.3f },
                     new[] { 0 }, new[]
                 {
                     0.0f, 0.3f, 0.6f, 0.1f,
@@ -144,7 +148,7 @@ namespace ProjectOrbitalRing.Patches.Logic.AddVein
             },
             {
                 15, // 草原
-                new ThemeData(new[] { 1, 2, 3, 4, 14 }, new[] { 6, 4, 2, 4, 5 }, new[] { 0.15f, 0.3f, 0.6f, 0.5f, 0.2f }, new[] { 0.5f, 0.6f, 0.5f, 0.7f, 1f },
+                new ThemeData(new[] { 1, 2, 3, 4, 14 }, new[] { 6, 4, 2, 4, 5 }, new[] { 0.15f, 0.3f, 0.6f, 0.5f, 0.3f }, new[] { 0.5f, 0.6f, 0.5f, 0.7f, 0.3f },
                     Array.Empty<int>(), Array.Empty<float>(), new[] { 17, 18, }, new[]
                 {
                     0.0f, 0.25f, 0.75f, 0.5f, //
@@ -161,15 +165,16 @@ namespace ProjectOrbitalRing.Patches.Logic.AddVein
             },
             {
                 17, // 黑石盐滩
-                new ThemeData(new[] { 3, 5, 14}, new[] { 2, 3, 8 }, new[] { 0.2f, 0.1f, 0.1f }, new[] { 0.3f, 0.3f, 1.0f },
-                    Array.Empty<int>(), Array.Empty<float>(), new[] { 17, }, new[]
+                new ThemeData(new[] { 3, 5}, new[] { 2, 3 }, new[] { 0.2f, 0.1f }, new[] { 0.3f, 0.3f },
+                    Array.Empty<int>(), Array.Empty<float>(), new[] { 15, 17, }, new[]
                 {
+                    0.0f, 0.2f, 0.75f, 0.2f, //
                     0.0f, 0.2f, 0.75f, 0.2f, //
                 })
             },
             {
                 18, // 樱林海
-                new ThemeData(new[] { 1, 2, 3, 4, 14 }, new[] { 6, 3, 5, 5, 2 }, new[] { 0.1f, 0.3f, 0.5f, 0.8f, 0.2f }, new[] { 0.6f, 0.6f, 0.6f, 0.5f, 0.8f },
+                new ThemeData(new[] { 1, 2, 3, 4, 14 }, new[] { 6, 3, 5, 5, 3 }, new[] { 0.1f, 0.3f, 0.5f, 0.8f, 0.3f }, new[] { 0.6f, 0.6f, 0.6f, 0.5f, 0.2f },
                     Array.Empty<int>(), Array.Empty<float>(), new[] { 17, 18 }, new[]
                 {
                     0.0f, 0.1f, 0.6f, 0.2f, //
@@ -178,7 +183,7 @@ namespace ProjectOrbitalRing.Patches.Logic.AddVein
             },
             {
                 19, // 飓风石林
-                new ThemeData(new[] { 5, 14 }, new[] { 5, 1 }, new[] { 0.1f, 0.3f }, new[] { 0.3f, 0.2f },
+                new ThemeData(new[] { 5, 14 }, new[] { 5, 3 }, new[] { 0.1f, 0.3f }, new[] { 0.3f, 0.1f },
                     Array.Empty<int>(), Array.Empty<float>(), new[] { 17, 18, 19 }, new[]
                 {
                     0.0f, 0.3f, 0.85f, 0.1f, //
@@ -188,13 +193,14 @@ namespace ProjectOrbitalRing.Patches.Logic.AddVein
             },
             {
                 20, // 猩红冰湖
-                new ThemeData(new[] { 0, 1, 3, 14 }, new[] { 11, 5, 8, 2 }, new[] { 1f, 0.8f, 0.3f, 0.2f }, new[] { 1f, 1f, 1f, 0.2f },
+                new ThemeData(new[] { 0, 1, 3 }, new[] { 11, 5, 8 }, new[] { 1f, 0.8f, 0.3f }, new[] { 1f, 1f, 1f },
                     new[] { 0, 1 }, new[]
                 {
                     1.0f, 1f, 0.6f, 0.7f,
                     0.0f, 0.0f, 0.0f, 0.0f,
-                },  new[] { 17, 18, 19 }, new[]
+                },  new[] { 15, 17, 18, 19 }, new[]
                 {
+                    1.0f, 0.2f, 0.5f, 0.2f,
                     1.0f, 0.5f, 0.8f, 0.3f, //
                     1.0f, 0.7f, 0.8f, 0.4f, //
                     1.0f, 0.6f, 1.0f, 1.0f, //
@@ -202,7 +208,7 @@ namespace ProjectOrbitalRing.Patches.Logic.AddVein
             },
             {
                 22, // 热带草原
-                new ThemeData(new[] { 1, 2, 3, 4, 14 }, new[] { 5, 4, 3, 4, 3 }, new[] { 0.2f, 0.5f, 0.6f, 0.7f, 0.2f }, new[] { 0.6f, 0.8f, 0.7f, 1.0f, 1.0f },
+                new ThemeData(new[] { 1, 2, 3, 4, 14 }, new[] { 5, 4, 3, 4, 4 }, new[] { 0.2f, 0.5f, 0.6f, 0.7f, 0.4f }, new[] { 0.6f, 0.8f, 0.7f, 1.0f, 0.2f },
                     Array.Empty<int>(), Array.Empty<float>(), new[] { 17, 18, }, new[]
                 {
                     0.0f, 0.2f, 0.6f, 0.2f, //
@@ -211,7 +217,7 @@ namespace ProjectOrbitalRing.Patches.Logic.AddVein
             },
             {
                 23, // 橙晶荒漠
-                new ThemeData(new[] { 0, 1, 2, 4, 5, 14 }, new[] { 3, 7, 6, 4, 0, 2 }, new[] { 0.2f, 0.6f, 0.6f, 0.5f, 0, 0.6f }, new[] { 0.4f, 0.8f, 0.6f, 0.6f, 0, 0.5f },
+                new ThemeData(new[] { 0, 1, 2, 3, 4, 5, 14 }, new[] { 3, 7, 6, 4, 4, 0, 3 }, new[] { 0.2f, 0.6f, 0.6f, 0.7f, 0.5f, 0, 0.5f }, new[] { 0.4f, 0.8f, 0.6f, 0.5f, 0.6f, 0, 0.5f },
                     Array.Empty<int>(), Array.Empty<float>(), new[] { 17, 18, 19 }, new[]
                 {
                     0.0f, 0.8f, 0.83f, 1.0f, //
@@ -221,8 +227,9 @@ namespace ProjectOrbitalRing.Patches.Logic.AddVein
             },
             {
                 24, // 极寒冻土
-                new ThemeData(new[] { 1, 4, 5, 14, }, new[] { 6, 4, 0, 2, }, new[] { 0.4f, 0.4f, 0, 0.3f, }, new[] { 0.8f, 0.4f, 0, 0.3f, },
+                new ThemeData(new[] { 1, 4, 5, }, new[] { 6, 4, 0, }, new[] { 0.4f, 0.4f, 0, }, new[] { 0.8f, 0.4f, 0, },
                     new[] { 0, 1 }, new[]
+
                 {
                     1.0f, 1.0f, 0.8f, 1.0f,
                     0.0f, 0.0f, 0.0f, 0.0f,
@@ -235,7 +242,7 @@ namespace ProjectOrbitalRing.Patches.Logic.AddVein
             },
             {
                 25, // 潘多拉沼泽
-                new ThemeData(new[] { 0, 2, 3, 14 }, new[] { 5, 4, 3, 5 }, new[] { 0.3f, 0.1f, 0.3f, 0.1f }, new[] { 0.7f, 0.8f, 1f, 0.8f },
+                new ThemeData(new[] { 0, 2, 3, 14 }, new[] { 5, 4, 3, 4 }, new[] { 0.3f, 0.1f, 0.3f, 0.3f }, new[] { 0.7f, 0.8f, 1f, 0.4f },
                     Array.Empty<int>(), Array.Empty<float>(), new[] { 17, 18, 19 }, new[]
                 {
                     0.0f, 0.2f, 0.85f, 0.1f, //

@@ -78,6 +78,8 @@ namespace ProjectOrbitalRing.Compatibility
 
                     case 536: //量子服务集群
                         recipeProto.Items[0] = 7805; // 量子芯片换成量子计算机
+                        recipeProto.Items[1] = 7019; // 粒子宽带换成高速连接器
+                        recipeProto.ItemCounts[1] = 8;
                         break;
 
                     case 538: //物质解压器运载火箭

@@ -19,6 +19,8 @@ namespace ProjectOrbitalRing.Patches.Logic.OrbitalRing
                 __result = "同步轨道核心设施只能建设在对应基座上".Translate();
             } else if (_condition == (EBuildCondition)97) {
                 __result = "一个星环只能建造一座星环对撞机总控站".Translate();
+            } else if (_condition == (EBuildCondition)96) {
+                __result = "电磁轨道弹射器只能建造在无大气星球".Translate();
             }
         }
     }

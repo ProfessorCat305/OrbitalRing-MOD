@@ -60,7 +60,7 @@ namespace ProjectOrbitalRing.Patches.Logic.OrbitalRing
         public static void PlanetATField_UpdateGeneratorMatrix_Postfix(PlanetATField __instance)
         {
             bool flag = false;
-            OrbitalStationManager.Instance.AddPlanetId(__instance.planet.id);
+            OrbitalStationManager.Instance.AddPlanetId(__instance.planet.id, __instance.planet.radius == 100f);
             var planetOrbitalRingData = OrbitalStationManager.Instance.GetPlanetOrbitalRingData(__instance.planet.id);
             if (planetOrbitalRingData != null) {
                 for (int i = 0; i < planetOrbitalRingData.Rings.Count; i++) {

@@ -21,10 +21,13 @@
             2,
             3,
             501,
+            502,
+            514,
             6,
             17,
-            404,
-            429
+            429,
+            714,
+            787
         ],
         "UnlockFunctions": [],
         "UnlockValues": [],
@@ -104,7 +107,7 @@
         "PreTechsImplicit": [],
         "Items": [
             1202,
-            1301
+            1302
         ],
         "ItemPoints": [
             20,
@@ -163,7 +166,8 @@
         "UnlockRecipes": [
             11,
             12,
-            13
+            13,
+            830
         ],
         "UnlockFunctions": [],
         "UnlockValues": [],
@@ -192,11 +196,10 @@
             -32.0
         ],
         "PreTechs": [
-            1101
-        ],
-        "PreTechsImplicit": [
+            1101,
             1120
         ],
+        "PreTechsImplicit": [],
         "Items": [
             6001
         ],
@@ -546,7 +549,7 @@
             22,
             24,
             702,
-            712,
+            711,
             703,
             410
         ],
@@ -632,7 +635,7 @@
         ],
         "HashNeeded": 216000,
         "UnlockRecipes": [
-            714
+            712
         ],
         "UnlockFunctions": [],
         "UnlockValues": [],
@@ -782,15 +785,13 @@
         "IsHiddenTech": false,
         "PreItem": null,
         "Position": [
-            28.0,
+            32.0,
             -32.0
         ],
         "PreTechs": [
-            1932
+            1937
         ],
-        "PreTechsImplicit": [
-            1932
-        ],
+        "PreTechsImplicit": [],
         "Items": [
             6001,
             6002
@@ -965,7 +966,8 @@
             -12.0
         ],
         "PreTechs": [
-            1926
+            1926,
+            1133
         ],
         "PreTechsImplicit": [],
         "Items": [
@@ -1316,7 +1318,7 @@
             1101
         ],
         "Items": [
-            1301,
+            1302,
             1401
         ],
         "ItemPoints": [
@@ -1415,7 +1417,8 @@
         "HashNeeded": 288000,
         "UnlockRecipes": [
             47,
-            26
+            26,
+            710
         ],
         "UnlockFunctions": [],
         "UnlockValues": [],
@@ -1459,7 +1462,7 @@
         ],
         "HashNeeded": 288000,
         "UnlockRecipes": [
-            51
+            519
         ],
         "UnlockFunctions": [],
         "UnlockValues": [],
@@ -1502,6 +1505,7 @@
         "HashNeeded": 288000,
         "UnlockRecipes": [
             795,
+            796,
             533,
             536
         ],
@@ -1635,7 +1639,7 @@
         ],
         "HashNeeded": 108000,
         "UnlockRecipes": [
-            53
+            51
         ],
         "UnlockFunctions": [],
         "UnlockValues": [],
@@ -1711,7 +1715,7 @@
         "PreTechsImplicit": [],
         "Items": [
             1202,
-            1301
+            1302
         ],
         "ItemPoints": [
             20,
@@ -1939,10 +1943,9 @@
         "ItemPoints": [
             10
         ],
-        "HashNeeded": 43200,
+        "HashNeeded": 18000,
         "UnlockRecipes": [
             5,
-            826,
             63
         ],
         "UnlockFunctions": [
@@ -2190,7 +2193,7 @@
             -4.0
         ],
         "PreTechs": [
-            1414
+            1954
         ],
         "PreTechsImplicit": [],
         "Items": [
@@ -2331,8 +2334,7 @@
         ],
         "HashNeeded": 72000,
         "UnlockRecipes": [
-            68,
-            69
+            68
         ],
         "UnlockFunctions": [],
         "UnlockValues": [],
@@ -2372,8 +2374,9 @@
         ],
         "HashNeeded": 108000,
         "UnlockRecipes": [
+            71,
             70,
-            71
+            503
         ],
         "UnlockFunctions": [],
         "UnlockValues": [],
@@ -3016,7 +3019,7 @@
         ],
         "PreTechsImplicit": [],
         "Items": [
-            1301,
+            1302,
             1101
         ],
         "ItemPoints": [
@@ -5002,7 +5005,7 @@
         "HashNeeded": 60000,
         "UnlockRecipes": [
             156,
-            716
+            713
         ],
         "UnlockFunctions": [],
         "UnlockValues": [],
@@ -5103,6 +5106,86 @@
         "PropertyItemCounts": []
     },
     {
+        "ID": 1913,
+        "Name": "半导体晶体管",
+        "IconPath": "Assets/texpack/玻璃科技",
+        "Desc": "T半导体晶体管",
+        "Conclusion": "T半导体晶体管",
+        "IsHiddenTech": false,
+        "PreItem": null,
+        "Position": [
+            16.0,
+            -16.0
+        ],
+        "PreTechs": [
+            1402
+        ],
+        "PreTechsImplicit": [],
+        "Items": [
+            6001
+        ],
+        "ItemPoints": [
+            10
+        ],
+        "HashNeeded": 43200,
+        "UnlockRecipes": [
+            53
+        ],
+        "UnlockFunctions": [],
+        "UnlockValues": [],
+        "Published": true,
+        "Level": 0,
+        "MaxLevel": 0,
+        "LevelCoef1": 0,
+        "LevelCoef2": 0,
+        "IsLabTech": true,
+        "PreTechsMax": false,
+        "AddItems": [],
+        "AddItemCounts": [],
+        "PropertyOverrideItems": [],
+        "PropertyItemCounts": []
+    },
+    {
+        "ID": 1914,
+        "Name": "电路板",
+        "IconPath": "Assets/texpack/玻璃科技",
+        "Desc": "T电路板",
+        "Conclusion": "T电路板",
+        "IsHiddenTech": false,
+        "PreItem": null,
+        "Position": [
+            16.0,
+            12.0
+        ],
+        "PreTechs": [
+            1201
+        ],
+        "PreTechsImplicit": [],
+        "Items": [
+            6001
+        ],
+        "ItemPoints": [
+            10
+        ],
+        "HashNeeded": 28800,
+        "UnlockRecipes": [
+            822
+        ],
+        "UnlockFunctions": [],
+        "UnlockValues": [],
+        "Published": true,
+        "Level": 0,
+        "MaxLevel": 0,
+        "LevelCoef1": 0,
+        "LevelCoef2": 0,
+        "IsLabTech": true,
+        "PreTechsMax": false,
+        "AddItems": [],
+        "AddItemCounts": [],
+        "PropertyOverrideItems": [],
+        "PropertyItemCounts": []
+    },
+    {
         "ID": 1915,
         "Name": "T航空物流",
         "IconPath": "Icons/Tech/1102",
@@ -5171,6 +5254,47 @@
         "HashNeeded": 288000,
         "UnlockRecipes": [
             789
+        ],
+        "UnlockFunctions": [],
+        "UnlockValues": [],
+        "Published": true,
+        "Level": 0,
+        "MaxLevel": 0,
+        "LevelCoef1": 0,
+        "LevelCoef2": 0,
+        "IsLabTech": true,
+        "PreTechsMax": false,
+        "AddItems": [],
+        "AddItemCounts": [],
+        "PropertyOverrideItems": [],
+        "PropertyItemCounts": []
+    },
+    {
+        "ID": 1917,
+        "Name": "速生林",
+        "IconPath": "Assets/texpack/反物质飞弹",
+        "Desc": "T速生林",
+        "Conclusion": "T速生林",
+        "IsHiddenTech": false,
+        "PreItem": null,
+        "Position": [
+            20.0,
+            -44.0
+        ],
+        "PreTechs": [
+            1931
+        ],
+        "PreTechsImplicit": [],
+        "Items": [
+            6001
+        ],
+        "ItemPoints": [
+            10
+        ],
+        "HashNeeded": 18000,
+        "UnlockRecipes": [
+            517,
+            518
         ],
         "UnlockFunctions": [],
         "UnlockValues": [],
@@ -5485,10 +5609,10 @@
     },
     {
         "ID": 1926,
-        "Name": "T主板（金属封装）",
+        "Name": "多板架构",
         "IconPath": "Icons/Tech/1302",
-        "Desc": "T主板（金属封装）描述",
-        "Conclusion": "T主板（金属封装）描述",
+        "Desc": "T多板架构",
+        "Conclusion": "T多板架构",
         "IsHiddenTech": false,
         "PreItem": null,
         "Position": [
@@ -5496,11 +5620,10 @@
             -12.0
         ],
         "PreTechs": [
-            1302
+            1302,
+            1971
         ],
-        "PreTechsImplicit": [
-            1413
-        ],
+        "PreTechsImplicit": [],
         "Items": [
             6003,
             6278
@@ -5511,7 +5634,7 @@
         ],
         "HashNeeded": 72000,
         "UnlockRecipes": [
-            519
+            427
         ],
         "UnlockFunctions": [],
         "UnlockValues": [],
@@ -5705,27 +5828,24 @@
         "IsHiddenTech": false,
         "PreItem": null,
         "Position": [
-            28.0,
+            16.0,
             -44.0
         ],
-        "PreTechs": [],
-        "PreTechsImplicit": [
-            1111
+        "PreTechs": [
+            1120
         ],
+        "PreTechsImplicit": [],
         "Items": [
-            6001,
-            6002
+            6001
         ],
         "ItemPoints": [
-            15,
             10
         ],
-        "HashNeeded": 72000,
+        "HashNeeded": 36000,
         "UnlockRecipes": [
             423,
             512,
-            550,
-            509
+            513
         ],
         "UnlockFunctions": [],
         "UnlockValues": [],
@@ -5750,7 +5870,7 @@
         "IsHiddenTech": false,
         "PreItem": null,
         "Position": [
-            24.0,
+            20.0,
             -32.0
         ],
         "PreTechs": [
@@ -5952,33 +6072,32 @@
     },
     {
         "ID": 1937,
-        "Name": "碳元素解离",
+        "Name": "润滑油",
         "IconPath": "Assets/texpack/护盾载波调制",
-        "Desc": "T碳元素解离",
-        "Conclusion": "T碳元素解离",
+        "Desc": "T润滑油",
+        "Conclusion": "T润滑油",
         "IsHiddenTech": false,
         "PreItem": null,
         "Position": [
-            72.0,
-            24.0
+            24.0,
+            -32.0
         ],
         "PreTechs": [
-            1967
+            1932
         ],
         "PreTechsImplicit": [],
         "Items": [
-            6279,
-            6004,
-            6005
+            6001,
+            6002
         ],
         "ItemPoints": [
             6,
-            10,
-            4
+            10
         ],
-        "HashNeeded": 288000,
+        "HashNeeded": 54000,
         "UnlockRecipes": [
-            710
+            831,
+            428
         ],
         "UnlockFunctions": [],
         "UnlockValues": [],
@@ -6021,6 +6140,7 @@
         "HashNeeded": 720000,
         "UnlockRecipes": [
             522,
+            718,
             642
         ],
         "UnlockFunctions": [],
@@ -6161,49 +6281,8 @@
         "PropertyOverrideItems": [],
         "PropertyItemCounts": []
     },
-    {
-        "ID": 1942,
-        "Name": "T生物塑料合成",
-        "IconPath": "Icons/Tech/1122",
-        "Desc": "T生物塑料合成描述",
-        "Conclusion": "T生物塑料合成描述",
-        "IsHiddenTech": false,
-        "PreItem": null,
-        "Position": [
-            32.0,
-            -40.0
-        ],
-        "PreTechs": [
-            1931
-        ],
-        "PreTechsImplicit": [],
-        "Items": [
-            6001,
-            6002
-        ],
-        "ItemPoints": [
-            10,
-            10
-        ],
-        "HashNeeded": 108000,
-        "UnlockRecipes": [
-            717,
-            720
-        ],
-        "UnlockFunctions": [],
-        "UnlockValues": [],
-        "Published": true,
-        "Level": 0,
-        "MaxLevel": 0,
-        "LevelCoef1": 0,
-        "LevelCoef2": 0,
-        "IsLabTech": true,
-        "PreTechsMax": false,
-        "AddItems": [],
-        "AddItemCounts": [],
-        "PropertyOverrideItems": [],
-        "PropertyItemCounts": []
-    },
+    // 1942待回收
+    
     {
         "ID": 1943,
         "Name": "T伴生菌种培育",
@@ -6213,27 +6292,26 @@
         "IsHiddenTech": false,
         "PreItem": null,
         "Position": [
-            48.0,
+            28.0,
             -44.0
         ],
         "PreTechs": [
-            1931
+            1917
         ],
         "PreTechsImplicit": [],
         "Items": [
-            6003,
-            6278
+            6208
         ],
         "ItemPoints": [
-            10,
-            10
+            5
         ],
-        "HashNeeded": 108000,
+        "HashNeeded": 7200,
         "UnlockRecipes": [
             774,
             813,
             776,
-            778
+            777,
+            797
         ],
         "UnlockFunctions": [],
         "UnlockValues": [],
@@ -6242,7 +6320,7 @@
         "MaxLevel": 0,
         "LevelCoef1": 0,
         "LevelCoef2": 0,
-        "IsLabTech": true,
+        "IsLabTech": false,
         "PreTechsMax": false,
         "AddItems": [],
         "AddItemCounts": [],
@@ -6263,10 +6341,10 @@
             60.0,
             -44.0
         ],
-        "PreTechs": [
+        "PreTechs": [],
+        "PreTechsImplicit": [
             1943
         ],
-        "PreTechsImplicit": [],
         "Items": [
             6212
         ],
@@ -6276,8 +6354,7 @@
         "HashNeeded": 36000,
         "UnlockRecipes": [
             775,
-            779,
-            780,
+            778,
             800,
             624
         ],
@@ -6340,10 +6417,10 @@
     },
     {
         "ID": 1946,
-        "Name": "逆向掌中工厂蓝图",
+        "Name": "黑盒",
         "IconPath": "Assets/texpack/主机科技",
-        "Desc": "T逆向掌中工厂蓝图",
-        "Conclusion": "T逆向掌中工厂蓝图",
+        "Desc": "T黑盒",
+        "Conclusion": "T黑盒",
         "IsHiddenTech": true,
         "PreItem": [
             6215
@@ -6367,7 +6444,8 @@
         "HashNeeded": 36000,
         "UnlockRecipes": [
             403,
-            424
+            424,
+            826
         ],
         "UnlockFunctions": [],
         "UnlockValues": [],
@@ -6453,8 +6531,7 @@
         ],
         "HashNeeded": 288000,
         "UnlockRecipes": [
-            794,
-            793
+            794
         ],
         "UnlockFunctions": [],
         "UnlockValues": [],
@@ -6684,32 +6761,32 @@
     },
     {
         "ID": 1954,
-        "Name": "高级磁场应用",
+        "Name": "银矿冶炼",
         "IconPath": "Icons/Tech/1816",
-        "Desc": "T高级磁场应用",
-        "Conclusion": "T高级磁场应用",
+        "Desc": "T银矿冶炼",
+        "Conclusion": "T银矿冶炼",
         "IsHiddenTech": false,
         "PreItem": [],
         "Position": [
-            72.0,
-            20.0
+            36.0,
+            -4.0
         ],
         "PreTechs": [
-            1967
+            1414
         ],
         "PreTechsImplicit": [],
         "Items": [
-            6279,
-            6004,
-            6005
+            6003
         ],
         "ItemPoints": [
-            10,
-            6,
-            4
+            10
         ],
-        "HashNeeded": 288000,
-        "UnlockRecipes": [],
+        "HashNeeded": 108000,
+        "UnlockRecipes": [
+            404,
+            415,
+            69
+        ],
         "UnlockFunctions": [],
         "UnlockValues": [],
         "Published": true,
@@ -6822,7 +6899,7 @@
         "PreItem": [],
         "Position": [
             64.0,
-            28.0
+            32.0
         ],
         "PreTechs": [
             1951
@@ -7034,16 +7111,17 @@
         "PreTechs": [],
         "PreTechsImplicit": [],
         "Items": [
-            6234
+            6234,
+            6006
         ],
         "ItemPoints": [
-            1
+            1,
+            100
         ],
-        "HashNeeded": 36000,
+        "HashNeeded": 3600,
         "UnlockRecipes": [
             641,
-            805,
-            806
+            805
         ],
         "UnlockFunctions": [],
         "UnlockValues": [],
@@ -7112,7 +7190,7 @@
         "PreItem": [],
         "Position": [
             64.0,
-            24.0
+            28.0
         ],
         "PreTechs": [
             1951
@@ -7229,28 +7307,34 @@
     },
     {
         "ID": 1967,
-        "Name": "二选一科技",
+        "Name": "导电银浆",
         "IconPath": "Icons/Tech/1607",
-        "Desc": "T二选一科技",
-        "Conclusion": "T二选一科技",
+        "Desc": "T导电银浆",
+        "Conclusion": "T导电银浆",
         "IsHiddenTech": false,
         "PreItem": [],
         "Position": [
-            68.0,
-            24.0
+            40.0,
+            -8.0
         ],
-        "PreTechs": [],
+        "PreTechs": [
+            1954
+        ],
         "PreTechsImplicit": [
-            1705
+            1975
         ],
         "Items": [
-            1101
+            6003
         ],
         "ItemPoints": [
-            1
+            10
         ],
-        "HashNeeded": 3600,
-        "UnlockRecipes": [],
+        "HashNeeded": 162000,
+        "UnlockRecipes": [
+            832,
+            833,
+            823
+        ],
         "UnlockFunctions": [],
         "UnlockValues": [],
         "Published": true,
@@ -7392,6 +7476,47 @@
         "PropertyItemCounts": []
     },
     {
+        "ID": 1971,
+        "Name": "高速连接器",
+        "IconPath": "Icons/Tech/1811",
+        "Desc": "T高速连接器",
+        "Conclusion": "T高速连接器",
+        "IsHiddenTech": false,
+        "PreItem": [],
+        "Position": [
+            44.0,
+            -8.0
+        ],
+        "PreTechs": [
+            1967
+        ],
+        "PreTechsImplicit": [],
+        "Items": [
+            6003
+        ],
+        "ItemPoints": [
+            10
+        ],
+        "HashNeeded": 198000,
+        "UnlockRecipes": [
+            426,
+            793
+        ],
+        "UnlockFunctions": [],
+        "UnlockValues": [],
+        "Published": true,
+        "Level": 0,
+        "MaxLevel": 0,
+        "LevelCoef1": 0,
+        "LevelCoef2": 0,
+        "IsLabTech": true,
+        "PreTechsMax": false,
+        "AddItems": [],
+        "AddItemCounts": [],
+        "PropertyOverrideItems": [],
+        "PropertyItemCounts": []
+    },
+    {
         "ID": 1972,
         "Name": "高级钛矿冶炼",
         "IconPath": "Icons/Tech/1811",
@@ -7444,7 +7569,7 @@
         "PreItem": [],
         "Position": [
             64.0,
-            20.0
+            24.0
         ],
         "PreTechs": [
             1951
@@ -7460,8 +7585,7 @@
         ],
         "HashNeeded": 180000,
         "UnlockRecipes": [
-            828,
-            
+            828
         ],
         "UnlockFunctions": [],
         "UnlockValues": [],
@@ -7471,6 +7595,393 @@
         "LevelCoef1": 0,
         "LevelCoef2": 0,
         "IsLabTech": true,
+        "PreTechsMax": false,
+        "AddItems": [],
+        "AddItemCounts": [],
+        "PropertyOverrideItems": [],
+        "PropertyItemCounts": []
+    },
+    {
+        "ID": 1974,
+        "Name": "糖料作物研究",
+        "IconPath": "Icons/Tech/1811",
+        "Desc": "T糖料作物研究",
+        "Conclusion": "T糖料作物研究",
+        "IsHiddenTech": false,
+        "PreItem": [],
+        "Position": [
+            32.0,
+            -44.0
+        ],
+        "PreTechs": [
+            1943
+        ],
+        "PreTechsImplicit": [],
+        "Items": [
+            6001,
+            6002
+        ],
+        "ItemPoints": [
+            10,
+            10
+        ],
+        "HashNeeded": 216000,
+        "UnlockRecipes": [
+            704,
+            705,
+            706,
+            707
+        ],
+        "UnlockFunctions": [],
+        "UnlockValues": [],
+        "Published": true,
+        "Level": 0,
+        "MaxLevel": 0,
+        "LevelCoef1": 0,
+        "LevelCoef2": 0,
+        "IsLabTech": true,
+        "PreTechsMax": false,
+        "AddItems": [],
+        "AddItemCounts": [],
+        "PropertyOverrideItems": [],
+        "PropertyItemCounts": []
+    },
+    {
+        "ID": 1975,
+        "Name": "工业作物应用",
+        "IconPath": "Icons/Tech/1811",
+        "Desc": "T工业作物应用",
+        "Conclusion": "T工业作物应用",
+        "IsHiddenTech": false,
+        "PreItem": [],
+        "Position": [
+            36.0,
+            -44.0
+        ],
+        "PreTechs": [
+            1974
+        ],
+        "PreTechsImplicit": [],
+        "Items": [
+            6003
+        ],
+        "ItemPoints": [
+            10
+        ],
+        "HashNeeded": 234000,
+        "UnlockRecipes": [
+            708,
+            550,
+            779,
+            780
+        ],
+        "UnlockFunctions": [],
+        "UnlockValues": [],
+        "Published": true,
+        "Level": 0,
+        "MaxLevel": 0,
+        "LevelCoef1": 0,
+        "LevelCoef2": 0,
+        "IsLabTech": true,
+        "PreTechsMax": false,
+        "AddItems": [],
+        "AddItemCounts": [],
+        "PropertyOverrideItems": [],
+        "PropertyItemCounts": []
+    },
+    {
+        "ID": 1976,
+        "Name": "气云精炼",
+        "IconPath": "Icons/Tech/1811",
+        "Desc": "T气云精炼",
+        "Conclusion": "T气云精炼",
+        "IsHiddenTech": false,
+        "PreItem": [],
+        "Position": [
+            60.0,
+            20.0
+        ],
+        "PreTechs": [
+            1606
+        ],
+        "PreTechsImplicit": [],
+        "Items": [
+            6279,
+            6004
+        ],
+        "ItemPoints": [
+            10,
+            10
+        ],
+        "HashNeeded": 252000,
+        "UnlockRecipes": [
+            509,
+            510
+        ],
+        "UnlockFunctions": [],
+        "UnlockValues": [],
+        "Published": true,
+        "Level": 0,
+        "MaxLevel": 0,
+        "LevelCoef1": 0,
+        "LevelCoef2": 0,
+        "IsLabTech": true,
+        "PreTechsMax": false,
+        "AddItems": [],
+        "AddItemCounts": [],
+        "PropertyOverrideItems": [],
+        "PropertyItemCounts": []
+    },
+    {
+        "ID": 1977,
+        "Name": "富勒烯研究",
+        "IconPath": "Icons/Tech/1811",
+        "Desc": "T富勒烯研究",
+        "Conclusion": "T富勒烯研究",
+        "IsHiddenTech": false,
+        "PreItem": [],
+        "Position": [
+            64.0,
+            20.0
+        ],
+        "PreTechs": [
+            1976
+        ],
+        "PreTechsImplicit": [
+            1305
+        ],
+        "Items": [
+            6279,
+            6004
+        ],
+        "ItemPoints": [
+            10,
+            10
+        ],
+        "HashNeeded": 288000,
+        "UnlockRecipes": [
+            716,
+            717
+        ],
+        "UnlockFunctions": [],
+        "UnlockValues": [],
+        "Published": true,
+        "Level": 0,
+        "MaxLevel": 0,
+        "LevelCoef1": 0,
+        "LevelCoef2": 0,
+        "IsLabTech": true,
+        "PreTechsMax": false,
+        "AddItems": [],
+        "AddItemCounts": [],
+        "PropertyOverrideItems": [],
+        "PropertyItemCounts": []
+    },
+    {
+        "ID": 1978,
+        "Name": "富勒烯衍生物应用",
+        "IconPath": "Icons/Tech/1811",
+        "Desc": "T富勒烯衍生物应用",
+        "Conclusion": "T富勒烯衍生物应用",
+        "IsHiddenTech": false,
+        "PreItem": [],
+        "Position": [
+            68.0,
+            20.0
+        ],
+        "PreTechs": [
+            1977
+        ],
+        "PreTechsImplicit": [],
+        "Items": [
+            6279,
+            6004
+        ],
+        "ItemPoints": [
+            10,
+            10
+        ],
+        "HashNeeded": 72000,
+        "UnlockRecipes": [
+            753,
+            715,
+            521
+        ],
+        "UnlockFunctions": [],
+        "UnlockValues": [],
+        "Published": true,
+        "Level": 0,
+        "MaxLevel": 0,
+        "LevelCoef1": 0,
+        "LevelCoef2": 0,
+        "IsLabTech": true,
+        "PreTechsMax": false,
+        "AddItems": [],
+        "AddItemCounts": [],
+        "PropertyOverrideItems": [],
+        "PropertyItemCounts": []
+    },
+    {
+        "ID": 1979,
+        "Name": "永固型节点构造",
+        "IconPath": "Icons/Tech/1811",
+        "Desc": "T永固型节点构造",
+        "Conclusion": "T永固型节点构造",
+        "IsHiddenTech": false,
+        "PreItem": [],
+        "Position": [
+            80.0,
+            16.0
+        ],
+        "PreTechs": [
+            1523
+        ],
+        "PreTechsImplicit": [],
+        "Items": [
+            6006
+        ],
+        "ItemPoints": [
+            10
+        ],
+        "HashNeeded": 216000,
+        "UnlockRecipes": [
+            504
+        ],
+        "UnlockFunctions": [],
+        "UnlockValues": [],
+        "Published": true,
+        "Level": 0,
+        "MaxLevel": 0,
+        "LevelCoef1": 0,
+        "LevelCoef2": 0,
+        "IsLabTech": true,
+        "PreTechsMax": false,
+        "AddItems": [],
+        "AddItemCounts": [],
+        "PropertyOverrideItems": [],
+        "PropertyItemCounts": []
+    },
+    {
+        "ID": 1980,
+        "Name": "纳米晶体管",
+        "IconPath": "Icons/Tech/1811",
+        "Desc": "T纳米晶体管",
+        "Conclusion": "T纳米晶体管",
+        "IsHiddenTech": true,
+        "PreItem": [
+            6241
+        ],
+        "Position": [
+            84.0,
+            -4.0
+        ],
+        "PreTechs": [
+            1962
+        ],
+        "PreTechsImplicit": [],
+        "Items": [
+            6241
+        ],
+        "ItemPoints": [
+            1
+        ],
+        "HashNeeded": 18000,
+        "UnlockRecipes": [
+            507,
+            508
+        ],
+        "UnlockFunctions": [],
+        "UnlockValues": [],
+        "Published": true,
+        "Level": 0,
+        "MaxLevel": 0,
+        "LevelCoef1": 0,
+        "LevelCoef2": 0,
+        "IsLabTech": false,
+        "PreTechsMax": false,
+        "AddItems": [],
+        "AddItemCounts": [],
+        "PropertyOverrideItems": [],
+        "PropertyItemCounts": []
+    },
+    {
+        "ID": 1981,
+        "Name": "永磁涡轮",
+        "IconPath": "Icons/Tech/1811",
+        "Desc": "T永磁涡轮",
+        "Conclusion": "T永磁涡轮",
+        "IsHiddenTech": true,
+        "PreItem": [
+            6241
+        ],
+        "Position": [
+            84.0,
+            -8.0
+        ],
+        "PreTechs": [
+            1962
+        ],
+        "PreTechsImplicit": [],
+        "Items": [
+            6241
+        ],
+        "ItemPoints": [
+            1
+        ],
+        "HashNeeded": 18000,
+        "UnlockRecipes": [
+            520
+        ],
+        "UnlockFunctions": [],
+        "UnlockValues": [],
+        "Published": true,
+        "Level": 0,
+        "MaxLevel": 0,
+        "LevelCoef1": 0,
+        "LevelCoef2": 0,
+        "IsLabTech": false,
+        "PreTechsMax": false,
+        "AddItems": [],
+        "AddItemCounts": [],
+        "PropertyOverrideItems": [],
+        "PropertyItemCounts": []
+    },
+    {
+        "ID": 1982,
+        "Name": "磁胶粒子宽带",
+        "IconPath": "Icons/Tech/1811",
+        "Desc": "T磁胶粒子宽带",
+        "Conclusion": "T磁胶粒子宽带",
+        "IsHiddenTech": true,
+        "PreItem": [
+            6241
+        ],
+        "Position": [
+            84.0,
+            -12.0
+        ],
+        "PreTechs": [
+            1962
+        ],
+        "PreTechsImplicit": [],
+        "Items": [
+            6241
+        ],
+        "ItemPoints": [
+            1
+        ],
+        "HashNeeded": 18000,
+        "UnlockRecipes": [
+            755
+        ],
+        "UnlockFunctions": [],
+        "UnlockValues": [],
+        "Published": true,
+        "Level": 0,
+        "MaxLevel": 0,
+        "LevelCoef1": 0,
+        "LevelCoef2": 0,
+        "IsLabTech": false,
         "PreTechsMax": false,
         "AddItems": [],
         "AddItemCounts": [],

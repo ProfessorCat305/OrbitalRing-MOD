@@ -39,10 +39,14 @@ namespace ProjectOrbitalRing.Patches.Logic.OrbitalRing
             }
         }
 
-        public void AddPlanetId(int planetId, int ringCapacity = 40)
+        public void AddPlanetId(int planetId, bool isMoon)
         {
             if (AllplanetsOrbitalRings.ContainsKey(planetId)) return;
-            AllplanetsOrbitalRings[planetId] = new PlanetOrbitalRingData(planetId, ringCapacity);
+            if (isMoon) {
+                AllplanetsOrbitalRings[planetId] = new PlanetOrbitalRingData(planetId, 20);
+            } else {
+                AllplanetsOrbitalRings[planetId] = new PlanetOrbitalRingData(planetId, 40);
+            }
         }
 
         public PlanetOrbitalRingData GetPlanetOrbitalRingData(int planetId) => AllplanetsOrbitalRings.GetValueOrDefault(planetId);
@@ -169,7 +173,9 @@ namespace ProjectOrbitalRing.Patches.Logic.OrbitalRing
             PlanetId = planetId;
             // 初始创建两圈（可根据需求动态调整）
             Rings.Add(new EquatorRing(ringCapacity, planetId));
-            Rings.Add(new EquatorRing(ringCapacity, planetId));
+            if (ringCapacity > 20) {
+                Rings.Add(new EquatorRing(ringCapacity, planetId));
+            }
         }
 
         public bool IsRingFull()
@@ -247,7 +253,6 @@ namespace ProjectOrbitalRing.Patches.Logic.OrbitalRing
             if (GameMain.history == null) { return; }
             if (GameMain.history.TechUnlocked(1951)) { return; }
             if (IsOneFull()) {
-                Debug.LogFormat("scpppppppppppppppppppp spaceStationCount {0} Capacity {1}", spaceStationCount, Capacity);
                 GameMain.history.UnlockTech(1951);
             }
         }
@@ -407,6 +412,7 @@ namespace ProjectOrbitalRing.Patches.Logic.OrbitalRing
             int count = 0;
             isInsideRingComplete = true;
             for (int i = 0; i < insideRingPositions.Length; i++) {
+                if (Capacity == 20 && (i % 2 != 0)) continue; 
                 if (!insideRingPositions[i]) {
                     isInsideRingComplete = false;
                     count++;
@@ -421,6 +427,7 @@ namespace ProjectOrbitalRing.Patches.Logic.OrbitalRing
             count = 0;
             isOutsideRingComplete = true;
             for (int i = 0; i < outsideRingPositions.Length; i++) {
+                if (Capacity == 20 && (i % 2 != 0)) continue;
                 if (!outsideRingPositions[i]) {
                     isOutsideRingComplete = false;
                     count++;
@@ -436,6 +443,7 @@ namespace ProjectOrbitalRing.Patches.Logic.OrbitalRing
         {
             theCompleteStatue = true;
             for (int i = 0; i < ring.Length; i++) {
+                if (Capacity == 20 && (i % 2 != 0)) continue;
                 if (!ring[i]) {
                     theCompleteStatue = false;
                     break;

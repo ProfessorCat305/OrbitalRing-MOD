@@ -72,9 +72,9 @@ namespace ProjectOrbitalRing.Patches.Logic.OrbitalRing
             int modelId = __instance.entityPool[entityId].modelIndex;
             if (modelId == ProtoID.M轨道反物质堆基座) {
                 Vector3 thisPos = __instance.entityPool[entityId].pos;
-                int position = IsBuildingPosXZCorrect(thisPos.x, thisPos.z, true);
-                int ringIndex = isBuildingPosYCorrect(thisPos);
-                OrbitalStationManager.Instance.AddPlanetId(__instance.planet.id);
+                int position = IsBuildingPosXZCorrect(thisPos.x, thisPos.z, true, __instance.planet.radius == 100f);
+                int ringIndex = isBuildingPosYCorrect(thisPos, __instance.planet.radius == 100f);
+                OrbitalStationManager.Instance.AddPlanetId(__instance.planet.id, __instance.planet.radius == 100f);
                 var planetOrbitalRingData = OrbitalStationManager.Instance.GetPlanetOrbitalRingData(__instance.planet.id);
                 // 在赤道上/下圈？号位置添加轨道设施
                 if (modelId == ProtoID.M轨道反物质堆基座) {
@@ -89,8 +89,8 @@ namespace ProjectOrbitalRing.Patches.Logic.OrbitalRing
         {
             if (__instance.factory.entityPool[entityId].protoId == 6261) {
                 Vector3 thisPos = __instance.factory.entityPool[entityId].pos;
-                int position = IsBuildingPosXZCorrect(thisPos.x, thisPos.z, true);
-                int ringIndex = isBuildingPosYCorrect(thisPos);
+                int position = IsBuildingPosXZCorrect(thisPos.x, thisPos.z, true, __instance.planet.radius == 100f);
+                int ringIndex = isBuildingPosYCorrect(thisPos, __instance.planet.radius == 100f);
                 var planetOrbitalRingData = OrbitalStationManager.Instance.GetPlanetOrbitalRingData(__instance.planet.id);
                 // 在赤道上/下圈？号位置添加轨道设施
                 planetOrbitalRingData.Rings[ringIndex].AddOrbitalCore(position, __result, StationType.PowerGenCore);

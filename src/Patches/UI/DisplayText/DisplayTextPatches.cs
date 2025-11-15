@@ -42,13 +42,13 @@ namespace ProjectOrbitalRing.Patches.UI.DisplayText
 
                     break;
 
-                case Utils_ERecipeType.物质重组:
-                    __result = "物质重组".TranslateFromJson();
+                case Utils_ERecipeType.等离子熔炼:
+                    __result = "等离子熔炼".TranslateFromJson();
 
                     break;
 
-                case Utils_ERecipeType.等离子熔炼:
-                    __result = "等离子熔炼".TranslateFromJson();
+                case Utils_ERecipeType.物质重组:
+                    __result = "物质重组".TranslateFromJson();
 
                     break;
 
@@ -59,6 +59,11 @@ namespace ProjectOrbitalRing.Patches.UI.DisplayText
 
                 case Utils_ERecipeType.高分子化工:
                     __result = "先进化学反应釜".TranslateFromJson();
+
+                    break;
+
+                case Utils_ERecipeType.黑盒:
+                    __result = "黑盒".TranslateFromJson();
 
                     break;
 
@@ -135,8 +140,8 @@ namespace ProjectOrbitalRing.Patches.UI.DisplayText
                     __result = "复合化工".TranslateFromJson();
                     return;
 
-                case Utils_ERecipeType.复合制造:
-                    __result = "复合制造".TranslateFromJson();
+                case Utils_ERecipeType.黑盒:
+                    __result = "黑盒".TranslateFromJson();
                     return;
 
                 case Utils_ERecipeType.所有熔炉:

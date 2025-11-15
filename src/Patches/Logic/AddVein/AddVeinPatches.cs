@@ -41,7 +41,7 @@ namespace ProjectOrbitalRing.Patches.Logic.AddVein
             new Color(0.575f, 0.270f, 0.830f), // 光栅 12
             new Color(0.571f, 0.708f, 0.647f), // 刺笋 13
             new Color(0.349f, 0.222f, 0.247f), // 单极 14
-            new Color(0.113f, 0.130f, 0.140f), // 石墨 15
+            new Color(1.000f, 1.000f, 1.000f), // 辉银矿 15
             new Color(0.538f, 0.538f, 0.538f), // 深层熔岩 16
             new Color(0.685f, 0.792f, 0.000f), // 放射 17
             new Color(0.965f, 0.867f, 0.352f), // 黄铁 18
@@ -51,7 +51,7 @@ namespace ProjectOrbitalRing.Patches.Logic.AddVein
         internal static void ModifyVeinData()
         {
             AddVeinProtos(
-                NewVein(15, "石墨矿脉", "I石墨矿", "Assets/texpack/钨矿脉", ProtoID.I石墨矿, 34, 1, 60),
+                NewVein(15, "辉银矿脉", "I辉银矿", "Assets/texpack/铝矿脉", ProtoID.I石墨矿, 34, 3, 60),
                 NewVein(16, "深层熔岩", "I深层熔岩", "Icons/Vein/oil-vein", ProtoID.I深层熔岩, 0, 6, 60),
                 NewVein(17, "铀矿脉", "I铀矿", "Assets/texpack/放射晶体矿脉_新新", ProtoID.I放射性矿物, 35, 2, 90),
                 NewVein(18, "黄铁矿脉", "I黄铁矿", "Assets/texpack/硫矿脉_新", ProtoID.I黄铁矿, 36, 1, 90),
@@ -524,17 +524,39 @@ namespace ProjectOrbitalRing.Patches.Logic.AddVein
         // 母星系星球矿物储量定制
         public static void AddBirthGalaxyRareVein(PlanetAlgorithm algorithm, ref int[] array, ref float[] array2, ref float[] array3)
         {
+            // 月球的矿物削减
+            if (algorithm.planet.radius == 100f) {
+                array3[1] = 0.24f;
+                array3[2] = 0.24f;
+                array3[3] = 0.36f;
+                array3[4] = 0.36f;
+                array3[5] = 0.6f;
+                array3[15] = 0.12f;
+                array3[8] = 0.24f;
+                array3[12] = 0.2f;
+                array3[18] = 0.04f;
+                array3[19] = 0.12f;
+            }
             //star id是1，star index是0
-            if (algorithm.planet.star.id == 1)
-            {
-                if (algorithm.planet.index == 3)
-                {
+            if (algorithm.planet.star.id == 1) {
+                if (algorithm.planet.index == 0) {
+                    array[17] = 5;
+                    array2[17] = 0.35f;
+                    array3[17] = 0.5f;
+                }
+                if (algorithm.planet.index == 2) {
+                    array3[4] = 0.15f;
+                    array[19] = 12;
+                    array2[19] = 1.0f;
+                    array3[19] = 1.0f;
+                }
+                if (algorithm.planet.index == 4) {
                     array[8] = 7;
                     array2[8] = 0.4f;
                     array3[8] = 0.8f;
 
-                    array[15] = 5;
-                    array2[15] = 0.2f;
+                    array[15] = 8;
+                    array2[15] = 0.5f;
                     array3[15] = 0.5f;
 
                     array[17] = 4;
@@ -548,12 +570,6 @@ namespace ProjectOrbitalRing.Patches.Logic.AddVein
                     array[19] = 12;
                     array2[19] = 1.0f;
                     array3[19] = 1.0f;
-                }
-                if (algorithm.planet.index == 0)
-                {
-                    array[17] = 5;
-                    array2[17] = 0.35f;
-                    array3[17] = 0.5f;
                 }
             }
         }

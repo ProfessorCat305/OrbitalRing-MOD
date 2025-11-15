@@ -111,6 +111,7 @@
     <Compile Include="src\Compatibility\PlanetVeinUtilization.cs" />
     <Compile Include="src\Compatibility\PlanetwideMining.cs" />
     <Compile Include="src\Compatibility\WeaponPlus.cs" />
+    <Compile Include="src\Patches\Logic\FixMoonRadius.cs" />
     <Compile Include="src\Patches\Logic\AbnormalityLogicPatches.cs" />
     <Compile Include="src\Patches\Logic\AddVein\AddEffectEmitterProto.cs" />
     <Compile Include="src\Patches\Logic\AddVein\AddVeinPatches.cs" />
@@ -179,6 +180,7 @@
     <Compile Include="src\Patches\Logic\QuantumStorage\InternalFunctions.cs" />
     <Compile Include="src\Patches\Logic\QuantumStorage\QuantumStoragePatches.cs" />
     <Compile Include="src\Patches\Logic\QuantumStorage\UIPatches.cs" />
+    <Compile Include="src\Patches\Logic\SailNeedFuel.cs" />
     <Compile Include="src\Patches\Logic\SatellitePowerDistributionPatch.cs" />
     <Compile Include="src\Patches\Logic\SpaceMissilePatches.cs" />
     <Compile Include="src\Patches\Logic\StarGate.cs" />

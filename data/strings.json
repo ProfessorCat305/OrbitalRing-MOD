@@ -260,6 +260,547 @@
         "ENUS": "After specialization, the assemblers can meet the needs of different precision, but except for the dark fog assembler, different assembler can not be used universally."
     },
     {
+        "Name": "离星燃料消耗描述",
+        "ZHCN": "为了突破行星的重力井，离开星球需要额外消耗背包中的化学燃料棒，消耗的数量会随着背包和手上的物品数量增加而增长，具体为物品数量/物品最大堆叠的总和乘以10。在卫星上离开星球消耗的化学燃料棒减免90%",
+        "ENUS": "In order to break through the planet's gravity well, leaving the planet requires additional consumption of chemical fuel rods in the backpack. The amount consumed will increase as the number of items in the backpack and hands increases, specifically the sum of the number of items/the maximum stack of items multiplied by 10.90% reduction in chemical fuel rods consumed when leaving the planet on the satellite"
+    },
+    {
+        "Name": "离星燃料消耗减少描述",
+        "ZHCN": "推进器技术的进步带来燃料利用率的提升，离开星球额外消耗背包中的化学燃料棒减少50%",
+        "ENUS": "The advancement of propulsion technology has brought about an improvement in fuel utilization efficiency, reducing the additional consumption of chemical fuel rods in backpacks by 50% when leaving the planet"
+    },
+    {
+        "Name": "离星燃料消耗取消描述",
+        "ZHCN": "离开星球不再需要额外消耗背包中的化学燃料棒",
+        "ENUS": "Leaving the planet no longer requires additional consumption of chemical fuel rods in the backpack"
+    },
+    {
+        "Name": "背包化学燃料棒不足，需要",
+        "ZHCN": "背包化学燃料棒不足，需要",
+        "ENUS": "Insufficient chemical fuel rods in backpack, "
+    },
+    {
+        "Name": "个",
+        "ZHCN": "个",
+        "ENUS": " needed"
+    },
+    {
+        "Name": "电磁轨道弹射器只能建造在无大气星球",
+        "ZHCN": "电磁轨道弹射器只能建造在无大气星球",
+        "ENUS": "Electromagnetic orbital catapults can only be built on planets without atmospheres"
+    },
+    {
+        "Name": "钛矿",
+        "ZHCN": "钛矿",
+        "ENUS": "Titanium ore"
+    },
+    {
+        "Name": "莫桑石矿脉",
+        "ZHCN": "莫桑石矿脉",
+        "ENUS": "Moissanite vein"
+    },
+    {
+        "Name": "铀矿脉",
+        "ZHCN": "铀矿脉",
+        "ENUS": "Uranium Veins"
+    },
+    {
+        "Name": "辉银矿脉",
+        "ZHCN": "辉银矿脉",
+        "ENUS": "Silver ore vein"
+    },
+    {
+        "Name": "黄铁矿脉",
+        "ZHCN": "黄铁矿脉",
+        "ENUS": "Huangtie Veins"
+    },
+    {
+        "Name": "电路控制元件",
+        "ZHCN": "电路控制元件",
+        "ENUS": "Circuit Control Components"
+    },
+    {
+        "Name": "I电路控制元件",
+        "ZHCN": "门电路，将输入的电信号按照与或非逻辑处理后输出，单个门电路是最简单的单元电路，也是一步步构建电路板，集成电路的基石。",
+        "ENUS": "A gate circuit processes input electrical signals into AND or NOR logic and outputs them. A single gate circuit is the simplest unit circuit and the cornerstone of building circuit boards and integrated circuits step by step."
+    },
+    {
+        "Name": "真空电子管",
+        "ZHCN": "真空电子管",
+        "ENUS": "Vacuum Tube"
+    },
+    {
+        "Name": "R真空电子管",
+        "ZHCN": "第一代电信号逻辑处理电子元件，通过在真空的玻璃管里加热金属板使阴极发射电子，再由栅极控制电子流量，组成最简单的真空电子管。",
+        "ENUS": "The first generation of electrical signal logic processing electronic components consisted of heating a metal plate in a vacuum glass tube to cause the cathode to emit electrons, and then controlling the electron flow through a gate to form the simplest vacuum electronic tube."
+    },
+    {
+        "Name": "半导体晶体管",
+        "ZHCN": "半导体晶体管",
+        "ENUS": "Semiconductor Transistor"
+    },
+    {
+        "Name": "T半导体晶体管",
+        "ZHCN": "使用半导体硅制造晶体管，在可靠性，体积，能耗上都完全超越了老旧的真空电子管。",
+        "ENUS": "Using semiconductor silicon to manufacture transistors completely surpasses old vacuum tubes in terms of reliability, volume, and energy consumption."
+    },
+    {
+        "Name": "R半导体晶体管",
+        "ZHCN": "使用半导体硅制成二极管三极管场效应管，统称为晶体管，与电子管相比不需要真空气密，不需要加热预热，耐冲击，体积小，电子管是电气时代的敲门砖，而晶体管才是支撑起大规模集成电路的中流砥柱。",
+        "ENUS": "The use of semiconductor silicon to make diode transistor field-effect transistors, collectively known as transistors, does not require vacuum sealing, heating and preheating, is shock resistant, and has a small size compared to electronic tubes. Electronic tubes are the stepping stone to the electrical age, while transistors are the backbone that supports large-scale integrated circuits."
+    },
+    {
+        "Name": "T纳米晶体管",
+        "ZHCN": "从文明遗物中拼凑整理出来的科技，纳米晶体管是尺寸在纳米量级的晶体管，直径可缩小至1-2纳米。其体积仅为传统硅晶体管的百万分之一。",
+        "ENUS": "The technology pieced together and organized from cultural relics, the nanotransistor is a transistor with a size in the nanometer range, and its diameter can be reduced to 1-2 nanometers. Its volume is only one millionth of that of traditional silicon transistors."
+    },
+    {
+        "Name": "纳米晶体管",
+        "ZHCN": "纳米晶体管",
+        "ENUS": "Nano Transistor"
+    },
+    {
+        "Name": "R纳米晶体管",
+        "ZHCN": "使用碳纳米管制造的尺寸在纳米量级的晶体管，其体积仅为传统硅晶体管的百万分之一，这是不突破粒子论能做到的极限。",
+        "ENUS": "The size of transistors made using carbon nanotubes in the nanometer range is only one millionth of that of traditional silicon transistors, which is the limit that particle theory can achieve without breaking through."
+    },
+    {
+        "Name": "银浆印刷电路",
+        "ZHCN": "银浆印刷电路",
+        "ENUS": "Silver Paste Printed Circuit"
+    },
+    {
+        "Name": "R银浆印刷电路",
+        "ZHCN": "利用银导电性能更优异的特性，将导电银浆印刷在基材上形成电路，制成更高性能的电路板。",
+        "ENUS": "By utilizing the superior conductivity of silver, conductive silver paste is printed onto a substrate to form circuits, resulting in higher performance circuit boards."
+    },
+    {
+        "Name": "芯片",
+        "ZHCN": "芯片",
+        "ENUS": "Chip"
+    },
+    {
+        "Name": "I芯片",
+        "ZHCN": "超大规模集成电路的载体，使用纯净半导体制造成易碎的薄片，即晶圆后，在上面不断地光刻，离子注入和沉积，加工出“城市”般的立体纳米结构，最终封装成一枚小小的芯片。",
+        "ENUS": "The carrier of ultra large scale integrated circuits is made of pure semiconductors into fragile thin sheets, namely wafers, which are continuously photolithography, ion implantation, and deposition on top to process \"city like\" three-dimensional nanostructures, and finally packaged into a small chip."
+    },
+    {
+        "Name": "纳米晶体管处理器",
+        "ZHCN": "纳米晶体管处理器",
+        "ENUS": "Nano Transistor Processor"
+    },
+    {
+        "Name": "R纳米晶体管处理器",
+        "ZHCN": "将纳米晶体管技术用于芯片的制造，可以在同样的面积下集成更多的晶体管，从而制造出性能更强的芯片。",
+        "ENUS": "Applying nanotransistor technology to chip manufacturing can integrate more transistors in the same area, thereby producing chips with stronger performance."
+    },
+    {
+        "Name": "T第四代半导体",
+        "ZHCN": "第四代半导体",
+        "ENUS": "Fourth generation semiconductor"
+    },
+    {
+        "Name": "T第四代半导体描述",
+        "ZHCN": "得益于粒子打印技术的发展，我们终于得以大规模打印出完美晶体的金刚石，即晶圆级金刚石，这也意味着，第四代半导体，金刚石晶圆的量产已不再有门槛。",
+        "ENUS": "Thanks to the development of particle printing technology, we have finally been able to print perfect crystal diamonds on a large scale, namely wafer level diamonds. This also means that there is no longer a barrier to mass production for fourth generation semiconductors, diamond wafers."
+    },
+    {
+        "Name": "芯片（四代半导体）",
+        "ZHCN": "芯片（四代半导体）",
+        "ENUS": "Chip (Fourth Generation Semiconductor)"
+    },
+    {
+        "Name": "R芯片（四代半导体）",
+        "ZHCN": "将工业级金刚石用粒子打印重整修补为晶圆级金刚石，并与铜粒子一起在其上打印出超大规模集成电路。",
+        "ENUS": "Transforming industrial grade diamond into wafer level diamond through particle printing and repairing, and printing ultra large scale integrated circuits on it together with copper particles."
+    },
+    {
+        "Name": "主板",
+        "ZHCN": "主板",
+        "ENUS": "Motherboard"
+    },
+    {
+        "Name": "I主板",
+        "ZHCN": "将晶圆切割封装为处理器后，接入电路板，组成电子计算机主控板，在处理数据以及对处理过程进行控制更加出色。",
+        "ENUS": "After cutting and packaging the wafer into a processor, it is connected to a circuit board to form an electronic computer main control board, which performs better in processing data and controlling the processing process."
+    },
+    {
+        "Name": "多板架构",
+        "ZHCN": "多板架构",
+        "ENUS": "Multi Board Architecture"
+    },
+    {
+        "Name": "T多板架构",
+        "ZHCN": "主备板架构是一种计算高可用方案,主要用于确保系统在主板发生故障时,备份板可以无缝接管,从而提高系统的可靠性和可用性的架构。",
+        "ENUS": "The primary backup board architecture is a high availability solution for computing, mainly used to ensure that the backup board can seamlessly take over the system in the event of a motherboard failure, thereby improving the reliability and availability of the system."
+    },
+    {
+        "Name": "R多板架构",
+        "ZHCN": "在备份冗余有严格要求的场景，我们会设置一个主板和多个备板协同运行，在主板出现致命故障时将进程无缝切换到备板以实现主备板互切，赋予设备更高的稳定性。",
+        "ENUS": "In scenarios with strict requirements for backup redundancy, we will set up a motherboard and multiple backup boards to work together. In the event of a fatal failure on the motherboard, the process will seamlessly switch to the backup board to achieve mutual switching between the primary and backup boards, giving the device higher stability."
+    },
+    {
+        "Name": "基础激光应用",
+        "ZHCN": "基础激光应用",
+        "ENUS": "Basic Laser Applications"
+    },
+    {
+        "Name": "T基础激光应用",
+        "ZHCN": "通过磁场以及棱镜和透镜组的作用，产生的激光在钻井，切割，激发等离子体等领域都有重要作用。",
+        "ENUS": "The laser generated through the action of magnetic field, prism and lens group plays an important role in drilling, cutting, plasma excitation and other fields."
+    },
+    {
+        "Name": "激光发生器",
+        "ZHCN": "激光发生器",
+        "ENUS": "Laser Generator"
+    },
+    {
+        "Name": "I激光发生器",
+        "ZHCN": "通过磁场以及棱镜和透镜组的作用，可以高效地产生激光，改进后的激光发生器更稳定，性能也更好。",
+        "ENUS": "Through the action of magnetic field, prism and lens group, laser can be efficiently generated, and the improved laser generator is more stable and has better performance."
+    },
+    {
+        "Name": "R光栅激发器",
+        "ZHCN": "利用光栅石可以制作大功率激发器的特性，制造激光发生器。",
+        "ENUS": "Tar Fuel Rod"
+    },
+    {
+        "Name": "辉银矿",
+        "ZHCN": "辉银矿",
+        "ENUS": "Argentite"
+    },
+    {
+        "Name": "I辉银矿",
+        "ZHCN": "辉银矿是一种硫化银矿物，在银矿中属于最具开采价值的种类。",
+        "ENUS": "Argentite is a type of silver sulfide mineral that is the most valuable for mining in silver mines."
+    },
+    {
+        "Name": "银矿冶炼",
+        "ZHCN": "银矿冶炼",
+        "ENUS": "Silver Ore Smelting"
+    },
+    {
+        "Name": "T银矿冶炼",
+        "ZHCN": "古时银作为货币而开采使用，到了现代，银因在电子，光学领域的优秀性质依旧备受关注。",
+        "ENUS": "In ancient times, silver was mined and used as currency, but in modern times, it still attracts attention due to its excellent properties in the fields of electronics and optics."
+    },
+    {
+        "Name": "R银矿冶炼",
+        "ZHCN": "将辉银矿进行氧化焙烧，把硫氧化为硫酸根，再还原熔炼出粗银和酸性气体，将酸性气体回收为硫酸做后续处理使用。",
+        "ENUS": "Oxidation roasting of pyroxene ore to oxidize sulfur into sulfate ions, followed by reduction smelting to produce crude silver and acidic gases. The acidic gases are recovered as sulfuric acid for subsequent processing."
+    },
+    {
+        "Name": "电解冶银",
+        "ZHCN": "电解冶银",
+        "ENUS": "Electrolytic Silver Smelting"
+    },
+    {
+        "Name": "R电解冶银",
+        "ZHCN": "将粗银用硫酸溶解，再进行电解精炼，最终在阴极得到高纯度的银。",
+        "ENUS": "Dissolve crude silver in sulfuric acid, then refine it by electrolysis, and finally obtain high-purity silver at the cathode."
+    },
+    {
+        "Name": "粗银",
+        "ZHCN": "粗银",
+        "ENUS": "Unpurified Silver"
+    },
+    {
+        "Name": "I粗银",
+        "ZHCN": "银矿初步冶炼的产物，含有铜铝等杂质，可以进一步冶炼提纯，也可以粉碎后参杂铜做成导电浆料供印刷电路使用。",
+        "ENUS": "The initial smelting products of silver mines contain impurities such as copper and aluminum, which can be further refined and purified. They can also be crushed and mixed with copper to make conductive paste for use in printed circuits."
+    },
+    {
+        "Name": "纯银",
+        "ZHCN": "纯银",
+        "ENUS": "Sterling Silver"
+    },
+    {
+        "Name": "I纯银",
+        "ZHCN": "电解精炼后的高纯银，纯度达到99.99%，可以利用其优异的导电性能做成导电银浆，也可以利用其极高的光反射率应用于光学器件的制造中。",
+        "ENUS": "After electrolytic refining, the purity of high-purity silver reaches 99.99%. Its excellent conductivity can be used to make conductive silver paste, and its extremely high light reflectivity can also be applied in the manufacturing of optical devices."
+    },
+    {
+        "Name": "导电银浆",
+        "ZHCN": "导电银浆",
+        "ENUS": "Conductive Silver Paste"
+    },
+    {
+        "Name": "T导电银浆",
+        "ZHCN": "银的导电性远高于铜，但因为银的储量远低于铜，一般不会直接将银压印在电路板上，而是粉碎后与有机溶剂一起制成导电银浆印刷在电路板上。",
+        "ENUS": "The conductivity of silver is much higher than that of copper, but because the storage capacity of silver is much lower than that of copper, silver is generally not directly imprinted on circuit boards. Instead, it is crushed and mixed with organic solvents to make conductive silver paste and printed on circuit boards."
+    },
+    {
+        "Name": "I导电银浆",
+        "ZHCN": "用于印刷电路用的导电浆料，因其混杂了导电性能最佳的金属：银，因此其印刷的电路产品广泛应用于高频电路、精密电子、航空航天等领域。",
+        "ENUS": "The conductive paste used for printed circuits is widely used in high-frequency circuits, precision electronics, aerospace and other fields due to its mixture of the best conductive metal: silver."
+    },
+    {
+        "Name": "银铜混合浆料",
+        "ZHCN": "银铜混合浆料",
+        "ENUS": "Silver Copper Mixed Paste"
+    },
+    {
+        "Name": "R银铜混合浆料",
+        "ZHCN": "对银纯度要求不高的场合，可以将粗银与铜混合制成银铜粉末，与有机溶剂混合制造而成。",
+        "ENUS": "In situations where silver purity is not a high requirement, coarse silver can be mixed with copper to produce silver copper powder, which can then be mixed with organic solvents for manufacturing."
+    },
+    {
+        "Name": "I光子合并器",
+        "ZHCN": "将棱镜表面切割成纳米光栅再重新组装，在特定结构的组合下连续吸收多个低能量的光子后会发出一个高能量的光子。",
+        "ENUS": "Cutting the prism surface into a nano grating and reassembling it will emit a high-energy photon after continuously absorbing multiple low-energy photons in a specific structure combination."
+    },
+    {
+        "Name": "银透镜合并器",
+        "ZHCN": "银透镜合并器",
+        "ENUS": "Silver Lens Combiner"
+    },
+    {
+        "Name": "R银透镜合并器",
+        "ZHCN": "银透镜具有高折射率和低色散的优点，在光子合并器中，镀银透镜可以起到关键作用，银层激发的表面等离子体可复原倏逝波，增强光的强度，从而实现光子的能级合并。",
+        "ENUS": "Silver lenses have the advantages of high refractive index and low dispersion. In photon combiners, silver plated lenses can play a key role. The surface plasma excited by the silver layer can recover evanescent waves, enhance the intensity of light, and achieve photon energy level merging."
+    },
+    {
+        "Name": "润滑油",
+        "ZHCN": "润滑油",
+        "ENUS": "lubricating Oil"
+    },
+    {
+        "Name": "T润滑油",
+        "ZHCN": "润滑油是用在各种机械设备上以减少摩擦，保护机械及加工件的液体或半固体润滑剂，主要起润滑、辅助冷却、防锈、清洁、密封和缓冲等作用，可以大幅延长使用寿命或维持设备流畅运转。",
+        "ENUS": "Lubricating oil is a liquid or semi-solid lubricant used on various mechanical equipment to reduce friction, protect machinery and processed parts, mainly for lubrication, auxiliary cooling, rust prevention, cleaning, sealing, and buffering purposes. It can greatly extend the service life or maintain smooth operation of equipment."
+    },
+    {
+        "Name": "I润滑油",
+        "ZHCN": "从原油提炼的润滑剂，主要对机械零件起润滑、辅助冷却、防锈、清洁、密封和缓冲等作用，能提高机械的效率和大大延长机械的使用寿命。",
+        "ENUS": "Lubricants extracted from crude oil mainly provide lubrication, auxiliary cooling, rust prevention, cleaning, sealing, and buffering for mechanical parts, which can improve the efficiency of machinery and greatly extend its service life."
+    },
+    {
+        "Name": "高速连接器",
+        "ZHCN": "高速连接器",
+        "ENUS": "High-speed Connector"
+    },
+    {
+        "Name": "T高速连接器",
+        "ZHCN": "利用银优良导电性能专门制造的信号交互器，能以极高的速度完成信号传递，在多设备组网，量子计算领域有重要应用。",
+        "ENUS": "The signal interactor specially manufactured using silver's excellent conductivity can complete signal transmission at extremely high speeds, and has important applications in multi device networking and quantum computing."
+    },
+    {
+        "Name": "I高速连接器",
+        "ZHCN": "专门负责设备与设备之间连接通信用模块，提供专业的低时延高速读写服务。",
+        "ENUS": "Specially responsible for connecting communication modules between devices, providing professional low latency and high-speed read/write services."
+    },
+    {
+        "Name": "润滑电动机",
+        "ZHCN": "润滑电动机",
+        "ENUS": "Lubricating Electric Motor"
+    },
+    {
+        "Name": "R润滑电动机",
+        "ZHCN": "将润滑油注入转轴，齿轮等易磨损部位，可以大大延长零件的使用寿命。",
+        "ENUS": "Injecting lubricating oil into easily worn parts such as shafts and gears can greatly extend the service life of the components."
+    },
+    {
+        "Name": "木炭",
+        "ZHCN": "木炭",
+        "ENUS": "Charcoal"
+    },
+    {
+        "Name": "R木炭",
+        "ZHCN": "将原木切割破碎，烘干水分后，进一步加热木材，使其在无氧环境下炭化，最后得到木炭。",
+        "ENUS": "Cut and crush the logs, dry the moisture, further heat the wood to carbonize it in an anaerobic environment, and finally obtain charcoal."
+    },
+    {
+        "Name": "热解",
+        "ZHCN": "热解",
+        "ENUS": "Pyrolysis"
+    },
+    {
+        "Name": "R热解",
+        "ZHCN": "在无氧或极低氧环境下加热生物质，分解为生物油、和氢气，生物油经精炼可替代化石燃料。",
+        "ENUS": "Heating biomass in anaerobic or extremely low oxygen environments decomposes it into bio oil and hydrogen gas, and bio oil can be refined to replace fossil fuels."
+    },
+    {
+        "Name": "水生植物培养",
+        "ZHCN": "水生植物培养",
+        "ENUS": "Cultivation Of Aquatic Plants"
+    },
+    {
+        "Name": "R水生植物培养",
+        "ZHCN": "水生蕨类，绿藻等生物群，作为首批出现的植物，在富营养水体中能大量繁殖，是优质的生物质来源。",
+        "ENUS": "Aquatic ferns, green algae and other biological groups, as the first plants to appear, can reproduce in large quantities in eutrophic water bodies and are high-quality sources of biomass."
+    },
+    {
+        "Name": "培养皿",
+        "ZHCN": "培养皿",
+        "ENUS": "Petri Dish"
+    },
+    {
+        "Name": "I培养皿",
+        "ZHCN": "生物研究使用的消耗品，在玻璃皿中放入灭菌的生物质，以供想要研究的细胞细菌繁殖。",
+        "ENUS": "Consumables used in biological research, sterilized biomass is placed in glass dishes for bacterial growth in the cells to be studied."
+    },
+    {
+        "Name": "种子",
+        "ZHCN": "种子",
+        "ENUS": "Seeds"
+    },
+    {
+        "Name": "I种子",
+        "ZHCN": "采集自本地生态圈的种子，来源广泛，可定向培育为各种工业作物。",
+        "ENUS": "Collecting seeds from local ecosystems, with a wide range of sources, can be selectively cultivated into various industrial crops."
+    },
+    {
+        "Name": "速生林",
+        "ZHCN": "速生林",
+        "ENUS": "Rapid Growth Forest"
+    },
+    {
+        "Name": "T速生林",
+        "ZHCN": "速生林是轮伐周期短的人工林，在工业造纸、木材加工领域需求较大。由于其速生优势，材质好，造林成活率高等优良特性，因而有很好的经济价值。",
+        "ENUS": "Rapid growth forests are artificial forests with short rotation cycles, and are in high demand in the fields of industrial papermaking and wood processing. Due to its advantages of rapid growth, good material quality, and high survival rate in afforestation, it has great economic value."
+    },
+    {
+        "Name": "速生苗",
+        "ZHCN": "速生苗",
+        "ENUS": "Fast-growing Seedlings"
+    },
+    {
+        "Name": "I速生苗",
+        "ZHCN": "经过筛选培育出来的树木幼苗，和自然树木比有速生优势，材质好，造林成活率高等优良特性，因而有很好的经济价值。",
+        "ENUS": "The tree seedlings cultivated through screening have excellent characteristics such as rapid growth advantage, good material quality, and high afforestation survival rate compared to natural trees, thus having great economic value."
+    },
+    {
+        "Name": "速生苗培养",
+        "ZHCN": "速生苗培养",
+        "ENUS": "Rapid Seedling Cultivation"
+    },
+    {
+        "Name": "R速生苗培养",
+        "ZHCN": "通过在培养皿中观察种子的性状，发育情况，筛选出生长速度最快的速生林种，并培养为待移植的树苗。",
+        "ENUS": "By observing the characteristics and development of seeds in a petri dish, the fastest growing fast-growing forest species can be selected and cultivated as seedlings for transplantation."
+    },
+    {
+        "Name": "速生林种植",
+        "ZHCN": "速生林种植",
+        "ENUS": "Fast Growing Forest Planting"
+    },
+    {
+        "Name": "R速生林种植",
+        "ZHCN": "将速生苗移植到人造生态圈内，多层垂直水培槽，人工照明，自动恒温等措施保证速生林将以最快的速度成长为可砍伐的树木。",
+        "ENUS": "Transplanting fast-growing seedlings into artificial ecological circles, using multi-layer vertical hydroponic tanks, artificial lighting, automatic constant temperature and other measures to ensure that fast-growing forests will grow into trees that can be cut down at the fastest speed."
+    },
+    {
+        "Name": "速生林扩张",
+        "ZHCN": "速生林扩张",
+        "ENUS": "Rapid Forest Expansion"
+    },
+    {
+        "Name": "R速生林扩张",
+        "ZHCN": "使用激素菌群配置的营养液进行雾化水培林苗，使树根时刻保持在空气与水雾中，水雾里专门配置的激素与营养素能帮助树木快速生长。减少砍伐，以增加速生林规模为目标进行培养。",
+        "ENUS": "Using nutrient solution prepared with hormone bacteria to atomize hydroponic forest seedlings, keeping the roots in air and water mist at all times. The hormones and nutrients specially prepared in the water mist can help trees grow rapidly. Reduce deforestation and cultivate with the goal of increasing the scale of fast-growing forests."
+    },
+    {
+        "Name": "营养水培林",
+        "ZHCN": "营养水培林",
+        "ENUS": "Nutrient Hydroponic Forest"
+    },
+    {
+        "Name": "R营养水培林",
+        "ZHCN": "使用激素菌群配置的营养液进行雾化水培林苗，使树根时刻保持在空气与水雾中，水雾里专门配置的激素与营养素能帮助树木快速生长。",
+        "ENUS": "Using nutrient solution prepared with hormone bacteria to atomize hydroponic forest seedlings, keeping the roots in air and water mist at all times. The hormones and nutrients specially prepared in the water mist can help trees grow rapidly."
+    },
+    {
+        "Name": "转基因工具",
+        "ZHCN": "转基因工具",
+        "ENUS": "Genetically Modified Tools"
+    },
+    {
+        "Name": "I转基因工具",
+        "ZHCN": "制式转基因工具，内部记录了目标的转基因序列，激光通过光纤对基因进行精准地切割，最终使转基因顺利插入目标DNA中，实现转基因改造。",
+        "ENUS": "The standard transgenic tool records the transgenic sequence of the target internally, and the laser precisely cuts the gene through optical fiber, ultimately enabling the transgenic to be smoothly inserted into the target DNA, achieving transgenic modification."
+    },
+    {
+        "Name": "糖料作物研究",
+        "ZHCN": "糖料作物研究",
+        "ENUS": "Research On Sugar Crops"
+    },
+    {
+        "Name": "T糖料作物研究",
+        "ZHCN": "糖料作物是以制糖工业原料生产为核心用途的农作物，能产出工业糖这一核心产品。",
+        "ENUS": "Sugar crops are crops that are primarily used for the production of raw materials in the sugar industry, and can produce the core product of industrial sugar."
+    },
+    {
+        "Name": "糖料作物种",
+        "ZHCN": "糖料作物种",
+        "ENUS": "Sugar Crop Seeds"
+    },
+    {
+        "Name": "I糖料作物种",
+        "ZHCN": "通过转基因改造的糖料作物种子，其生长周期先将能量转化为糖分储存在根茎里，然后再消耗糖分生长出种子，因此若是为了收获糖料，可以在前半段生长周期直接收获根茎。",
+        "ENUS": "The sugar crop seeds modified through genetic engineering first convert energy into sugar and store it in the roots and stems during their growth cycle, and then consume the sugar to grow the seeds. Therefore, if you want to harvest sugar, you can directly harvest the roots and stems during the first half of the growth cycle."
+    },
+    {
+        "Name": "糖料作物（满周期）",
+        "ZHCN": "糖料作物（满周期）",
+        "ENUS": "Sugar Crops (Full Cycle)"
+    },
+    {
+        "Name": "R糖料作物（满周期）",
+        "ZHCN": "等糖料作物生长完全周期后收获，可以收获糖料作物种子供下一循环播种。",
+        "ENUS": "After the complete growth cycle of sugar crops, the seeds can be harvested for the next cycle of sowing."
+    },
+    {
+        "Name": "糖料作物（半周期）",
+        "ZHCN": "糖料作物（半周期）",
+        "ENUS": "Sugar Crops (Half Cycle)"
+    },
+    {
+        "Name": "R糖料作物（半周期）",
+        "ZHCN": "在糖料作物生长到一半，根茎储存糖分最多时收获，只能获得根茎，将其粉碎提炼获得工业用糖。",
+        "ENUS": "Harvesting sugar crops halfway through their growth and when the roots and stems store the most sugar, only the roots and stems can be obtained, which can be crushed and refined to obtain industrial sugar."
+    },
+    {
+        "Name": "工业糖",
+        "ZHCN": "工业糖",
+        "ENUS": "Industrial Sugar"
+    },
+    {
+        "Name": "I工业糖",
+        "ZHCN": "含有杂质的糖料，尚未达到食品级的标准，不过工业这个饕餮巨兽不挑剔这些。",
+        "ENUS": "Sugar ingredients containing impurities have not yet reached food grade standards, but this industrial behemoth is not picky about these."
+    },
+    {
+        "Name": "工业作物应用",
+        "ZHCN": "工业作物应用",
+        "ENUS": "Industrial Crop Applications"
+    },
+    {
+        "Name": "T工业作物应用",
+        "ZHCN": "将工业糖进行发酵处理得到工业醇，醇作为重要的有机溶剂，在许多化工场景都有重要应用。",
+        "ENUS": "Fermentation of industrial sugar produces industrial alcohols, which are important organic solvents and have significant applications in many chemical industries."
+    },
+    {
+        "Name": "工业醇",
+        "ZHCN": "工业醇",
+        "ENUS": "Industrial Alcohol"
+    },
+    {
+        "Name": "I工业醇",
+        "ZHCN": "在无氧环境下微生物发酵分解糖等有机物，最终得到的工业用醇，可用于多种化学合成场景。",
+        "ENUS": "The industrial alcohol obtained by microbial fermentation and decomposition of sugars and other organic compounds in an anaerobic environment can be used in various chemical synthesis scenarios."
+    },
+    {
+        "Name": "醇润滑油",
+        "ZHCN": "醇润滑油",
+        "ENUS": "Alcohol Lubricating Oil"
+    },
+    {
+        "Name": "R醇润滑油",
+        "ZHCN": "在润滑油中添加醇，提升润滑油性能。",
+        "ENUS": "Add alcohol to lubricating oil to enhance its performance."
+    },
+
+    {
         "Name": "T航天器速度提升",
         "ZHCN": "提升物流运输机飞行速度。\n提升配送运输机飞行速度。\n提升星际物流运输船航行速度。",
         "ENUS": "Improve the flight speed of logistics transport aircraft. \nImprove the flight speed of delivery transport aircraft. \nImprove the navigation speed of interstellar logistics transport ships."
@@ -268,11 +809,6 @@
         "Name": "充放电集成化",
         "ZHCN": "充放电集成化",
         "ENUS": "Integrated Charging And Discharging"
-    },
-    {
-        "Name": "铀矿脉",
-        "ZHCN": "铀矿脉",
-        "ENUS": "Uranium Veins"
     },
     {
         "Name": "中子星星系行星",
@@ -344,16 +880,7 @@
         "ZHCN": "甲烷海",
         "ENUS": "Methane Sea"
     },
-    {
-        "Name": "钛矿",
-        "ZHCN": "钛矿",
-        "ENUS": "Titanium ore"
-    },
-    {
-        "Name": "莫桑石矿脉",
-        "ZHCN": "莫桑石矿脉",
-        "ENUS": "Moissanite vein"
-    },
+
     {
         "Name": "莫桑石",
         "ZHCN": "莫桑石",
@@ -364,6 +891,8 @@
         "ZHCN": "莫桑石为天然存在的一种碳化硅晶体矿物，在高温、高压等极端条件下表现出优异的性能，可用于制作高性能的碳化硅陶瓷材料。",
         "ENUS": "Moissanite is a naturally occurring silicon carbide crystal mineral that exhibits excellent properties under extreme conditions such as high temperature and high pressure, and can be used to produce high-performance silicon carbide ceramic materials."
     },
+
+
     {
         "Name": "黑雾",
         "ZHCN": "黑雾",
@@ -390,14 +919,14 @@
         "ENUS": "A material that has existed since ancient times and can be used to build large structures."
     },
     {
-        "Name": "优质混凝土",
-        "ZHCN": "优质混凝土",
-        "ENUS": "High Quality Concrete"
+        "Name": "石英砂玻璃",
+        "ZHCN": "石英砂玻璃",
+        "ENUS": "Quartz Sand Glass"
     },
     {
-        "Name": "R优质混凝土",
-        "ZHCN": "通过在混凝土中添加硅灰，能促进水泥水化，生成硅酸钙凝胶，显著提高混凝土强度和抗裂性。",
-        "ENUS": "Adding silica fume into concrete can promote cement hydration, generate calcium silicate gel, and significantly improve concrete strength and crack resistance."
+        "Name": "R石英砂玻璃",
+        "ZHCN": "将石料破碎筛选为石英砂，再用于烧制玻璃，表面积增大，能更快熔融为均匀的玻璃液，也有助于形成成分均匀的玻璃液，产出高质量的玻璃。",
+        "ENUS": "Crushing and screening the stone material into quartz sand, which is then used for firing glass, increases the surface area and can melt faster into a uniform glass liquid, which also helps to form a uniformly composed glass liquid and produce high-quality glass."
     },
     {
         "Name": "火力发电厂",
@@ -417,12 +946,22 @@
     {
         "Name": "塑料",
         "ZHCN": "塑料",
-        "ENUS": "Polypropylene"
+        "ENUS": "Plastic"
     },
     {
         "Name": "I塑料",
         "ZHCN": "一种热塑性塑料，具有良好的机械性能、化学稳定性和较低的合成成本。",
         "ENUS": "A thermoplastic, with good mechanical properties, chemical stability and low synthetic costs."
+    },
+    {
+        "Name": "醇塑料",
+        "ZHCN": "醇塑料",
+        "ENUS": "Alcohol Plastic"
+    },
+    {
+        "Name": "R醇塑料",
+        "ZHCN": "以烯烃为原料制造塑料，在工业醇作为有机溶剂中添加天然纤维作为添加剂，以此合成出高质量的塑料。",
+        "ENUS": "Using olefins as raw materials to manufacture plastics, natural fibers are added as additives in industrial alcohols as organic solvents to synthesize high-quality plastics."
     },
     {
         "Name": "增产剂",
@@ -530,24 +1069,19 @@
         "ENUS": "Uranium-235 Solution"
     },
     {
-        "Name": "基础激光应用",
-        "ZHCN": "基础激光应用",
-        "ENUS": "Basic Laser Applications"
+        "Name": "永固型节点构造",
+        "ZHCN": "永固型节点构造",
+        "ENUS": "Permanent Node Construction"
     },
     {
-        "Name": "T基础激光应用",
-        "ZHCN": "通过磁场以及棱镜和透镜组的作用，产生的激光在钻井，切割，激发等离子体等领域都有重要作用。",
-        "ENUS": "The laser generated through the action of magnetic field, prism and lens group plays an important role in drilling, cutting, plasma excitation and other fields."
+        "Name": "T永固型节点构造",
+        "ZHCN": "恒星并不会一成不变，细微的波动就会在表面掀起太阳风，射线爆发，高能粒子轰击对于近在咫尺的戴森球来说无异于被海量的粒子武器攻击，凡物制造的防护层在轰击中很快就会变得如饼干般酥脆，若要建设永固型戴森球节点，我们需要比范德华力更加强大的作用力制成的材料：零素装甲。",
+        "ENUS": "Stars do not remain unchanged, subtle fluctuations can trigger solar winds, burst rays, and high-energy particle bombardment on the surface. For the Dyson sphere that is close at hand, it is no different from being attacked by a massive amount of particle weapons. The protective layer made of ordinary objects will quickly become crispy like cookies during bombardment. To build a permanent Dyson sphere node, we need a material made of a force stronger than van der Waals force: zero element armor."
     },
     {
-        "Name": "激光发生器",
-        "ZHCN": "激光发生器",
-        "ENUS": "Laser Generator"
-    },
-    {
-        "Name": "I激光发生器",
-        "ZHCN": "通过磁场以及棱镜和透镜组的作用，可以高效地产生激光，改进后的激光发生器更稳定，性能也更好。",
-        "ENUS": "Through the action of magnetic field, prism and lens group, laser can be efficiently generated, and the improved laser generator is more stable and has better performance."
+        "Name": "R永固型节点构造",
+        "ZHCN": "使用零素装甲防护的永固型戴森球节点组件。",
+        "ENUS": "A permanent Dyson ball node component protected by zero element armor."
     },
     {
         "Name": "激光钻井平台",
@@ -578,6 +1112,16 @@
         "Name": "I碳化硅",
         "ZHCN": "高性能陶瓷材料，耐热，导热高，强度高。在航空航天，半导体，核能，化工领域都有应用。",
         "ENUS": "High performance ceramic material, heat-resistant, high thermal conductivity, and high strength. It has applications in aerospace, semiconductor, nuclear energy, and chemical industries."
+    },
+    {
+        "Name": "碳化硅（高效）",
+        "ZHCN": "碳化硅（高效）",
+        "ENUS": "Silicon Carbide (Efficient)"
+    },
+    {
+        "Name": "R碳化硅（高效）",
+        "ZHCN": "莫桑石是天然的碳化硅原矿，如果有莫桑石，我们就能高效地炼制碳化硅。",
+        "ENUS": "Moissanite is a natural raw material for silicon carbide, and if we have Moissanite, we can efficiently refine silicon carbide."
     },
     {
         "Name": "深层熔岩",
@@ -760,9 +1304,24 @@
         "ENUS": "A hydroponic nutrient solution rich in hormones and trace elements that promote plant growth can significantly increase crop cultivation and growth."
     },
     {
+        "Name": "营养液调配",
+        "ZHCN": "营养液调配",
+        "ENUS": "Nutrient Solution Preparation"
+    },
+    {
         "Name": "R营养液调配",
         "ZHCN": "将激素生长菌群与水和土壤提取物混合，生产出促进植物生长的激素与微量元素的营养液，比起死板的机器，这些世世代代与植物伴生的伙伴更懂得生长需要什么。",
         "ENUS": "Mixing hormone growth bacteria with water and soil extracts to produce nutrient solutions containing hormones and trace elements that promote plant growth, these partners who have been associated with plants for generations understand what growth requires more than rigid machines."
+    },
+    {
+        "Name": "绿肥营养液",
+        "ZHCN": "绿肥营养液",
+        "ENUS": "Green Manure Nutrient Solution"
+    },
+    {
+        "Name": "R绿肥营养液",
+        "ZHCN": "激素菌群能将自然界中的游离元素固定为可供植物直接吸收的化合物，自然也能将生物尸骸中的营养素分离出来再使用，效率也更高。",
+        "ENUS": "Hormonal microbiota can fix free elements in nature into compounds that can be directly absorbed by plants, and can also separate nutrients from biological remains for reuse, with higher efficiency."
     },
     {
         "Name": "高级生物塑料",
@@ -771,18 +1330,8 @@
     },
     {
         "Name": "R高级生物塑料",
-        "ZHCN": "通过高速生长菌群替代宿主生物反应的特性，可以诱导它对有机质进行分解重构，直接生成具有特定纳米结构的类塑料有机高分子。",
-        "ENUS": "By replacing the host organism with a rapidly growing microbial community, it can induce the decomposition and reconstruction of organic matter, directly generating plastic like organic polymers with specific nanostructures."
-    },
-    {
-        "Name": "高级生物发酵",
-        "ZHCN": "高级生物发酵",
-        "ENUS": "Advanced Biological Fermentation"
-    },
-    {
-        "Name": "R高级生物发酵",
-        "ZHCN": "在高速生长菌群的催化下，厌氧菌几乎能榨尽发酵堆中所有的有机质，并分解为甲烷。",
-        "ENUS": "Under the catalysis of rapidly growing bacterial communities, anaerobic bacteria can almost completely extract all organic matter from the fermentation pile and decompose it into methane."
+        "ZHCN": "通过共生菌核替代宿主生物反应的特性，可以诱导它对有机质进行分解重构，直接生成具有特定纳米结构的类塑料有机高分子。",
+        "ENUS": "By replacing the host organism's response with symbiotic sclerotia, it can induce the decomposition and reconstruction of organic matter, directly generating plastic like organic polymers with specific nanostructures."
     },
     {
         "Name": "高级有机合金",
@@ -791,48 +1340,18 @@
     },
     {
         "Name": "R高级有机合金",
-        "ZHCN": "通过高速生长菌群替代宿主生物反应的特性，可以诱导它对有机质进行分解重构，直接与金属进行生化反应生成有机合金。",
-        "ENUS": "By replacing the host organism with a rapidly growing microbial community, it can be induced to decompose and reconstruct organic matter, directly reacting with metals to form organic alloys."
+        "ZHCN": "通过共生菌核替代宿主生物反应的特性，可以诱导它对有机质进行分解重构，直接与金属进行生化反应生成有机合金。",
+        "ENUS": "By utilizing the characteristic of symbiotic sclerotia as a substitute for host biological reactions, it can induce the decomposition and reconstruction of organic matter, and directly undergo biochemical reactions with metals to generate organic alloys."
     },
     {
-        "Name": "高速生长纤维",
-        "ZHCN": "高速生长纤维",
-        "ENUS": "High-speed Fiber Growth"
+        "Name": "超速生林",
+        "ZHCN": "超速生林",
+        "ENUS": "Overspeed Forest"
     },
     {
-        "Name": "R高速生长纤维",
-        "ZHCN": "在高速生长菌群的催化下，我们能获得近乎违背常理的植物纤维产量。",
-        "ENUS": "Under the catalysis of rapidly growing bacterial communities, we can achieve almost counterintuitive plant fiber yields."
-    },
-    {
-        "Name": "高速生长生物质",
-        "ZHCN": "高速生长生物质",
-        "ENUS": "High Speed Growth Of Biomass"
-    },
-    {
-        "Name": "R高速生长生物质",
-        "ZHCN": "在高速生长菌群的催化下，我们能获得近乎违背常理的生物质产量。",
-        "ENUS": "Under the catalysis of rapidly growing microbial communities, we can achieve biomass yields that are almost contrary to common sense."
-    },
-    {
-        "Name": "激素生长纤维",
-        "ZHCN": "激素生长纤维",
-        "ENUS": "Hormone growth fiber"
-    },
-    {
-        "Name": "R激素生长纤维",
-        "ZHCN": "通过伴生菌种提供肥料和激素，我们得以获得更高产量的植物纤维。",
-        "ENUS": "By providing fertilizers and hormones through companion strains, we are able to obtain higher yields of plant fiber."
-    },
-    {
-        "Name": "激素生长生物质",
-        "ZHCN": "激素生长生物质",
-        "ENUS": "Hormonal Growth Biomass"
-    },
-    {
-        "Name": "R激素生长生物质",
-        "ZHCN": "通过伴生菌种提供肥料和激素，我们得以获得更高产量的生物质。",
-        "ENUS": "By providing fertilizers and hormones through companion strains, we are able to obtain higher yields of biomass."
+        "Name": "R超速生林",
+        "ZHCN": "被共生菌核寄生的林苗，其生长速度已经有些超过植物的定义，其培养水槽必须处于无缝混凝土室内，且期间不得有任何非食物的活物进入其中，否则不保证其安全。",
+        "ENUS": "The growth rate of forest seedlings parasitized by symbiotic sclerotia has exceeded the definition of plants. The cultivation tank must be located in a seamless concrete chamber, and no non food living organisms are allowed to enter during this period, otherwise their safety cannot be guaranteed."
     },
     {
         "Name": "激素生长菌群",
@@ -855,12 +1374,12 @@
         "ENUS": "Through manual screening, the target bacterial species can rapidly evolve in the direction of promoting plant growth and be mass-produced."
     },
     {
-        "Name": "高速生长菌群",
-        "ZHCN": "高速生长菌群",
-        "ENUS": "High Growth Microbial Community"
+        "Name": "共生菌核",
+        "ZHCN": "共生菌核",
+        "ENUS": "Symbiotic Sclerotia"
     },
     {
-        "Name": "I高速生长菌群",
+        "Name": "I共生菌核",
         "ZHCN": "采集自生态系统更加繁荣发达的生态圈，能促进植物高速生长或辅助催化复杂的生物反应，自身也需要更高级的营养，因其霸道的伴生逻辑，要小心菌种不慎泄露导致的物种入侵事故。",
         "ENUS": "Collecting from more prosperous and developed ecosystems, it can promote rapid plant growth or assist in catalyzing complex biological reactions. It also requires higher levels of nutrition. Due to its dominant accompanying logic, caution should be taken against species invasion accidents caused by accidental leakage of bacterial strains."
     },
@@ -871,13 +1390,13 @@
     },
     {
         "Name": "R辐射诱变迭代",
-        "ZHCN": "一开始我们将高速生长菌群产生的增生组织按生物防治条例进行焚毁处理，但接着菌群种群就出现了的负增长，直到一名工程师违规将增生组织重新用于菌群的培养。似乎曾经对增生组织的焚烧处理让菌群认为这是有威胁，不利于生长的环境，而将增生组织重新回收培养能让菌群判定为“只是一次试图让宿主更加适应环境改造的失败”，这里还是安全的，循环的生态圈。",
-        "ENUS": "At the beginning, we incinerated the proliferative tissue generated by the rapidly growing bacterial community according to biological control regulations, but then the bacterial population showed negative growth until an engineer illegally reused the proliferative tissue for bacterial culture. It seems that the incineration treatment of proliferating tissues once made the microbiota consider it a threatening and unfavorable environment for growth, while the recycling and cultivation of proliferating tissues can make the microbiota judge it as \"just a failed attempt to make the host more adaptable to the environment\". This is still a safe and circular ecosystem."
+        "ZHCN": "一开始我们将共生菌核产生的增生组织按生物防治条例进行焚毁处理，但接着菌群种群就出现了的负增长，直到一名工程师违规将增生组织重新用于菌群的培养。似乎曾经对增生组织的焚烧处理让菌群认为这是有威胁，不利于生长的环境，而将增生组织重新回收培养能让菌群判定为“只是一次试图让宿主更加适应环境改造的失败”，这里还是安全的，循环的生态圈。",
+        "ENUS": "At the beginning, we incinerated the proliferative tissue produced by symbiotic sclerotia according to biological control regulations, but then there was a negative growth in the microbial population, until an engineer illegally reused the proliferative tissue for microbial cultivation. It seems that the incineration treatment of proliferating tissues once made the microbiota consider it a threatening and unfavorable environment for growth, while the recycling and cultivation of proliferating tissues can make the microbiota judge it as \"just a failed attempt to make the host more adaptable to the environment\". This is still a safe and circular ecosystem."
     },
     {
         "Name": "I增生组织",
-        "ZHCN": "将高速生长菌群诱导对有机质进行分解重构时，产生的令人不安的副产物，菌群似乎根据反应皿的环境临时增生出了各种用途的器官，有观测环境的感光器官，用于移动的爬行关节，甚至是试图破坏容器的喙和利爪。",
-        "ENUS": "When inducing the decomposition and reconstruction of organic matter by rapidly growing bacterial communities, disturbing byproducts are produced. The microbial community seems to temporarily proliferate various organs based on the environment of the reaction vessel, including photosensitive organs for observing the environment, crawling joints for movement, and even beaks and claws attempting to destroy containers."
+        "ZHCN": "将共生菌核诱导对宿主进行分解重构时，产生的令人不安的副产物，菌群似乎根据反应皿的环境临时增生出了各种用途的器官，有观测环境的感光器官，用于移动的爬行关节，甚至是试图破坏容器的喙和利爪。",
+        "ENUS": "When inducing the decomposition and reconstruction of the host by symbiotic sclerotia, unsettling byproducts are produced. The microbial community seems to temporarily proliferate various organs for different purposes based on the environment of the reaction dish, including photosensitive organs for observing the environment, crawling joints for movement, and even beaks and claws attempting to destroy the container."
     },
     {
         "Name": "甲烷",
@@ -1146,8 +1665,13 @@
     },
     {
         "Name": "R石料破碎",
-        "ZHCN": "将石料破碎为沙土，以供基建使用。",
-        "ENUS": "Crush the stone into sand for use in infrastructure construction."
+        "ZHCN": "将石料破碎为沙土，以供基建使用。\n沙土放入背包时会以<color=\"#FD965ECC\">50倍</color>转化为铺设地基的沙土",
+        "ENUS": "Crush the stone into sand for use in infrastructure construction.\nWhen sand is placed in a backpack, it will be converted <color=\"#FD965ECC\">50 times</color> into sand for laying the foundation"
+    },
+    {
+        "Name": "I沙土",
+        "ZHCN": "由石料破碎筛选而成纯净砂石，可以用于烧制玻璃，或提取营养元素用于配置水培液。",
+        "ENUS": "Pure sand and gravel are obtained by crushing and screening stone materials, which can be used for firing glass or extracting nutrients for preparing hydroponic solutions."
     },
     {
         "Name": "忠诚僚机计划",
@@ -1192,7 +1716,7 @@
     {
         "Name": "材料矩阵",
         "ZHCN": "材料矩阵",
-        "ENUS": "Structure Matrix"
+        "ENUS": "Material Matrix"
     },
     {
         "Name": "I材料矩阵",
@@ -1237,12 +1761,22 @@
     {
         "Name": "电磁矩阵",
         "ZHCN": "电磁矩阵",
-        "ENUS": "Tensor Matrix"
+        "ENUS": "Electromagnetic Matrix"
     },
     {
         "Name": "I电磁矩阵",
         "ZHCN": "电磁力，四大基本力之一，电场与磁场的交响塑造了可见世界的基本秩序，对其理解的程度决定了文明的广度。",
         "ENUS": "Electromagnetic force, one of the four fundamental forces, the symphony of electric and magnetic fields shapes the basic order of the visible world, and the level of understanding of it determines the breadth of civilization."
+    },
+    {
+        "Name": "电磁矩阵（黑盒）",
+        "ZHCN": "电磁矩阵（黑盒）",
+        "ENUS": "Electromagnetic Matrix (Black Box)"
+    },
+    {
+        "Name": "R电磁矩阵（黑盒）",
+        "ZHCN": "原矿黑盒。",
+        "ENUS": "Raw ore black box."
     },
     {
         "Name": "T粒子矩阵描述",
@@ -1252,7 +1786,7 @@
     {
         "Name": "粒子矩阵",
         "ZHCN": "粒子矩阵",
-        "ENUS": "particle Matrix"
+        "ENUS": "Particle Matrix"
     },
     {
         "Name": "I粒子矩阵",
@@ -1290,24 +1824,19 @@
         "ENUS": "The objective improvement of explosive weapon damage has reached a bottleneck.  If you want to continue to improve, you need to analyze the enemy's structure, target weaknesses, and achieve greater damage effects with the same attack, in order to achieve the actual \"increase in damage\"."
     },
     {
-        "Name": "掌中工厂",
-        "ZHCN": "掌中工厂",
-        "ENUS": "Palm Factory"
+        "Name": "黑盒",
+        "ZHCN": "黑盒",
+        "ENUS": "Black Box"
     },
     {
-        "Name": "I掌中工厂",
-        "ZHCN": "考古发现的外星文明遗物，一台冰箱大的设备光原料输入口与成品输出口就占据了85%的空间，很明显这个工厂真正的加工设施不在当前纬度，而是类似于伊卡洛斯背包的内空间。通过研究它，我们或许能在内空间的使用上得到新的思路。",
-        "ENUS": "The archaeological discovery of extraterrestrial civilization relics, a refrigerator sized device occupying 85% of the space for raw material input and finished product output, clearly indicates that the actual processing facilities of this factory are not located at the current latitude, but rather in an interior space similar to the Icarus backpack. By studying it, we may be able to gain new insights into the use of inner space."
+        "Name": "T黑盒",
+        "ZHCN": "其他文明的遗物，全封闭的外壳刻画了一个原料异常简单的配方，而这个配方的产物是它自己，很明显这个设备是文明发生断代时用来快速重启文明的工具，为此刻画在表面的配方甚至采用了纯绘画方式来表达，工厂真正的加工设施不在当前纬度，而是类似于伊卡洛斯背包的内空间。暴力拆解外壳只会导致真正的内核消失在空间流中。",
+        "ENUS": "The fully enclosed shell of a relic from other civilizations depicts an exceptionally simple formula, and the product of this formula is itself. It is obvious that this device is a tool used to quickly restart civilization when it is cut off. Therefore, the formula depicted on the surface even uses pure painting to express it. The actual processing facilities of the factory are not in the current latitude, but in the interior space similar to the Icarus backpack. Violent disassembly of the shell will only cause the true kernel to disappear into the spatial stream."
     },
     {
-        "Name": "逆向掌中工厂蓝图",
-        "ZHCN": "逆向掌中工厂蓝图",
-        "ENUS": "Reverse Palm Factory Blueprint"
-    },
-    {
-        "Name": "T逆向掌中工厂蓝图",
-        "ZHCN": "对掌中工厂进行逆向工程，先复制零件做替换实验，尝试设计出蓝图，再根据我们的工业标准重新规范化接口设计。",
-        "ENUS": "Reverse engineer the Palm Factory by copying parts for replacement experiments, attempting to design a blueprint, and then re standardize the interface design according to our industrial standards."
+        "Name": "I黑盒",
+        "ZHCN": "其他文明的遗物，全封闭黑盒内是处于内空间中的万能工厂，因为暴力拆解外壳只会导致真正的内核消失在空间流中，所以我们对其内部构造还一无所知。",
+        "ENUS": "The relics of other civilizations, fully enclosed black boxes, are universal factories located in the inner space, because violent dismantling of the shell will only cause the true core to disappear into the spatial flow, so we still know nothing about its internal structure."
     },
     {
         "Name": "次级维度工厂",
@@ -1316,8 +1845,8 @@
     },
     {
         "Name": "I次级维度工厂",
-        "ZHCN": "将掌中工厂进行集成，用曲率引擎加强对虚数空间的开辟能力与航行能力，以此获得能在次级维度行动的工厂。",
-        "ENUS": "Integrate the palm factory and enhance its ability to open up imaginary space and navigate with a curvature engine, in order to obtain a factory that can operate in the secondary dimension."
+        "ZHCN": "将黑盒进行集成，用曲率引擎加强对虚数空间的开辟能力与航行能力，以此获得能在次级维度行动的工厂。",
+        "ENUS": "Integrate the Black Box and enhance its ability to open up imaginary space and navigate with a curvature engine, in order to obtain a factory that can operate in the secondary dimension."
     },
     {
         "Name": "T次级维度工厂",
@@ -1400,11 +1929,6 @@
         "ENUS": "Ceramic smelting"
     },
     {
-        "Name": "I晶圆",
-        "ZHCN": "晶圆是超大规模集成电路的基础，使用纯净半导体制造成薄片后，在上面光刻，离子注入和沉积，加工出“城市”般的立体纳米结构。",
-        "ENUS": "Wafers are the foundation of ultra large scale integrated circuits, which are made into thin sheets using pure semiconductors, and then subjected to photolithography, ion implantation, and deposition to process three-dimensional nanostructures resembling cities."
-    },
-    {
         "Name": "流速监测器",
         "ZHCN": "流速监测器",
         "ENUS": "Traffic Monitor"
@@ -1440,14 +1964,144 @@
         "ENUS": "By fully dispersing nanoparticles in plastic resins, the heat resistance, weather resistance, wear resistance and other properties of plastics are effectively improved."
     },
     {
-        "Name": "主板",
-        "ZHCN": "主板",
-        "ENUS": "Motherboard"
+        "Name": "气云",
+        "ZHCN": "气云",
+        "ENUS": "Gas Cloud"
     },
     {
-        "Name": "I主板",
-        "ZHCN": "将晶圆切割封装为处理器后，接入电路板，组成电子计算机主控板，在处理数据以及对处理过程进行控制更加出色。",
-        "ENUS": "After cutting and packaging the wafer into a processor, it is connected to a circuit board to form an electronic computer main control board, which performs better in processing data and controlling the processing process."
+        "Name": "I气云",
+        "ZHCN": "气态巨行星的轨道采集物，采集站初步分馏无法处理的混合物，需要送到专业的化工厂进行处理。",
+        "ENUS": "The orbit collection of gaseous giant planets requires the initial fractionation of the mixture that cannot be processed by the collection station, and it needs to be sent to a professional chemical plant for processing."
+    },
+    {
+        "Name": "富勒烯",
+        "ZHCN": "富勒烯",
+        "ENUS": "Fullerene"
+    },
+    {
+        "Name": "I富勒烯",
+        "ZHCN": "碳原子以五边形或六边形相互连接，最终连为一个球状的碳异形体，被称为富勒烯。",
+        "ENUS": "Carbon atoms are connected to each other in pentagons or hexagons, ultimately forming a spherical carbon heterostructure known as fullerene."
+    },
+    {
+        "Name": "气云精炼",
+        "ZHCN": "气云精炼",
+        "ENUS": "Gas Cloud Refining"
+    },
+    {
+        "Name": "T气云精炼",
+        "ZHCN": "气态巨行星除了富含大量的氢，甲烷之外，深处还有部分碳以及其同素异形体：富勒烯，这亦是种潜力强大的新型材料，等待我们利用起来。",
+        "ENUS": "Gas giant planets are not only rich in hydrogen and methane, but also contain some carbon and its allotropes: fullerenes, which are powerful new materials waiting for us to utilize."
+    },
+    {
+        "Name": "气云超精炼",
+        "ZHCN": "气云超精炼",
+        "ENUS": "Gas Cloud Ultra Refining"
+    },
+    {
+        "Name": "R气云超精炼",
+        "ZHCN": "精细处理气云，分离出更多细微的富勒烯异形体成分。",
+        "ENUS": "Fine processing of gas clouds to separate more subtle fullerene shaped components."
+    },
+    {
+        "Name": "富勒烯研究",
+        "ZHCN": "富勒烯研究",
+        "ENUS": "Research On Fullerenes"
+    },
+    {
+        "Name": "T富勒烯研究",
+        "ZHCN": "碳是一种神奇的元素，在材料学上光只有它一种元素就有无定形碳，石墨，钻石，石墨烯，碳纳米管等诸多结构，而现在，还有一种结构：球形碳富勒烯，无论是在球内内嵌原子，还是在球面节点上增加功能基团，都有重要的工业意义。",
+        "ENUS": "Carbon is a magical element, and in materials science, there are many structures of amorphous carbon, graphite, diamond, graphene, carbon nanotubes, and so on. Nowadays, there is also a structure called spherical carbon fullerene, which has important industrial significance whether it is embedding atoms inside the sphere or adding functional groups to the spherical nodes."
+    },
+    {
+        "Name": "富勒醇",
+        "ZHCN": "富勒醇",
+        "ENUS": "Fullerol"
+    },
+    {
+        "Name": "I富勒醇",
+        "ZHCN": "富勒醇是富勒烯的羟基化衍生物，为富勒烯碳骨架上多入了羟基的结构体。增加的水溶性让富勒醇在高端润滑与生物技术中有所应用。",
+        "ENUS": "Fullerenol is a hydroxylated derivative of fullerene, which is a structure with hydroxyl groups added to the carbon skeleton of fullerene. The increased water solubility enables the application of fuller alcohols in high-end lubrication and biotechnology."
+    },
+    {
+        "Name": "富勒烯内嵌银",
+        "ZHCN": "富勒烯内嵌银",
+        "ENUS": "Fullerene Embedded With Silver"
+    },
+    {
+        "Name": "I富勒烯内嵌银",
+        "ZHCN": "富勒烯内嵌银是在富勒烯球状结构中内嵌一个银原子构成的富勒烯衍生物，在磁场，量子计算等领域有重要的作用。",
+        "ENUS": "Fullerene embedded silver is a fullerene derivative composed of a silver atom embedded in a spherical structure of fullerene, which plays an important role in fields such as magnetic fields and quantum computing."
+    },
+    {
+        "Name": "富勒烯衍生物应用",
+        "ZHCN": "富勒烯衍生物应用",
+        "ENUS": "Application of Fullerene Derivatives"
+    },
+    {
+        "Name": "T富勒烯衍生物应用",
+        "ZHCN": "在持续的研究中，我们暂时归纳出两种富勒烯衍生物：富勒醇和内嵌银富勒烯，前者增加了醇基团使其溶于水，得以应用于润滑增产。后者则在永磁体与量子计算领域发挥作用。",
+        "ENUS": "In our ongoing research, we have tentatively identified two types of fullerene derivatives: fullerene alcohols and embedded silver fullerenes. The former has added alcohol groups to make it soluble in water, making it suitable for lubrication and increased production. The latter plays a role in the fields of permanent magnets and quantum computing."
+    },
+    {
+        "Name": "富勒醇增产剂",
+        "ZHCN": "富勒醇增产剂",
+        "ENUS": "Fullerenol Yield Enhancer"
+    },
+    {
+        "Name": "R富勒醇增产剂",
+        "ZHCN": "富勒醇是一种优秀的有机化工中介体，常在两种形状间转换以储存和放出传导物质，使用富勒醇可以轻易合成出增产剂。",
+        "ENUS": "Fullerenol is an excellent organic chemical intermediate that often transitions between two shapes to store and release conductive substances. It can be easily synthesized into yield increasing agents using Fullerenol."
+    },
+    {
+        "Name": "富勒银量子比特",
+        "ZHCN": "富勒银量子比特",
+        "ENUS": "Fuller Silver Quantum Bit"
+    },
+    {
+        "Name": "R富勒银量子比特",
+        "ZHCN": "银原子嵌入石墨烯后，结合了富勒烯碳笼的物理保护特性与金属原子的电子特性，为量子计算提供了稳定的物理平台。其核心优势体现在量子相干性保护、自旋态可调控性及分子级集成能力上。",
+        "ENUS": "After embedding silver atoms into graphene, the combination of the physical protection properties of fullerene carbon cages and the electronic properties of metal atoms provides a stable physical platform for quantum computing. Its core advantages are reflected in quantum coherence protection, spin state controllability, and molecular level integration capability."
+    },
+    {
+        "Name": "有机磁胶",
+        "ZHCN": "有机磁胶",
+        "ENUS": "Organic Magnetic Adhesive"
+    },
+    {
+        "Name": "I有机磁胶",
+        "ZHCN": "磁流体作为一种高级合金，可以在电场磁场的作用下改变形状，而以此为基底制造的有机磁胶，则可以在电场的作用下产生变化的磁场，赋予制造更多可能。",
+        "ENUS": "Magnetic fluid, as a type of advanced alloy, can change its shape under the action of electric and magnetic fields, while organic magnetic adhesives made on this substrate can generate changing magnetic fields under the action of electric fields, giving manufacturing more possibilities."
+    },
+    {
+        "Name": "永磁涡轮",
+        "ZHCN": "永磁涡轮",
+        "ENUS": "Permanent Magnet Turbine"
+    },
+    {
+        "Name": "T永磁涡轮",
+        "ZHCN": "从文明遗物中拼凑整理出来的科技，记录了另一种电磁涡轮的制造方法。",
+        "ENUS": "The technology pieced together from cultural relics records another method of manufacturing electromagnetic turbines."
+    },
+    {
+        "Name": "R永磁涡轮",
+        "ZHCN": "通过将富勒烯内嵌金属制备成高矫顽力永磁体，参与磁悬浮涡轮的制造，能轻易提升电磁涡轮的运行性能。",
+        "ENUS": "By embedding fullerene into metal to prepare high coercivity permanent magnets and participating in the manufacturing of magnetic levitation turbines, the operational performance of electromagnetic turbines can be easily improved."
+    },
+    {
+        "Name": "磁胶粒子宽带",
+        "ZHCN": "磁胶粒子宽带",
+        "ENUS": "Magnetic Adhesive Particle Broadband"
+    },
+    {
+        "Name": "T磁胶粒子宽带",
+        "ZHCN": "从文明遗物中拼凑整理出来的科技，记录了另一种电磁涡轮的制造方法。",
+        "ENUS": "Magnetic Adhesive Particle Broadband"
+    },
+    {
+        "Name": "R磁胶粒子宽带",
+        "ZHCN": "粒子宽带需要利用卡西米尔效应干涉粒子的状态，以达成操作粒子的功能，这需要电场和磁场的共同作用，能同时改变形状和磁场的有机磁胶无疑更适合粒子宽带。",
+        "ENUS": "Particle broadband requires the use of the Casimir effect to interfere with the state of particles in order to achieve the function of manipulating particles. This requires the combined action of electric and magnetic fields, and organic magnetic adhesives that can simultaneously change shape and magnetic field are undoubtedly more suitable for particle broadband."
     },
     {
         "Name": "光导纤维",
@@ -1478,6 +2132,16 @@
         "Name": "I量子计算机550MAGI",
         "ZHCN": "量子芯片，光纤连接和经典电子计算机封装外接，组成了550系列经典的“自感知、自适应、自组织”的可重塑编译计算核心，在与硬件连接后，可以实时生成底层操作系统。",
         "ENUS": "Quantum chips, fiber optic connections, and classical electronic computer packaging external connections form the 550 series classic \"self sensing, adaptive, and self-organizing\" reconfigurable compilation computing core. After being connected to hardware, it can generate real-time underlying operating systems."
+    },
+    {
+        "Name": "高速量子计算机",
+        "ZHCN": "高速量子计算机",
+        "ENUS": "High Speed Quantum Computer"
+    },
+    {
+        "Name": "R高速量子计算机",
+        "ZHCN": "使用高速连接器负责量子芯片以及附属的电子计算机群之间的信息传输，其效率比需要频繁进行电光信号转换的光纤更高。",
+        "ENUS": "The use of high-speed connectors for information transmission between quantum chips and affiliated electronic computer clusters is more efficient than optical fibers that require frequent electro-optical signal conversion."
     },
     {
         "Name": "终末螺旋",
@@ -1645,26 +2309,6 @@
         "ENUS": "Under the high temperature and high pressure of plasma, heavy oil undergoes hydrogenation, cracking, and isomerization reactions, converting into light oil."
     },
     {
-        "Name": "玻璃基板电路",
-        "ZHCN": "玻璃基板电路",
-        "ENUS": "Glass Substrate Circuit"
-    },
-    {
-        "Name": "R玻璃基板电路",
-        "ZHCN": "电路板即导电的铜作为电路刻蚀在绝缘的基板上，在没有塑料的场合，可以使用玻璃作为基板，尽管其精度不高且易碎。",
-        "ENUS": "The circuit board is made of conductive copper etched onto an insulating substrate. In the absence of plastic, glass can be used as the substrate, although its accuracy is not high and it is fragile."
-    },
-    {
-        "Name": "石墨烯基板电路",
-        "ZHCN": "石墨烯基板电路",
-        "ENUS": "Graphene Substrate Circuit"
-    },
-    {
-        "Name": "R石墨烯基板电路",
-        "ZHCN": "石墨烯基板是以单层碳原子组成的二维材料为核心的高性能基板，兼具超高导热性、高电子迁移率和优异机械强度。在高频通信、热管理、柔性基板领域有重要应用。",
-        "ENUS": "Graphene substrate is a high-performance substrate composed of a two-dimensional material consisting of a single layer of carbon atoms, which combines ultra-high thermal conductivity, high electron mobility, and excellent mechanical strength. It has important applications in high-frequency communication, thermal management, and flexible substrate fields."
-    },
-    {
         "Name": "菌丝母株",
         "ZHCN": "菌丝母株",
         "ENUS": "Mycelium Mother Plant"
@@ -1695,14 +2339,24 @@
         "ENUS": "Condense the synapses of mushroom neural networks into a large network, use silicon-based neurons as intermediate interfaces, and then use a self computing research station for unified command to create a simplified version of the hash operation array for studying technologies that COSMO did not include in the Dyson Sphere project."
     },
     {
-        "Name": "神经芯片",
-        "ZHCN": "神经芯片",
-        "ENUS": "Neurochip"
+        "Name": "湿件主机",
+        "ZHCN": "湿件主机",
+        "ENUS": "Wet Parts Host"
     },
     {
-        "Name": "I神经芯片",
-        "ZHCN": "神经芯片是个巨大的储备池计算系统的基础原件，由错综复杂的电路、晶体管和生命维持系统将大型神经网络的数以亿计思维神经互相连接。",
-        "ENUS": "Neural chips are the fundamental components of a massive reservoir computing system, connecting billions of thought neurons in large neural networks through intricate circuits, transistors, and life support systems."
+        "Name": "I湿件主机",
+        "ZHCN": "将生物脑封装进玻璃罐中组成的生物系计算机，错综复杂的电路通过电极信号与数以亿计思维神经互相连接交互。曾经在厂区发生火灾事故时出现生物脑打破罐子自己逃跑的案例，此后玻璃罐从普通玻璃升级为钛化玻璃。",
+        "ENUS": "A biological computer composed of biological brains encapsulated in glass jars, with intricate circuits interconnected and interacting with billions of thinking nerves through electrode signals. There was a case of a biological brain breaking a jar and escaping on its own during a fire accident in the factory area, after which the glass jar was upgraded from ordinary glass to titanium glass."
+    },
+    {
+        "Name": "湿件主机超频",
+        "ZHCN": "湿件主机超频",
+        "ENUS": "Wet Parts Host Overclocking"
+    },
+    {
+        "Name": "R湿件主机超频",
+        "ZHCN": "无论怎么说，生物脑在数值计算和多线程方面终究和门电路计算机有差距，想要达成一样的效果的话，需要给湿件主机超频，而且湿件主机超频不需要调电压，输入葡萄糖就行。",
+        "ENUS": "Anyway, there is still a gap between biological brains and gate circuit computers in terms of numerical computation and multithreading. To achieve the same effect, it is necessary to overclock the wet host, and overclocking the wet host does not require voltage adjustment, just inputting glucose."
     },
     {
         "Name": "突触凝炼机",
@@ -1743,16 +2397,6 @@
         "Name": "I大气收集设施",
         "ZHCN": "可以富集并收集大气成分的自维持大型设施。",
         "ENUS": "A large self-sustaining facility that can enrich and collect atmospheric components."
-    },
-    {
-        "Name": "生物塑料",
-        "ZHCN": "生物塑料",
-        "ENUS": "Bioplastics"
-    },
-    {
-        "Name": "R生物塑料",
-        "ZHCN": "使用植物纤维和有机晶体，反应生成性能与塑料类似的有机高分子。",
-        "ENUS": "Using plant fibers and organic crystals, react to produce organic polymers with properties similar to plastics."
     },
     {
         "Name": "生物发酵甲烷",
@@ -1885,14 +2529,14 @@
         "ENUS": "The uranium mine is crushed and leached with sulfuric acid to obtain a uranium containing solution, mainly consisting of uranium-238 with only a very small amount of uranium-235."
     },
     {
-        "Name": "石墨（高效）",
-        "ZHCN": "石墨（高效）",
-        "ENUS": "Graphite (efficient)"
+        "Name": "银面太阳帆",
+        "ZHCN": "银面太阳帆",
+        "ENUS": "Silver Faced Solar Sail"
     },
     {
-        "Name": "R石墨（高效）",
-        "ZHCN": "从石墨矿能更高效地提炼石墨。",
-        "ENUS": "Extracting graphite from graphite ore can be more efficient."
+        "Name": "R银面太阳帆",
+        "ZHCN": "在高度抛光的太阳帆表面上通过真空蒸镀技术沉积银膜，利用银高反射率的物理特性，获得更高性能的太阳帆。",
+        "ENUS": "By depositing a silver film on the highly polished surface of a solar sail using vacuum evaporation technology, and utilizing the physical properties of silver's high reflectivity, higher performance solar sails can be obtained."
     },
     {
         "Name": "铁板浇筑",
@@ -2004,26 +2648,7 @@
         "ZHCN": "奔涌的岩浆溶解着来自地幔深处的物质，并带到地表，对于高级工业文明而言，这就是巨型金属矿。\n<color=\"#FD965ECC\">此物品不可星际运输，不可设置为星际供应</color>",
         "ENUS": "The surging magma dissolves materials from deep within the mantle and brings them to the surface, which is known as giant metal mines for advanced industrial civilizations.\n<color=\"#FD965ECC\">This item is not suitable for interstellar transportation and cannot be set as an interstellar supply</color>"
     },
-    {
-        "Name": "晶圆（四代半导体）",
-        "ZHCN": "晶圆（四代半导体）",
-        "ENUS": "Wafer (Fourth Generation Semiconductor)"
-    },
-    {
-        "Name": "R晶圆（四代半导体）",
-        "ZHCN": "将工业级金刚石用粒子打印重整修补为晶圆级金刚石，并与铜粒子一起在其上打印出超大规模集成电路。",
-        "ENUS": "Transforming industrial grade diamond into wafer level diamond through particle printing and repairing, and printing ultra large scale integrated circuits on it together with copper particles."
-    },
-    {
-        "Name": "晶圆",
-        "ZHCN": "晶圆",
-        "ENUS": "Wafer"
-    },
-    {
-        "Name": "R晶圆",
-        "ZHCN": "将纯净碳化硅用金刚石线或激光切割，得到一片片薄如蝉翼，刚硬易碎的晶圆，随后在其上进行光刻，注铜，沉积，清洗，得到一层纳米级的电路，将这个工艺重复80遍，最终叠出80层超大规模集成电路。",
-        "ENUS": "Pure silicon carbide is cut with diamond wire or laser to obtain thin, rigid and fragile wafers, which are then subjected to photolithography, copper injection, deposition, and cleaning to obtain a layer of nanoscale circuits. This process is repeated 80 times to finally stack 80 layers of ultra large scale integrated circuits."
-    },
+
     {
         "Name": "酸中和",
         "ZHCN": "酸中和",
@@ -2064,16 +2689,7 @@
         "ZHCN": "经过第一代纯硅，第二代砷化镓的发展，第三代半导体主要以碳化硅为代表的半导体材料。具有更宽的禁带宽度、更高的击穿电场、更高的热导率、更高的电子饱和速率及更高的抗辐射能力，因此更适合于制作高温、高频、大功率及抗辐射器件。",
         "ENUS": "After the development of the first generation of pure silicon and the second generation of gallium arsenide, the third generation of semiconductors mainly consists of semiconductor materials represented by silicon carbide. It has a wider bandgap, higher breakdown electric field, higher thermal conductivity, higher electron saturation rate, and higher radiation resistance, making it more suitable for making high-temperature, high-frequency, high-power, and radiation resistant devices."
     },
-    {
-        "Name": "T第四代半导体",
-        "ZHCN": "第四代半导体",
-        "ENUS": "Fourth generation semiconductor"
-    },
-    {
-        "Name": "T第四代半导体描述",
-        "ZHCN": "得益于粒子打印技术的发展，我们终于得以大规模打印出完美晶体的金刚石，即晶圆级金刚石，这也意味着，第四代半导体，金刚石晶圆的量产已不再有门槛。",
-        "ENUS": "Thanks to the development of particle printing technology, we have finally been able to print perfect crystal diamonds on a large scale, namely wafer level diamonds. This also means that there is no longer a barrier to mass production for fourth generation semiconductors, diamond wafers."
-    },
+
     {
         "Name": "T强相互作用力材料",
         "ZHCN": "强相互作用力材料",
@@ -2208,6 +2824,16 @@
         "Name": "T物品仓储",
         "ZHCN": "物品仓储",
         "ENUS": "Item Storage"
+    },
+    {
+        "Name": "电路板",
+        "ZHCN": "电路板",
+        "ENUS": "Circuit Board"
+    },
+    {
+        "Name": "T电路板",
+        "ZHCN": "电路板是电子设备中承载并连接各类电子元器件的核心部件，属于元件器件的总称。在绝缘板上通过铜或其他导电材料按电路将电阻，电感，晶体管等电路控制元件连接起来，组成电气控制能力。",
+        "ENUS": "Circuit board is the core component that carries and connects various electronic components in electronic devices, and belongs to the general term for component devices. Connect circuit control components such as resistors, inductors, transistors, etc. through copper or other conductive materials on an insulating board to form electrical control capabilities."
     },
     {
         "Name": "T电子计算机",
@@ -2428,16 +3054,6 @@
         "Name": "T人造生态圈描述",
         "ZHCN": "在殖民时代，一个自循环，健全的人造生态圈是外星探索必不可少的技术，哪怕现在不再需要其提供食物，也可以用来培育工业作物。第八代殖民生态穹顶，使用雾培无土栽培技术，拥有垂直多层的强透光培养槽，必要时完全内循环生态，生化反应车间，可以帮助伊卡洛斯完成绝大多数生物的培育和生化反应。",
         "ENUS": "In the colonial era, a self circulating, robust artificial ecosystem was an essential technology for extraterrestrial exploration, even if it was no longer needed to provide food, it could be used to cultivate industrial crops. The eighth generation colonial ecological dome adopts the technique of soilless cultivation through fog cultivation, with vertically multi-layered strong light transmission cultivation tanks. When necessary, it can fully circulate the ecology and biochemical reaction workshop, which can help Icarus complete the cultivation and biochemical reactions of the vast majority of organisms."
-    },
-    {
-        "Name": "T生物塑料合成",
-        "ZHCN": "生物材料反应",
-        "ENUS": "Biomaterial Reaction"
-    },
-    {
-        "Name": "T生物塑料合成描述",
-        "ZHCN": "在漫长岁月和特殊地质环境下，有机质演变为原油与甲烷，在缺乏原油与甲烷的场合，我们可以用人工手段代替岁月和地质。",
-        "ENUS": "Over a long period of time and in special geological environments, organic matter has evolved into crude oil and methane. In situations where crude oil and methane are lacking, we can use artificial means to replace time and geology."
     },
     {
         "Name": "T伴生菌种培育",
@@ -2681,8 +3297,8 @@
     },
     {
         "Name": "解锁手搓",
-        "ZHCN": "所有可由物质重组工厂制造的配方全部解锁手动制造。",
-        "ENUS": "All formulas that can be manufactured by material recombination factories are unlocked for manual manufacturing."
+        "ZHCN": "所有配方全部解锁手动制造。",
+        "ENUS": "All formulas are unlocked for manual manufacturing."
     },
     {
         "Name": "I铀矿",
@@ -2719,11 +3335,7 @@
         "ZHCN": "当楼房的高度随材料学发展而拔高，在高空建造第二层，第三层人造地面将楼房连接起来成为发展的必然，工业的发展也是如此，绕过地面错综复杂的产线，物品通过物流立交在远离地面的第二地面运输，将方便地进行总线式产线规划。",
         "ENUS": "As the height of buildings increases with the development of materials science, it is inevitable to build a second and third floor at high altitude to connect the buildings with artificial ground. The development of industry is also like this. By bypassing the complex production lines on the ground and transporting goods through logistics overpasses on the second ground far away from the ground, it will be convenient to carry out bus style production line planning."
     },
-    {
-        "Name": "黄铁矿脉",
-        "ZHCN": "黄铁矿脉",
-        "ENUS": "Huangtie Veins"
-    },
+
     {
         "Name": "黄铁矿",
         "ZHCN": "黄铁矿",
@@ -3498,7 +4110,7 @@
     },
     {
         "Name": "I太空电梯",
-        "ZHCN": "作为有史以来最高的人造建筑，太空电梯是跨越行星与太空的垂直运输枢纽，千米级的高强度碳纳米管缆固定的电梯将为后续建造的同步轨道设施提供运力支撑。作为戴森球计划中最先接触到的航天工程，它将是文明迈向星际的起点。\n<color=\"#FD965ECC\">选择物品的槽位自动收/送上层轨道设施对应的需求物品/产出物品</color>\n<color=\"#FD965ECC\">只能建造在固定位置，纬度为赤道上下10格，经度为从0开始每隔25格</color>",
+        "ZHCN": "作为有史以来最高的人造建筑，太空电梯是跨越行星与太空的垂直运输枢纽，千米级的高强度碳纳米管缆固定的电梯将为后续建造的同步轨道设施提供运力支撑。作为戴森球计划中最先接触到的航天工程，它将是文明迈向星际的起点。\n<color=\"#FD965ECC\">选择物品的槽位自动收/送上层轨道设施对应的需求物品/产出物品</color>\n<color=\"#FD965ECC\">只能建造在固定位置，纬度为赤道上下10格，经度为从0开始每隔50格</color>",
         "ENUS": "As the tallest man-made building in history, the space elevator is a vertical transportation hub that spans planets and space. The kilometer level high-strength carbon nanotube cable fixed elevator will provide transportation support for the subsequent construction of synchronous orbit facilities. As the first aerospace project to be encountered in the Dyson Sphere program, it will be the starting point for civilization to move towards interstellar space.\n<color=\"#FD965ECC\">Select the slot for the item to automatically receive/deliver the required/output items corresponding to the upper level track facilities</color>\n<color=\"#FD965ECC\">It can only be built in a fixed location, with a latitude of 10 grids above and below the equator and a longitude of every 25 grids starting from 0</color>"
     },
     {
@@ -3533,8 +4145,8 @@
     },
     {
         "Name": "I轨道熔炼站",
-        "ZHCN": "巨大的同步轨道熔炉车间，覆有大面积的铜箔散热鳍，熔炼太空电梯输入的原料，同步轨道的真空环境是天然的无尘车间，无重力环境可以避免熔炼中的金属因重力而分层，由此同步轨道熔炉车间可以产出高质量熔炼金属。\n此建筑产出无条件获得<color=\"#FD965ECC\">三级增产</color>效果\n<color=\"#FD965ECC\">需要由底下的太空电梯提供物品的输入输出。</color>",
-        "ENUS": "The huge synchronous orbit furnace workshop is covered with large areas of copper foil heat dissipation fins, which melt the raw materials input by the space elevator. The vacuum environment of the synchronous orbit is a natural dust-free workshop, and the gravity free environment can avoid the layering of metals during melting due to gravity. Therefore, the synchronous orbit furnace workshop can produce high-quality melted metals.\nThis building guarantees an unconditional <color=\"#FD965ECC\">Level 3 Production Boost</color> effect in its output.\n<color=\"#FD965ECC\">The input and output of items need to be provided by the space elevator below</color>"
+        "ZHCN": "巨大的同步轨道熔炉车间，覆有大面积的铜箔散热鳍，熔炼太空电梯输入的原料，同步轨道的真空环境是天然的无尘车间，无重力环境可以避免熔炼中的金属因重力而分层，由此同步轨道熔炉车间可以产出高质量熔炼金属。\n此建筑<color=\"#FD965ECC\">30倍</color>堆叠生产\n此建筑产出无条件获得<color=\"#FD965ECC\">三级增产</color>效果\n<color=\"#FD965ECC\">需要由底下的太空电梯提供物品的输入输出。</color>",
+        "ENUS": "The huge synchronous orbit furnace workshop is covered with large areas of copper foil heat dissipation fins, which melt the raw materials input by the space elevator. The vacuum environment of the synchronous orbit is a natural dust-free workshop, and the gravity free environment can avoid the layering of metals during melting due to gravity. Therefore, the synchronous orbit furnace workshop can produce high-quality melted metals.\nThis building guarantees an unconditional <color=\"#FD965ECC\">Level 3 Production Boost</color> effect in its output.\nThis building is <color=\"#FD965ECC\">30 times</color> stacked for production\n<color=\"#FD965ECC\">The input and output of items need to be provided by the space elevator below</color>"
     },
     {
         "Name": "T轨道熔炼站",
@@ -3588,8 +4200,8 @@
     },
     {
         "Name": "I星环对撞机总控站",
-        "ZHCN": "星环对撞机在轨总控设施，建造时会将各节加速轨道加装到星环上的各轨道设施上。星环对撞机总控站负责控制整个星环的加速轨道，以及目标粒子的输入输出。\n因为以整个星环为加速轨道，因此<color=\"#FD965ECC\">一个星环只能建造一个星环对撞机总控站。</color>\n且需要<color=\"#FD965ECC\">星环完整</color>才能运作\n<color=\"#FD965ECC\">需要由底下的太空电梯提供物品的输入输出。</color>",
-        "ENUS": "The in orbit control facility of the Star Ring Collider will be constructed by installing each section of the acceleration orbit onto the various orbital facilities on the star ring. The main control station of the Star Ring Collider is responsible for controlling the acceleration orbit of the entire star ring and the input and output of target particles.\n Because the entire ring is used as the acceleration orbit, only <color=\"#FD965ECC\">one ring collider control station can be built for each ring.</color>\n And it requires the <color=\"#FD965ECC\">complete orbital ring</color> to operate \n<color=\"#FD965ECC\">The input and output of items need to be provided by the space elevator below</color>"
+        "ZHCN": "星环对撞机在轨总控设施，建造时会将各节加速轨道加装到星环上的各轨道设施上。星环对撞机总控站负责控制整个星环的加速轨道，以及目标粒子的输入输出。\n因为以整个星环为加速轨道，因此<color=\"#FD965ECC\">一个星环只能建造一个星环对撞机总控站。</color>\n此建筑<color=\"#FD965ECC\">30倍</color>堆叠生产（在卫星为<color=\"#FD965ECC\">15倍</color>）\n且需要<color=\"#FD965ECC\">星环完整</color>才能运作\n<color=\"#FD965ECC\">需要由底下的太空电梯提供物品的输入输出。</color>",
+        "ENUS": "The in orbit control facility of the Star Ring Collider will be constructed by installing each section of the acceleration orbit onto the various orbital facilities on the star ring. The main control station of the Star Ring Collider is responsible for controlling the acceleration orbit of the entire star ring and the input and output of target particles.\n Because the entire ring is used as the acceleration orbit, only <color=\"#FD965ECC\">one ring collider control station can be built for each ring.</color>\nThis building is <color=\"#FD965ECC\">30 times</color> stacked for production (<color=\"#FD965ECC\">15 times</color> on satellite)\n And it requires the <color=\"#FD965ECC\">complete orbital ring</color> to operate \n<color=\"#FD965ECC\">The input and output of items need to be provided by the space elevator below</color>"
     },
     {
         "Name": "粒子加速轨道",
@@ -3598,7 +4210,7 @@
     },
     {
         "Name": "I粒子加速轨道",
-        "ZHCN": "回旋加速器，利用磁场加速并约束带电粒子，在一圈圈的回旋加速轨道中将粒子束加速至亚光速并对撞。曾经，在地面上加速轨道直径达数十公里的粒子对撞机就被称之为超级对撞机，而如今，我们将建造以星球大小为直径的星环对撞机，由一节节加速轨道拼接而成的，星球级回旋加速器。",
+        "ZHCN": "回旋加速器，利用磁场加速并约束带电粒子，在一圈圈的回旋加速轨道中将粒子束加速至亚光速并对撞。曾经，在地面上加速轨道直径达数十公里的粒子对撞机就被称之为超级对撞机，而如今，我们将建造以星球大小为直径的星环对撞机，由一节节加速轨道拼接而成的，星球级回旋加速器。\n<color=\"#FD965ECC\">需要完整连接一圈对应的星环对撞机总控站才能运作</color>",
         "ENUS": "A cyclotron uses a magnetic field to accelerate and constrain charged particles, accelerating the particle beam to sub light speed and colliding in a circular orbit. Once, particle colliders that accelerated to orbit diameters of tens of kilometers on the ground were called supercolliders, but now we will build ring colliders with diameters the size of planets，A planetary level cyclotron composed of a series of accelerated orbits pieced together."
     },
     {

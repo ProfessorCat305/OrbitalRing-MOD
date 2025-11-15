@@ -15,6 +15,7 @@ using System.Reflection;
 using static ProjectOrbitalRing.ProjectOrbitalRing;
 using ProjectOrbitalRing.Utils;
 using System.Numerics;
+using static UIPlayerDeliveryPanel;
 
 namespace ProjectOrbitalRing.Patches.Logic.OrbitalRing
 {
@@ -32,14 +33,14 @@ namespace ProjectOrbitalRing.Patches.Logic.OrbitalRing
             bool flag2 = IsBuildingItemIdisOrbitalCore(prebuild.protoId);
             if (flag1 || flag2) {
                 int planetId = __instance.planet.id;
-                OrbitalStationManager.Instance.AddPlanetId(planetId);
+                OrbitalStationManager.Instance.AddPlanetId(planetId, __instance.planet.radius == 100f);
                 var planetOrbitalRingData = OrbitalStationManager.Instance.GetPlanetOrbitalRingData(planetId);
-                int ringIndex = isBuildingPosYCorrect(prebuild.pos);
+                int ringIndex = isBuildingPosYCorrect(prebuild.pos, __instance.planet.radius == 100f);
                 if (planetOrbitalRingData != null) {
                     int position = -1;
                     if (ringIndex != -1) {
                         bool flag = planetOrbitalRingData.Rings[ringIndex].IsAllFull() && prebuild.protoId != ProtoID.I太空电梯;
-                        position = IsBuildingPosXZCorrect(prebuild.pos.x, prebuild.pos.z, flag);
+                        position = IsBuildingPosXZCorrect(prebuild.pos.x, prebuild.pos.z, flag, __instance.planet.radius == 100f);
                     }
                     if (!PreBuild.ContainsKey(planetId)) {
                         PreBuild[planetId] = new HashSet<(int, int, bool)>();
@@ -67,8 +68,8 @@ namespace ProjectOrbitalRing.Patches.Logic.OrbitalRing
                 bool flag2 = IsBuildingItemIdisOrbitalCore(__instance.prebuildPool[id].protoId);
                 if (flag1 || flag2) {
                     PrebuildData data = __instance.prebuildPool[id];
-                    int position = IsBuildingPosXZCorrect(data.pos.x, data.pos.z, true);
-                    int ringIndex = isBuildingPosYCorrect(data.pos);
+                    int position = IsBuildingPosXZCorrect(data.pos.x, data.pos.z, true, __instance.planet.radius == 100f);
+                    int ringIndex = isBuildingPosYCorrect(data.pos, __instance.planet.radius == 100f);
                     if (PreBuild.TryGetValue(__instance.planetId, out var values)) {
                         if (flag2) {
                             values.Remove((ringIndex, position, true));
@@ -86,22 +87,23 @@ namespace ProjectOrbitalRing.Patches.Logic.OrbitalRing
         [HarmonyPatch(typeof(BuildTool_Addon), "DeterminePreviews")]
         public static void DeterminePreviewsPatch(BuildTool_Click __instance)
         {
+            
             int count = __instance.buildPreviews.Count;
             for (int i = 0; i < count; i++) {
                 BuildPreview preview = __instance.buildPreviews[i];
                 if (IsBuildingItemIdisOrbitalStation(preview.item.ID, true) || IsBuildingItemIdisOrbitalCore(preview.item.ID)) {
                     double vanillaY = preview.lpos.y;
-                    var (pos, flag) = ShouldBeAdsorb(preview.lpos);
+                    var (pos, flag) = ShouldBeAdsorb(preview.lpos, (__instance.planet.radius == 100f));
                     if (flag) {
                         preview.lpos = pos;
                         int planetId = __instance.planet.id;
-                        OrbitalStationManager.Instance.AddPlanetId(planetId);
+                        OrbitalStationManager.Instance.AddPlanetId(planetId, __instance.planet.radius == 100f);
                         var planetOrbitalRingData = OrbitalStationManager.Instance.GetPlanetOrbitalRingData(planetId);
-                        int ringIndex = isBuildingPosYCorrect(preview.lpos);
+                        int ringIndex = isBuildingPosYCorrect(preview.lpos, __instance.planet.radius == 100f);
                         if (planetOrbitalRingData != null) {
                             if (ringIndex != -1) {
                                 bool flag1 = planetOrbitalRingData.Rings[ringIndex].IsAllFull() && preview.item.ID != ProtoID.I太空电梯;
-                                preview.lpos = ShouldBeXZAdsorb(preview.lpos, flag1);
+                                preview.lpos = ShouldBeXZAdsorb(preview.lpos, flag1, (__instance.planet.radius == 100f));
                             }
                         }
                         preview.lrot = Maths.SphericalRotation(preview.lpos, __instance.yaw);
@@ -149,14 +151,14 @@ namespace ProjectOrbitalRing.Patches.Logic.OrbitalRing
                 if (flag1 || flag2) {
                     
                     int planetId = __instance.planet.id;
-                    OrbitalStationManager.Instance.AddPlanetId(planetId);
+                    OrbitalStationManager.Instance.AddPlanetId(planetId, __instance.planet.radius == 100f);
                     var planetOrbitalRingData = OrbitalStationManager.Instance.GetPlanetOrbitalRingData(planetId);
-                    int ringIndex = isBuildingPosYCorrect(buildPreview.lpos);
+                    int ringIndex = isBuildingPosYCorrect(buildPreview.lpos, __instance.planet.radius == 100f);
                     if (planetOrbitalRingData != null) {
                         int position = -1;
                         if (ringIndex != -1) {
                             bool flag3 = planetOrbitalRingData.Rings[ringIndex].IsAllFull() && buildPreview.item.ID != ProtoID.I太空电梯;
-                            position = IsBuildingPosXZCorrect(buildPreview.lpos.x, buildPreview.lpos.z, flag3);
+                            position = IsBuildingPosXZCorrect(buildPreview.lpos.x, buildPreview.lpos.z, flag3, __instance.planet.radius == 100f);
                         }
                         if (position == -1 || ringIndex == -1) {
                             buildPreview.condition = (EBuildCondition)99;
@@ -166,7 +168,7 @@ namespace ProjectOrbitalRing.Patches.Logic.OrbitalRing
                             //return false;
                         }
 
-                        OrbitalStationManager.Instance.AddPlanetId(__instance.planet.id);
+                        OrbitalStationManager.Instance.AddPlanetId(__instance.planet.id, __instance.planet.radius == 100f);
                         if (previewItem != ProtoID.I太空电梯) { // 太空电梯不检查重合
                             flag = false;
 
@@ -242,19 +244,19 @@ namespace ProjectOrbitalRing.Patches.Logic.OrbitalRing
                 }
                 flag = false;
                 if (previewItem == ProtoID.I轨道连接组件) {
-                    int beltYPosition = isBeltBuildingPosYCorrect(buildPreview.lpos, 0);
+                    int beltYPosition = isBeltBuildingPosYCorrect(buildPreview.lpos, 0, __instance.planet.radius == 100f);
                     if (beltYPosition == -1) {
                         flag = true;
                     }
                 }
                 if (previewItem == ProtoID.I星环电网组件) {
-                    int beltYPosition = isBeltBuildingPosYCorrect(buildPreview.lpos, 2);
+                    int beltYPosition = isBeltBuildingPosYCorrect(buildPreview.lpos, 2, __instance.planet.radius == 100f);
                     if (beltYPosition == -1) {
                         flag = true;
                     }
                 }
                 if (previewItem == ProtoID.I粒子加速轨道) {
-                    int beltYPosition = isBeltBuildingPosYCorrect(buildPreview.lpos, 1);
+                    int beltYPosition = isBeltBuildingPosYCorrect(buildPreview.lpos, 1, __instance.planet.radius == 100f);
                     if (beltYPosition == -1) {
                         flag = true;
                     }
@@ -263,6 +265,14 @@ namespace ProjectOrbitalRing.Patches.Logic.OrbitalRing
                     buildPreview.condition = (EBuildCondition)99;
                     __instance.AddErrorMessage((EBuildCondition)99, buildPreview);
                     continue;
+                }
+
+                if (previewItem == 2311) {
+                    // 电磁轨道弹射器
+                    if (__instance.planet.theme != 11) { // 贫瘠荒漠
+                        buildPreview.condition = (EBuildCondition)96;
+                        __instance.AddErrorMessage((EBuildCondition)96, buildPreview);
+                    }
                 }
             }
             return true;
@@ -293,14 +303,14 @@ namespace ProjectOrbitalRing.Patches.Logic.OrbitalRing
                         return false;
                     }
                     int planetId = __instance.planet.id;
-                    OrbitalStationManager.Instance.AddPlanetId(planetId);
+                    OrbitalStationManager.Instance.AddPlanetId(planetId, __instance.planet.radius == 100f);
                     var planetOrbitalRingData = OrbitalStationManager.Instance.GetPlanetOrbitalRingData(planetId);
-                    int ringIndex = isBuildingPosYCorrect(buildPreview.lpos);
+                    int ringIndex = isBuildingPosYCorrect(buildPreview.lpos, __instance.planet.radius == 100f);
                     if (planetOrbitalRingData != null) {
                         int position = -1;
                         if (ringIndex != -1) {
                             bool flag3 = planetOrbitalRingData.Rings[ringIndex].IsAllFull() && previewItem != ProtoID.I太空电梯;
-                            position = IsBuildingPosXZCorrect(buildPreview.lpos.x, buildPreview.lpos.z, flag3);
+                            position = IsBuildingPosXZCorrect(buildPreview.lpos.x, buildPreview.lpos.z, flag3, __instance.planet.radius == 100f);
                         }
                         if (position == -1 || ringIndex == -1) {
                             buildPreview.condition = (EBuildCondition)99;
@@ -377,6 +387,15 @@ namespace ProjectOrbitalRing.Patches.Logic.OrbitalRing
                     }
                     // 继续原可否建造判断流程
                     return true;
+                }
+
+                if (previewItem == 2311) {
+                    // 电磁轨道弹射器
+                    if (__instance.planet.theme != 11) { // 贫瘠荒漠
+                        buildPreview.condition = (EBuildCondition)96;
+                        __result = false;
+                        return false;
+                    }
                 }
             }
             return true;
@@ -466,9 +485,9 @@ namespace ProjectOrbitalRing.Patches.Logic.OrbitalRing
         public static void BuildElevator(PlanetTransport __instance, int thisEntityId, ref StationComponent thisStation)
         {
             Vector3 thisPos = __instance.factory.entityPool[thisEntityId].pos;
-            int position = IsBuildingPosXZCorrect(thisPos.x, thisPos.z, false);
-            int ringIndex = isBuildingPosYCorrect(thisPos);
-            OrbitalStationManager.Instance.AddPlanetId(__instance.planet.id);
+            int position = IsBuildingPosXZCorrect(thisPos.x, thisPos.z, false, __instance.planet.radius == 100f);
+            int ringIndex = isBuildingPosYCorrect(thisPos, __instance.planet.radius == 100f);
+            OrbitalStationManager.Instance.AddPlanetId(__instance.planet.id, __instance.planet.radius == 100f);
             var planetOrbitalRingData = OrbitalStationManager.Instance.GetPlanetOrbitalRingData(__instance.planet.id);
             // 在赤道上/下圈？号位置添加电梯
             planetOrbitalRingData.Rings[ringIndex].AddElevator(position, thisStation.id);
@@ -486,9 +505,9 @@ namespace ProjectOrbitalRing.Patches.Logic.OrbitalRing
         public static void BuildOrbitalStation(PlanetTransport __instance, int thisEntityId, ref StationComponent thisStation)
         {
             Vector3 thisPos = __instance.factory.entityPool[thisEntityId].pos;
-            int position = IsBuildingPosXZCorrect(thisPos.x, thisPos.z, true);
-            int ringIndex = isBuildingPosYCorrect(thisPos);
-            OrbitalStationManager.Instance.AddPlanetId(__instance.planet.id);
+            int position = IsBuildingPosXZCorrect(thisPos.x, thisPos.z, true, __instance.planet.radius == 100f);
+            int ringIndex = isBuildingPosYCorrect(thisPos, __instance.planet.radius == 100f);
+            OrbitalStationManager.Instance.AddPlanetId(__instance.planet.id, __instance.planet.radius == 100f);
             var planetOrbitalRingData = OrbitalStationManager.Instance.GetPlanetOrbitalRingData(__instance.planet.id);
             // 在赤道上/下圈？号位置添加轨道设施
             planetOrbitalRingData.Rings[ringIndex].AddOrbitalStation(position, thisStation.id, StationType.Station);
@@ -565,15 +584,15 @@ namespace ProjectOrbitalRing.Patches.Logic.OrbitalRing
                 if (protoId == ProtoID.I星环对撞机) // 星环对撞机，拆除，放开再建
                 {
                     PrebuildData preBuildData = __instance.prebuildPool[-objId];
-                    int preBuildringIndex = isBuildingPosYCorrect(preBuildData.pos);
+                    int preBuildringIndex = isBuildingPosYCorrect(preBuildData.pos, __instance.planet.radius == 100f);
                     var data = OrbitalStationManager.Instance.GetPlanetOrbitalRingData(__instance.planet.id);
                     data.Rings[preBuildringIndex].isParticleCollider = false;
                 }
                 return;
             }
             Vector3 thisPos = __instance.entityPool[objId].pos;
-            int position = IsBuildingPosXZCorrect(thisPos.x, thisPos.z, true);
-            int ringIndex = isBuildingPosYCorrect(thisPos);
+            int position = IsBuildingPosXZCorrect(thisPos.x, thisPos.z, true, __instance.planet.radius == 100f);
+            int ringIndex = isBuildingPosYCorrect(thisPos, __instance.planet.radius == 100f);
             var planetOrbitalRingData = OrbitalStationManager.Instance.GetPlanetOrbitalRingData(__instance.planet.id);
             if (protoId == ProtoID.I太空电梯) {
                 if (planetOrbitalRingData == null)
@@ -609,8 +628,8 @@ namespace ProjectOrbitalRing.Patches.Logic.OrbitalRing
                         if (BuildTool_Dismantle.showDemolishContainerQuery) {
                             if (buildPreview.objId > 0 && buildPreview.item.ID == ProtoID.I轨道反物质堆基座 || buildPreview.item.ID == ProtoID.I轨道观测站 ||
                                 buildPreview.item.ID == ProtoID.I天枢座) {
-                                int ringIndex = isBuildingPosYCorrect(buildPreview.lpos);
-                                int position = IsBuildingPosXZCorrect(buildPreview.lpos.x, buildPreview.lpos.z, true);
+                                int ringIndex = isBuildingPosYCorrect(buildPreview.lpos, __instance.planet.radius == 100f);
+                                int position = IsBuildingPosXZCorrect(buildPreview.lpos.x, buildPreview.lpos.z, true, __instance.planet.radius == 100f);
                                 var pair = planetOrbitalRingData.Rings[ringIndex].GetPair(position);
                                 if (!OrbitalStationManager.StationTypeIsBase(pair.stationType)) {
                                     if (pair.OrbitalCorePoolId == -1)

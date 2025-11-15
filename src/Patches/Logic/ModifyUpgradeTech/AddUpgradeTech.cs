@@ -19,7 +19,7 @@ namespace ProjectOrbitalRing.Patches.Logic.ModifyUpgradeTech
             AddDamageUpgradeTechs();
             AddWreckageRecoveryUpgradeTechs();
             AddFleetUpgradeTechs();
-            Add2choose1Techs();
+            //Add2choose1Techs();
             AddPilerEjectorTechs();
             //AddWarpEngineTechs();
             //AddTempBugFixTechs();

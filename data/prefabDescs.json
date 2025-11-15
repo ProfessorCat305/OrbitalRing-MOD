@@ -67,7 +67,7 @@
         "ModelID": 53,
         "powerConnectDistance": 15.0,
         "powerCoverRadius": 0.0,
-        "genEnergyPerTick": 7000,
+        "genEnergyPerTick": 6000,
         "waterTypes": [
             1000,
             1007,
@@ -115,6 +115,8 @@
     {
         "ModelID": 61,
         "minerPeriod": 300000,
+        "idleEnergyPerTick": 1000,
+        "workEnergyPerTick": 20000,
         "allowBuildInWater": true,
         "needBuildInWaterTech": false,
         "waterTypes": [
@@ -129,7 +131,9 @@
     },
     {
         "ModelID": 63,
-        "assemblerSpeed": 10000
+        "assemblerSpeed": 10000,
+        "idleEnergyPerTick": 1000,
+        "workEnergyPerTick": 30000
     },
     {
         "ModelID": 64,
@@ -145,15 +149,15 @@
     },
     {
         "ModelID": 66,
-        "idleEnergyPerTick": 400,
-        "workEnergyPerTick": 12000,
+        "idleEnergyPerTick": 1000,
+        "workEnergyPerTick": 24000,
         "assemblerSpeed": 20000
     },
     {
         "ModelID": 67,
         "assemblerRecipeType": 10,
-        "idleEnergyPerTick": 800,
-        "workEnergyPerTick": 24000,
+        "idleEnergyPerTick": 12000,
+        "workEnergyPerTick": 96000,
         "assemblerSpeed": 20000
     },
     {
@@ -165,7 +169,9 @@
     },
     {
         "ModelID": 69,
-        "assemblerSpeed": 10000
+        "assemblerSpeed": 10000,
+        "idleEnergyPerTick": 24000,
+        "workEnergyPerTick": 400000
     },
     {
         "ModelID": 70,
@@ -204,6 +210,8 @@
     {
         "ModelID": 194,
         "assemblerRecipeType": 11,
+        "idleEnergyPerTick": 12000,
+        "workEnergyPerTick": 48000,
         "assemblerSpeed": 20000
     },
     {
@@ -238,8 +246,8 @@
     {
         "ModelID": 376,
         "assemblerRecipeType": 2,
-        "idleEnergyPerTick": 600,
-        "workEnergyPerTick": 36000,
+        "idleEnergyPerTick": 18000,
+        "workEnergyPerTick": 144000,
         "assemblerSpeed": 10000
     },
     {
@@ -276,14 +284,14 @@
     },
     {
         "ModelID": 456,
-        "idleEnergyPerTick": 8000,
-        "workEnergyPerTick": 48000,
+        "idleEnergyPerTick": 24000,
+        "workEnergyPerTick": 192000,
         "assemblerSpeed": 30000,
         "assemblerRecipeType": 12
     },
     {
         "ModelID": 457,
-        "idleEnergyPerTick": 48000,
+        "idleEnergyPerTick": 240000,
         "workEnergyPerTick": 1600,
         "assemblerSpeed": 30000,
         "assemblerRecipeType": 11
@@ -302,9 +310,9 @@
         "isAssembler": true,
         "isStation": false,
         "assemblerRecipeType": 1,
-        "idleEnergyPerTick": 20000,
-        "workEnergyPerTick": 200000,
-        "assemblerSpeed": 120000,
+        "idleEnergyPerTick": 100000,
+        "workEnergyPerTick": 700000,
+        "assemblerSpeed": 10000,
         "stationMaxEnergyAcc": 0,
         "stationMaxItemCount": 0,
         "stationMaxItemKinds": 0,
@@ -404,7 +412,7 @@
         "ModelID": 809,
         "isAccumulator": false,
         "isPowerGen": true,
-        "genEnergyPerTick": 25000
+        "genEnergyPerTick": 35000
     },
     {
         "ModelID": 810,
@@ -425,8 +433,8 @@
         "isStation": false,
         "assemblerRecipeType": 5,
         "idleEnergyPerTick": 1200000,
-        "workEnergyPerTick": 12000000,
-        "assemblerSpeed": 300000,
+        "workEnergyPerTick": 12500000,
+        "assemblerSpeed": 10000,
         "stationMaxEnergyAcc": 0,
         "stationMaxItemCount": 0,
         "stationMaxItemKinds": 0,
@@ -515,9 +523,16 @@
         "stationMaxDroneCount": 30,
         "stationMaxShipCount": 0
     },
+    // 824到827为 轨道连接组件 星环粒子轨道 星环电网 星环护盾
     {
-        "ModelID": 824,
-        //"isBelt": false,
-        //"beltSpeed": 0
+        "ModelID": 828,
+        "isStorage": false,
+        "isAssembler": true,
+        "isPowerConsumer": true,
+        "assemblerRecipeType": 18,
+        "idleEnergyPerTick": 240000,
+        "workEnergyPerTick": 1600000,
+        "assemblerSpeed": 40000
     }
+
 ]

@@ -49,11 +49,11 @@ namespace ProjectOrbitalRing.Patches.Logic.OrbitalRing
                 if (preview.item.ID == ProtoID.I轨道连接组件 || __instance.handItem.ID == ProtoID.I粒子加速轨道 || __instance.handItem.ID == ProtoID.I星环电网组件) {
                     Vector3 pos = new Vector3(0, 0, 0);
                     if (preview.item.ID == ProtoID.I轨道连接组件) {
-                        pos = BeltShouldBeAdsorb(preview.lpos, startPos, 0);
+                        pos = BeltShouldBeAdsorb(preview.lpos, startPos, 0, __instance.planet.radius == 100f);
                     } else if (preview.item.ID == ProtoID.I粒子加速轨道) {
-                        pos = BeltShouldBeAdsorb(preview.lpos, startPos, 1);
+                        pos = BeltShouldBeAdsorb(preview.lpos, startPos, 1, __instance.planet.radius == 100f);
                     } else if (preview.item.ID == ProtoID.I星环电网组件) {
-                        pos = BeltShouldBeAdsorb(preview.lpos, startPos, 2);
+                        pos = BeltShouldBeAdsorb(preview.lpos, startPos, 2, __instance.planet.radius == 100f);
                     }
 
                     preview.lpos = pos;
@@ -77,6 +77,9 @@ namespace ProjectOrbitalRing.Patches.Logic.OrbitalRing
 
         public static bool isOrbitalBelt(BuildPreview buildPreview2)
         {
+            if (buildPreview2 == null) {
+                return false;
+            }
             int id = buildPreview2.item.ID;
             switch (id) {
                 case ProtoID.I轨道连接组件:
@@ -227,7 +230,7 @@ namespace ProjectOrbitalRing.Patches.Logic.OrbitalRing
             return matcher.InstructionEnumeration();
         }
 
-        public static bool xxx(BuildTool_Path instance, ref int num2)
+        public static bool CheckBeltId(BuildTool_Path instance, ref int num2)
         {
             int modelIndex = instance.GetPrefabDesc(num2).modelIndex;
             if (instance.handItem.ID == ProtoID.I轨道连接组件) {
@@ -263,7 +266,7 @@ namespace ProjectOrbitalRing.Patches.Logic.OrbitalRing
             matcher.Advance(1).InsertAndAdvance(
                 new CodeInstruction(OpCodes.Ldarg_0),
                 new CodeInstruction(OpCodes.Ldloca_S, V_10),
-                new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(OrbitalConnect), nameof(xxx),
+                new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(OrbitalConnect), nameof(CheckBeltId),
                     new System.Type[] {
                         typeof(BuildTool_Path),
                         typeof(int).MakeByRefType(),
@@ -271,7 +274,7 @@ namespace ProjectOrbitalRing.Patches.Logic.OrbitalRing
                 )),
                 new CodeInstruction(OpCodes.Brtrue_S, IL_0451)
             );
-            matcher.LogInstructionEnumeration();
+            //matcher.LogInstructionEnumeration();
             return matcher.InstructionEnumeration();
         }
 
@@ -303,19 +306,21 @@ namespace ProjectOrbitalRing.Patches.Logic.OrbitalRing
         //    }
         //}
 
-        [HarmonyPatch(typeof(PlanetTransport), nameof(PlanetTransport.SetStationStorage))]
-        [HarmonyPostfix]
-        public static void SetStationStorage_Patch(ref PlanetTransport __instance)
-        {
-            OrbitalStationManager.Instance.AddPlanetId(__instance.planet.id);
-            var planetOrbitalRingData = OrbitalStationManager.Instance.GetPlanetOrbitalRingData(__instance.planet.id);
-            LogError($" 0 ring not complete inside {planetOrbitalRingData.Rings[0].isInsideRingComplete} outside {planetOrbitalRingData.Rings[0].isOutsideRingComplete}");
-            LogError($" 0 ring not complete low inside {planetOrbitalRingData.Rings[0].isLowInsideRingComplete} outside {planetOrbitalRingData.Rings[0].isLowOutsideRingComplete}");
-            LogError($" 1 ring not complete inside {planetOrbitalRingData.Rings[1].isInsideRingComplete} outside {planetOrbitalRingData.Rings[1].isOutsideRingComplete}");
-            LogError($" 1 ring not complete low inside {planetOrbitalRingData.Rings[1].isLowInsideRingComplete} outside {planetOrbitalRingData.Rings[1].isLowOutsideRingComplete}");
-            //planetOrbitalRingData.Rings[0].CheckRingComplete(true);
-            //planetOrbitalRingData.Rings[1].CheckRingComplete(true);
-        }
+        //[HarmonyPatch(typeof(PlanetTransport), nameof(PlanetTransport.SetStationStorage))]
+        //[HarmonyPostfix]
+        //public static void SetStationStorage_Patch(ref PlanetTransport __instance)
+        //{
+        //    OrbitalStationManager.Instance.AddPlanetId(__instance.planet.id, __instance.planet.radius == 100f);
+        //    var planetOrbitalRingData = OrbitalStationManager.Instance.GetPlanetOrbitalRingData(__instance.planet.id);
+        //    LogError($" 0 ring not complete inside {planetOrbitalRingData.Rings[0].isInsideRingComplete} outside {planetOrbitalRingData.Rings[0].isOutsideRingComplete}");
+        //    LogError($" 0 ring not complete low inside {planetOrbitalRingData.Rings[0].isLowInsideRingComplete} outside {planetOrbitalRingData.Rings[0].isLowOutsideRingComplete}");
+        //    if (__instance.planet.radius > 100f) {
+        //        LogError($" 1 ring not complete inside {planetOrbitalRingData.Rings[1].isInsideRingComplete} outside {planetOrbitalRingData.Rings[1].isOutsideRingComplete}");
+        //        LogError($" 1 ring not complete low inside {planetOrbitalRingData.Rings[1].isLowInsideRingComplete} outside {planetOrbitalRingData.Rings[1].isLowOutsideRingComplete}");
+        //    }
+        //    //planetOrbitalRingData.Rings[0].CheckRingComplete(true);
+        //    //planetOrbitalRingData.Rings[1].CheckRingComplete(true);
+        //}
 
 
 
@@ -329,8 +334,8 @@ namespace ProjectOrbitalRing.Patches.Logic.OrbitalRing
                     if (prebuildData.protoId == ProtoID.I轨道连接组件 || prebuildData.protoId == ProtoID.I粒子加速轨道 || prebuildData.protoId == ProtoID.I星环电网组件) {
                         //LogError($"BuildFinallyPostPatch");
                         Vector3 pos = prebuildData.pos;
-                        (int positionIndex, int ringBeltIndex, int ringIndex) = CalculateRingPosMark(pos);
-                        OrbitalStationManager.Instance.AddPlanetId(__instance.planet.id);
+                        (int positionIndex, int ringBeltIndex, int ringIndex) = CalculateRingPosMark(pos, __instance.planet.radius == 100f);
+                        OrbitalStationManager.Instance.AddPlanetId(__instance.planet.id, __instance.planet.radius == 100f);
                         var planetOrbitalRingData = OrbitalStationManager.Instance.GetPlanetOrbitalRingData(__instance.planet.id);
                         if (prebuildData.protoId == ProtoID.I轨道连接组件) {
                             planetOrbitalRingData.Rings[ringIndex].AddRing(positionIndex, ringBeltIndex, false);
@@ -348,7 +353,7 @@ namespace ProjectOrbitalRing.Patches.Logic.OrbitalRing
         {
             if (protoId == ProtoID.I轨道连接组件 || protoId == ProtoID.I粒子加速轨道) {
                 Vector3 thisPos = __instance.entityPool[objId].pos;
-                (int positionIndex, int ringBeltIndex, int ringIndex) = CalculateRingPosMark(thisPos);
+                (int positionIndex, int ringBeltIndex, int ringIndex) = CalculateRingPosMark(thisPos, __instance.planet.radius == 100f);
                 var planetOrbitalRingData = OrbitalStationManager.Instance.GetPlanetOrbitalRingData(__instance.planet.id);
                 if (protoId == ProtoID.I轨道连接组件) {
                     planetOrbitalRingData.Rings[ringIndex].DelRing(positionIndex, ringBeltIndex, false);

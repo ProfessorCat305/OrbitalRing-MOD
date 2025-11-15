@@ -75,7 +75,10 @@ namespace ProjectOrbitalRing.Patches.Logic.MegaAssembler
 
                 case Utils.ERecipeType.粒子打印: return type == Utils.ERecipeType.Assemble || type == Utils.ERecipeType.粒子打印;
 
-                case Utils.ERecipeType.复合制造: return type == Utils.ERecipeType.Assemble || type == Utils.ERecipeType.太空船坞;
+                case Utils.ERecipeType.黑盒:
+                    return type == Utils.ERecipeType.黑盒 || type == Utils.ERecipeType.粒子打印 || type == Utils.ERecipeType.Assemble || 
+                        type == Utils.ERecipeType.等离子熔炼 || type == Utils.ERecipeType.Smelt || type == Utils.ERecipeType.Refine ||
+                        type == Utils.ERecipeType.Chemical || type == Utils.ERecipeType.Particle;
 
                 case Utils.ERecipeType.物质重组:
                     return type == Utils.ERecipeType.Assemble || type == Utils.ERecipeType.粒子打印 || type == Utils.ERecipeType.物质重组;
