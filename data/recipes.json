@@ -4781,7 +4781,7 @@
         "Name": "电解冶银",
         "Description": "R电解冶银",
         "IconPath": "",
-        "Type": 10,
+        "Type": 2,
         "GridIndex": 4108,
         "Time": 120,
         "Input": [

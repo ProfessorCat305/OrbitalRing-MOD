@@ -6037,18 +6037,18 @@
         "IsHiddenTech": false,
         "PreItem": null,
         "Position": [
-            48.0,
+            40.0,
             24.0
         ],
-        "PreTechs": [ 1940 ],
+        "PreTechs": [
+            1940
+        ],
         "PreTechsImplicit": [],
         "Items": [
-            6003,
-            6278
+            6003
         ],
         "ItemPoints": [
-            10,
-            6
+            10
         ],
         "HashNeeded": 288000,
         "UnlockRecipes": [

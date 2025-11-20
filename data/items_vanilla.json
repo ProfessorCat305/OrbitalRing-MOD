@@ -5,7 +5,7 @@
     "Description": "I水",
     "IconPath": "Icons/ItemRecipe/water",
     "GridIndex": 4506,
-    "StackSize": 20,
+    "StackSize": 200,
     "Type": 1,
     "PreTechOverride": 0,
     "DescFields": [
@@ -151,7 +151,7 @@
     "Description": "I硅石",
     "IconPath": "Icons/ItemRecipe/silicium-ore",
     "GridIndex": 3806,
-    "StackSize": 100,
+    "StackSize": 50,
     "Type": 1,
     "PreTechOverride": 0,
     "DescFields": [
@@ -248,7 +248,7 @@
     "Description": "I石矿",
     "IconPath": "Icons/ItemRecipe/stone-ore",
     "GridIndex": 3805,
-    "StackSize": 100,
+    "StackSize": 50,
     "Type": 1,
     "PreTechOverride": 0,
     "DescFields": [
@@ -296,7 +296,7 @@
     "Description": "I煤矿",
     "IconPath": "Icons/ItemRecipe/coal-ore",
     "GridIndex": 3804,
-    "StackSize": 100,
+    "StackSize": 50,
     "Type": 1,
     "PreTechOverride": 0,
     "DescFields": [
@@ -347,7 +347,7 @@
     "Description": "I原油",
     "IconPath": "Icons/ItemRecipe/oil",
     "GridIndex": 4101,
-    "StackSize": 20,
+    "StackSize": 200,
     "Type": 1,
     "PreTechOverride": 0,
     "DescFields": [
@@ -740,7 +740,7 @@
         "Description": "I生物质",
         "IconPath": "Icons/ItemRecipe/plant-fuel",
         "GridIndex": 4114,
-        "StackSize": 500,
+        "StackSize": 200,
         "Type": 1,
         "PreTechOverride": 0,
         "DescFields": [
@@ -1463,7 +1463,7 @@
         "Description": "I重油",
         "IconPath": "Assets/texpack/煤焦油",
         "GridIndex": 4301,
-        "StackSize": 20,
+        "StackSize": 200,
         "Type": 2,
         "PreTechOverride": 0,
         "DescFields": [
@@ -1514,7 +1514,7 @@
         "Description": "I塑料",
         "IconPath": "Icons/ItemRecipe/plastic",
         "GridIndex": 4102,
-        "StackSize": 200,
+        "StackSize": 300,
         "Type": 2,
         "PreTechOverride": 0,
         "DescFields": [
@@ -1562,7 +1562,7 @@
     "Description": "I硫酸",
     "IconPath": "Icons/ItemRecipe/sulphuric-acid",
     "GridIndex": 4406,
-    "StackSize": 20,
+    "StackSize": 200,
     "Type": 2,
     "PreTechOverride": 0,
     "DescFields": [
@@ -1611,7 +1611,7 @@
     "Description": "I有机晶体",
     "IconPath": "Icons/ItemRecipe/crystal-rubber",
     "GridIndex": 4612,
-    "StackSize": 200,
+    "StackSize": 250,
     "Type": 2,
     "PreTechOverride": 0,
     "DescFields": [
@@ -1759,7 +1759,7 @@
         "Description": "I氢",
         "IconPath": "Icons/ItemRecipe/hydrogen",
         "GridIndex": 4104,
-        "StackSize": 20,
+        "StackSize": 400,
         "Type": 2,
         "PreTechOverride": 0,
         "DescFields": [
@@ -1811,7 +1811,7 @@
         "Description": "I重氢",
         "IconPath": "Icons/ItemRecipe/deuterium",
         "GridIndex": 4205,
-        "StackSize": 20,
+        "StackSize": 400,
         "Type": 2,
         "PreTechOverride": 1134,
         "DescFields": [
@@ -1863,7 +1863,7 @@
         "Description": "I反物质",
         "IconPath": "Icons/ItemRecipe/anti-matter",
         "GridIndex": 4703,
-        "StackSize": 20,
+        "StackSize": 50,
         "Type": 2,
         "PreTechOverride": 0,
         "DescFields": [
@@ -1963,7 +1963,7 @@
     "Description": "I碳纳米管",
     "IconPath": "Icons/ItemRecipe/nanotube",
     "GridIndex": 4303,
-    "StackSize": 200,
+    "StackSize": 250,
     "Type": 2,
     "PreTechOverride": 0,
     "DescFields": [
@@ -2960,7 +2960,7 @@
     "Description": "I电路板",
     "IconPath": "Icons/ItemRecipe/circuit-board",
     "GridIndex": 1303,
-    "StackSize": 200,
+    "StackSize": 300,
     "Type": 3,
     "PreTechOverride": 0,
     "DescFields": [
@@ -3585,7 +3585,7 @@
     "Description": "I戴森球组件",
     "IconPath": "Icons/ItemRecipe/dyson-sphere-component",
     "GridIndex": 1811,
-    "StackSize": 100,
+    "StackSize": 50,
     "Type": 3,
     "PreTechOverride": 0,
     "DescFields": [
@@ -5999,7 +5999,7 @@
         "Description": "I裂变重水堆",
         "IconPath": "Icons/ItemRecipe/fusion-power-station",
         "GridIndex": 2107,
-        "StackSize": 20,
+        "StackSize": 25,
         "Type": 6,
         "PreTechOverride": 0,
         "DescFields": [
