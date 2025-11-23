@@ -2332,10 +2332,10 @@
         "Time": 120,
         "Input": [
             1101,
-            1301
+            1302
         ],
         "InCounts": [
-            1,
+            4,
             1
         ],
         "Output": [
@@ -7613,23 +7613,31 @@
     },
     {
         "ID": 806,
-        "Name": "文明数据上传",
-        "Description": "R文明数据上传",
+        "Name": "空轨",
+        "Description": "",
         "IconPath": "",
-        "Type": 0,
-        "GridIndex": 0,
-        "Time": 600,
+        "Type": 4,
+        "GridIndex": 2211,
+        "Time": 1500,
         "Input": [
-            6241
+            1103,
+            1204,
+            1301
         ],
         "InCounts": [
+            5,
+            2,
             1
         ],
-        "Output": [],
-        "OutCounts": [],
-        "Explicit": true,
-        "Handcraft": true,
-        "NonProductive": true
+        "Output": [
+            6235
+        ],
+        "OutCounts": [
+            5
+        ],
+        "Explicit": false,
+        "Handcraft": false,
+        "NonProductive": false
     },
     {
         "ID": 807,

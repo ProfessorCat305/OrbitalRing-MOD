@@ -57,6 +57,7 @@ namespace ProjectOrbitalRing.Utils
                            I放射性矿物 = 6222,
                            I量子储物仓 = 6231,
                            I文明遗物 = 6234,
+                           I空轨 = 6235,
                            I钚燃料棒 = 6241,
                            I铀燃料棒 = 6242,
                            IMOX燃料棒 = 6243,
@@ -144,7 +145,7 @@ namespace ProjectOrbitalRing.Utils
                            M超空间中继器 = 802,
                            M太空船坞 = 803,
                            M轨道观测站 = 804,
-                           M巨型化学反应釜 = 805,
+                           M太空电梯 = 805,
                            M深空物流港 = 806,
                            M轨道反物质堆核心 = 807,
                            M勘察卫星 = 808,
@@ -167,7 +168,8 @@ namespace ProjectOrbitalRing.Utils
                            M粒子加速轨道 = 825,
                            M星环电网组件 = 826,
                            M星环护盾组件 = 827,
-                           M黑盒 = 828;
+                           M黑盒 = 828,
+                           M空轨 = 829;
 
         internal const int T戴森球计划 = 1,
                            T电磁学 = 1001,

@@ -3331,6 +3331,16 @@
         "ENUS": "The nodes of the surface logistics network, where goods are distributed and integrated for transportation at the upper and lower entrances and exits, will form a new layer of \"artificial ground\" in the highly developed industrial planet, with high-level logistics conveyor belts extending in all directions.\n<color=\"#FD965ECC\">The belt can be lifted to the 17th floor to dock with the upper interface</color>"
     },
     {
+        "Name": "空轨",
+        "ZHCN": "空轨",
+        "ENUS": "Overhead Tracks"
+    },
+    {
+        "Name": "I空轨",
+        "ZHCN": "专门为了运输设计的高空货运轨道，使用磁悬浮技术最大程度减小阻力，以实现超高速货物运输，物流立交之间将被它串联成一张大网，最终形成新的一层人造地面。\n只能在<color=\"#FD965ECC\">16层及以上高度</color>使用",
+        "ENUS": "A high-altitude freight track specially designed for transportation, using magnetic levitation technology to minimize resistance and achieve ultra high speed cargo transportation. The logistics interchanges will be connected into a large network by it, ultimately forming a new layer of artificial ground.\nCan only be used at <color=\"#FD965ECC\">heights of 16 floors and above</color>"
+    },
+    {
         "Name": "行星物流系统描述",
         "ZHCN": "当楼房的高度随材料学发展而拔高，在高空建造第二层，第三层人造地面将楼房连接起来成为发展的必然，工业的发展也是如此，绕过地面错综复杂的产线，物品通过物流立交在远离地面的第二地面运输，将方便地进行总线式产线规划。",
         "ENUS": "As the height of buildings increases with the development of materials science, it is inevitable to build a second and third floor at high altitude to connect the buildings with artificial ground. The development of industry is also like this. By bypassing the complex production lines on the ground and transporting goods through logistics overpasses on the second ground far away from the ground, it will be convenient to carry out bus style production line planning."

@@ -32,14 +32,29 @@ namespace ProjectOrbitalRing.Patches.Logic.OrbitalRing
             }
         }
 
+        [HarmonyPrefix]
+        [HarmonyPatch(typeof(BuildTool_Path), "DeterminePreviews")]
+        public static void BuildTool_Path_DeterminePreviews_PrePatch(BuildTool_Path __instance)
+        {
+            if (__instance.handItem.ID == ProtoID.I空轨) {
+                if (__instance.altitude == 0) {
+                    __instance.altitude = 17;
+                }
+            }
+        }
+
         [HarmonyPostfix]
         [HarmonyPatch(typeof(BuildTool_Path), "DeterminePreviews")]
-        public static void DeterminePreviews_Path_Patch(BuildTool_Path __instance)
+        public static void BuildTool_Path_DeterminePreviews_PostPatch(BuildTool_Path __instance)
         {
             if (__instance.handItem.ID == ProtoID.I轨道连接组件) {
                 __instance.altitude = 48;
             } else if (__instance.handItem.ID == ProtoID.I粒子加速轨道 || __instance.handItem.ID == ProtoID.I星环电网组件) {
                 __instance.altitude = 43;
+            } else if (__instance.handItem.ID == ProtoID.I空轨) {
+                if (__instance.altitude < 16) {
+                    __instance.altitude = 16;
+                }
             }
 
             int count = __instance.buildPreviews.Count;
@@ -67,7 +82,7 @@ namespace ProjectOrbitalRing.Patches.Logic.OrbitalRing
                     Vector3 normalized = preview.lpos.normalized;
                     // 计算新长度并返回结果
                     preview.lpos = normalized * (__instance.planet.realRadius + 0.2f + __instance.altitude * 1.3333333f);
-                    Debug.LogFormat("length {0}  altitude {1} ", __instance.planet.realRadius + 0.2f + __instance.altitude * 1.3333333f, __instance.altitude);
+                    //Debug.LogFormat("length {0}  altitude {1} ", __instance.planet.realRadius + 0.2f + __instance.altitude * 1.3333333f, __instance.altitude);
                     //preview.lrot2 *= Quaternion.AngleAxis(180, Vector3.right);
 
                 }

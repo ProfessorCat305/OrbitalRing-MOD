@@ -7,99 +7,99 @@ using HarmonyLib;
 
 namespace ProjectOrbitalRing.Patches.UI.BeltColorFix
 {
-    //public static class BeltFixPatches
-    //{
-    //    private static readonly FieldInfo BeltComponent_Speed_Field = AccessTools.Field(typeof(BeltComponent), nameof(BeltComponent.speed));
+    public static class BeltFixPatches
+    {
+        private static readonly FieldInfo BeltComponent_Speed_Field = AccessTools.Field(typeof(BeltComponent), nameof(BeltComponent.speed));
 
-    //    private static readonly FieldInfo PrefabDesc_beltSpeed_Field = AccessTools.Field(typeof(PrefabDesc), nameof(PrefabDesc.beltSpeed));
+        private static readonly FieldInfo PrefabDesc_beltSpeed_Field = AccessTools.Field(typeof(PrefabDesc), nameof(PrefabDesc.beltSpeed));
 
-    //    [HarmonyPatch(typeof(ConnGizmoRenderer), nameof(ConnGizmoRenderer.Update))]
-    //    [HarmonyTranspiler]
-    //    public static IEnumerable<CodeInstruction> BuildTool_BlueprintCopy_UpdatePreviewModels_Transpiler(
-    //        IEnumerable<CodeInstruction> instructions)
-    //    {
-    //        var matcher = new CodeMatcher(instructions);
+        //[HarmonyPatch(typeof(ConnGizmoRenderer), nameof(ConnGizmoRenderer.Update))]
+        //[HarmonyTranspiler]
+        //public static IEnumerable<CodeInstruction> BuildTool_BlueprintCopy_UpdatePreviewModels_Transpiler(
+        //    IEnumerable<CodeInstruction> instructions)
+        //{
+        //    var matcher = new CodeMatcher(instructions);
 
-    //        matcher.MatchForward(false, new CodeMatch(OpCodes.Ldfld, PrefabDesc_beltSpeed_Field));
+        //    matcher.MatchForward(false, new CodeMatch(OpCodes.Ldfld, PrefabDesc_beltSpeed_Field));
 
-    //        matcher.Advance(1).InsertAndAdvance(new CodeInstruction(OpCodes.Call,
-    //            AccessTools.Method(typeof(BeltFixPatches), nameof(BeltSpeed_Patch))));
+        //    matcher.Advance(1).InsertAndAdvance(new CodeInstruction(OpCodes.Call,
+        //        AccessTools.Method(typeof(BeltFixPatches), nameof(BeltSpeed_Patch))));
 
-    //        return matcher.InstructionEnumeration();
-    //    }
+        //    return matcher.InstructionEnumeration();
+        //}
 
-    //    [HarmonyPatch(typeof(CargoTraffic), nameof(CargoTraffic.SetBeltSelected))]
-    //    [HarmonyTranspiler]
-    //    public static IEnumerable<CodeInstruction> CargoTraffic_SetBeltSelected_Transpiler(IEnumerable<CodeInstruction> instructions)
-    //    {
-    //        var matcher = new CodeMatcher(instructions);
+        //[HarmonyPatch(typeof(CargoTraffic), nameof(CargoTraffic.SetBeltSelected))]
+        //[HarmonyTranspiler]
+        //public static IEnumerable<CodeInstruction> CargoTraffic_SetBeltSelected_Transpiler(IEnumerable<CodeInstruction> instructions)
+        //{
+        //    var matcher = new CodeMatcher(instructions);
 
-    //        matcher.MatchForward(false, new CodeMatch(OpCodes.Ldfld, BeltComponent_Speed_Field));
+        //    matcher.MatchForward(false, new CodeMatch(OpCodes.Ldfld, BeltComponent_Speed_Field));
 
-    //        matcher.Advance(1).InsertAndAdvance(new CodeInstruction(OpCodes.Call,
-    //            AccessTools.Method(typeof(BeltFixPatches), nameof(BeltSpeed_Patch))));
-
-
-    //        return matcher.InstructionEnumeration();
-    //    }
-
-    //    [HarmonyPatch(typeof(BuildTool_BlueprintCopy), nameof(BuildTool_BlueprintCopy.UpdatePreviewModels))]
-    //    [HarmonyPatch(typeof(BuildTool_Path), nameof(BuildTool_Path.UpdateGizmos))]
-    //    [HarmonyTranspiler]
-    //    public static IEnumerable<CodeInstruction> BuildTool_Path_UpdateGizmos_Transpiler(IEnumerable<CodeInstruction> instructions)
-    //    {
-    //        var matcher = new CodeMatcher(instructions);
-
-    //        matcher.MatchForward(false, new CodeMatch(OpCodes.Ldfld, PrefabDesc_beltSpeed_Field));
-
-    //        matcher.Advance(1).InsertAndAdvance(new CodeInstruction(OpCodes.Call,
-    //            AccessTools.Method(typeof(BeltFixPatches), nameof(BeltSpeed_Patch))));
-
-    //        matcher.MatchForward(false, new CodeMatch(OpCodes.Ldfld, PrefabDesc_beltSpeed_Field));
-
-    //        matcher.Advance(1).InsertAndAdvance(new CodeInstruction(OpCodes.Call,
-    //            AccessTools.Method(typeof(BeltFixPatches), nameof(BeltSpeed_Patch))));
-
-    //        return matcher.InstructionEnumeration();
-    //    }
-
-    //    [HarmonyPatch(typeof(CargoTraffic), nameof(CargoTraffic.AlterBeltRenderer))]
-    //    [HarmonyTranspiler]
-    //    public static IEnumerable<CodeInstruction> CargoTraffic_AlterBeltRenderer_Transpiler(IEnumerable<CodeInstruction> instructions)
-    //    {
-    //        var matcher = new CodeMatcher(instructions);
-
-    //        matcher.MatchForward(false, new CodeMatch(OpCodes.Ldfld, BeltComponent_Speed_Field));
-
-    //        matcher.Advance(1).InsertAndAdvance(new CodeInstruction(OpCodes.Call,
-    //            AccessTools.Method(typeof(BeltFixPatches), nameof(BeltSpeed_Patch))));
-
-    //        matcher.MatchForward(false, new CodeMatch(OpCodes.Ldfld, BeltComponent_Speed_Field));
-
-    //        matcher.Advance(1).InsertAndAdvance(new CodeInstruction(OpCodes.Call,
-    //            AccessTools.Method(typeof(BeltFixPatches), nameof(BeltSpeed_Patch))));
+        //    matcher.Advance(1).InsertAndAdvance(new CodeInstruction(OpCodes.Call,
+        //        AccessTools.Method(typeof(BeltFixPatches), nameof(BeltSpeed_Patch))));
 
 
-    //        return matcher.InstructionEnumeration();
-    //    }
+        //    return matcher.InstructionEnumeration();
+        //}
 
-    //    [HarmonyPatch(typeof(PathRenderingBatch), nameof(PathRenderingBatch.AddNode))]
-    //    [HarmonyPatch(typeof(PathRenderingBatch), nameof(PathRenderingBatch.AddNodeNoRefresh))]
-    //    [HarmonyPrefix]
-    //    public static void PathRenderingBatch_AddNode_Prefix(ref int speed) => speed = BeltSpeed_Patch(speed);
+        //[HarmonyPatch(typeof(BuildTool_BlueprintCopy), nameof(BuildTool_BlueprintCopy.UpdatePreviewModels))]
+        //[HarmonyPatch(typeof(BuildTool_Path), nameof(BuildTool_Path.UpdateGizmos))]
+        //[HarmonyTranspiler]
+        //public static IEnumerable<CodeInstruction> BuildTool_Path_UpdateGizmos_Transpiler(IEnumerable<CodeInstruction> instructions)
+        //{
+        //    var matcher = new CodeMatcher(instructions);
 
-    //    public static int BeltSpeed_Patch(int beltSpeed)
-    //    {
-    //        switch (beltSpeed)
-    //        {
-    //            case 5: return 5;
+        //    matcher.MatchForward(false, new CodeMatch(OpCodes.Ldfld, PrefabDesc_beltSpeed_Field));
 
-    //            case 2: return 2;
+        //    matcher.Advance(1).InsertAndAdvance(new CodeInstruction(OpCodes.Call,
+        //        AccessTools.Method(typeof(BeltFixPatches), nameof(BeltSpeed_Patch))));
 
-    //            case 1: return 1;
+        //    matcher.MatchForward(false, new CodeMatch(OpCodes.Ldfld, PrefabDesc_beltSpeed_Field));
 
-    //            default: return beltSpeed;
-    //        }
-    //    }
-    //}
+        //    matcher.Advance(1).InsertAndAdvance(new CodeInstruction(OpCodes.Call,
+        //        AccessTools.Method(typeof(BeltFixPatches), nameof(BeltSpeed_Patch))));
+
+        //    return matcher.InstructionEnumeration();
+        //}
+
+        //[HarmonyPatch(typeof(CargoTraffic), nameof(CargoTraffic.AlterBeltRenderer))]
+        //[HarmonyTranspiler]
+        //public static IEnumerable<CodeInstruction> CargoTraffic_AlterBeltRenderer_Transpiler(IEnumerable<CodeInstruction> instructions)
+        //{
+        //    var matcher = new CodeMatcher(instructions);
+
+        //    matcher.MatchForward(false, new CodeMatch(OpCodes.Ldfld, BeltComponent_Speed_Field));
+
+        //    matcher.Advance(1).InsertAndAdvance(new CodeInstruction(OpCodes.Call,
+        //        AccessTools.Method(typeof(BeltFixPatches), nameof(BeltSpeed_Patch))));
+
+        //    matcher.MatchForward(false, new CodeMatch(OpCodes.Ldfld, BeltComponent_Speed_Field));
+
+        //    matcher.Advance(1).InsertAndAdvance(new CodeInstruction(OpCodes.Call,
+        //        AccessTools.Method(typeof(BeltFixPatches), nameof(BeltSpeed_Patch))));
+
+
+        //    return matcher.InstructionEnumeration();
+        //}
+
+        //[HarmonyPatch(typeof(PathRenderingBatch), nameof(PathRenderingBatch.AddNode))]
+        //[HarmonyPatch(typeof(PathRenderingBatch), nameof(PathRenderingBatch.AddNodeNoRefresh))]
+        //[HarmonyPrefix]
+        //public static void PathRenderingBatch_AddNode_Prefix(ref int speed) => speed = BeltSpeed_Patch(speed);
+
+        public static int BeltSpeed_Patch(int beltSpeed)
+        {
+            switch (beltSpeed) {
+                case 5:
+                case 2:
+                case 1:
+                    return beltSpeed;
+                case 10:
+                    return 1;
+                default: 
+                    return beltSpeed;
+            }
+        }
+    }
 }

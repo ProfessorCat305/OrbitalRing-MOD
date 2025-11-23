@@ -533,6 +533,9 @@
         "idleEnergyPerTick": 240000,
         "workEnergyPerTick": 1600000,
         "assemblerSpeed": 40000
+    },
+    {
+        "ModelID": 829,
+        "beltSpeed": 10
     }
-
 ]

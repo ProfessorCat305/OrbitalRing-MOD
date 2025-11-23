@@ -3164,7 +3164,8 @@
         ],
         "HashNeeded": 72000,
         "UnlockRecipes": [
-            93
+            93,
+            806
         ],
         "UnlockFunctions": [],
         "UnlockValues": [],
@@ -3626,7 +3627,7 @@
         "IsHiddenTech": false,
         "PreItem": null,
         "Position": [
-            36.0,
+            28.0,
             8.0
         ],
         "PreTechs": [
@@ -3634,9 +3635,11 @@
         ],
         "PreTechsImplicit": [],
         "Items": [
-            6003
+            6001,
+            6002
         ],
         "ItemPoints": [
+            10,
             10
         ],
         "HashNeeded": 108000,
@@ -4814,7 +4817,7 @@
         ],
         "UnlockValues": [
             9,
-            400,
+            300,
             0.5,
             1.0,
             0,

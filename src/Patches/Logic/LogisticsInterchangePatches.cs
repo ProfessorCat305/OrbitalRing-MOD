@@ -9,6 +9,8 @@ using GalacticScale;
 using UnityEngine.Playables;
 using ProjectOrbitalRing.Patches.Logic.OrbitalRing;
 using static ProjectOrbitalRing.ProjectOrbitalRing;
+using static System.Reflection.Emit.OpCodes;
+using System.Text.RegularExpressions;
 
 namespace ProjectOrbitalRing.Patches.Logic
 {
@@ -43,22 +45,22 @@ namespace ProjectOrbitalRing.Patches.Logic
                 new Pose(megaPumper.portPoses[9].position, megaPumper.portPoses[9].rotation),
                 new Pose(megaPumper.portPoses[10].position, megaPumper.portPoses[10].rotation),
                 new Pose(megaPumper.portPoses[11].position, megaPumper.portPoses[11].rotation),
-                //new Pose(megaPumper.portPoses[0].position, megaPumper.portPoses[0].rotation),
+                new Pose(megaPumper.portPoses[0].position, megaPumper.portPoses[0].rotation),
                 new Pose(megaPumper.portPoses[1].position, megaPumper.portPoses[1].rotation),
-                //new Pose(megaPumper.portPoses[2].position, megaPumper.portPoses[2].rotation),
-                //new Pose(megaPumper.portPoses[3].position, megaPumper.portPoses[3].rotation),
+                new Pose(megaPumper.portPoses[2].position, megaPumper.portPoses[2].rotation),
+                new Pose(megaPumper.portPoses[3].position, megaPumper.portPoses[3].rotation),
                 new Pose(megaPumper.portPoses[4].position, megaPumper.portPoses[4].rotation),
-                //new Pose(megaPumper.portPoses[5].position, megaPumper.portPoses[5].rotation),
-                //new Pose(megaPumper.portPoses[6].position, megaPumper.portPoses[6].rotation),
+                new Pose(megaPumper.portPoses[5].position, megaPumper.portPoses[5].rotation),
+                new Pose(megaPumper.portPoses[6].position, megaPumper.portPoses[6].rotation),
                 new Pose(megaPumper.portPoses[7].position, megaPumper.portPoses[7].rotation),
-                //new Pose(megaPumper.portPoses[8].position, megaPumper.portPoses[8].rotation),
-                //new Pose(megaPumper.portPoses[9].position, megaPumper.portPoses[9].rotation),
+                new Pose(megaPumper.portPoses[8].position, megaPumper.portPoses[8].rotation),
+                new Pose(megaPumper.portPoses[9].position, megaPumper.portPoses[9].rotation),
                 new Pose(megaPumper.portPoses[10].position, megaPumper.portPoses[10].rotation),
-                //new Pose(megaPumper.portPoses[11].position, megaPumper.portPoses[11].rotation)
+                new Pose(megaPumper.portPoses[11].position, megaPumper.portPoses[11].rotation)
             };
             for (int i = 12; i < newPortPoses.Length; i++)
             {
-                newPortPoses[i].position.y = 22.5f;
+                newPortPoses[i].position.y = 17 * 1.3333333f;
             }
             megaPumper.portPoses = newPortPoses;
 
@@ -66,71 +68,9 @@ namespace ProjectOrbitalRing.Patches.Logic
 
         }
 
-       
-       //[HarmonyPostfix]
-       //[HarmonyPatch(typeof(BuildTool_Path), "CheckBuildConditions")]
-       // public static void CheckBuildConditionsPatch(BuildTool_Path __instance, ref bool __result)
-       // {
-       //     GameHistoryData history = __instance.actionBuild.history;
-       //     int count = __instance.buildPreviews.Count;
-       //     int num = count - 1;
-       //     for (int i = 0; i < count; i++) {
-       //         BuildPreview buildPreview = __instance.buildPreviews[i];
-       //         if (buildPreview.item.ID == ProtoID.I轨道连接组件 || buildPreview.item.ID == ProtoID.I粒子加速轨道 || buildPreview.item.ID == ProtoID.I星环电网组件) {
-       //             if (buildPreview.condition == EBuildCondition.Collide) {
-       //                 if (history.buildMaxHeight + 0.5f <= 64f) {
-       //                     buildPreview.condition = EBuildCondition.Ok;
-       //                     __result = true;
-       //                     __instance.actionBuild.model.cursorState = 0;
-       //                     __instance.actionBuild.model.cursorText = BuildPreview.GetConditionText(EBuildCondition.Ok);
-       //                     float num36 = __instance.altitude;
-       //                     float num37 = __instance.altitude;
-       //                     float num38 = __instance.tilt;
-       //                     float num39 = __instance.tilt;
-       //                     if (count > 0) {
-       //                         num36 = (__instance.buildPreviews[0].lpos.magnitude - __instance.planet.realRadius - 0.2f) / 1.33333325f;
-       //                         num37 = (__instance.buildPreviews[count - 1].lpos.magnitude - __instance.planet.realRadius - 0.2f) / 1.33333325f;
-       //                         num36 = Mathf.Round(num36 * 100f) / 100f;
-       //                         num37 = Mathf.Round(num37 * 100f) / 100f;
-       //                         if ((double)num36 < 0.041) {
-       //                             num36 = 0f;
-       //                         }
-
-       //                         if ((double)num37 < 0.041) {
-       //                             num37 = 0f;
-       //                         }
-
-       //                         num38 = __instance.buildPreviews[0].tilt;
-       //                         num39 = __instance.buildPreviews[count - 1].tilt;
-       //                     }
-
-       //                     if (num36 > 0f || num37 > 0f || num38 != 0f || num39 != 0f || Mathf.Abs(__instance.maxSlope) > 1E-06f) {
-       //                         __instance.actionBuild.model.cursorText += "<size=12>";
-       //                         if (num36 > 0f || num37 > 0f) {
-       //                             string arg = ((num36 != num37) ? $"{num36:0.##}\u2006～\u2006{num37:0.##}" : $"{num36:0.##}");
-       //                             __instance.actionBuild.model.cursorText += string.Format("传送带高度提示".Translate(), arg);
-       //                         }
-
-       //                         if (num38 != 0f || num39 != 0f) {
-       //                             string arg2 = ((num38 != num39) ? $"{0f - num38:+0.#;-0.#;0}\u2006～\u2006{0f - num39:+0.#;-0.#;0}" : $"{0f - num38:+0.#;-0.#;0}°");
-       //                             __instance.actionBuild.model.cursorText += string.Format("传送带倾斜提示".Translate(), arg2);
-       //                         }
-
-       //                         if (Mathf.Abs(__instance.maxSlope) > 0.01f) {
-       //                             string arg3 = ((!(Mathf.Abs(__instance.maxSlope) < 500f)) ? "几乎垂直".Translate() : $"{__instance.maxSlope:0.##}");
-       //                             __instance.actionBuild.model.cursorText += string.Format("传送带坡度提示".Translate(), arg3);
-       //                         }
-       //                     }
-       //                 }
-       //             }
-       //         }
-       //     }
-
-       // }
-
         internal static void StationPrefabDescPostAdd810()
         {
-            PrefabDesc megaPumper = LDB.models.Select(810).prefabDesc;
+            PrefabDesc megaPumper = LDB.models.Select(ProtoID.M太空电梯).prefabDesc;
             Pose[] newPortPoses = { new Pose(megaPumper.portPoses[0].position, megaPumper.portPoses[0].rotation),
                 new Pose(megaPumper.portPoses[1].position, megaPumper.portPoses[1].rotation),
                 new Pose(megaPumper.portPoses[2].position, megaPumper.portPoses[2].rotation),
@@ -143,29 +83,26 @@ namespace ProjectOrbitalRing.Patches.Logic
                 new Pose(megaPumper.portPoses[9].position, megaPumper.portPoses[9].rotation),
                 new Pose(megaPumper.portPoses[10].position, megaPumper.portPoses[10].rotation),
                 new Pose(megaPumper.portPoses[11].position, megaPumper.portPoses[11].rotation),
+                new Pose(megaPumper.portPoses[0].position, megaPumper.portPoses[0].rotation),
                 new Pose(megaPumper.portPoses[1].position, megaPumper.portPoses[1].rotation),
+                new Pose(megaPumper.portPoses[2].position, megaPumper.portPoses[2].rotation),
+                new Pose(megaPumper.portPoses[3].position, megaPumper.portPoses[3].rotation),
                 new Pose(megaPumper.portPoses[4].position, megaPumper.portPoses[4].rotation),
+                new Pose(megaPumper.portPoses[5].position, megaPumper.portPoses[5].rotation),
+                new Pose(megaPumper.portPoses[6].position, megaPumper.portPoses[6].rotation),
                 new Pose(megaPumper.portPoses[7].position, megaPumper.portPoses[7].rotation),
+                new Pose(megaPumper.portPoses[8].position, megaPumper.portPoses[8].rotation),
+                new Pose(megaPumper.portPoses[9].position, megaPumper.portPoses[9].rotation),
                 new Pose(megaPumper.portPoses[10].position, megaPumper.portPoses[10].rotation),
+                new Pose(megaPumper.portPoses[11].position, megaPumper.portPoses[11].rotation)
             };
             for (int i = 12; i < newPortPoses.Length; i++)
             {
-                newPortPoses[i].position.y = 22.5f;
+                newPortPoses[i].position.y = 17 * 1.3333333f;
             }
             megaPumper.portPoses = newPortPoses;
 
-            DelStationPose(801); // 轨道熔炼站
-            DelStationPose(803); // 太空船坞
-            DelStationPose(804); // 轨道观测站
-            DelStationPose(806); // 深空物流港
-            DelSlotPose(807); // 轨道反物质堆核心
-            DelStationPose(811); // 星环对撞机总控站
-            DelStationPose(814); // 轨道反物质堆基座
-            DelStationPose(820); // 星环电网枢纽
-            DelStationPose(821); // 超空间中继器核心
-            DelSlotPose(822); // 重型电磁弹射器
-
-            megaPumper = LDB.models.Select(805).prefabDesc;
+            megaPumper = LDB.models.Select(ProtoID.M轨道空投站).prefabDesc;
             newPortPoses = new Pose[]{ new Pose(megaPumper.portPoses[0].position, megaPumper.portPoses[0].rotation),
                 new Pose(megaPumper.portPoses[1].position, megaPumper.portPoses[1].rotation),
                 new Pose(megaPumper.portPoses[2].position, megaPumper.portPoses[2].rotation),
@@ -181,15 +118,34 @@ namespace ProjectOrbitalRing.Patches.Logic
                 new Pose(megaPumper.portPoses[0].position, megaPumper.portPoses[0].rotation),
                 new Pose(megaPumper.portPoses[1].position, megaPumper.portPoses[1].rotation),
                 new Pose(megaPumper.portPoses[2].position, megaPumper.portPoses[2].rotation),
+                new Pose(megaPumper.portPoses[3].position, megaPumper.portPoses[3].rotation),
+                new Pose(megaPumper.portPoses[4].position, megaPumper.portPoses[4].rotation),
+                new Pose(megaPumper.portPoses[5].position, megaPumper.portPoses[5].rotation),
+                new Pose(megaPumper.portPoses[6].position, megaPumper.portPoses[6].rotation),
                 new Pose(megaPumper.portPoses[7].position, megaPumper.portPoses[7].rotation),
+                new Pose(megaPumper.portPoses[8].position, megaPumper.portPoses[8].rotation),
+                new Pose(megaPumper.portPoses[9].position, megaPumper.portPoses[9].rotation),
+                new Pose(megaPumper.portPoses[10].position, megaPumper.portPoses[10].rotation),
+                new Pose(megaPumper.portPoses[11].position, megaPumper.portPoses[11].rotation)
             };
             for (int i = 12; i < newPortPoses.Length; i++)
             {
-                newPortPoses[i].position.y = 22.5f;
+                newPortPoses[i].position.y = 17 * 1.3333333f;
             }
             megaPumper.portPoses = newPortPoses;
 
+            DelStationPose(801); // 轨道熔炼站
+            DelStationPose(803); // 太空船坞
+            DelStationPose(804); // 轨道观测站
+            DelStationPose(806); // 深空物流港
+            DelSlotPose(807); // 轨道反物质堆核心
+            DelStationPose(811); // 星环对撞机总控站
+            DelStationPose(814); // 轨道反物质堆基座
+            DelStationPose(820); // 星环电网枢纽
+            DelStationPose(821); // 超空间中继器核心
+            DelSlotPose(822); // 重型电磁弹射器
 
+            // 化工厂和量子化工厂新增前方两个爪子口
             megaPumper = LDB.models.Select(64).prefabDesc;
             Pose[] newSlotPoses = new Pose[]{
                 new Pose(megaPumper.slotPoses[0].position, megaPumper.slotPoses[0].rotation),
@@ -230,7 +186,7 @@ namespace ProjectOrbitalRing.Patches.Logic
 
         }
 
-        /*
+        
         [HarmonyPatch(typeof(BuildingGizmo), nameof(BuildingGizmo.SetGizmoDesc))]
         [HarmonyPrefix]
         public static bool BuildingGizmo_SetGizmoDesc_Prefix(BuildingGizmo __instance, ref BuildGizmoDesc _desc)
@@ -353,7 +309,6 @@ namespace ProjectOrbitalRing.Patches.Logic
             return false;
         }
 
-        // BuildTool_Path的DeterminePreviews，EBuildCondition.Occupied时提示接口占用，由PlanetFactory entityConnPool 数组决定，起码是决定一半
         [HarmonyPatch(typeof(PlanetFactory), nameof(PlanetFactory.SetEntityCapacity))]
         [HarmonyPrefix]
         public static bool SetEntityCapacityPatch(PlanetFactory __instance, int newCapacity)
@@ -405,42 +360,56 @@ namespace ProjectOrbitalRing.Patches.Logic
 
             return false;
         }
+        /*
+        // BuildTool_Path的DeterminePreviews，EBuildCondition.Occupied时提示接口占用，由PlanetFactory entityConnPool 数组决定，起码是决定一半
 
         [HarmonyPatch(typeof(PlanetFactory), nameof(PlanetFactory.RemoveEntityWithComponents))]
         [HarmonyPostfix]
-        public static void RemoveEntityWithComponentsPatch(PlanetFactory __instance, int id, bool isKill)
+        public static void RemoveEntityWithComponentsPatch(PlanetFactory __instance, int id)
         {
-            bool flag = false;
             if (id != 0 && __instance.entityPool[id].id != 0)
             {
                 Array.Clear(__instance.entityConnPool, id * 24, 24);
             }
         }
 
-        [HarmonyPatch(typeof(PlanetFactory), nameof(PlanetFactory.ReadObjectConn))]
-        [HarmonyPostfix]
-        public static void ReadObjectConnPatch(PlanetFactory __instance, int objId, int slot, out bool isOutput, out int otherObjId, out int otherSlot)
-        {
-            isOutput = false;
-            otherObjId = 0;
-            otherSlot = 0;
-            if (objId > 0)
-            {
-                int num = __instance.entityConnPool[objId * 24 + slot];
-                if (num != 0)
-                {
-                    bool num2 = num > 0;
-                    num = (num2 ? num : (-num));
-                    isOutput = (num & 0x20000000) == 0;
-                    otherObjId = num & 0xFFFFFF;
-                    otherSlot = (num & 0x1FFFFFFF) >> 24;
-                    if (!num2)
-                    {
-                        otherObjId = -otherObjId;
-                    }
-                }
-            }
-        }
+        //[HarmonyPatch(typeof(PlanetFactory), nameof(PlanetFactory.ReadObjectConn))]
+        //[HarmonyPrefix]
+        //public static bool ReadObjectConnPatch(PlanetFactory __instance, int objId, int slot, out bool isOutput, out int otherObjId, out int otherSlot)
+        //{
+        //    isOutput = false;
+        //    otherObjId = 0;
+        //    otherSlot = 0;
+        //    if (objId > 0) {
+        //        int num = __instance.entityConnPool[objId * 24 + slot];
+        //        if (num == 0) {
+        //            return false;
+        //        }
+        //        bool flag = num > 0;
+        //        num = (flag ? num : (-num));
+        //        isOutput = ((num & 536870912) == 0);
+        //        otherObjId = (num & 16777215);
+        //        otherSlot = (num & 536870911) >> 24;
+        //        if (!flag) {
+        //            otherObjId = -otherObjId;
+        //            return false;
+        //        }
+        //    } else if (objId < 0) {
+        //        int num2 = __instance.prebuildConnPool[-objId * 24 + slot];
+        //        if (num2 == 0) {
+        //            return false;
+        //        }
+        //        bool flag2 = num2 > 0;
+        //        num2 = (flag2 ? num2 : (-num2));
+        //        isOutput = ((num2 & 536870912) == 0);
+        //        otherObjId = (num2 & 16777215);
+        //        otherSlot = (num2 & 536870911) >> 24;
+        //        if (!flag2) {
+        //            otherObjId = -otherObjId;
+        //        }
+        //    }
+        //    return false;
+        //}
 
         [HarmonyPatch(typeof(PlanetFactory), nameof(PlanetFactory.WriteObjectConnDirect))]
         [HarmonyPrefix]
@@ -468,7 +437,7 @@ namespace ProjectOrbitalRing.Patches.Logic
             }
             else if (objId < 0)
             {
-                __instance.prebuildConnPool[-objId * 16 + slot] = num;
+                __instance.prebuildConnPool[-objId * 24 + slot] = num;
             }
             return false;
         }
@@ -485,7 +454,7 @@ namespace ProjectOrbitalRing.Patches.Logic
                 }
                 else if (objId < 0)
                 {
-                    __instance.prebuildConnPool[-objId * 16 + slot] = 0;
+                    __instance.prebuildConnPool[-objId * 24 + slot] = 0;
                 }
             }
             return false;
@@ -495,29 +464,21 @@ namespace ProjectOrbitalRing.Patches.Logic
         [HarmonyPrefix]
         public static bool ClearObjectConnPatch(PlanetFactory __instance, int objId)
         {
-            if (objId > 0)
-            {
-                int num = objId * 16;
-                for (int i = 0; i < 16; i++)
-                {
-                    if (__instance.entityConnPool[num + i] != 0)
-                    {
+            if (objId > 0) {
+                int num = objId * 24;
+                for (int i = 0; i < 24; i++) {
+                    if (__instance.entityConnPool[num + i] != 0) {
                         __instance.ClearObjectConn(objId, i);
                     }
                 }
-            }
-            else
-            {
-                if (objId >= 0)
-                {
+            } else {
+                if (objId >= 0) {
                     return false;
                 }
 
-                int num2 = -objId * 16;
-                for (int j = 0; j < 16; j++)
-                {
-                    if (__instance.prebuildConnPool[num2 + j] != 0)
-                    {
+                int num2 = -objId * 24;
+                for (int j = 0; j < 24; j++) {
+                    if (__instance.prebuildConnPool[num2 + j] != 0) {
                         __instance.ClearObjectConn(objId, j);
                     }
                 }
@@ -546,7 +507,7 @@ namespace ProjectOrbitalRing.Patches.Logic
                 {
                     for (int j = 4; j < 12; j++)
                     {
-                        if (__instance.prebuildConnPool[-otherObjId * 16 + j] == 0)
+                        if (__instance.prebuildConnPool[-otherObjId * 24 + j] == 0)
                         {
                             otherSlot = j;
                             break;
@@ -584,10 +545,78 @@ namespace ProjectOrbitalRing.Patches.Logic
             }
             else
             {
-                Array.Clear(__instance.prebuildConnPool, -oldId * 16, 16);
+                Array.Clear(__instance.prebuildConnPool, -oldId * 24, 24);
             }
             return false;
         }
         */
+
+        [HarmonyTranspiler]
+        [HarmonyPatch(typeof(PlanetFactory), nameof(PlanetFactory.SetPrebuildCapacity))]
+        //[HarmonyPatch(typeof(PlanetFactory), nameof(PlanetFactory.SetEntityCapacity))]
+        [HarmonyPatch(typeof(PlanetFactory), nameof(PlanetFactory.Import))]
+        [HarmonyPatch(typeof(PlanetFactory), nameof(PlanetFactory.Export))]
+        public static IEnumerable<CodeInstruction> PlanetFactory_SetPrebuildCapacity_Patch(IEnumerable<CodeInstruction> instructions)
+        {
+            //instructions = new CodeMatcher(instructions)
+            var matcher1 = new CodeMatcher(instructions);
+            matcher1.MatchForward(
+                    true,
+                    new CodeMatch(i => i.opcode == Ldc_I4_S && Convert.ToDouble(i.operand ?? 0.0) == 16)
+                )
+                .Repeat(matcher => {
+                    matcher.SetInstruction(new CodeInstruction(Ldc_I4_S, (sbyte)24));
+                }).InstructionEnumeration();
+
+            matcher1.LogInstructionEnumeration();
+
+            return instructions;
+        }
+
+
+        [HarmonyTranspiler]
+        [HarmonyPatch(typeof(PlanetFactory), nameof(PlanetFactory.ValidateConns))]
+        [HarmonyPatch(typeof(PlanetFactory), nameof(PlanetFactory.AddPrebuildData))]
+        [HarmonyPatch(typeof(PlanetFactory), nameof(PlanetFactory.CreateEntityLogicComponents))]
+        [HarmonyPatch(typeof(PlanetFactory), nameof(PlanetFactory.EnsureObjectConn))]
+        [HarmonyPatch(typeof(PlanetFactory), nameof(PlanetFactory.KillEntityFinally))]
+        [HarmonyPatch(typeof(PlanetFactory), nameof(PlanetFactory.RemovePrebuildWithComponents))]
+        [HarmonyPatch(typeof(PlanetFactory), nameof(PlanetFactory.ReadObjectConn))]
+        [HarmonyPatch(typeof(PlanetFactory), nameof(PlanetFactory.RemoveEntityWithComponents))]
+        //[HarmonyPatch(typeof(PlanetFactory), nameof(PlanetFactory.SetEntityCapacity))]
+        [HarmonyPatch(typeof(PlanetFactory), nameof(PlanetFactory.WriteObjectConnDirect))]
+        [HarmonyPatch(typeof(PlanetFactory), nameof(PlanetFactory.ClearObjectConnDirect))]
+        [HarmonyPatch(typeof(PlanetFactory), nameof(PlanetFactory.WriteObjectConn))]
+        [HarmonyPatch(typeof(PlanetFactory), nameof(PlanetFactory.ClearObjectConn), new Type[] { typeof(int) })]
+        [HarmonyPatch(typeof(PlanetFactory), nameof(PlanetFactory.HandleObjectConnChangeWhenBuild))]
+        //[HarmonyPatch(typeof(PlanetFactory), nameof(PlanetFactory.SetPrebuildCapacity))]
+        [HarmonyPatch(typeof(BuildTool_Path), nameof(BuildTool_Path.CheckBuildConditions))]
+        [HarmonyPatch(typeof(BuildTool_Path), nameof(BuildTool_Path.DeterminePreviews))]
+        [HarmonyPatch(typeof(BuildTool_Path), nameof(BuildTool_Path.CreatePrebuilds))]
+        public static IEnumerable<CodeInstruction> BuildTool_Path_CheckBuildConditions_Patch(IEnumerable<CodeInstruction> instructions)
+        {
+            instructions = new CodeMatcher(instructions)
+                .MatchForward(
+                    true,
+                    new CodeMatch(i => i.opcode == Ldc_I4_S && Convert.ToInt16(i.operand ?? 0.0) == 16)
+                )
+                .Repeat(matcher => {
+                    matcher.SetInstruction(new CodeInstruction(Ldc_I4_S, (sbyte)24));
+
+                }).InstructionEnumeration();
+
+            return instructions;
+        }
+
+        [HarmonyPatch(typeof(BuildTool_Path), nameof(BuildTool_Path.DeterminePreviews))]
+        [HarmonyPrefix]
+        public static void BuildTool_Path_DeterminePreviews_PrePatch(BuildTool_Path __instance)
+        {
+            if (__instance.tmp_conn.Length < 24) {
+                __instance.tmp_conn = new int[24];
+            }
+        }
+
+       
     }
 }

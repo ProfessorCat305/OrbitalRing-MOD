@@ -23,7 +23,7 @@ namespace ProjectOrbitalRing.Utils
             CopyModelProto(117, ProtoID.M超空间中继器, null);
             CopyModelProto(50, ProtoID.M太空船坞, Color.HSVToRGB(0.5571f, 0.3188f, 0.8980f));
             CopyModelProto(50, ProtoID.M轨道观测站, Color.HSVToRGB(0.2275f, 0.3804f, 0.6431f));
-            CopyModelProto(49, ProtoID.M巨型化学反应釜, Color.HSVToRGB(0.1404f, 0.8294f, 0.9882f));
+            CopyModelProto(49, ProtoID.M太空电梯, Color.HSVToRGB(0.1404f, 0.8294f, 0.9882f));
             CopyModelProto(50, ProtoID.M深空物流港, new Color32(60, 179, 113, 255));
             CopyModelProto(56, ProtoID.M轨道反物质堆核心);
             CopyModelProto(56, ProtoID.M超空间中继器核心);
@@ -47,6 +47,7 @@ namespace ProjectOrbitalRing.Utils
             CopyModelProto(37, ProtoID.M粒子加速轨道, new Color(1f, 1f, 1f));
             CopyModelProto(402, ProtoID.M星环护盾组件, new Color(1f, 1f, 1f));
             CopyModelProto(51, ProtoID.M黑盒, new Color(0f, 0f, 0f));
+            CopyModelProto(37, ProtoID.M空轨, new Color(0f, 0f, 0f));
 
             //AddHyperRelayReactor();
             ChangeAccumulatorColor();
