@@ -7,6 +7,7 @@ using ProjectOrbitalRing.Patches.Logic.OrbitalRing;
 using ProjectOrbitalRing.Utils;
 using static ProjectOrbitalRing.Patches.Logic.OrbitalRing.OrbitalAssembler;
 using static ProjectOrbitalRing.Patches.Logic.OrbitalRing.OrbitalRingStorageCalculate;
+using static ProjectOrbitalRing.Patches.Logic.PlanetFocus.WaterWorldPatch;
 using ProjectOrbitalRing.Patches.Logic.AssemblerModule;
 
 // ReSharper disable InconsistentNaming
@@ -132,6 +133,9 @@ namespace ProjectOrbitalRing.Patches.Logic.MegaAssembler
                 CheckRecipeCount(ref __instance, factory.planet.radius == 100f);
             }
 
+            // 水世界星球特质处理入口
+            SetAssmeblerWaterFull(ref __instance, factory);
+
             // 插件处理入口
             AssemblerModulePatches.AssemblerModuleProcess(factory, ref __instance);
 
@@ -148,6 +152,8 @@ namespace ProjectOrbitalRing.Patches.Logic.MegaAssembler
 
                 //if (__instance.recipeId != ProtoID.R物质分解)
                 //{
+
+                // 如果产物和原料是同一种东西，产物会内部直接填回原料，不再需要在绿塔外拉个回环线
                 for (int i = 0; i < __instance.products.Length; i++) {
                     for (int j = 0; j < __instance.needs.Length; j++) {
                         if (__instance.products[i] == __instance.needs[j] && __instance.produced[i] > 0) {

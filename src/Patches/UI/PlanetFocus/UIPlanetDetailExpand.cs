@@ -45,9 +45,9 @@ namespace ProjectOrbitalRing.Patches.UI.PlanetFocus
                     case 1:
                         ProjectOrbitalRing.PlanetFocusWindow.FocusId = 6526;
                         break;
-                    //case 16:
-                    //    ProjectOrbitalRing.PlanetFocusWindow.FocusId = 6524;
-                    //    break;
+                    case 16:
+                        ProjectOrbitalRing.PlanetFocusWindow.FocusId = 6524;
+                        break;
                     case 18:
                         ProjectOrbitalRing.PlanetFocusWindow.FocusId = 6527;
                         break;

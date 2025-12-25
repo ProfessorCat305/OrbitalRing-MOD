@@ -4225,8 +4225,8 @@
     },
     {
         "Name": "I轨道连接组件",
-        "ZHCN": "将同步轨道设施连接起来的连接结构，坚固强韧的钛晶石保证连接的可靠，光纤连接的电路控制则为后续以环行星巨构为载体的组件提供控制基础。",
-        "ENUS": "The connection structure that connects synchronous orbit facilities, with sturdy and strong titanium crystals ensuring reliable connections, and the circuit control of fiber optic connections providing a control basis for subsequent components carried by planetary structures."
+        "ZHCN": "将同步轨道设施连接起来的太空结构，坚固强韧的特种钢保证连接的可靠，光纤连接的电路控制则为后续以环行星巨构为载体的组件提供控制基础。",
+        "ENUS": "The space structure that connects synchronous orbit facilities is made of sturdy and strong special steel to ensure reliable connections, and the circuit control of fiber optic connections provides a control basis for subsequent components carried by planetary structures."
     },
     {
         "Name": "轨道设施连接工程",
@@ -4554,6 +4554,26 @@
         "Name": "开弦修正结果",
         "ZHCN": "【公式】质能储存 的产物数目已改变（最小为1，最大为4）。",
         "ENUS": "The product of [Formula] mass-energy storage has changed (minimum 1, maximum 4)."
+    },
+    {
+        "Name": "无限应用课题",
+        "ZHCN": "无限应用课题",
+        "ENUS": "Unlimited Application Topics"
+    },
+    {
+        "Name": "T无限应用课题",
+        "ZHCN": "数学率引擎是个巨大的机器，在最终点火全启动前，各个子模块自己进行测试启动也是非常正常的。子模块启动时也可以对修改数学率应用课题进行初步的实验，总结规律，收集经验，也正因如此，实验的结果会飘忽不定。",
+        "ENUS": "The mathematical rate engine is a huge machine, and it is also normal for each submodule to test and start on its own before the final ignition is fully started. When the submodule is started, preliminary experiments can also be conducted on modifying mathematical rate application topics, summarizing patterns, and collecting experience. As a result, the experimental results may be unpredictable."
+    },
+    {
+        "Name": "量子虚拟生命",
+        "ZHCN": "量子虚拟生命",
+        "ENUS": "Quantum Virtual Life"
+    },
+    {
+        "Name": "I量子虚拟生命",
+        "ZHCN": "在数学率修改实验中偶然变异的程序集，在变异中失去了所有对外接口的接入能力，取而代之的是极高的自修改速度，几乎每96秒内部的代码就会全部更新一遍，这赋予了它极高的适应能力。可惜的是，无论如何扫描，复制出来的程序都会丧失这关键的自迭代能力。",
+        "ENUS": "The program set that accidentally mutates in the mathematical rate modification experiment loses all the ability to access external interfaces during mutation, and is replaced by extremely high self modification speed. Almost every 96 seconds, the internal code is updated, which endows it with extremely high adaptability. Unfortunately, no matter how scanned, the copied program will lose this critical self iteration ability."
     },
     {
         "Name": "规划",

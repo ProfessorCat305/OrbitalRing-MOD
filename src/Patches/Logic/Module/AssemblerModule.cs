@@ -11,7 +11,7 @@ using ProjectOrbitalRing.Utils;
 namespace ProjectOrbitalRing.Patches.Logic.AssemblerModule
 {
     // Token: 0x02000038 RID: 56
-    internal static class AssemblerModulePatches
+    public static class AssemblerModulePatches
     {
         internal static int GetIncLevel(int moduleItemId)
         {
@@ -58,7 +58,7 @@ namespace ProjectOrbitalRing.Patches.Logic.AssemblerModule
         }
 
         // Token: 0x0600015C RID: 348 RVA: 0x0000FE60 File Offset: 0x0000E060
-        internal static void Export(BinaryWriter w)
+        public static void Export(BinaryWriter w)
         {
             w.Write(AssemblerModulePatches._AssemblerModuleData.Count);
             foreach (KeyValuePair<ValueTuple<int, int>, AssemblerModuleData> keyValuePair in AssemblerModulePatches._AssemblerModuleData) {
@@ -72,7 +72,7 @@ namespace ProjectOrbitalRing.Patches.Logic.AssemblerModule
         }
 
         // Token: 0x0600015D RID: 349 RVA: 0x0000FF30 File Offset: 0x0000E130
-        internal static void Import(BinaryReader r)
+        public static void Import(BinaryReader r)
         {
             AssemblerModulePatches.ReInitAll();
             try {
@@ -92,7 +92,7 @@ namespace ProjectOrbitalRing.Patches.Logic.AssemblerModule
         }
 
         // Token: 0x0600015E RID: 350 RVA: 0x0000FFD4 File Offset: 0x0000E1D4
-        internal static void IntoOtherSave()
+        public static void IntoOtherSave()
         {
             AssemblerModulePatches.ReInitAll();
         }

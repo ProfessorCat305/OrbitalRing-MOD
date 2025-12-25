@@ -37,6 +37,7 @@ using static ProjectOrbitalRing.Patches.Logic.ModifyUpgradeTech.ModifyUpgradeTec
 using static ProjectOrbitalRing.Patches.Logic.MathematicalRateEngine.UI;
 using static ProjectOrbitalRing.Patches.Logic.SatellitePowerDistributionPatch;
 using static ProjectOrbitalRing.Patches.Logic.OrbitalRing.PosTool;
+using ProjectOrbitalRing.Patches.Logic.AssemblerModule;
 using ProjectOrbitalRing.Patches.Logic.OrbitalRing;
 using ProjectOrbitalRing.Patches.UI.UIOrbitalRingStorageWindow;
 //ProjectGenesis
@@ -63,7 +64,7 @@ namespace ProjectOrbitalRing
     {
         public const string MODGUID = "org.ProfessorCat305.OrbitalRing";
         public const string MODNAME = "OrbitalRing";
-        public const string VERSION = "0.8.26";
+        public const string VERSION = "0.8.27";
         public const string DEBUGVERSION = "";
 
 
@@ -208,6 +209,7 @@ namespace ProjectOrbitalRing
             Unlock_Save_Load.Export(w);
             StarGate.Export(w);
             OrbitalStationManager.Export(w);
+            AssemblerModulePatches.Export(w);
         }
 
         public void Import(BinaryReader r)
@@ -222,6 +224,7 @@ namespace ProjectOrbitalRing
             Unlock_Save_Load.Import(r);
             StarGate.Import(r);
             OrbitalStationManager.Import(r);
+            AssemblerModulePatches.Import(r);
         }
 
         public void IntoOtherSave()
@@ -234,6 +237,7 @@ namespace ProjectOrbitalRing
             Unlock_Save_Load.IntoOtherSave();
             StarGate.IntoOtherSave();
             OrbitalStationManager.IntoOtherSave();
+            AssemblerModulePatches.IntoOtherSave();
         }
 
         public string Version => VERSION;

@@ -2307,10 +2307,10 @@
         "GridIndex": 2305,
         "Time": 120,
         "Input": [
-            1108
+            1101
         ],
         "InCounts": [
-            4
+            12
         ],
         "Output": [
             2101
@@ -2435,7 +2435,7 @@
         "GridIndex": 2306,
         "Time": 240,
         "Input": [
-            1108
+            1103
         ],
         "InCounts": [
             8
@@ -8435,7 +8435,7 @@
     },
     {
         "ID": 835,
-        "Name": "超净室过滤器",
+        "Name": "超高效过滤器",
         "Description": "",
         "IconPath": "",
         "Type": 4,

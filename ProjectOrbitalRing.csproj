@@ -178,6 +178,7 @@
     <Compile Include="src\Patches\Logic\PlanetFocus\MinerPatches.cs" />
     <Compile Include="src\Patches\Logic\PlanetFocus\PlanetFocusPatches.cs" />
     <Compile Include="src\Patches\Logic\PlanetFocus\PowerSystemPatches.cs" />
+    <Compile Include="src\Patches\Logic\PlanetFocus\WaterWorldPatch.cs" />
     <Compile Include="src\Patches\Logic\PlanetGasPatches.cs" />
     <Compile Include="src\Patches\Logic\PowerGeneratorEnergyCapPatches.cs" />
     <Compile Include="src\Patches\Logic\ProductOverflowPatches.cs" />
