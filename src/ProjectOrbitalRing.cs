@@ -64,7 +64,7 @@ namespace ProjectOrbitalRing
     {
         public const string MODGUID = "org.ProfessorCat305.OrbitalRing";
         public const string MODNAME = "OrbitalRing";
-        public const string VERSION = "0.8.28";
+        public const string VERSION = "0.8.29";
         public const string DEBUGVERSION = "";
 
 

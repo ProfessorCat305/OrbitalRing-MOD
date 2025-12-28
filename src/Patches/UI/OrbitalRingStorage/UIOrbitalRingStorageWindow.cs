@@ -51,8 +51,8 @@ namespace ProjectOrbitalRing.Patches.UI.UIOrbitalRingStorageWindow
                     _iconImgs[i * 10 + j] = iconImage;
                     _iconTexts[i * 10 + j] = CreateText("", 16);
 
-                    NormalizeRectWithTopLeft(iconBtn.transform, 0 + i * 110, 60 + j * 60, _tab1);
-                    NormalizeRectWithTopLeft(_iconTexts[i + j].transform, 55 + i * 110, 72 + j * 60, _tab1);
+                    NormalizeRectWithTopLeft(iconBtn.transform, 0 + j * 110, 60 + i * 60, _tab1);
+                    NormalizeRectWithTopLeft(_iconTexts[i * 10 + j].transform, 55 + j * 110, 72 + i * 60, _tab1);
                 }
             }
             _tagNotSelectedSprite = _iconImgs[0].sprite;

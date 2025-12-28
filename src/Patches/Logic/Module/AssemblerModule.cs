@@ -7,6 +7,7 @@ using System.Reflection;
 using HarmonyLib;
 using ProjectOrbitalRing.Patches.Logic.OrbitalRing;
 using ProjectOrbitalRing.Utils;
+using static ProjectOrbitalRing.Patches.UI.UIAssemblerWindowPatch;
 
 namespace ProjectOrbitalRing.Patches.Logic.AssemblerModule
 {
@@ -124,34 +125,56 @@ namespace ProjectOrbitalRing.Patches.Logic.AssemblerModule
                     ref AssemblerComponent ptr = ref __instance.factorySystem.assemblerPool[entityData.assemblerId];
                     bool flag3 = ptr.id != entityData.assemblerId;
                     if (!flag3) {
-                        bool flag4 = (ptr.recipeType == ERecipeType.Assemble || ptr.recipeType == (ERecipeType)10 || ptr.recipeType == (ERecipeType)12);
+                        bool flag4 = ShouldModuleButtonActive(ptr.recipeType, ptr.recipeId, ptr.speed);
                         if (flag4) {
                             AssemblerModuleData AssemblerModuleData = AssemblerModulePatches.GetAssemblerModuleData(__instance.factorySystem.planet.id, entityData.assemblerId);
                             AssemblerModuleData.NeedCount = 1;
                             int moduleId = AssemblerModulePatches.GetModuleId(ptr.recipeId);
-                            bool flag5 = false;
-                            if (!flag5) {
+                            if (AssemblerModuleData.ItemCount == 0) {
                                 Player mainPlayer = GameMain.mainPlayer;
-                                bool flag6 = (moduleId == 7616 && moduleId != AssemblerModuleData.ItemId) || (moduleId == 7617 && AssemblerModuleData.ItemId != 7617 && AssemblerModuleData.ItemId != 7618);
-                                if (flag6) {
-                                    int upCount = mainPlayer.TryAddItemToPackage(AssemblerModuleData.ItemId, AssemblerModuleData.ItemCount, AssemblerModuleData.ItemInc, true, 0);
-                                    AssemblerModuleData.ItemCount = 0;
-                                    UIItemup.Up(AssemblerModuleData.ItemId, upCount);
-                                }
-                                int num = AssemblerModuleData.NeedCount - AssemblerModuleData.ItemCount;
-                                int itemInc = 0;
-                                if (num > 0 && (mainPlayer.inhandItemId == moduleId || moduleId == 7617 && mainPlayer.inhandItemId == 7618)) {
-                                    int itemId = mainPlayer.inhandItemId;
-                                    mainPlayer.TakeItemFromPlayer(ref itemId, ref num, out itemInc, fromPackage, itemBundle);
-                                }
-                                bool flag8 = num > 0;
-                                if (flag8) {
-                                    AssemblerModuleData.ItemId = mainPlayer.inhandItemId;
-                                    AssemblerModuleData.ItemCount += num;
-                                    AssemblerModuleData.ItemInc = itemInc;
-                                    AssemblerModulePatches.SetAssemblerModuleData(__instance.factorySystem.planet.id, entityData.assemblerId, AssemblerModuleData);
+                                int handItemId = mainPlayer.inhandItemId;
+                                if (handItemId != 0) {
+                                    int itemCount = 1;
+                                    int itemInc = 0;
+                                    if ((handItemId == moduleId || moduleId == 7617 && handItemId == 7618)) {
+                                        mainPlayer.TakeItemFromPlayer(ref handItemId, ref itemCount, out itemInc, fromPackage, itemBundle);
+
+                                        if (itemCount > 0) {
+                                            AssemblerModuleData.ItemId = mainPlayer.inhandItemId;
+                                            AssemblerModuleData.ItemCount += itemCount;
+                                            AssemblerModuleData.ItemInc = itemInc;
+                                            AssemblerModulePatches.SetAssemblerModuleData(__instance.factorySystem.planet.id, entityData.assemblerId, AssemblerModuleData);
+                                        }
+                                    }
+                                } else {
+
                                 }
                             }
+
+
+                            //bool flag5 = false;
+                            //if (!flag5) {
+                            //    Player mainPlayer = GameMain.mainPlayer;
+                            //    bool flag6 = (moduleId == 7616 && moduleId != AssemblerModuleData.ItemId) || (moduleId == 7617 && AssemblerModuleData.ItemId != 7617 && AssemblerModuleData.ItemId != 7618);
+                            //    if (flag6) {
+                            //        int upCount = mainPlayer.TryAddItemToPackage(AssemblerModuleData.ItemId, AssemblerModuleData.ItemCount, AssemblerModuleData.ItemInc, true, 0);
+                            //        AssemblerModuleData.ItemCount = 0;
+                            //        UIItemup.Up(AssemblerModuleData.ItemId, upCount);
+                            //    }
+                            //    int num = AssemblerModuleData.NeedCount - AssemblerModuleData.ItemCount;
+                            //    int itemInc = 0;
+                            //    if (num > 0 && (mainPlayer.inhandItemId == moduleId || moduleId == 7617 && mainPlayer.inhandItemId == 7618)) {
+                            //        int itemId = mainPlayer.inhandItemId;
+                            //        mainPlayer.TakeItemFromPlayer(ref itemId, ref num, out itemInc, fromPackage, itemBundle);
+                            //    }
+                            //    bool flag8 = num > 0;
+                            //    if (flag8) {
+                            //        AssemblerModuleData.ItemId = mainPlayer.inhandItemId;
+                            //        AssemblerModuleData.ItemCount += num;
+                            //        AssemblerModuleData.ItemInc = itemInc;
+                            //        AssemblerModulePatches.SetAssemblerModuleData(__instance.factorySystem.planet.id, entityData.assemblerId, AssemblerModuleData);
+                            //    }
+                            //}
                         }
                     }
                 }

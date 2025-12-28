@@ -58,12 +58,13 @@ namespace ProjectOrbitalRing.Patches.UI.PlanetFocus
             _iconBtns[0] = iconBtn;
             _iconImgs[0] = iconImage;
             _iconTexts[0] = CreateText("", 16);
+            _tagNotSelectedSprite = _iconImgs[0].sprite;
 
             NormalizeRectWithTopLeft(iconBtn.transform, 0, 60, _tab1);
             NormalizeRectWithTopLeft(_iconTexts[0].transform, 55, 72, _tab1);
 
             ItemProto itemProto = LDB.items.Select(FocusId);
-            _iconImgs[0].sprite = (FocusId == 0) ? null : itemProto.iconSprite;
+            _iconImgs[0].sprite = (FocusId == 0) ? _tagNotSelectedSprite : itemProto.iconSprite;
             _iconTexts[0].text = FocusIds[FocusId].TranslateFromJson();
             _iconBtns[0].tips.itemId = FocusId;
 
@@ -118,7 +119,7 @@ namespace ProjectOrbitalRing.Patches.UI.PlanetFocus
 
             ItemProto proto = LDB.items.Select(FocusId);
             _iconTexts[0].text = FocusIds[FocusId].TranslateFromJson();
-            Sprite sprite = (FocusId == 0) ? null : proto.iconSprite;
+            Sprite sprite = (FocusId == 0) ? _tagNotSelectedSprite : proto.iconSprite;
 
             _iconImgs[0].sprite = sprite;
             _iconBtns[0].tips.itemId = FocusId;
