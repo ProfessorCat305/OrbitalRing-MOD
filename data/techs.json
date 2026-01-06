@@ -6742,9 +6742,7 @@
         ],
         "HashNeeded": 3600,
         "UnlockRecipes": [
-            534,
-            138,
-            139
+            791
         ],
         "UnlockFunctions": [],
         "UnlockValues": [],
@@ -6755,8 +6753,12 @@
         "LevelCoef2": 0,
         "IsLabTech": false,
         "PreTechsMax": false,
-        "AddItems": [],
-        "AddItemCounts": [],
+        "AddItems": [
+            7711
+        ],
+        "AddItemCounts": [
+            1
+        ],
         "PropertyOverrideItems": [],
         "PropertyItemCounts": []
     },
@@ -7072,14 +7074,16 @@
         ],
         "PreTechsImplicit": [],
         "Items": [
-            6228
+            6006
         ],
         "ItemPoints": [
-            1
+            10
         ],
-        "HashNeeded": 3600,
+        "HashNeeded": 4320000,
         "UnlockRecipes": [
-            791
+            535,
+            138,
+            139
         ],
         "UnlockFunctions": [],
         "UnlockValues": [],
@@ -8168,11 +8172,11 @@
         "ID": 1986,
         "Name": "亿万械国",
         "IconPath": "Assets/texpack/尖端组件",
-        "Desc": "未完成",
-        "Conclusion": "未完成",
+        "Desc": "T亿万械国",
+        "Conclusion": "T亿万械国",
         "IsHiddenTech": true,
         "PreItem": [
-            6528
+            6530
         ],
         "Position": [
             88.0,
@@ -8183,10 +8187,12 @@
         ],
         "PreTechsImplicit": [],
         "Items": [
-            6528
+            6530,
+            6006
         ],
         "ItemPoints": [
-            1
+            1,
+            10
         ],
         "HashNeeded": 3600,
         "UnlockRecipes": [
@@ -8197,6 +8203,86 @@
         "Published": true,
         "Level": 0,
         "MaxLevel": 0,
+        "LevelCoef1": 0,
+        "LevelCoef2": 0,
+        "IsLabTech": false,
+        "PreTechsMax": false,
+        "AddItems": [],
+        "AddItemCounts": [],
+        "PropertyOverrideItems": [],
+        "PropertyItemCounts": []
+    },
+    {
+        "ID": 1987,
+        "Name": "无限应用课题",
+        "IconPath": "Assets/texpack/尖端组件",
+        "Desc": "T无限应用课题",
+        "Conclusion": "无限应用课题完成",
+        "IsHiddenTech": true,
+        "PreItem": [
+            6528
+        ],
+        "Position": [
+            88.0,
+            -12.0
+        ],
+        "PreTechs": [],
+        "PreTechsImplicit": [],
+        "Items": [
+            6006
+        ],
+        "ItemPoints": [
+            10
+        ],
+        "HashNeeded": 360000,
+        "UnlockRecipes": [],
+        "UnlockFunctions": [],
+        "UnlockValues": [],
+        "Published": true,
+        "Level": 1,
+        "MaxLevel": 10000,
+        "LevelCoef1": 0,
+        "LevelCoef2": 0,
+        "IsLabTech": true,
+        "PreTechsMax": false,
+        "AddItems": [],
+        "AddItemCounts": [],
+        "PropertyOverrideItems": [],
+        "PropertyItemCounts": []
+    },
+    {
+        "ID": 1988,
+        "Name": "城市化",
+        "IconPath": "Icons/Tech/6006",
+        "Desc": "T城市化",
+        "Conclusion": "T城市化",
+        "IsHiddenTech": true,
+        "PreItem": [
+            6531
+        ],
+        "Position": [
+            92.0,
+            -12.0
+        ],
+        "PreTechs": [],
+        "PreTechsImplicit": [],
+        "Items": [
+            6531
+        ],
+        "ItemPoints": [
+            1
+        ],
+        "HashNeeded": 3600,
+        "UnlockRecipes": [],
+        "UnlockFunctions": [
+            84
+        ],
+        "UnlockValues": [
+            3.3
+        ],
+        "Published": true,
+        "Level": 1,
+        "MaxLevel": 10000,
         "LevelCoef1": 0,
         "LevelCoef2": 0,
         "IsLabTech": false,

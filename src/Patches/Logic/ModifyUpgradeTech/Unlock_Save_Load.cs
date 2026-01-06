@@ -5,6 +5,8 @@ using System.Reflection.Emit;
 using static ProjectOrbitalRing.Patches.Logic.ModifyUpgradeTech.ModifyUpgradeTech;
 using static ProjectOrbitalRing.Utils.RandomUtils;
 using ProjectOrbitalRing.Utils;
+using static ProjectOrbitalRing.Patches.Logic.MathematicalRateEngine.EnergyCalculate;
+using UnityEngine;
 
 namespace ProjectOrbitalRing.Patches.Logic.ModifyUpgradeTech
 {
@@ -59,6 +61,21 @@ namespace ProjectOrbitalRing.Patches.Logic.ModifyUpgradeTech
 
         public static int PilerEjectorLevel;
 
+        struct gachaData { public int item; public int count; }
+
+        private static readonly gachaData[] gachaDatas = {
+           new gachaData { item = ProtoID.I氢, count = 114 },
+           new gachaData { item = ProtoID.I单极磁石, count = 1000 },
+           new gachaData { item =  ProtoID.I反物质, count = 514 },
+           new gachaData { item = ProtoID.I负熵奇点, count = 173 },
+           new gachaData { item = ProtoID.I奇夸克样本, count = 16 },
+           new gachaData { item = ProtoID.I量子虚拟生命, count = 1 },
+           new gachaData { item = ProtoID.ISCP310恒燃之火, count = 1 },
+           new gachaData { item = ProtoID.I黑萝卜, count = 1 },
+        };
+
+        private static int gachaIndex = 0;
+
         private static void InitData()
         {
             WreckFallingLevel = 0;
@@ -110,6 +127,7 @@ namespace ProjectOrbitalRing.Patches.Logic.ModifyUpgradeTech
             AntiMatterOutCountsTech(_techId);
             OrbitalTurretTech(_techId);
             PilerEjectorTechs(_techId);
+            Gacha(_techId);
         }
 
         static void UAVHPAndfiringRateUpgrade(int level)
@@ -593,11 +611,14 @@ namespace ProjectOrbitalRing.Patches.Logic.ModifyUpgradeTech
                     break;
                 case 1952:
                     techProto = LDB.techs.Select(1960);
-                    techProto.IsHiddenTech = false;
+                    techProto.IsHiddenTech = false; // 解除宇宙的齿轮的隐藏状态，3阶
                     break;
                 case 1960:
                     techProto = LDB.techs.Select(1814);
                     techProto.IsHiddenTech = false;
+
+                    RemoveSailsByOrbit();
+                    CalculateThirdLevelMathematicalRateEngine();
                     break;
             }
         }
@@ -684,6 +705,18 @@ namespace ProjectOrbitalRing.Patches.Logic.ModifyUpgradeTech
             }
         }
 
+        static void Gacha(int techId)
+        {
+            if (techId == 1987) {
+                TechProto techProto;
+                techProto = LDB.techs.Select(1987);
+                techProto.Conclusion = "无限应用课题完成".TranslateFromJson() + gachaDatas[gachaIndex].count.ToString() + " " + LDB.items.Select(gachaDatas[gachaIndex].item).Name + "无限应用课题完成英文结尾".TranslateFromJson();
+                techProto.RefreshTranslation();
+                int package = GameMain.mainPlayer.TryAddItemToPackage(gachaDatas[gachaIndex].item, gachaDatas[gachaIndex].count, 0, true);
+
+                gachaIndex = GetRandInt(0, gachaDatas.Length);
+            }
+        }
 
         internal static void Export(BinaryWriter w)
         {
@@ -709,7 +742,6 @@ namespace ProjectOrbitalRing.Patches.Logic.ModifyUpgradeTech
             IntoOtherSave();
             try {
                 ItemProto itemProto;
-                TechProto techProto;
                 RecipeProto recipeProto;
                 WreckFallingLevel = r.ReadInt32();
                 for (int i = 1; i <= WreckFallingLevel; i++) {
@@ -817,6 +849,12 @@ namespace ProjectOrbitalRing.Patches.Logic.ModifyUpgradeTech
             itemProto.Name = "轨道观测站";
             itemProto.Description = "I轨道观测站";
             itemProto.RefreshTranslation();
+
+            gachaIndex = GetRandInt(0, gachaDatas.Length);
+            TechProto techProto;
+            techProto = LDB.techs.Select(1987);
+            techProto.Conclusion = "无限应用课题完成".TranslateFromJson() + gachaDatas[gachaIndex].count.ToString() + " " + LDB.items.Select(gachaDatas[gachaIndex].item).Name + "无限应用课题完成英文结尾".TranslateFromJson();
+            techProto.RefreshTranslation();
         }
 
         public static void AddUniverseObserveBuilding(int itemId)

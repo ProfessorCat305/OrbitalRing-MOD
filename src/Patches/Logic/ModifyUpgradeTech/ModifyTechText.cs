@@ -48,18 +48,31 @@ namespace ProjectOrbitalRing.Patches.Logic.ModifyUpgradeTech {
                 case 1951:
                     __result = "\r\n" + "星环解锁".TranslateFromJson();
                     break;
-               
+
                 case 1959:
                     double[] upgrades = Unlock_Save_Load.AntiMatterOutCountsUpgrades;
                     int count = Unlock_Save_Load.AntiMatterOutCounts;
+                    double arg0;
+                    int arg1;
+                    double arg2;
+                    int arg3;
                     if (count == 1) {
-                        __result = string.Format("开弦修正描述".TranslateFromJson(), upgrades[0], 0);
+                        arg0 = 1 - upgrades[0];
+                        arg1 = count;
+                        arg2 = upgrades[0];
+                        arg3 = count + 1;
                     } else if (count == 4) {
-                        __result = string.Format("开弦修正描述".TranslateFromJson(), 0, 0);
+                        arg0 = 0;
+                        arg1 = count - 1;
+                        arg2 = 1;
+                        arg3 = count;
                     } else {
-                        __result = string.Format("开弦修正描述".TranslateFromJson(), upgrades[count - 1],
-                            1 - upgrades[count - 1]);
+                        arg0 = 1 - upgrades[count - 1];
+                        arg1 = count - 1;
+                        arg2 = upgrades[count - 1];
+                        arg3 = count + 1;
                     }
+                    __result = string.Format("开弦修正描述".TranslateFromJson(), arg0, arg1, arg2, arg3);
                     break;
                 case 3151:
                 case 3152:

@@ -140,6 +140,7 @@
     <Compile Include="src\Patches\Logic\InitialTechPatches.cs" />
     <Compile Include="src\Patches\Logic\InserterComponentPatches.cs" />
     <Compile Include="src\Patches\Logic\LogisticsInterchangePatches.cs" />
+    <Compile Include="src\Patches\Logic\MathematicalRateEngine\EnergyCalculate.cs" />
     <Compile Include="src\Patches\Logic\MathematicalRateEngine\SiloAndEjector.cs" />
     <Compile Include="src\Patches\Logic\MegaAssembler\InternalFunctions.cs" />
     <Compile Include="src\Patches\Logic\MathematicalRateEngine\UI.cs" />

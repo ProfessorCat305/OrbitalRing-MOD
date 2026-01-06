@@ -2,6 +2,7 @@
 using GalacticScale;
 using HarmonyLib;
 using ProjectOrbitalRing.Compatibility;
+using ProjectOrbitalRing.Patches.Logic.MathematicalRateEngine;
 using ProjectOrbitalRing.Utils;
 using System;
 using System.Collections.Generic;
@@ -876,24 +877,43 @@ namespace ProjectOrbitalRing.Patches.Logic.ModifyUpgradeTech
         public static void BeforeGameTickPatch(DysonSphere __instance)
         {
             if (__instance.starData.type == EStarType.BlackHole) {
+                if (ProjectOrbitalRing.MoreMegaStructureCompatibility) {
+                    try {
+                        // 使用反射动态获取类型
+                        var mmType = Type.GetType("MoreMegaStructure.MoreMegaStructure, MoreMegaStructure");
+                        var starMegaType = mmType?.GetField("StarMegaStructureType")?.GetValue(null) as int[];
+
+                        if (starMegaType?[__instance.starData.index] != 0) {
+                            return; // 如果是更多巨构mod的其他巨构，则跳过数学率引擎的处理
+                        }
+                    } catch(Exception ex) {
+                    }
+                }
+                long DysonEnergy = (__instance.energyGenCurrentTick - __instance.energyReqCurrentTick);
                 if (!GameMain.history.TechUnlocked(1952)) {
-                    if (__instance.energyGenCurrentTick > 8000000) {
-                        GameMain.history.UnlockTech(1952);
+                    if (DysonEnergy > 8000000) {
+                        GameMain.history.UnlockTech(1952); // 解锁穿透现实，2阶
                     }
                 } else if (LDB.techs.Select(1934).IsHiddenTech == true) {
-                    if (__instance.energyGenCurrentTick > 10000000) {
-                        LDB.techs.Select(1934).IsHiddenTech = false;
+                    if (DysonEnergy > 10000000) {
+                        LDB.techs.Select(1934).IsHiddenTech = false; // 解除坐标引擎的隐藏状态
                     }
                 } else if (LDB.techs.Select(1959).IsHiddenTech == true) {
-                    if (__instance.energyGenCurrentTick > 10000000) {
-                        LDB.techs.Select(1959).IsHiddenTech = false;
+                    if (DysonEnergy > 10000000) {
+                        LDB.techs.Select(1959).IsHiddenTech = false; // 解除开弦修正的隐藏状态
                     }
-                } else if (!GameMain.history.TechUnlocked(1960)) {
-                    if (__instance.energyGenCurrentTick > 40000000) {
-                        GameMain.history.UnlockTech(1960);
+                } else if (LDB.techs.Select(1987).IsHiddenTech == true) {
+                    if (DysonEnergy > 10000000) {
+                        LDB.techs.Select(1987).IsHiddenTech = false; // 解除无限应用课题的隐藏状态
                     }
-                } else if (!GameMain.history.TechUnlocked(1814)) {
-                    if (__instance.energyGenCurrentTick > 80000000) {
+                    //} else if (!GameMain.history.TechUnlocked(1960)) {
+                    //    if (__instance.energyGenCurrentTick > 40000000) {
+                    //        GameMain.history.UnlockTech(1960);
+                    //    }
+                } else if (!GameMain.history.TechUnlocked(1814) && GameMain.history.TechUnlocked(1960)) {
+                    long ThirdLevelEnergy = DysonEnergy - EnergyCalculate.SecondLevelEnergy;
+                    double coefficient = ThirdLevelEnergy / 4000000.0;
+                    if ((long)((EnergyCalculate.SecondLevelEnergy / 2000) * coefficient) > 400000000) {
                         GameMain.history.UnlockTech(1814);
                     }
                 }

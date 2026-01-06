@@ -57,18 +57,18 @@ namespace ProjectOrbitalRing.Patches.Logic.MathematicalRateEngine
                     {
                     // ignored
                     }
-            }
+                }
                 if (!GameMain.history.TechUnlocked(1952))
                 {
-                    bulletIdExpected = 6228;
+                    bulletIdExpected = 6228; // 默认无法发射火箭
                 }
                 else if (!GameMain.history.TechUnlocked(1960))
                 {
-                    bulletIdExpected = 6504;
+                    bulletIdExpected = 6502; // 进入二阶，发射深蓝之井火箭
                 }
                 else
                 {
-                    bulletIdExpected = 6502;
+                    bulletIdExpected = 6504; // 进入三阶，发射深蓝之井火箭
                 }
 
                 if (__instance.bulletId != bulletIdExpected)
@@ -130,19 +130,19 @@ namespace ProjectOrbitalRing.Patches.Logic.MathematicalRateEngine
                 }
                 if (!GameMain.history.TechUnlocked(1802))
                 {
-                    bulletIdExpected = 6228;
+                    bulletIdExpected = 6228; // 默认无法发射弹射物
                 }
                 else if (!GameMain.history.TechUnlocked(1952))
                 {
-                    bulletIdExpected = 9480;
+                    bulletIdExpected = 9480; // 进入一阶，发射引力发生装置
                 }
                 else if (!GameMain.history.TechUnlocked(1960))
                 {
-                    bulletIdExpected = 1803;
+                    bulletIdExpected = 1803; // 进入二阶，发射反物质燃料棒
                 }
                 else
                 {
-                    bulletIdExpected = 9482;
+                    bulletIdExpected = 9482; // 进入三阶，发射引力钻头
                 }
             
                 if (__instance.bulletId != bulletIdExpected)

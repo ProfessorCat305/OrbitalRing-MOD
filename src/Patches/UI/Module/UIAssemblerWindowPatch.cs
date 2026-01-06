@@ -183,7 +183,7 @@ namespace ProjectOrbitalRing.Patches.UI
                             __instance.stateText.text = "缺少过滤器".TranslateFromJson();
                             __instance.stateText.color = __instance.workStoppedColor;
                         }
-                        ItemProto itemProto = LDB.items.Select(moduleId);
+                        ItemProto itemProto = LDB.items.Select((AssemblerModuleData.ItemCount > 0) ? AssemblerModuleData.ItemId : moduleId);
                         UIAssemblerWindowPatch._icon.sprite = (AssemblerModuleData.ItemCount > 0) ? itemProto._iconSprite : _tagNotSelectedSprite;
                         UIAssemblerWindowPatch._icon.enabled = (AssemblerModuleData.ItemCount > 0);
                         UIAssemblerWindowPatch._text.text = (moduleId == 7616 || AssemblerModuleData.ItemCount > 0) ? itemProto.name : "伺服器".TranslateFromJson();

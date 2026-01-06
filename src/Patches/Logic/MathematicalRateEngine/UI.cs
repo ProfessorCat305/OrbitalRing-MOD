@@ -166,21 +166,20 @@ namespace ProjectOrbitalRing.Patches.Logic.MathematicalRateEngine
             {
                 if (!ProjectOrbitalRing.MoreMegaStructureCompatibility)
                 {
-                    if (curStar.type == EStarType.BlackHole)
-                    {
+                    if (curStar.type == EStarType.BlackHole) {
                         long DysonEnergy = (curDysonSphere.energyGenCurrentTick - curDysonSphere.energyReqCurrentTick);
 
-                        if (!GameMain.history.TechUnlocked(1802))
-                        {
+                        if (!GameMain.history.TechUnlocked(1802)) {
                             RightMaxPowGenValueText.text = Capacity2Str(DysonEnergy) + "?";
-                        }
-                        else if (!GameMain.history.TechUnlocked(1952))
-                        {
+                        } else if (!GameMain.history.TechUnlocked(1952)) {
                             RightMaxPowGenValueText.text = Capacity2Str(DysonEnergy) + " g";
-                        }
-                        else
-                        {
+                        } else if (!GameMain.history.TechUnlocked(1960)) {
                             RightMaxPowGenValueText.text = Capacity2Str(DysonEnergy / 2000) + "休谟";
+                        } else {
+                            long ThirdLevelEnergy = DysonEnergy - EnergyCalculate.SecondLevelEnergy;
+                            double coefficient = ThirdLevelEnergy / 4000000.0;
+                            RightMaxPowGenValueText.text = Capacity2Str((long)((EnergyCalculate.SecondLevelEnergy / 2000) * coefficient)) + "休谟";
+                            //RightMaxPowGenValueText.text = coefficient.ToString() + "休谟";
                         }
                     }
                 }

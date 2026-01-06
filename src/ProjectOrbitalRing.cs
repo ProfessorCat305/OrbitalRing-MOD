@@ -40,6 +40,7 @@ using static ProjectOrbitalRing.Patches.Logic.OrbitalRing.PosTool;
 using ProjectOrbitalRing.Patches.Logic.AssemblerModule;
 using ProjectOrbitalRing.Patches.Logic.OrbitalRing;
 using ProjectOrbitalRing.Patches.UI.UIOrbitalRingStorageWindow;
+using ProjectOrbitalRing.Patches.Logic.MathematicalRateEngine;
 //ProjectGenesis
 
 // ReSharper disable UnusedVariable
@@ -64,7 +65,7 @@ namespace ProjectOrbitalRing
     {
         public const string MODGUID = "org.ProfessorCat305.OrbitalRing";
         public const string MODNAME = "OrbitalRing";
-        public const string VERSION = "0.8.30";
+        public const string VERSION = "0.8.31";
         public const string DEBUGVERSION = "";
 
 
@@ -211,6 +212,7 @@ namespace ProjectOrbitalRing
             OrbitalStationManager.Export(w);
             AssemblerModulePatches.Export(w);
             MoonPatch.Export(w);
+            EnergyCalculate.Export(w);
         }
 
         public void Import(BinaryReader r)
@@ -227,6 +229,7 @@ namespace ProjectOrbitalRing
             OrbitalStationManager.Import(r);
             AssemblerModulePatches.Import(r);
             MoonPatch.Import(r);
+            EnergyCalculate.Import(r);
         }
 
         public void IntoOtherSave()
@@ -241,6 +244,7 @@ namespace ProjectOrbitalRing
             OrbitalStationManager.IntoOtherSave();
             AssemblerModulePatches.IntoOtherSave();
             MoonPatch.IntoOtherSave();
+            EnergyCalculate.IntoOtherSave();
         }
 
         public string Version => VERSION;
@@ -411,12 +415,37 @@ namespace ProjectOrbitalRing
         // 尝试解决过场动画报错的问题
         [HarmonyPatch(typeof(LogisticDroneRenderer), nameof(LogisticDroneRenderer.Update))]
         [HarmonyPrefix]
-        public static bool LogisticDroneRenderer_Update_Patch()
+        public static bool LogisticDroneRenderer_Update_Patch(LogisticDroneRenderer __instance)
         {
-            if (DSPGame.IsMenuDemo || GameMain.mainPlayer == null) {
+            __instance.droneCount = 0;
+            if (__instance.transport == null) {
                 return false;
             }
-            return true;
+
+            for (int i = 1; i < __instance.transport.stationCursor; i++) {
+                StationComponent stationComponent = __instance.transport.stationPool[i];
+                if (stationComponent == null || stationComponent.id != i) {
+                    continue;
+                }
+
+                int num = __instance.droneCount + stationComponent.workDroneCount;
+                if (num > 0) {
+                    while (__instance.capacity < num) {
+                        __instance.Expand2x();
+                    }
+
+                    if (stationComponent.workDroneCount < stationComponent.workDroneDatas.Length) {
+                        __instance.SetCapacity(__instance.droneCount + stationComponent.workDroneDatas.Length);
+                    }
+                    Array.Copy(stationComponent.workDroneDatas, 0, __instance.dronesArr, __instance.droneCount, stationComponent.workDroneCount);
+                    __instance.droneCount = num;
+                }
+            }
+
+            if (__instance.dronesBuffer != null) {
+                __instance.dronesBuffer.SetData(__instance.dronesArr, 0, 0, __instance.droneCount);
+            }
+            return false;
         }
     }
 }

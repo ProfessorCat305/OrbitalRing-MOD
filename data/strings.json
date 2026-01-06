@@ -887,8 +887,8 @@
     },
     {
         "Name": "I重型电浆炮",
-        "ZHCN": "重型的反轨道电浆炮，使用专门的等离子轨道弹，将弹芯原子抽取后等离子化，再用强磁场约束并发射出去，形成一道聚集的能量束，在没有大气干扰的太空中有不俗的射程和极佳的破坏力，它亦是COSMO太空舰队的制式主炮。",
-        "ENUS": "The heavy-duty anti orbital plasma cannon uses specialized plasma railshells to extract atoms from the core, ionize them, and then confine and launch them with a strong magnetic field to form a concentrated energy beam. It has a decent range and excellent destructive power in space without atmospheric interference, and is also the standard main gun of the COSMO space fleet."
+        "ZHCN": "重型的反轨道电浆炮，使用专门的等离子轨道弹，将弹芯原子抽取后等离子化，再用强磁场约束并发射出去，形成一道聚集的能量束，在没有大气干扰的太空中有不俗的射程和极佳的破坏力，它亦是COSMO太空舰队的制式主炮。\n<color=\"#FD965ECC\">只能建造在轨道炮座上</color>",
+        "ENUS": "The heavy-duty anti orbital plasma cannon uses specialized plasma railshells to extract atoms from the core, ionize them, and then confine and launch them with a strong magnetic field to form a concentrated energy beam. It has a decent range and excellent destructive power in space without atmospheric interference, and is also the standard main gun of the COSMO space fleet.\n<color=\"#FD965ECC\">It can only be constructed on a Orbital Barbette</color>"
     },
     {
         "Name": "原油涌泉或原油海",
@@ -1279,6 +1279,11 @@
         "ENUS": "The large server cluster component installed in the constellation of the Celestial Pivot utilizes the ultra-high thermal conductivity of graphene and a large heat dissipation film to maintain the heat dissipation of this row star supercomputer server. When the corresponding Orbital Ring is fully constructed, it will provide pre-processing servo capabilities for the manufacturing stations of the entire planet.\n<color=\"#FD965ECC\">Built in the constellation of Nexus with a complete orbital ring and sufficient power supply, it provides a first level production status for manufacturing stations worldwide</color>"
     },
     {
+        "Name": "智能方尖碑",
+        "ZHCN": "智能方尖碑",
+        "ENUS": "Smart Obelisk"
+    },
+    {
         "Name": "T智能方尖碑",
         "ZHCN": "传统计算架构的超算提升算力是有上限的，如果想要对全球的工厂进行更加细致，更加高效的加工方案调整，就需要以量子比特架构为主的量子超算组成的全球协调组件：智能方尖碑。",
         "ENUS": "The supercomputing of traditional computing architectures has a limit to improving computing power. If we want to make more detailed and efficient adjustments to processing plans for factories around the world, we need a global coordination component composed mainly of quantum supercomputers based on quantum bit architecture: the intelligent obelisk."
@@ -1287,6 +1292,21 @@
         "Name": "I智能方尖碑",
         "ZHCN": "安装在天枢座的超级量子超算，强大的算力通过星环能对全球每一个工厂的每一次制造过程都提供独立的定制优化加工方案，只有极为繁荣的工业星才会安装这种协调中枢。\n<color=\"#FD965ECC\">建造在拥有完整星环的天枢座，且供电充足时，为全球的制造台提供二级增产状态</color>",
         "ENUS": "The super quantum supercomputer installed in the constellation of the Celestial Pivot provides independent customized and optimized processing solutions for every manufacturing process in every factory around the world through its powerful computing power. Only highly prosperous industrial stars would install this coordination center.\n<color=\"#FD965ECC\">Built in the constellation of Nexus with a complete orbital ring and sufficient power supply, it provides a second level production status for manufacturing stations worldwide</color>"
+    },
+    {
+        "Name": "亿万械国",
+        "ZHCN": "亿万械国",
+        "ENUS": "Billion Mechanical Nation"
+    },
+    {
+        "Name": "T亿万械国",
+        "ZHCN": "量子虚拟生命那极快的自更新速度和量子生命特有的多线程思维是天生的机械操作者，只要提供足够的算力，传感器触及之地，皆为机械的国土。",
+        "ENUS": "Quantum virtual life, with its extremely fast self-updating speed and the unique multi-threaded thinking characteristic of quantum life, is a natural mechanical operator. As long as sufficient computing power is provided, wherever sensors reach, it becomes a mechanical territory."
+    },
+    {
+        "Name": "I亿万械国",
+        "ZHCN": "加载了量子虚拟生命的超级量子超算，在天枢座上能将这个生命的“触感”延申至全球的制造台，其“机魂”能更加细致的分辨出零件的差异，哪怕在传感器里它们的数据完全一样。\n<color=\"#FD965ECC\">建造在拥有完整星环的天枢座，且供电充足时，为全球的制造台提供三级增产状态</color>",
+        "ENUS": "The super quantum supercomputer, loaded with quantum virtual life, can extend the \"touch\" of this life to manufacturing platforms worldwide on the Tian Shu Zuo. Its \"machine soul\" can distinguish the differences in parts more precisely, even if their data are exactly the same in the sensors.\n<color=\"#FD965ECC\">Built in the constellation of Nexus with a complete orbital ring and sufficient power supply, it provides a third level production status for manufacturing stations worldwide</color>"
     },
     {
         "Name": "铀燃料棒",
@@ -1375,8 +1395,8 @@
     },
     {
         "Name": "I金属氢",
-        "ZHCN": "将氢压缩成液态，固态后继续压缩，直至电子在超高压下逸散而出，形成金属般的导电性，然后使用石墨烯制造纳米笼包裹以及金属钛吸附，维持其常压下存在，便形成了有金属性质的临界固体氢：金属氢。",
-        "ENUS": "Compressing hydrogen into a liquid state and then continuing to compress it in a solid state until electrons escape under ultra-high pressure, forming a metallic conductivity. Then, graphene is used to create nanocages and metal titanium adsorption to maintain its existence at normal pressure, forming a critical solid hydrogen with metallic properties: metallic hydrogen."
+        "ZHCN": "将氢压缩成液态，固态后继续压缩，直至电子在超高压下逸散而出，形成金属般的导电性，然后使用石墨烯制造纳米笼包裹以及金属钛吸附，利用化学内应力维持其常压下存在，便形成了有金属性质的临界固体氢：金属氢。",
+        "ENUS": "Compressing hydrogen into a liquid state and then continuing to compress it in a solid state until electrons escape under ultra-high pressure, forming a metallic conductivity. Then, Using graphene to fabricate nanocage encapsulation and metal titanium adsorption, and utilizing chemical internal stress to maintain its existence under normal pressure, forming a critical solid hydrogen with metallic properties: metallic hydrogen."
     },
     {
         "Name": "磁流体",
@@ -1935,8 +1955,8 @@
     },
     {
         "Name": "T黑盒",
-        "ZHCN": "其他文明的遗物，全封闭的外壳刻画了一个原料异常简单的配方，而这个配方的产物是它自己，很明显这个设备是文明发生断代时用来快速重启文明的工具，为此刻画在表面的配方甚至采用了纯绘画方式来表达，工厂真正的加工设施不在当前纬度，而是类似于伊卡洛斯背包的内空间。暴力拆解外壳只会导致真正的内核消失在空间流中。",
-        "ENUS": "The fully enclosed shell of a relic from other civilizations depicts an exceptionally simple formula, and the product of this formula is itself. It is obvious that this device is a tool used to quickly restart civilization when it is cut off. Therefore, the formula depicted on the surface even uses pure painting to express it. The actual processing facilities of the factory are not in the current latitude, but in the interior space similar to the Icarus backpack. Violent disassembly of the shell will only cause the true kernel to disappear into the spatial stream."
+        "ZHCN": "其他文明的遗物，全封闭的外壳刻画了一个原料异常简单的配方，而这个配方的产物是它自己，很明显这个设备是文明发生断代时用来快速重启文明的工具，为此刻画在表面的配方甚至采用了纯绘画方式来表达，工厂真正的加工设施不在当前维度，而是类似于伊卡洛斯背包的内空间。暴力拆解外壳只会导致真正的内核消失在空间流中。",
+        "ENUS": "The fully enclosed shell of a relic from other civilizations depicts an exceptionally simple formula, and the product of this formula is itself. It is obvious that this device is a tool used to quickly restart civilization when it is cut off. Therefore, the formula depicted on the surface even uses pure painting to express it. The actual processing facilities of the factory are not in the current dimension, but in the interior space similar to the Icarus backpack. Violent disassembly of the shell will only cause the true kernel to disappear into the spatial stream."
     },
     {
         "Name": "I黑盒",
@@ -4395,8 +4415,8 @@
     },
     {
         "Name": "I轨道炮座",
-        "ZHCN": "原是同步轨道宇宙观测站，其高精镜头组不仅可以观测深空，也可以为近处的射击提供火控演算诸元，只要稍加做下改造，就是一座不错的轨道炮座。\n可以加载轨道弹射器或者重型电浆炮",
-        "ENUS": "Originally a synchronous orbit space observation station, its high-precision lens group can not only observe deep space, but also provide fire control calculation elements for nearby shooting. With a little modification, it is a good orbital gun mount.\nCan load orbital catapults or heavy plasma guns"
+        "ZHCN": "原是同步轨道宇宙观测站，其高精镜头组不仅可以观测深空，也可以为近处的射击提供火控演算诸元，只要稍加做下改造，就是一座不错的轨道炮座。\n可以加载重型电磁弹射器或者重型电浆炮",
+        "ENUS": "Originally a synchronous orbit space observation station, its high-precision lens group can not only observe deep space, but also provide fire control calculation elements for nearby shooting. With a little modification, it is a good orbital gun mount.\nCan load Heavy Duty Electromagnetic Catapult or Heavy Plasma Cannon"
     },
     {
         "Name": "重型电磁弹射器",
@@ -4405,8 +4425,8 @@
     },
     {
         "Name": "I重型电磁弹射器",
-        "ZHCN": "为同步轨道武装炮座做适配化改造的大型电磁弹射器，接入了炮座的瞄准系统，后坐力缓冲系统和炮身冷却系统，可以以极高的效率弹射太阳帆。",
-        "ENUS": "A large electromagnetic catapult adapted for the synchronous orbit armed gun mount has been integrated with the aiming system, recoil buffering system, and gun cooling system of the gun mount, which can launch solar sails with extremely high efficiency."
+        "ZHCN": "为同步轨道武装炮座做适配化改造的大型电磁弹射器，接入了炮座的瞄准系统，后坐力缓冲系统和炮身冷却系统，可以以极高的效率弹射太阳帆。\n<color=\"#FD965ECC\">只能建造在轨道炮座上</color>",
+        "ENUS": "A large electromagnetic catapult adapted for the synchronous orbit armed gun mount has been integrated with the aiming system, recoil buffering system, and gun cooling system of the gun mount, which can launch solar sails with extremely high efficiency.\n<color=\"#FD965ECC\">It can only be constructed on a Orbital Barbette</color>"
     },
     {
         "Name": "轨道空投",
@@ -4495,6 +4515,16 @@
         "ENUS": "The resonant disc can generate interstellar-scale space-wave energy beams from only stellar-scale energy. If the resonant discs are formed into an array, a warp field covering the entire universe can theoretically be formed."
     },
     {
+        "Name": "光子探针",
+        "ZHCN": "光子探针",
+        "ENUS": "Photon probe"
+    },
+    {
+        "Name": "I光子探针",
+        "ZHCN": "将临界光子变频后发射并引导晶体重构，发射的光子还能被回收。",
+        "ENUS": "The critical photons are frequency-converted and emitted, thereby guiding the crystal reconstruction. The photons can also be recovered."
+    },
+    {
         "Name": "量子服务器群集",
         "ZHCN": "量子服务器群集",
         "ENUS": "Quantum Service Cluster"
@@ -4506,24 +4536,24 @@
     },
     // 通关
     {
-        "Name": "数学率引擎-算力架构组件",
-        "ZHCN": "数学率引擎-算力架构组件",
-        "ENUS": "Mathematical Rate Engine - Computing Architecture Component"
+        "Name": "数学率引擎-起振焦点组件",
+        "ZHCN": "数学率引擎-起振焦点组件",
+        "ENUS": "Mathematical Rate Engine - Vibration Excitation Focus Assembly"
     },
     {
-        "Name": "I数学率引擎-算力架构组件",
-        "ZHCN": "引力是穿透现实的最佳选择，而控制宇宙中最极端的引力天体：黑洞，以及引力发生装置组成的引力共鸣阵列，则需要成千上万个量子服务器群集联网组成太空巨构，使用谐振盘精细调控引力场的共鸣。",
-        "ENUS": "Gravity is the best choice for penetrating reality, and controlling the most extreme gravitational celestial bodies in the universe: black holes, as well as the gravitational resonance array composed of gravity generating devices, requires thousands of quantum server clusters to network together to form a space giant, using resonance disks to finely regulate the resonance of the gravitational field."
+        "Name": "I数学率引擎-起振焦点组件",
+        "ZHCN": "引力是穿透现实的最佳选择，而控制宇宙中最极端的引力天体：黑洞，以及引力钻头组成的引力共鸣阵列，则需要成千上万个光子探针收集这个狂暴天体的精确信息，再使用谐振盘精细调控引力场的共鸣。",
+        "ENUS": "Gravity is the optimal choice to penetrate reality. However, controlling the most extreme gravitational celestial bodies in the universe: black holes, as well as the gravitational resonance arrays composed of Graviton drill, requires thousands of photon probes to collect precise information about these violent celestial bodies, and then use resonant disks to finely regulate the resonance of the gravitational field."
     },
     {
-        "Name": "数学率引擎-算力架构-运载火箭",
-        "ZHCN": "数学率引擎-算力架构-运载火箭",
-        "ENUS": "Mathematical Rate Engine - Computing Architecture - Launch Vehicle"
+        "Name": "数学率引擎-起振焦点-运载火箭",
+        "ZHCN": "数学率引擎-起振焦点-运载火箭",
+        "ENUS": "Mathematical Rate Engine - Vibration Excitation Focus - Launch Vehicle"
     },
     {
-        "Name": "I数学率引擎-算力架构-运载火箭",
-        "ZHCN": "负责运载数学率引擎节点组件的火箭，为了抵抗黑洞强大的引力，推进器更换为加力推进器。",
-        "ENUS": "The rocket responsible for carrying the mathematical rate engine node components has replaced its thrusters with booster thrusters to resist the strong gravitational pull of the black hole."
+        "Name": "I数学率引擎-起振焦点-运载火箭",
+        "ZHCN": "负责运载起振焦点组件的火箭，在预定位置将组件建造为共鸣场节点，利用吸附的引力钻头，拨动-弦-，令其起振，并将焦点集中在黑洞奇点，以此来控制并改写宇宙底层最基础的信息：数学率。",
+        "ENUS": "The rocket responsible for transporting the oscillating focus component constructs the component as a resonance field node at the predetermined location, utilizes the adsorbed gravitational drill to stir the -string-, causing it to oscillate, and focuses the focus on the black hole singularity, thereby controlling and rewriting the most fundamental information at the bottom layer of the universe: mathematical laws."
     },
     {
         "Name": "数学率引擎-深蓝之井-运载火箭",
@@ -4532,8 +4562,8 @@
     },
     {
         "Name": "I数学率引擎-深蓝之井-运载火箭",
-        "ZHCN": "为了使数学率引擎全功率运转，需要建造有史以来最强大的发电站：环黑洞反物质堆发电巨构，以供应这座创生引擎。",
-        "ENUS": "In order to operate the mathematical rate engine at full power, it is necessary to build the most powerful power plant in history: the Ring Black Hole Anti Matter Reactor Power Generation Complex, to supply this generative engine."
+        "ZHCN": "为了使数学率引擎全功率运转，需要建造有史以来最强大的发电站：环黑洞反物质堆发电巨构，将反物质堆核心拆分打包到各个火箭上，送到指定位置再展开重组装为反物质堆，接受弹射到轨道上的反物质燃料棒以供应这座数学率引擎。",
+        "ENUS": "To operate the mathematical rate engine at full power, it is necessary to construct the most powerful power station ever built: a giant structure for generating electricity using a ring of black hole antimatter reactors. The cores of these antimatter reactors would be disassembled and packaged into individual rockets, which would be sent to designated locations and then reassembled into antimatter reactors. These reactors would then receive antimatter fuel rods ejected into orbit to supply the mathematical rate engine."
     },
     {
         "Name": "数学率引擎零阶",
@@ -4542,17 +4572,17 @@
     },
     {
         "Name": "数学率引擎一阶",
-        "ZHCN": "黑洞的电磁弹射器发射改为 反物质燃料棒，发射井发射 数学率引擎-算力架构-运载火箭",
-        "ENUS": "The electromagnetic catapult of the black hole is replaced with antimatter fuel rods, and the mathematical rate engine - computing power architecture - carrier rocket is launched from the launch well"
+        "ZHCN": "黑洞的电磁弹射器发射改为 反物质燃料棒\n\n发射井发射 数学率引擎-深蓝之井-运载火箭",
+        "ENUS": "The electromagnetic catapult of the black hole is replaced with antimatter fuel rods \nThe mathematical rate engine - Deep Blue Well - carrier rocket is launched from the launch well"
     },
     {
         "Name": "数学率引擎二阶",
-        "ZHCN": "黑洞的电磁弹射器发射改为 引力钻头，发射井发射 数学率引擎-深蓝之井-运载火箭",
-        "ENUS": "The electromagnetic catapult launch of the black hole is replaced by a gravity drill bit, and the launch well launches a mathematical rate engine - Deep Blue Well - carrier rocket"
+        "ZHCN": "黑洞的电磁弹射器发射改为 引力钻头\n\n发射井发射 数学率引擎-起振焦点-运载火箭",
+        "ENUS": "The electromagnetic catapult launch of the black hole is replaced by a gravity drill bit \nThe launch well launches a mathematical rate engine - Vibration Excitation Focus - carrier rocket"
     },
     {
         "Name": "数学率引擎三阶",
-        "ZHCN": "使数学率引擎达到40k休谟指数以完成科技",
+        "ZHCN": "使数学率引擎达到400k休谟指数以完成科技",
         "ENUS": "Achieve a mathematical rate engine of 40k Humes to complete technology"
     },
     {
@@ -4577,18 +4607,18 @@
     },
     {
         "Name": "T开弦修正",
-        "ZHCN": "通过数学率引擎对现实的修改，我们尝试对临界光子产生的开弦进行修正，我们对数学率的了解还不是很清晰，对弦论的修改可能会出现预期外的结果。",
-        "ENUS": "By modifying reality through the mathematical rate engine, we attempt to correct the open strings generated by critical photons. Our understanding of mathematical rates is not yet very clear, and modifications to string theory may yield unexpected results."
+        "ZHCN": "通过数学率引擎对现实的修改，我们尝试对临界光子产生的开弦进行修正，从而永久影响临界光子的分解效果。但是，由于我们对数学率的了解不够深入，对弦论的修改可能会出现预期外的结果。\n\n每当科技研究完成时，<color=\"#FD965ECC\">质能储存</color>的产物数目将被永久修正。\n修正结果无法预知，产物数目可能增加、减少，或不变。\n产物数目最低为1，最高为4。",
+        "ENUS": "Through modifications to reality via the mathematical rate engine, we endeavour to correct the open strings generated by critical photons, thereby permanently altering the decomposition effects of these photons. However, owing to our limited understanding of mathematical rates, modifications to string theory may yield unforeseen consequences.\n\n Upon completion of each technological research, the count of mass-energy storage products shall be permanently adjusted.\n The outcome of these corrections is unpredictable; the count of products may increase, decrease, or remain unchanged.\n The minimum count of products is 1, and the maximum is 4."
     },
     {
         "Name": "开弦修正描述",
-        "ZHCN": "研究完成时，【公式】质能储存 的产物有{0:P0}概率+1，有{1:P0}概率-1。",
-        "ENUS": "Upon completion of the research, the product of [Formula] mass-energy storage has a {0:P0} probability of +1 and a {1:P0} probability of -1."
+        "ZHCN": "{0:P0} 使产物数目永久修正为{1}\r\n{2:P0} 使产物数目永久修正为{3}",
+        "ENUS": "{0:P0} Permanently adjust the count of products to {1}\n{2:P0} Permanently adjust the count of products to {3}"
     },
     {
         "Name": "开弦修正结果",
-        "ZHCN": "【公式】质能储存 的产物数目已改变（最小为1，最大为4）。",
-        "ENUS": "The product of [Formula] mass-energy storage has changed (minimum 1, maximum 4)."
+        "ZHCN": "【公式】质能储存 的产物数目已改变（最小为1，最大为4），请查看此配方以确认效果。",
+        "ENUS": "The product of [Formula] mass-energy storage has changed (minimum 1, maximum 4),please consult this recipes to verify the outcome."
     },
     {
         "Name": "无限应用课题",
@@ -4597,8 +4627,18 @@
     },
     {
         "Name": "T无限应用课题",
-        "ZHCN": "数学率引擎是个巨大的机器，在最终点火全启动前，各个子模块自己进行测试启动也是非常正常的。子模块启动时也可以对修改数学率应用课题进行初步的实验，总结规律，收集经验，也正因如此，实验的结果会飘忽不定。",
-        "ENUS": "The mathematical rate engine is a huge machine, and it is also normal for each submodule to test and start on its own before the final ignition is fully started. When the submodule is started, preliminary experiments can also be conducted on modifying mathematical rate application topics, summarizing patterns, and collecting experience. As a result, the experimental results may be unpredictable."
+        "ZHCN": "数学率引擎是个巨大的机器，在最终点火全启动前，各个子模块自己进行测试启动也是非常正常的。子模块启动时也可以对修改数学率应用课题进行初步的实验，总结规律，收集经验，也正因如此，实验的结果会飘忽不定。\n\n<color=\"#FD965ECC\">每次研究完成时，随机获得某数量某种东西，其中，只能在该科技获得的绝版物品有3种。</color>",
+        "ENUS": "The mathematical rate engine is a huge machine, and it is also normal for each submodule to test and start on its own before the final ignition is fully started. When the submodule is started, preliminary experiments can also be conducted on modifying mathematical rate application topics, summarizing patterns, and collecting experience. As a result, the experimental results may be unpredictable.\n\n<color=\"#FD965ECC\">Upon completion of each research, a certain quantity of a certain item is randomly obtained, among which there is only 3 out-of-print item that can only be obtained through this technology.</color>"
+    },
+    {
+        "Name": "无限应用课题完成",
+        "ZHCN": "我们在对现实进行精确而广泛的编辑方面取得了成功，成功在一片真空中从宇宙规则底层打捞出了 ",
+        "ENUS": "We have achieved success in precisely and extensively editing reality, successfully salvaging"
+    },
+    {
+        "Name": "无限应用课题完成英文结尾",
+        "ZHCN": "",
+        "ENUS": " from the bottom layer of universal rules in a vacuum"
     },
     {
         "Name": "量子虚拟生命",
@@ -4609,6 +4649,36 @@
         "Name": "I量子虚拟生命",
         "ZHCN": "在数学率修改实验中偶然变异的程序集，在变异中失去了所有对外接口的接入能力，取而代之的是极高的自修改速度，几乎每96秒内部的代码就会全部更新一遍，这赋予了它极高的适应能力。可惜的是，无论如何扫描，复制出来的程序都会丧失这关键的自迭代能力。",
         "ENUS": "The program set that accidentally mutates in the mathematical rate modification experiment loses all the ability to access external interfaces during mutation, and is replaced by extremely high self modification speed. Almost every 96 seconds, the internal code is updated, which endows it with extremely high adaptability. Unfortunately, no matter how scanned, the copied program will lose this critical self iteration ability."
+    },
+    {
+        "Name": "SCP-310恒燃之火",
+        "ZHCN": "SCP-310恒燃之火",
+        "ENUS": "SCP-310 Eternal Flame"
+    },
+    {
+        "Name": "ISCP-310恒燃之火",
+        "ZHCN": "一团等离子体，完全违背质能守恒定律，不消耗任何工质，无限释放光和热，无法用任何手段熄灭，任何与之接触的物质都会被其同化吸收。\n<color=\"#FD965ECC\">此建筑无条件永久发电</color>",
+        "ENUS": "A plasma ball, in complete violation of the law of conservation of mass and energy, releases light and heat infinitely without consuming any working medium. It cannot be extinguished by any means, and any substance in contact with it will be assimilated and absorbed by it.\n<color=\"#FD965ECC\">This building has unconditional permanent power generation</color>"
+    },
+    {
+        "Name": "黑萝卜",
+        "ZHCN": "黑萝卜",
+        "ENUS": "DarkCarrot"
+    },
+    {
+        "Name": "I黑萝卜",
+        "ZHCN": "As you can see",
+        "ENUS": "As you can see"
+    },
+    {
+        "Name": "城市化",
+        "ZHCN": "城市化",
+        "ENUS": "Urbanization"
+    },
+    {
+        "Name": "T城市化",
+        "ZHCN": "行星要塞，行星要塞，还是行星要塞",
+        "ENUS": "Planetary fortress, planetary fortress, and planetary fortress"
     },
     {
         "Name": "规划",
@@ -4662,7 +4732,7 @@
     },
     {
         "Name": "T因为，山就在那里",
-        "ZHCN": "这只是个虚无缥缈的推论，一个猜想，但是要验证这个推论需要数个星系维持的庞大物力。放眼整个星区已没有任何人配称得上敌人，大统一理论已被推论，宇宙的真理已尽在你手，为何还要攀登高峰？\r\n\r\n<color=\"#FD965ECC\">解锁黑洞巨构 共鸣阵列 的建设。</color>",
+        "ZHCN": "这只是个虚无缥缈的推论，一个猜想，但是要验证这个推论需要数个星系维持的庞大物力。放眼整个星区已没有任何人配称得上敌人，大统一理论已被推论，宇宙的真理已尽在你手，为何还要攀登高峰？\n\n<color=\"#FD965ECC\">解锁黑洞巨构 共鸣阵列 的建设。</color>",
         "ENUS": "This is just a vague inference, a conjecture, but to verify this inference, it requires massive physical forces maintained by several galaxies. Looking at the entire star region, there is no one worthy of being an enemy. The theory of great unity has been deduced, and the truth of the universe is already in your hands. Why climb the peak?\r\n\r\n<color=\"#FD965ECC\">Unlock the construction of the Megastructure Resonance Array within a Black Hole.</color>"
     },
     {
@@ -4677,8 +4747,8 @@
     },
     {
         "Name": "T穿透现实",
-        "ZHCN": "随着大统一理论的秘密逐渐被揭开，我们确定，引力在塑造宇宙这个精密的数学率机器中起到了重要作用。就如黑洞是宇宙中最极端的天体，引力是穿透现实的最佳选择。\r\n\r\n<color=\"#FD965ECC\">共鸣阵列达到8Mg（g=9.8m/s）解锁此科技，黑洞巨构升级为 数学率引擎。</color>",
-        "ENUS": "As the secrets of the grand unified theory are gradually revealed, we are certain that gravity plays an important role in shaping the precise mathematical rate machine of the universe. Just as black holes are the most extreme celestial bodies in the universe, gravity is the best choice for penetrating reality.\r\n\r\n<color=\"#FD965ECC\">The resonance array reaches 16.5Mg(g=9.8m/s) to unlock this technology, and the black hole structure is upgraded to a mathematical rate engine.</color>"
+        "ZHCN": "随着大统一理论的秘密逐渐被揭开，我们确定，引力在塑造宇宙这个精密的数学率机器中起到了重要作用。就如黑洞是宇宙中最极端的天体，引力是穿透现实的最佳选择。\r\n\r\n<color=\"#FD965ECC\">共鸣阵列达到8Mg（g=9.8m/s）解锁此科技，黑洞巨构升级为 数学率引擎。</color>\n\n<color=\"#FD965ECC\">注意：数学率引擎将不再计算游离的弹射物的功率</color>",
+        "ENUS": "As the secrets of the grand unified theory are gradually revealed, we are certain that gravity plays an important role in shaping the precise mathematical rate machine of the universe. Just as black holes are the most extreme celestial bodies in the universe, gravity is the best choice for penetrating reality.\r\n\r\n<color=\"#FD965ECC\">The resonance array reaches 16.5Mg(g=9.8m/s) to unlock this technology, and the black hole structure is upgraded to a mathematical rate engine.</color> \n\n<color=\"#FD965ECC\">Note: The mathematical rate engine will no longer calculate the power of free-floating projectiles</color>"
     },
     {
         "Name": "T穿透现实完成",
@@ -4692,13 +4762,23 @@
     },
     {
         "Name": "T宇宙的齿轮",
-        "ZHCN": "宇宙是个庞大机器，以数学，规则为齿轮构筑的，数千万亿年都在精准运行的机器。如今借由量子比特架构的强大算力，我们得以尝试通过引力发生阵列拨动黑洞的重力涟漪，以此来撬动这个庞大机器中的齿轮：数学率。\r\n\r\n<color=\"#FD965ECC\">数学率引擎达到20k休谟指数解锁此科技</color>",
-        "ENUS": "The universe is a massive machine, constructed with mathematics and rules as gears, and has been operating precisely for billions of years. Nowadays, with the powerful computing power of quantum bit architecture, we are able to attempt to manipulate the gravitational ripples of black holes through gravitational arrays, in order to lever the gears in this massive machine: mathematical rates.\r\n\r\n<color=\"#FD965ECC\">Math rate engine reaches 20k Humes to unlock this technology</color>"
+        "ZHCN": "宇宙是个庞大机器，以数学，规则为齿轮构筑的，数千万亿年都在精准运行的机器。如今借由量子比特架构的强大算力，我们得以尝试通过引力发生阵列拨动黑洞的重力涟漪，以此来撬动这个庞大机器中的齿轮：数学率。\n\n<color=\"#FD965ECC\">注意：研究完成时会清空游离的弹射物</color>",
+        "ENUS": "The universe is a massive machine, constructed with mathematics and rules as gears, and has been operating precisely for billions of years. Nowadays, with the powerful computing power of quantum bit architecture, we are able to attempt to manipulate the gravitational ripples of black holes through gravitational arrays, in order to lever the gears in this massive machine: mathematical rates. \n\n<color=\"#FD965ECC\">Note: Free-floating projectiles will be cleared upon completion of the study</color>"
     },
     {
         "Name": "T宇宙的齿轮完成",
         "ZHCN": "现实在指令的重压下屈服，从此以后，光速，不再是一个常数。",
         "ENUS": "Reality yielded under the weight of instructions, and from then on, the speed of light was no longer a constant."
+    },
+    {
+        "Name": "数学率引擎建设说明书",
+        "ZHCN": "数学率引擎建设说明书",
+        "ENUS": "Instructions for building a mathematical rate engine"
+    },
+    {
+        "Name": "I数学率引擎建设说明书",
+        "ZHCN": "自二阶开始，数学率引擎将不再计算游离的弹射物的功率，解锁了数学率引擎-深蓝之井-运载火箭，使用火箭建设节点以吸附游离的弹射物。\n同时解锁了三阶科技的隐藏，当三阶科技研究完成时，会立刻清空数学率引擎的游离弹射物，请确保研究完成时所有的游离弹射物已经吸附完成。同时，会将当前的休谟值记录，三阶建造的节点和吸附的弹射物将不再直接增加休谟值，而是转化为系数乘以记录的休谟值(系数为增加的休谟/2000)，同时已存在的层数的节点将不再能吸附，需要新建戴森层，因此三阶科技请视情况自行决定研究完成的时机。",
+        "ENUS": "Starting from Tier 2, the mathematical rate engine will no longer calculate the power of free projectiles, unlocking the mathematical rate engine - Deep Blue Well - carrier rocket. Use the rocket construction node to adsorb free projectiles.\n The unlocking of Tier 3 technology has been achieved simultaneously. Upon completion of Tier 3 technology research, the free projectiles of the mathematical rate engine will be instantly cleared. Please ensure that all free projectiles have been adsorbed upon the completion of research. Additionally, the current Hume value will be recorded. Nodes constructed at Tier 3 and adsorbed projectiles will no longer directly increase the Hume value, but will instead be converted into a coefficient multiplied by the recorded Hume value (the coefficient is the increased Hume/2000). Meanwhile, existing nodes of layers will no longer be able to adsorb, and new Dyson layers need to be created. Therefore, please decide the timing of completing Tier 3 technology research based on your situation."
     },
     {
         "Name": "宇宙创生",

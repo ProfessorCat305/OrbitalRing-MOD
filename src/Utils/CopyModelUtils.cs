@@ -51,6 +51,7 @@ namespace ProjectOrbitalRing.Utils
             CopyModelProto(403, ProtoID.M伺服天穹组件);
             CopyModelProto(403, ProtoID.M智能方尖碑, new Color(1f, 1f, 1f));
             CopyModelProto(403, ProtoID.M亿万械国, new Color(0f, 0f, 0f));
+            CopyModelProto(56, ProtoID.MSCP310恒燃之火, new Color(0f, 0f, 0f));
 
             //AddHyperRelayReactor();
             ChangeAccumulatorColor();
@@ -262,7 +263,8 @@ namespace ProjectOrbitalRing.Utils
             turretNeed = ref ItemProto.turretNeeds[(int)EAmmoType.LocalPlasma];
             turretNeed = new int[] { ProtoID.I氘核轨道弹, 0, 0 };
 
-            ItemProto item = LDB.items.Select(6514);
+            // 添加轨道空投引导站的接收运输船位置，并置于轨道高空
+            ItemProto item = LDB.items.Select(ProtoID.I轨道空投引导站);
             item.prefabDesc.stationShipPos = new Vector3(0f, 100f, 0f);
 
             item = LDB.items.Select(3010);

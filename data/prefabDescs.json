@@ -564,5 +564,11 @@
         "beaconSignalRadius": 0.0,
         "beaconSpaceSignalRange": 0.0,
         "powerConnectDistance": 0.5
+    },
+    {
+        "ModelID": 833,
+        "fuelMask": 0,
+        "useFuelPerTick": 0,
+        "genEnergyPerTick": 4800000
     }
 ]

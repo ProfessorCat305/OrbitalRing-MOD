@@ -111,7 +111,6 @@ namespace ProjectOrbitalRing.Patches.Logic
                 case ProtoID.I铀燃料棒:
                 case ProtoID.I钚燃料棒:
                 case ProtoID.I氘核燃料棒:
-                case ProtoID.I氦三燃料棒:
                 case ProtoID.I反物质燃料棒:
                     count = 1;
 

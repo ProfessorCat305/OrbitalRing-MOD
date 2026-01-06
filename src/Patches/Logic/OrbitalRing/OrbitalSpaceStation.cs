@@ -691,6 +691,15 @@ namespace ProjectOrbitalRing.Patches.Logic.OrbitalRing
         }
 
 
-
+        [HarmonyPatch(typeof(StationComponent), nameof(StationComponent.CalcRemoteSingleTripTime))]
+        [HarmonyPrefix]
+        public static bool CalcRemoteSingleTripTimePatch(StationComponent __instance, int __result)
+        {
+            if (__instance.shipDiskPos.Length == 0) {
+                __result = 0;
+                return false;
+            }
+            return true;
+        }
     }
 }
