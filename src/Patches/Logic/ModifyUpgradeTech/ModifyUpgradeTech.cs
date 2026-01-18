@@ -598,9 +598,10 @@ namespace ProjectOrbitalRing.Patches.Logic.ModifyUpgradeTech
             techProto = LDB.techs.Select(5006);
             techProto.Items = new int[] { 5201 };
             techProto.IsLabTech = false;
-            techProto.HashNeeded = techProto.HashNeeded / 10;
-            techProto.LevelCoef1 = techProto.LevelCoef1 / 10;
-            techProto.LevelCoef2 = techProto.LevelCoef2 / 10;
+            techProto.ItemPoints = new int[] { 3600 };
+            techProto.HashNeeded = techProto.HashNeeded / 9000;
+            techProto.LevelCoef1 = techProto.LevelCoef1 / 9000;
+            techProto.LevelCoef2 = techProto.LevelCoef2 / 9000;
             techProto.Desc = "T动能武器伤害无限";
             techProto.RefreshTranslation();
 
@@ -611,9 +612,10 @@ namespace ProjectOrbitalRing.Patches.Logic.ModifyUpgradeTech
             techProto = LDB.techs.Select(5106);
             techProto.Items = new int[] { 5201 };
             techProto.IsLabTech = false;
-            techProto.HashNeeded = techProto.HashNeeded / 10;
-            techProto.LevelCoef1 = techProto.LevelCoef1 / 10;
-            techProto.LevelCoef2 = techProto.LevelCoef2 / 10;
+            techProto.ItemPoints = new int[] { 3600 };
+            techProto.HashNeeded = techProto.HashNeeded / 9000;
+            techProto.LevelCoef1 = techProto.LevelCoef1 / 9000;
+            techProto.LevelCoef2 = techProto.LevelCoef2 / 9000;
             techProto.Desc = "T能量武器伤害无限";
             techProto.RefreshTranslation();
 
@@ -624,9 +626,10 @@ namespace ProjectOrbitalRing.Patches.Logic.ModifyUpgradeTech
             techProto = LDB.techs.Select(5206);
             techProto.Items = new int[] { 5201 };
             techProto.IsLabTech = false;
-            techProto.HashNeeded = techProto.HashNeeded / 10;
-            techProto.LevelCoef1 = techProto.LevelCoef1 / 10;
-            techProto.LevelCoef2 = techProto.LevelCoef2 / 10;
+            techProto.ItemPoints = new int[] { 3600 };
+            techProto.HashNeeded = techProto.HashNeeded / 9000;
+            techProto.LevelCoef1 = techProto.LevelCoef1 / 9000;
+            techProto.LevelCoef2 = techProto.LevelCoef2 / 9000;
             techProto.Desc = "T爆破武器伤害无限";
             techProto.RefreshTranslation();
 

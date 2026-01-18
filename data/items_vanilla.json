@@ -6049,7 +6049,7 @@
     "ID": 2212,
     "Name": "卫星配电站",
     "Description": "I卫星配电站",
-    "IconPath": "Icons/ItemRecipe/orbital-substation",
+    "IconPath": "Assets/texpack/I卫星配电站",
     "GridIndex": 2602,
     "StackSize": 30,
     "Type": 5,

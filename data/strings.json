@@ -4449,14 +4449,14 @@
         "ENUS": "Electricity is the nerve of industrial giants, and power supply is the beginning of industrial operations. From ground connections, to long-distance power supply, and then to satellite power distribution, you may think that satellite power distribution is already sufficient, but engineers have provided a more ambitious plan to build a synchronous orbit power grid hub, which will coordinate with other synchronous orbit facilities in the same ring as a carrier to broadcast a space ring power grid covering the entire planet."
     },
     {
-        "Name": "星环电网组件",
-        "ZHCN": "星环电网组件",
-        "ENUS": "Orbital Ring Power Grid Components"
+        "Name": "星环电网环路",
+        "ZHCN": "星环电网环路",
+        "ENUS": "Orbital Ring Power Grid Loop"
     },
     {
-        "Name": "I星环电网组件",
-        "ZHCN": "一个无线输电同调组件，借助星环里轨道连接组件提供的支撑和连接，如同连接组件一样建设成首尾相连的星环电网，所有组件相互协调同频，向行星发送覆盖全行星的电力广播，以此达成全球无线电力连接。\n<color=\"#FD965ECC\">连接组件起码连接一环以上和电网组件环必须完整才能使全球供电。</color>",
-        "ENUS": "A wireless transmission synchronization component, with the support and connection provided by the orbital connection component in the Orbital Ring, is constructed as a connected Orbital Ring power grid like a connection component. All components coordinate with each other on the same frequency and send power broadcasts covering the entire planet to achieve global wireless power connection.\n<color=\"#FD965ECC\">The connecting components must be connected to at least one ring and the power grid components must be complete in order to provide global power supply.</color>"
+        "Name": "I星环电网环路",
+        "ZHCN": "一个无线输电同调组件，借助星环里轨道连接组件提供的支撑和连接，如同连接组件一样建设成首尾相连的星环电网，所有组件相互协调同频，向行星发送覆盖全行星的电力广播，以此达成全球无线电力连接。\n<color=\"#FD965ECC\">连接组件起码连接一环以上和电网环路环必须完整才能使全球供电。</color>",
+        "ENUS": "A wireless transmission synchronization component, with the support and connection provided by the orbital connection component in the Orbital Ring, is constructed as a connected Orbital Ring power grid like a connection component. All components coordinate with each other on the same frequency and send power broadcasts covering the entire planet to achieve global wireless power connection.\n<color=\"#FD965ECC\">The connecting components must be connected to at least one ring and the power grid loop must be complete in order to provide global power supply.</color>"
     },
     {
         "Name": "星环对撞机",

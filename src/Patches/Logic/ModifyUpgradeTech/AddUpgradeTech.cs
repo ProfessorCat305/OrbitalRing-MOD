@@ -128,6 +128,7 @@ namespace ProjectOrbitalRing.Patches.Logic.ModifyUpgradeTech
             string conclusion = "动能武器伤害结果";
             string iconPath = "Icons/Tech/5006";
             TechProto NewTechProto = AddOneUpgradeTech(id, name, description, conclusion, iconPath);
+            NewTechProto.ItemPoints = new int[] { 4, 4, 4 };
             NewTechProto.UnlockFunctions = new int[] { 61 };
             NewTechProto.UnlockValues = new double[] { 0.2 };
             NewTechProto.HashNeeded = 3600000;
@@ -138,6 +139,7 @@ namespace ProjectOrbitalRing.Patches.Logic.ModifyUpgradeTech
             conclusion = "能量武器伤害结果";
             iconPath = "Icons/Tech/5106";
             NewTechProto = AddOneUpgradeTech(id, name, description, conclusion, iconPath);
+            NewTechProto.ItemPoints = new int[] { 4, 4, 4 };
             NewTechProto.UnlockFunctions = new int[] { 62 };
             NewTechProto.UnlockValues = new double[] { 0.2 };
             NewTechProto.HashNeeded = 5400000;
@@ -148,6 +150,7 @@ namespace ProjectOrbitalRing.Patches.Logic.ModifyUpgradeTech
             conclusion = "爆炸武器伤害结果";
             iconPath = "Icons/Tech/5206";
             NewTechProto = AddOneUpgradeTech(id, name, description, conclusion, iconPath);
+            NewTechProto.ItemPoints = new int[] { 4, 4, 4 };
             NewTechProto.UnlockFunctions = new int[] { 63 };
             NewTechProto.UnlockValues = new double[] { 0.2 };
             NewTechProto.HashNeeded = 3600000;

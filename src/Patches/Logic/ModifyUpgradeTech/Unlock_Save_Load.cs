@@ -374,7 +374,7 @@ namespace ProjectOrbitalRing.Patches.Logic.ModifyUpgradeTech
         static bool isRecipesHandcraftUnlock(bool Handcraft)
         {
             // 解锁了次级维度工厂后，所有配方全可手搓
-            if (GameMain.history.TechUnlocked(1945)) {
+            if (GameMain.history.TechUnlocked(1947)) {
                 return true;
             }
             return Handcraft;

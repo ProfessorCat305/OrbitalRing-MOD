@@ -111,7 +111,7 @@ namespace ProjectOrbitalRing.Patches.Logic.BattleRelated
             modelProto.prefabDesc.enemySandCount = 0;
 
             modelProto = LDB.models.Select(ProtoID.M守卫者);
-            modelProto.HpMax = 65000;
+            modelProto.HpMax = 62000;
             modelProto.HpUpgrade = 4500;
             modelProto.prefabDesc.unitMaxMovementSpeed = 5;
             modelProto.prefabDesc.unitMarchMovementSpeed = 5;

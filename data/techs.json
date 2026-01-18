@@ -269,7 +269,7 @@
     {
         "ID": 1104,
         "Name": "T纳米塑料纤维",
-        "IconPath": "Assets/texpack/精炼科技",
+        "IconPath": "Icons/Tech/1122",
         "Desc": "T纳米塑料纤维描述",
         "Conclusion": "T纳米塑料纤维描述",
         "IsHiddenTech": false,
@@ -570,7 +570,7 @@
     {
         "ID": 1122,
         "Name": "T粒子加速器",
-        "IconPath": "Icons/Tech/1121",
+        "IconPath": "Assets/texpack/T粒子加速器",
         "Desc": "T粒子加速器描述",
         "Conclusion": "T粒子加速器描述",
         "IsHiddenTech": false,
@@ -1066,7 +1066,8 @@
         "HashNeeded": 360000,
         "UnlockRecipes": [
             104,
-            78
+            78,
+            534
         ],
         "UnlockFunctions": [],
         "UnlockValues": [],
@@ -2609,7 +2610,7 @@
     {
         "ID": 1509,
         "Name": "高效翘曲器",
-        "IconPath": "Icons/Tech/1511",
+        "IconPath": "Assets/texpack/T高效翘曲器",
         "Desc": "T高效翘曲器",
         "Conclusion": "T高效翘曲器",
         "IsHiddenTech": false,
@@ -2653,7 +2654,7 @@
     {
         "ID": 1510,
         "Name": "T磁单极子构成",
-        "IconPath": "Icons/Tech/1511",
+        "IconPath": "Assets/texpack/T磁单极子构成",
         "Desc": "T磁单极子构成描述",
         "Conclusion": "T磁单极子构成描述",
         "IsHiddenTech": false,
@@ -3749,7 +3750,7 @@
     {
         "ID": 1802,
         "Name": "为何攀登高峰",
-        "IconPath": "Icons/Tech/1508",
+        "IconPath": "Assets/texpack/T为何攀登高峰",
         "Desc": "T因为，山就在那里",
         "Conclusion": "T因为，山就在那里完成",
         "IsHiddenTech": true,
@@ -5401,7 +5402,7 @@
     {
         "ID": 1921,
         "Name": "T第四代半导体",
-        "IconPath": "Icons/Tech/1416",
+        "IconPath": "Icons/Tech/1302",
         "Desc": "T第四代半导体描述",
         "Conclusion": "T第四代半导体描述",
         "IsHiddenTech": false,
@@ -5959,7 +5960,7 @@
     {
         "ID": 1934,
         "Name": "坐标引擎",
-        "IconPath": "Assets/texpack/虫洞航行",
+        "IconPath": "Assets/texpack/T坐标引擎",
         "Desc": "T坐标引擎",
         "Conclusion": "T坐标引擎",
         "IsHiddenTech": true,
@@ -6429,7 +6430,7 @@
     {
         "ID": 1945,
         "Name": "未知射线研究",
-        "IconPath": "Icons/Tech/1903",
+        "IconPath": "Assets/texpack/T终末螺旋",
         "Desc": "T未知射线研究",
         "Conclusion": "T终末螺旋",
         "IsHiddenTech": true,
@@ -6472,7 +6473,7 @@
     {
         "ID": 1946,
         "Name": "黑盒",
-        "IconPath": "Assets/texpack/主机科技",
+        "IconPath": "Assets/texpack/T黑盒",
         "Desc": "T黑盒",
         "Conclusion": "T黑盒",
         "IsHiddenTech": true,
@@ -6602,7 +6603,7 @@
     {
         "ID": 1949,
         "Name": "超空间中继器",
-        "IconPath": "Assets/texpack/主机科技",
+        "IconPath": "Assets/texpack/T超空间中继器",
         "Desc": "T超空间中继器",
         "Conclusion": "T超空间中继器",
         "IsHiddenTech": false,
@@ -6687,7 +6688,7 @@
     {
         "ID": 1951,
         "Name": "星环巨构",
-        "IconPath": "Assets/texpack/主机科技",
+        "IconPath": "Assets/texpack/T星环巨构",
         "Desc": "T星环巨构",
         "Conclusion": "T星环巨构",
         "IsHiddenTech": false,
@@ -6727,7 +6728,7 @@
     {
         "ID": 1952,
         "Name": "穿透现实",
-        "IconPath": "Assets/texpack/反物质单元",
+        "IconPath": "Assets/texpack/T穿透现实",
         "Desc": "T穿透现实",
         "Conclusion": "T穿透现实完成",
         "IsHiddenTech": true,
@@ -6773,7 +6774,7 @@
     {
         "ID": 1953,
         "Name": "勘探船",
-        "IconPath": "Assets/texpack/反物质单元",
+        "IconPath": "Icons/Tech/1822",
         "Desc": "T勘探船",
         "Conclusion": "T勘探船",
         "IsHiddenTech": false,
@@ -6857,7 +6858,7 @@
     {
         "ID": 1955,
         "Name": "轨道观测站",
-        "IconPath": "Icons/Tech/1816",
+        "IconPath": "Icons/Tech/4103",
         "Desc": "T轨道观测站",
         "Conclusion": "T轨道观测站",
         "IsHiddenTech": false,
@@ -6987,7 +6988,7 @@
     {
         "ID": 1958,
         "Name": "深空物流港",
-        "IconPath": "Icons/Tech/1813",
+        "IconPath": "Assets/texpack/T深空物流",
         "Desc": "T深空物流港",
         "Conclusion": "T深空物流港",
         "IsHiddenTech": false,
@@ -7028,7 +7029,7 @@
     {
         "ID": 1959,
         "Name": "开弦修正",
-        "IconPath": "Assets/texpack/反物质飞弹",
+        "IconPath": "Icons/Tech/1145",
         "Desc": "T开弦修正",
         "Conclusion": "开弦修正结果",
         "IsHiddenTech": true,
@@ -7238,7 +7239,7 @@
     {
         "ID": 1964,
         "Name": "星环对撞机",
-        "IconPath": "Icons/Tech/1607",
+        "IconPath": "Assets/texpack/T星环对撞机",
         "Desc": "T星环对撞机",
         "Conclusion": "T星环对撞机",
         "IsHiddenTech": false,
@@ -7363,7 +7364,7 @@
     {
         "ID": 1967,
         "Name": "导电银浆",
-        "IconPath": "Icons/Tech/1607",
+        "IconPath": "Assets/texpack/T导电银浆",
         "Desc": "T导电银浆",
         "Conclusion": "T导电银浆",
         "IsHiddenTech": false,
@@ -7407,7 +7408,7 @@
     {
         "ID": 1968,
         "Name": "近防电浆炮",
-        "IconPath": "Icons/Tech/1811",
+        "IconPath": "Assets/texpack/T近防电浆炮",
         "Desc": "T近防电浆炮",
         "Conclusion": "T近防电浆炮",
         "IsHiddenTech": false,
@@ -7490,7 +7491,7 @@
     {
         "ID": 1970,
         "Name": "轨道设施连接工程",
-        "IconPath": "Icons/Tech/1811",
+        "IconPath": "Assets/texpack/T轨道设施连接工程",
         "Desc": "T轨道设施连接工程",
         "Conclusion": "T轨道设施连接工程",
         "IsHiddenTech": false,
@@ -7620,7 +7621,7 @@
     {
         "ID": 1973,
         "Name": "星环护盾",
-        "IconPath": "Icons/Tech/1811",
+        "IconPath": "Assets/texpack/T星环护盾",
         "Desc": "T星环护盾",
         "Conclusion": "T星环护盾",
         "IsHiddenTech": false,
@@ -7750,7 +7751,7 @@
     {
         "ID": 1976,
         "Name": "气云精炼",
-        "IconPath": "Icons/Tech/1811",
+        "IconPath": "Assets/texpack/T气云精炼",
         "Desc": "T气云精炼",
         "Conclusion": "T气云精炼",
         "IsHiddenTech": false,
@@ -7793,7 +7794,7 @@
     {
         "ID": 1977,
         "Name": "富勒烯研究",
-        "IconPath": "Icons/Tech/1811",
+        "IconPath": "Assets/texpack/T富勒烯",
         "Desc": "T富勒烯研究",
         "Conclusion": "T富勒烯研究",
         "IsHiddenTech": false,
@@ -7838,7 +7839,7 @@
     {
         "ID": 1978,
         "Name": "富勒烯衍生物应用",
-        "IconPath": "Icons/Tech/1811",
+        "IconPath": "Assets/texpack/T富勒衍生物",
         "Desc": "T富勒烯衍生物应用",
         "Conclusion": "T富勒烯衍生物应用",
         "IsHiddenTech": false,
@@ -7882,7 +7883,7 @@
     {
         "ID": 1979,
         "Name": "永固型节点构造",
-        "IconPath": "Icons/Tech/1811",
+        "IconPath": "Assets/texpack/T永固型节点",
         "Desc": "T永固型节点构造",
         "Conclusion": "T永固型节点构造",
         "IsHiddenTech": false,
@@ -8091,7 +8092,7 @@
     {
         "ID": 1984,
         "Name": "星环伺服天穹",
-        "IconPath": "Assets/texpack/尖端组件",
+        "IconPath": "Assets/texpack/T伺服天穹",
         "Desc": "T星环伺服天穹",
         "Conclusion": "T星环伺服天穹",
         "IsHiddenTech": false,
@@ -8134,7 +8135,7 @@
     {
         "ID": 1985,
         "Name": "智能方尖碑",
-        "IconPath": "Assets/texpack/尖端组件",
+        "IconPath": "Assets/texpack/T智能方尖碑",
         "Desc": "T智能方尖碑",
         "Conclusion": "T智能方尖碑",
         "IsHiddenTech": false,
@@ -8178,7 +8179,7 @@
     {
         "ID": 1986,
         "Name": "亿万械国",
-        "IconPath": "Assets/texpack/尖端组件",
+        "IconPath": "Assets/texpack/T亿万械国",
         "Desc": "T亿万械国",
         "Conclusion": "T亿万械国",
         "IsHiddenTech": true,
@@ -8302,7 +8303,7 @@
     {
         "ID": 1989,
         "Name": "光速修改",
-        "IconPath": "Icons/Tech/6006",
+        "IconPath": "Assets/texpack/T光速修改",
         "Desc": "T光速修改",
         "Conclusion": "T光速修改",
         "IsHiddenTech": true,
@@ -8340,7 +8341,7 @@
     {
         "ID": 1990,
         "Name": "移山计划",
-        "IconPath": "Icons/Tech/6006",
+        "IconPath": "Assets/texpack/T移山计划",
         "Desc": "T移山计划",
         "Conclusion": "T移山计划",
         "IsHiddenTech": false,

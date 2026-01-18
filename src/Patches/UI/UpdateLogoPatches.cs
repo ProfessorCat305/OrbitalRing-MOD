@@ -31,13 +31,13 @@ namespace ProjectOrbitalRing.Patches.UI
             string iconstr;
 
             if (Localization.isZHCN) {
-                iconstr = "黑雾中文图标";
+                iconstr = "黑雾中文图标1";
 
                 DateTime dateTime = DateTime.Now;
 
-                if (dateTime > new DateTime(2024, 2, 9) && dateTime < new DateTime(2024, 2, 25)) iconstr = "创世Logo新春贺岁版";
+                // if (dateTime > new DateTime(2024, 2, 9) && dateTime < new DateTime(2024, 2, 25)) iconstr = "创世Logo新春贺岁版";
             } else { 
-                iconstr = "黑雾英文图标";
+                iconstr = "黑雾英文图标1";
             }
 
             Texture2D texture = TextureHelper.GetTexture(iconstr);
