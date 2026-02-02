@@ -81,11 +81,13 @@ namespace ProjectOrbitalRing.Patches.Logic
                             __instance.player.mecha.MarkEnergyChange(5, 0.0 - num6);
                             __instance.percent = Mathf.Clamp01((float)((double)patchMiningTick / (double)(vegeProto.MiningTime * 10000)));
                             if (patchMiningTick >= vegeProto.MiningTime * 10000) {
-                                OnMine(ref factory, vegeData.id);
+                                if (__instance.player.mecha.coreEnergy != 0) {
+                                    OnMine(ref factory, vegeData.id);
+                                }
                                 patchMiningTick = 0;
                             }
                         } else {
-                            OnMine(ref factory, vegeData.id);
+                            //OnMine(ref factory, vegeData.id);
                             patchMiningTick = 0;
                         }
                     }

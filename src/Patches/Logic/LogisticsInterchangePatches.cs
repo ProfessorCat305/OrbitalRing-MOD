@@ -207,6 +207,25 @@ namespace ProjectOrbitalRing.Patches.Logic
             newSlotPoses[9].rotation = new Quaternion(0f, 0.7071f, 0f, 0.7071f);
             megaPumper.slotPoses = newSlotPoses;
 
+            megaPumper = LDB.models.Select(836).prefabDesc;
+            newSlotPoses = new Pose[]{
+                new Pose(megaPumper.slotPoses[0].position, megaPumper.slotPoses[0].rotation),
+                new Pose(megaPumper.slotPoses[1].position, megaPumper.slotPoses[1].rotation),
+                new Pose(megaPumper.slotPoses[2].position, megaPumper.slotPoses[2].rotation),
+                new Pose(megaPumper.slotPoses[3].position, megaPumper.slotPoses[3].rotation),
+                new Pose(megaPumper.slotPoses[4].position, megaPumper.slotPoses[4].rotation),
+                new Pose(megaPumper.slotPoses[5].position, megaPumper.slotPoses[5].rotation),
+                new Pose(megaPumper.slotPoses[6].position, megaPumper.slotPoses[6].rotation),
+                new Pose(megaPumper.slotPoses[7].position, megaPumper.slotPoses[7].rotation),
+                new Pose(megaPumper.slotPoses[7].position, megaPumper.slotPoses[7].rotation),
+                new Pose(megaPumper.slotPoses[7].position, megaPumper.slotPoses[7].rotation),
+            };
+            newSlotPoses[8].position = new Vector3(3.8f, -0.02f, 0.1f);
+            newSlotPoses[8].rotation = new Quaternion(0f, 0.7071f, 0f, 0.7071f);
+            newSlotPoses[9].position = new Vector3(3.8f, -0.02f, 1.1f);
+            newSlotPoses[9].rotation = new Quaternion(0f, 0.7071f, 0f, 0.7071f);
+            megaPumper.slotPoses = newSlotPoses;
+
         }
 
         

@@ -522,11 +522,15 @@ namespace ProjectOrbitalRing.Patches.Logic.AddVein
                     array3[19] = 1.0f;
                 }
                 if (algorithm.planet.index == 4) {
+                    array[3] = 3;
+                    array2[3] = 0.8f;
+                    array3[3] = 1.2f;
+
                     array[8] = 7;
                     array2[8] = 0.4f;
-                    array3[8] = 0.8f;
+                    array3[8] = 0.9f;
 
-                    array[15] = 8;
+                    array[15] = 5;
                     array2[15] = 0.5f;
                     array3[15] = 0.5f;
 

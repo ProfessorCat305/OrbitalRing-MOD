@@ -138,11 +138,14 @@ namespace ProjectOrbitalRing.Patches.Logic.Farm
                     lock (array3) {
                         int[] array4 = array8;
                         lock (array4) {
-                            int num17 = 10 * ((__instance.speedOverride + 9999) / 10000) - 2;
+                            int num17;
                             for (int i = 0; i < __instance.produced.Length; i++) {
+                                num17 = 2 * __instance.recipeExecuteData.productCounts[i];
                                 if (__instance.produced[i] < num17 && assemblerPool[nextAssemblerId].produced[i] > 0) {
                                     if (AutoBackfill.ContainsKey(__instance.recipeId) && i == AutoBackfill[__instance.recipeId]) {
-                                        continue;
+                                        if (assemblerPool[nextAssemblerId].produced[i] < num17 + 1) {
+                                            continue;
+                                        }
                                     }
                                     int num18 = (num17 - __instance.produced[i] < assemblerPool[nextAssemblerId].produced[i]) ? (num17 - __instance.produced[i]) : assemblerPool[nextAssemblerId].produced[i];
                                     __instance.produced[i] += num18;

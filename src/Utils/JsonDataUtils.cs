@@ -84,8 +84,6 @@ namespace ProjectOrbitalRing.Utils
                 }
             }
 
-            LogError($"97  array.Length {LDB.recipes.Select(97).Items.Length} requires.Length {RecipeProto.recipeExecuteData[97].requires.Length} !!!!!!!!!!!!!!!!!!!!!!!!!");
-
 
             #endregion
 

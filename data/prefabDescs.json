@@ -102,7 +102,7 @@
     },
     {
         "ModelID": 60,
-        "minerPeriod": 600000,
+        "minerPeriod": 300000,
         "allowBuildInWater": true,
         "waterTypes": [
             1000,
@@ -208,6 +208,10 @@
         "useFuelPerTick": 1000000
     },
     {
+        "ModelID": 121,
+        "fluidStorageCount": 50000
+    },
+    {
         "ModelID": 194,
         "assemblerRecipeType": 11,
         "idleEnergyPerTick": 12000,
@@ -223,6 +227,7 @@
     },
     {
         "ModelID": 256,
+        "workEnergyPerTick": 200000,
         "minerPeriod": 600000
     },
     {
@@ -245,7 +250,7 @@
     },
     {
         "ModelID": 376,
-        "assemblerRecipeType": 2,
+        "assemblerRecipeType": 16,
         "idleEnergyPerTick": 18000,
         "workEnergyPerTick": 144000,
         "assemblerSpeed": 10000

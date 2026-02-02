@@ -307,7 +307,7 @@ namespace ProjectOrbitalRing.Patches.Logic.OrbitalRing
                     }
                 }
                 if (previewItem == ProtoID.I低温工厂) {
-                    if (__instance.planet.theme != 7 || __instance.planet.theme != 10 || __instance.planet.theme != 20 || __instance.planet.theme != 24 ) { // 冰星
+                    if (!(__instance.planet.theme == 7 || __instance.planet.theme == 10 || __instance.planet.theme == 20 || __instance.planet.theme == 24 )) { // 冰星
                         buildPreview.condition = (EBuildCondition)94;
                         __instance.AddErrorMessage((EBuildCondition)94, buildPreview);
                     }
@@ -447,7 +447,7 @@ namespace ProjectOrbitalRing.Patches.Logic.OrbitalRing
                     }
                 }
                 if (previewItem == ProtoID.I低温工厂) {
-                    if (__instance.planet.theme != 7 || __instance.planet.theme != 10 || __instance.planet.theme != 20 || __instance.planet.theme != 24) { // 冰星
+                    if (!(__instance.planet.theme == 7 || __instance.planet.theme == 10 || __instance.planet.theme == 20 || __instance.planet.theme == 24)) { // 冰星
                         buildPreview.condition = (EBuildCondition)94;
                         __result = false;
                         return false;

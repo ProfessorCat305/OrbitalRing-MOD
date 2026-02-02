@@ -1356,7 +1356,7 @@
         ],
         "InCounts": [
             10,
-            3,
+            5,
             1
         ],
         "Output": [
@@ -1511,7 +1511,7 @@
         "Description": "",
         "IconPath": "",
         "Type": 10,
-        "GridIndex": 4801,
+        "GridIndex": 1711,
         "Time": 720,
         "Input": [
             1402,
@@ -2864,7 +2864,7 @@
         "Description": "",
         "IconPath": "",
         "Type": 10,
-        "GridIndex": 1711,
+        "GridIndex": 1710,
         "Time": 240,
         "Input": [
             1123,
@@ -4917,7 +4917,7 @@
         "Name": "高级岩浆炼磁铁",
         "Description": "R高级岩浆炼磁铁",
         "IconPath": "Assets/texpack/R岩浆磁铁",
-        "Type": 11,
+        "Type": 1,
         "GridIndex": 3509,
         "Time": 120,
         "Input": [
@@ -4997,7 +4997,7 @@
         "Name": "钛铁联产处理",
         "Description": "R钛铁联产处理",
         "IconPath": "Assets/texpack/R钛铁联产",
-        "Type": 11,
+        "Type": 1,
         "GridIndex": 3507,
         "Time": 60,
         "Input": [
@@ -5132,7 +5132,7 @@
             7019
         ],
         "OutCounts": [
-            4
+            2
         ],
         "Explicit": false,
         "Handcraft": true,
@@ -5329,7 +5329,7 @@
         "Name": "纳米塑料纤维",
         "Description": "I纳米塑料纤维",
         "IconPath": "",
-        "Type": 2,
+        "Type": 16,
         "GridIndex": 4103,
         "Time": 180,
         "Input": [
@@ -5489,7 +5489,7 @@
         ],
         "InCounts": [
             1,
-            6,
+            3,
             1
         ],
         "Output": [
@@ -6312,7 +6312,7 @@
         "Name": "转基因工具",
         "Description": "",
         "IconPath": "",
-        "Type": 16,
+        "Type": 14,
         "GridIndex": 4414,
         "Time": 5760,
         "Input": [
@@ -6344,7 +6344,7 @@
         "Name": "糖料作物种",
         "Description": "",
         "IconPath": "",
-        "Type": 16,
+        "Type": 14,
         "GridIndex": 4514,
         "Time": 5760,
         "Input": [
@@ -7415,7 +7415,7 @@
             7804
         ],
         "OutCounts": [
-            4
+            3
         ],
         "Explicit": true,
         "Handcraft": false,
@@ -7430,7 +7430,7 @@
         "GridIndex": 1306,
         "Time": 240,
         "Input": [
-            1303,
+            1301,
             1111,
             1115
         ],
@@ -7520,7 +7520,7 @@
         ],
         "InCounts": [
             4,
-            32,
+            16,
             16
         ],
         "Output": [
@@ -7763,7 +7763,7 @@
         "Description": "",
         "IconPath": "",
         "Type": 9,
-        "GridIndex": 1610,
+        "GridIndex": 1611,
         "Time": 1080,
         "Input": [
             6512,
@@ -7906,8 +7906,8 @@
         ],
         "InCounts": [
             4,
-            16,
-            9
+            8,
+            1
         ],
         "Output": [
             6206,
@@ -7972,7 +7972,7 @@
             1
         ],
         "Explicit": true,
-        "Handcraft": true,
+        "Handcraft": false,
         "NonProductive": false
     },
     {
@@ -8071,7 +8071,7 @@
         "Description": "I预制星舰模块",
         "IconPath": "",
         "Type": 9,
-        "GridIndex": 1710,
+        "GridIndex": 1610,
         "Time": 720,
         "Input": [
             1125,
@@ -8248,7 +8248,7 @@
         "Name": "高级钛矿冶炼",
         "Description": "R高级钛矿冶炼",
         "IconPath": "Assets/texpack/R岩浆钛",
-        "Type": 11,
+        "Type": 1,
         "GridIndex": 3607,
         "Time": 60,
         "Input": [
@@ -8764,11 +8764,11 @@
     {
         "ID": 843,
         "Name": "拆解生态穹顶",
-        "Description": "",
-        "IconPath": "",
+        "Description": "原成本返还材料",
+        "IconPath": "Assets/texpack/R拆解生态穹顶",
         "Type": 4,
         "GridIndex": 2509,
-        "Time": 30,
+        "Time": 6,
         "Input": [
             6264
         ],
@@ -8785,7 +8785,7 @@
             5,
             10
         ],
-        "Explicit": false,
+        "Explicit": true,
         "Handcraft": true,
         "NonProductive": false
     },

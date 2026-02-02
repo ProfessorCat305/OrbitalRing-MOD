@@ -271,8 +271,8 @@
     },
     {
         "Name": "离星燃料消耗描述",
-        "ZHCN": "为了突破行星的重力井，离开星球需要额外消耗背包中的化学燃料棒，消耗的数量会随着背包和手上的物品数量增加而增长，具体为物品数量/物品最大堆叠的总和乘以10。在卫星上离开星球消耗的化学燃料棒减免90%",
-        "ENUS": "In order to break through the planet's gravity well, leaving the planet requires additional consumption of chemical fuel rods in the backpack. The amount consumed will increase as the number of items in the backpack and hands increases, specifically the sum of the number of items/the maximum stack of items multiplied by 10.90% reduction in chemical fuel rods consumed when leaving the planet on the satellite"
+        "ZHCN": "为了突破行星的重力井，离开星球需要额外消耗背包中的化学燃料棒，消耗的数量会随着背包和手上的物品数量增加而增长，具体为每格物品数量除以物品最大堆叠的总和乘以10。在卫星上离开星球消耗的化学燃料棒减免90%",
+        "ENUS": "In order to break through the planet's gravity well, leaving the planet requires additional consumption of chemical fuel rods in the backpack. The amount consumed will increase as the number of items in the backpack and hands increases, Specifically, it is calculated by dividing the number of items in each slot by the total maximum stack size of the items, and then multiplying the result by 10. 90% reduction in chemical fuel rods consumed when leaving the planet on the satellite"
     },
     {
         "Name": "离星燃料消耗减少描述",
@@ -2305,8 +2305,8 @@
     },
     {
         "Name": "I低温工厂",
-        "ZHCN": "专为极寒星球设计的化工厂，只能建造于极寒星球上，它能完成在极寒环境下完成的化工反应，同时使用更好的材料制造的反应釜能内部反应更加充分。\n<color=\"#FD965ECC\">自带25%产能加成</color>\n只能建造在<color=\"#FD965ECC\">极寒星球</color>",
-        "ENUS": "The chemical plant, specifically designed for extremely cold planets, can only be constructed on such planets. It is capable of carrying out chemical reactions in extremely cold environments, and the use of better materials for the reaction vessels ensures more thorough internal reactions.\n<color=\"#FD965ECC\">Comes with a 25% production capacity bonus</color>\nIt can only be built on <color=\"#FD965ECC\">extremely cold planets</color>"
+        "ZHCN": "专为极寒星球设计的化工厂，只能建造于极寒星球上，它能完成在极寒环境下完成的化工反应，同时使用更好的材料制造的反应釜能内部反应更加充分。\n<color=\"#FD965ECC\">自带25%产能加成，可与增产剂叠加</color>\n只能建造在<color=\"#FD965ECC\">极寒星球</color>",
+        "ENUS": "The chemical plant, specifically designed for extremely cold planets, can only be constructed on such planets. It is capable of carrying out chemical reactions in extremely cold environments, and the use of better materials for the reaction vessels ensures more thorough internal reactions.\n<color=\"#FD965ECC\">Comes with a 25% production capacity bonus, Can be combined with yield-enhancing agents</color>\nIt can only be built on <color=\"#FD965ECC\">extremely cold planets</color>"
     },
     {
         "Name": "T低温工厂",

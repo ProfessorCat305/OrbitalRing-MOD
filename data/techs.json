@@ -826,7 +826,7 @@
         "IsHiddenTech": false,
         "PreItem": null,
         "Position": [
-            32.0,
+            28.0,
             -32.0
         ],
         "PreTechs": [
@@ -871,7 +871,7 @@
         "IsHiddenTech": false,
         "PreItem": null,
         "Position": [
-            36.0,
+            32.0,
             -32.0
         ],
         "PreTechs": [
@@ -879,12 +879,14 @@
         ],
         "PreTechsImplicit": [],
         "Items": [
-            6003
+            6001,
+            6002
         ],
         "ItemPoints": [
+            10,
             10
         ],
-        "HashNeeded": 216000,
+        "HashNeeded": 144000,
         "UnlockRecipes": [
             33,
             35
@@ -958,7 +960,7 @@
         "PreItem": null,
         "Position": [
             36.0,
-            -40.0
+            -36.0
         ],
         "PreTechs": [],
         "PreTechsImplicit": [
@@ -5368,7 +5370,7 @@
         "PreItem": null,
         "Position": [
             40.0,
-            -40.0
+            -36.0
         ],
         "PreTechs": [
             1134
