@@ -716,8 +716,8 @@
     },
     {
         "Name": "R速生苗培养",
-        "ZHCN": "通过在培养皿中观察种子的性状，发育情况，筛选出生长速度最快的速生林种，并培养为待移植的树苗。",
-        "ENUS": "By observing the characteristics and development of seeds in a petri dish, the fastest growing fast-growing forest species can be selected and cultivated as seedlings for transplantation."
+        "ZHCN": "通过在培养皿中观察种子的性状，发育情况，筛选出生长速度最快的速生林种，并培养为待移植的树苗。\n<color=\"#FD965ECC\">速生苗</color>将<color=\"#FD965ECC\">概率</color>产出",
+        "ENUS": "By observing the characteristics and development of seeds in a petri dish, the fastest growing fast-growing forest species can be selected and cultivated as seedlings for transplantation.\n<color=\"#FD965ECC\">Fast-growing seedlings</color> will <color=\"#FD965ECC\">have a probability</color> of being produced"
     },
     {
         "Name": "速生林种植",
@@ -1505,8 +1505,8 @@
     },
     {
         "Name": "R定向筛选培育",
-        "ZHCN": "通过人工筛选，使目标菌种在促进植物生长方向上快速进化，并批量培育。",
-        "ENUS": "Through manual screening, the target bacterial species can rapidly evolve in the direction of promoting plant growth and be mass-produced."
+        "ZHCN": "通过人工筛选，使目标菌种在促进植物生长方向上快速进化，并批量培育。\n<color=\"#FD965ECC\">激素生长菌群</color>将<color=\"#FD965ECC\">概率</color>产出",
+        "ENUS": "Through manual screening, the target bacterial species can rapidly evolve in the direction of promoting plant growth and be mass-produced.\n<color=\"#FD965ECC\">Hormone Growth Bacterial Community</color> will <color=\"#FD965ECC\">have a probability</color> of being produced"
     },
     {
         "Name": "共生菌核",
@@ -1525,8 +1525,8 @@
     },
     {
         "Name": "R辐射诱变迭代",
-        "ZHCN": "共生菌核的发展与扩张极为霸道，在面对其他菌种时，如果营养充足，它们会毫不犹豫地尝试吞噬，同化其他菌种，它甚至会利用放射性元素构成有机蛋白质团，对其他菌种的基因进行靶向攻击并诱导变异。",
-        "ENUS": "The development and expansion of symbiotic sclerotia are extremely dominant. When facing other bacterial species, if they have sufficient nutrition, they will not hesitate to try to engulf and assimilate them. They may even use radioactive elements to form organic protein clusters, target and attack the genes of other bacterial species, and induce mutations."
+        "ZHCN": "共生菌核的发展与扩张极为霸道，在面对其他菌种时，如果营养充足，它们会毫不犹豫地尝试吞噬，同化其他菌种，它甚至会利用放射性元素构成有机蛋白质团，对其他菌种的基因进行靶向攻击并诱导变异。\n<color=\"#FD965ECC\">共生菌核</color>将<color=\"#FD965ECC\">概率</color>产出",
+        "ENUS": "The development and expansion of symbiotic sclerotia are extremely dominant. When facing other bacterial species, if they have sufficient nutrition, they will not hesitate to try to engulf and assimilate them. They may even use radioactive elements to form organic protein clusters, target and attack the genes of other bacterial species, and induce mutations.\n<color=\"#FD965ECC\">Symbiotic Sclerotia</color> will <color=\"#FD965ECC\">have a probability</color> of being produced"
     },
     {
         "Name": "共生繁育",
@@ -2145,8 +2145,8 @@
     },
     {
         "Name": "R气云超精炼",
-        "ZHCN": "精细处理气云，分离出更多细微的富勒烯异形体成分。",
-        "ENUS": "Fine processing of gas clouds to separate more subtle fullerene shaped components."
+        "ZHCN": "精细处理气云，分离出更多细微的富勒烯异形体成分。\n<color=\"#FD965ECC\">富勒醇</color>与<color=\"#FD965ECC\">富勒烯内嵌银</color>将<color=\"#FD965ECC\">概率</color>产出",
+        "ENUS": "Fine processing of gas clouds to separate more subtle fullerene shaped components.\n<color=\"#FD965ECC\">Fullerol</color> and <color=\"#FD965ECC\">fullerene-embedded silver</color> will <color=\"#FD965ECC\">probably</color> be produced."
     },
     {
         "Name": "富勒烯研究",

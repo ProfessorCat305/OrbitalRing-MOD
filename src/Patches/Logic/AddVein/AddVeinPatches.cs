@@ -526,8 +526,12 @@ namespace ProjectOrbitalRing.Patches.Logic.AddVein
                     array2[3] = 0.8f;
                     array3[3] = 1.2f;
 
+                    array[5] = 8;
+                    array2[5] = 0.7f;
+                    array3[5] = 0.5f;
+
                     array[8] = 7;
-                    array2[8] = 0.4f;
+                    array2[8] = 0.8f;
                     array3[8] = 0.9f;
 
                     array[15] = 5;
@@ -544,7 +548,7 @@ namespace ProjectOrbitalRing.Patches.Logic.AddVein
 
                     array[19] = 12;
                     array2[19] = 1.0f;
-                    array3[19] = 1.0f;
+                    array3[19] = 1.2f;
                 }
             }
         }

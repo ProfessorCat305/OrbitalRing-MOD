@@ -55,6 +55,10 @@ namespace ProjectOrbitalRing.Patches.Logic.OrbitalRing
                 if (__instance.altitude < 16) {
                     __instance.altitude = 16;
                 }
+            } else if (__instance.handItem.ID == 2001 || __instance.handItem.ID == 2002 || __instance.handItem.ID == 2003 || __instance.handItem.ID == ProtoID.I空轨) {
+                if (__instance.altitude > 40) {
+                    __instance.altitude = 40;
+                }
             }
 
             int count = __instance.buildPreviews.Count;
@@ -367,14 +371,16 @@ namespace ProjectOrbitalRing.Patches.Logic.OrbitalRing
         [HarmonyPrefix]
         public static void DismantleFinallyPatch(PlanetFactory __instance, int objId, ref int protoId)
         {
-            if (protoId == ProtoID.I轨道连接组件 || protoId == ProtoID.I粒子加速轨道) {
-                Vector3 thisPos = __instance.entityPool[objId].pos;
-                (int positionIndex, int ringBeltIndex, int ringIndex) = CalculateRingPosMark(thisPos, __instance.planet.radius == 100f);
-                var planetOrbitalRingData = OrbitalStationManager.Instance.GetPlanetOrbitalRingData(__instance.planet.id);
-                if (protoId == ProtoID.I轨道连接组件) {
-                    planetOrbitalRingData.Rings[ringIndex].DelRing(positionIndex, ringBeltIndex, false);
-                } else if (protoId == ProtoID.I粒子加速轨道) {
-                    planetOrbitalRingData.Rings[ringIndex].DelRing(positionIndex, ringBeltIndex, true);
+            if (objId > 0) {
+                if (protoId == ProtoID.I轨道连接组件 || protoId == ProtoID.I粒子加速轨道) {
+                    Vector3 thisPos = __instance.entityPool[objId].pos;
+                    (int positionIndex, int ringBeltIndex, int ringIndex) = CalculateRingPosMark(thisPos, __instance.planet.radius == 100f);
+                    var planetOrbitalRingData = OrbitalStationManager.Instance.GetPlanetOrbitalRingData(__instance.planet.id);
+                    if (protoId == ProtoID.I轨道连接组件) {
+                        planetOrbitalRingData.Rings[ringIndex].DelRing(positionIndex, ringBeltIndex, false);
+                    } else if (protoId == ProtoID.I粒子加速轨道) {
+                        planetOrbitalRingData.Rings[ringIndex].DelRing(positionIndex, ringBeltIndex, true);
+                    }
                 }
             }
         }

@@ -72,7 +72,7 @@ namespace ProjectOrbitalRing.Utils
 
             RecipeProto.recipeExecuteData = new Dictionary<int, RecipeExecuteData>();
             foreach (RecipeProtoJson protoJson in GetJsonContent<RecipeProtoJson>("recipes")) {
-                if (!ProjectOrbitalRing.MoreMegaStructureCompatibility || !(protoJson.ID >= 530 && protoJson.ID <= 536)) {
+                if (!ProjectOrbitalRing.MoreMegaStructureCompatibility || !(protoJson.ID >= 530 && protoJson.ID <= 550)) {
                     protoJson.GridIndex = GetTableID(protoJson.GridIndex);
                     if (LDB.recipes.Exist(protoJson.ID)) {
                         protoJson.ToProto(LDB.recipes.Select(protoJson.ID));

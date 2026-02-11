@@ -7883,7 +7883,7 @@
     "Description": "I物流运输机",
     "IconPath": "Icons/ItemRecipe/logistic-drone",
     "GridIndex": 1211,
-    "StackSize": 20,
+    "StackSize": 30,
     "Type": 5,
     "PreTechOverride": 0,
     "DescFields": [

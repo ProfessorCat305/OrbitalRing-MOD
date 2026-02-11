@@ -18,6 +18,7 @@ namespace ProjectOrbitalRing.Patches.Logic.Farm
             { 409, 1 },
             { 518, 2 },
             { 550, 1 },
+            { 845, 1 },
             { 705, 1 },
             { 775, 1 },
             { 777, 2 },

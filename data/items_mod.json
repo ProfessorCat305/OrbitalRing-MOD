@@ -858,7 +858,7 @@
         "FuelType": 0,
         "HeatValue": 0,
         "ReactorInc": 0.0,
-        "IsFluid": false,
+        "IsFluid": true,
         "Productive": true,
         "SubID": 0,
         "MiningFrom": "",
@@ -2870,7 +2870,7 @@
         "GridIndex": 2711,
         "StackSize": 5,
         "Type": 6,
-        "PreTechOverride": 1,
+        "PreTechOverride": 0,
         "DescFields": [
             1,
             40
@@ -3104,7 +3104,7 @@
         "GridIndex": 1610,
         "StackSize": 50,
         "Type": 3,
-        "PreTechOverride": 1,
+        "PreTechOverride": 0,
         "DescFields": [
             1,
             40
@@ -3305,7 +3305,7 @@
         "GridIndex": 2609,
         "StackSize": 200,
         "Type": 7,
-        "PreTechOverride": 1,
+        "PreTechOverride": 0,
         "DescFields": [
             1,
             40

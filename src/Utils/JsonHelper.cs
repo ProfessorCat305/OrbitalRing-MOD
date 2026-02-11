@@ -236,6 +236,7 @@ namespace ProjectOrbitalRing.Utils
         public int ID { get; set; }
         public string Name { get; set; }
         public string IconPath { get; set; }
+        public string IconTag { get; set; }
         public string Desc { get; set; }
         public string Conclusion { get; set; }
         public bool IsHiddenTech { get; set; }
@@ -275,6 +276,7 @@ namespace ProjectOrbitalRing.Utils
                 LevelCoef1 = i.LevelCoef1,
                 LevelCoef2 = i.LevelCoef2,
                 IconPath = i.IconPath,
+                IconTag = i.IconTag,
                 IsLabTech = i.IsLabTech,
                 PreTechs = i.PreTechs,
                 PreTechsImplicit = i.PreTechsImplicit,
@@ -304,6 +306,7 @@ namespace ProjectOrbitalRing.Utils
             proto.PreItem = PreItem ?? Array.Empty<int>();
             proto.Published = Published;
             proto.IconPath = IconPath;
+            proto.IconTag = IconTag;
             proto.IsLabTech = IsLabTech;
             proto.PreTechs = PreTechs ?? Array.Empty<int>();
             proto.PreTechsImplicit = PreTechsImplicit ?? Array.Empty<int>();

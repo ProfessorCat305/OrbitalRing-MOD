@@ -130,6 +130,7 @@
     <Compile Include="src\Patches\Logic\BattleRelated\HPAdjust.cs" />
     <Compile Include="src\Patches\Logic\BattleRelated\InfiniteReloadAmmo.cs" />
     <Compile Include="src\Patches\Logic\BattleRelated\LocalPlasmaBanAntimatter.cs" />
+    <Compile Include="src\Patches\Logic\BattleRelated\StopCircleAround.cs" />
     <Compile Include="src\Patches\Logic\Build\BuildingModelIndexRecord.cs" />
     <Compile Include="src\Patches\Logic\CurvatureLogistics\CurvatureLogistics.cs" />
     <Compile Include="src\Patches\Logic\DisableLDBToolCachePatches.cs" />
@@ -140,8 +141,14 @@
     <Compile Include="src\Patches\Logic\FastStartOptionPatches.cs" />
     <Compile Include="src\Patches\Logic\FastTravelPatches.cs" />
     <Compile Include="src\Patches\Logic\FelTreeObjects.cs" />
+    <Compile Include="src\Patches\Logic\FixMoonRadius\CalcLocalGridSize.cs" />
+    <Compile Include="src\Patches\Logic\FixMoonRadius\CalcSegmentsAcross.cs" />
+    <Compile Include="src\Patches\Logic\FixMoonRadius\DetermineLongitudeSegmentCount.cs" />
     <Compile Include="src\Patches\Logic\FixMoonRadius\FixMoonRadius.cs" />
+    <Compile Include="src\Patches\Logic\FixMoonRadius\LUT Rework.cs" />
+    <Compile Include="src\Patches\Logic\FixMoonRadius\RadiusFixTranspiler.cs" />
     <Compile Include="src\Patches\Logic\FixMoonRadius\TrashSystemFix.cs" />
+    <Compile Include="src\Patches\Logic\FixMoonRadius\UIBuildingGrid.cs" />
     <Compile Include="src\Patches\Logic\FixOpeningAnimationError.cs" />
     <Compile Include="src\Patches\Logic\FuelRodPatches.cs" />
     <Compile Include="src\Patches\Logic\GeothermalStrengthPatches.cs" />
@@ -194,6 +201,7 @@
     <Compile Include="src\Patches\Logic\PlanetGasPatches.cs" />
     <Compile Include="src\Patches\Logic\PowerExchangerOutputInputPatch.cs" />
     <Compile Include="src\Patches\Logic\PowerGeneratorEnergyCapPatches.cs" />
+    <Compile Include="src\Patches\Logic\ProbabilisticProduct.cs" />
     <Compile Include="src\Patches\Logic\ProductOverflowPatches.cs" />
     <Compile Include="src\Patches\Logic\PumpWaterDoubleSpeed.cs" />
     <Compile Include="src\Patches\Logic\QuantumStorage\InternalFunctions.cs" />

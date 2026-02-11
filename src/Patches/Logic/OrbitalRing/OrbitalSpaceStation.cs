@@ -5,6 +5,9 @@ using static ProjectOrbitalRing.Patches.Logic.OrbitalRing.PosTool;
 using static ProjectOrbitalRing.Patches.Logic.OrbitalRing.EquatorRing;
 using ProjectOrbitalRing.Utils;
 using System.Reflection.Emit;
+using static ProjectOrbitalRing.ProjectOrbitalRing;
+using static DebugFactoryData;
+using static UIPlayerDeliveryPanel;
 
 namespace ProjectOrbitalRing.Patches.Logic.OrbitalRing
 {
@@ -163,5 +166,82 @@ namespace ProjectOrbitalRing.Patches.Logic.OrbitalRing
             }
             return true;
         }
+
+
+        [HarmonyPatch(typeof(PlanetTransport), nameof(PlanetTransport.GameTick_UpdateNeeds))]
+        [HarmonyTranspiler]
+        public static IEnumerable<CodeInstruction> PlanetTransport_GameTick_UpdateNeeds_Transpiler(IEnumerable<CodeInstruction> instructions,
+            ILGenerator generator)
+        {
+            var matcher = new CodeMatcher(instructions, generator);
+
+            matcher.MatchForward(false,
+                new CodeMatch(OpCodes.Callvirt, AccessTools.Method(typeof(StationComponent), nameof(StationComponent.UpdateNeeds)))
+                );
+
+            matcher.Advance(3).InsertAndAdvance(
+                new CodeInstruction(OpCodes.Ldarg_0),
+                new CodeInstruction(OpCodes.Ldfld, AccessTools.Field(typeof(PlanetTransport), nameof(PlanetTransport.factory))),
+                new CodeInstruction(OpCodes.Ldloc_1),
+                new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(OrbitalSpaceStation), nameof(SyncWarpDrive)))
+            );
+            return matcher.InstructionEnumeration();
+        }
+
+        [HarmonyPatch(typeof(GameLogic), nameof(GameLogic._station_input_parallel))]
+        [HarmonyTranspiler]
+        public static IEnumerable<CodeInstruction> GameLogic_station_input_parallel_Transpiler(IEnumerable<CodeInstruction> instructions,
+            ILGenerator generator)
+        {
+            var matcher = new CodeMatcher(instructions, generator);
+
+            matcher.MatchForward(false, 
+                new CodeMatch(OpCodes.Ldfld, AccessTools.Field(typeof(GameLogic), nameof(GameLogic.factories)))
+                );
+
+            object factory = matcher.Advance(3).Operand;
+
+            matcher.MatchForward(false,
+                new CodeMatch(OpCodes.Callvirt, AccessTools.Method(typeof(StationComponent), nameof(StationComponent.UpdateNeeds)))
+                );
+
+            object stationPoolId = matcher.Advance(-5).Operand;
+
+            matcher.Advance(6).InsertAndAdvance(
+                new CodeInstruction(OpCodes.Ldloc_S, factory),
+                new CodeInstruction(OpCodes.Ldloc_S, stationPoolId),
+                new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(OrbitalSpaceStation), nameof(SyncWarpDrive)))
+            );
+            //matcher.LogInstructionEnumeration();
+            return matcher.InstructionEnumeration();
+        }
+
+        private static void SyncWarpDrive(PlanetFactory factory, int stationPoolId)
+        {
+            ref StationComponent station = ref factory.transport.stationPool[stationPoolId];
+            if (factory.entityPool[station.entityId].protoId != ProtoID.I太空电梯) return;
+            var planetOrbitalRingData = OrbitalStationManager.Instance.GetPlanetOrbitalRingData(factory.planet.id);
+            if (planetOrbitalRingData == null) return;
+            for (int i = 0; i < planetOrbitalRingData.Rings.Count; i++) {
+                EquatorRing ring = planetOrbitalRingData.Rings[i];
+                for (int j = 0; j < ring.Capacity; j++) {
+                    var pair = ring.GetPair(j);
+                    if (pair.elevatorPoolId == station.id) {
+                        if (pair.stationType == StationType.Station) {
+                            StationComponent stellarStation = factory.transport.stationPool[pair.OrbitalStationPoolId];
+                            if (factory.entityPool[stellarStation.entityId].protoId == ProtoID.I深空物流港) {
+                                stellarStation.warperCount += station.warperCount;
+                                station.warperCount = 0;
+                                if (stellarStation.warperCount < stellarStation.warperMaxCount) {
+                                    station.needs[5] = 1210;
+                                }
+                                station.warperCount = 0;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
     }
 }

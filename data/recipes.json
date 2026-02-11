@@ -928,7 +928,7 @@
     {
         "ID": 36,
         "Name": "粒子宽带",
-        "Description": "",
+        "Description": "I粒子宽带",
         "IconPath": "",
         "Type": 4,
         "GridIndex": 1310,
@@ -941,7 +941,7 @@
         "InCounts": [
             1,
             8,
-            1
+            2
         ],
         "Output": [
             1402
@@ -949,7 +949,7 @@
         "OutCounts": [
             1
         ],
-        "Explicit": false,
+        "Explicit": true,
         "Handcraft": false,
         "NonProductive": false
     },
@@ -2619,7 +2619,7 @@
     {
         "ID": 98,
         "Name": "电磁涡轮",
-        "Description": "",
+        "Description": "I电磁涡轮",
         "IconPath": "",
         "Type": 4,
         "GridIndex": 1103,
@@ -2638,7 +2638,7 @@
         "OutCounts": [
             1
         ],
-        "Explicit": false,
+        "Explicit": true,
         "Handcraft": true,
         "NonProductive": false
     },
@@ -4919,20 +4919,20 @@
         "IconPath": "Assets/texpack/R岩浆磁铁",
         "Type": 1,
         "GridIndex": 3509,
-        "Time": 120,
+        "Time": 60,
         "Input": [
             6203,
             6251
         ],
         "InCounts": [
             1,
-            12
+            6
         ],
         "Output": [
             1102
         ],
         "OutCounts": [
-            12
+            6
         ],
         "Explicit": true,
         "Handcraft": false,
@@ -5447,7 +5447,7 @@
         "IconPath": "Assets/texpack/R气云超精炼",
         "Type": 2,
         "GridIndex": 4207,
-        "Time": 3600,
+        "Time": 360,
         "Input": [
             6519,
             1123,
@@ -5619,7 +5619,7 @@
         "IconPath": "",
         "Type": 14,
         "GridIndex": 4214,
-        "Time": 5400,
+        "Time": 3600,
         "Input": [
             7021,
             7020,
@@ -5638,7 +5638,7 @@
             7022
         ],
         "OutCounts": [
-            1
+            4
         ],
         "Explicit": true,
         "Handcraft": false,
@@ -5679,7 +5679,7 @@
     {
         "ID": 519,
         "Name": "主板",
-        "Description": "",
+        "Description": "I主板",
         "IconPath": "",
         "Type": 4,
         "GridIndex": 1305,
@@ -5698,7 +5698,7 @@
         "OutCounts": [
             1
         ],
-        "Explicit": false,
+        "Explicit": true,
         "Handcraft": true,
         "NonProductive": false
     },
@@ -6061,7 +6061,7 @@
         "Description": "R有机晶体（原始）",
         "IconPath": "Icons/ItemRecipe/crystal-rubber-lv0",
         "Type": 14,
-        "GridIndex": 4612,
+        "GridIndex": 0,
         "Time": 720,
         "Input": [
             7015,
@@ -6314,7 +6314,7 @@
         "IconPath": "",
         "Type": 14,
         "GridIndex": 4414,
-        "Time": 5760,
+        "Time": 720,
         "Input": [
             7020,
             7021,
@@ -6346,7 +6346,7 @@
         "IconPath": "",
         "Type": 14,
         "GridIndex": 4514,
-        "Time": 5760,
+        "Time": 360,
         "Input": [
             7021,
             7611,
@@ -6362,7 +6362,7 @@
             7611
         ],
         "OutCounts": [
-            1,
+            2,
             1
         ],
         "Explicit": false,
@@ -6437,7 +6437,7 @@
         "InCounts": [
             1,
             2,
-            8
+            1
         ],
         "Output": [
             7015
@@ -6946,7 +6946,7 @@
         "IconPath": "",
         "Type": 14,
         "GridIndex": 4112,
-        "Time": 2880,
+        "Time": 1440,
         "Input": [
             1031,
             7020,
@@ -6961,7 +6961,7 @@
             6208
         ],
         "OutCounts": [
-            2
+            4
         ],
         "Explicit": true,
         "Handcraft": false,
@@ -7234,7 +7234,7 @@
         "IconPath": "",
         "Type": 14,
         "GridIndex": 4111,
-        "Time": 3600,
+        "Time": 1800,
         "Input": [
             6212,
             6208,
@@ -7251,7 +7251,7 @@
             6212
         ],
         "OutCounts": [
-            2
+            3
         ],
         "Explicit": true,
         "Handcraft": false,
@@ -7648,7 +7648,7 @@
     {
         "ID": 804,
         "Name": "电磁矩阵",
-        "Description": "",
+        "Description": "I电磁矩阵",
         "IconPath": "",
         "Type": 15,
         "GridIndex": 1805,
@@ -7671,7 +7671,7 @@
         "OutCounts": [
             1
         ],
-        "Explicit": false,
+        "Explicit": true,
         "Handcraft": false,
         "NonProductive": false
     },
@@ -7724,7 +7724,7 @@
             10
         ],
         "Explicit": false,
-        "Handcraft": false,
+        "Handcraft": true,
         "NonProductive": false
     },
     {
@@ -8816,5 +8816,37 @@
         "Explicit": false,
         "Handcraft": true,
         "NonProductive": false
+    },
+    {
+        "ID": 845,
+        "Name": "有机晶体",
+        "Description": "R有机晶体（原始）",
+        "IconPath": "Icons/ItemRecipe/crystal-rubber-lv0",
+        "Type": 14,
+        "GridIndex": 4612,
+        "Time": 720,
+        "Input": [
+            7015,
+            1030,
+            1031,
+            7101
+        ],
+        "InCounts": [
+            1,
+            4,
+            8,
+            3
+        ],
+        "Output": [
+            1117,
+            7101
+        ],
+        "OutCounts": [
+            2,
+            3
+        ],
+        "Explicit": true,
+        "Handcraft": false,
+        "NonProductive": true
     }
 ]

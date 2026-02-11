@@ -279,12 +279,12 @@ namespace ProjectOrbitalRing.Patches.Logic
                             if (__instance.portsGizmos[__instance.portsGizmos.Length - 1 - i].parent != null)
                             {
                                 instantiatedGameObject.transform.SetParent(__instance.portsGizmos[__instance.portsGizmos.Length - 1 - i].parent);
-                                Debug.LogFormat("scppppppppppppppppppppppppp114514 has parent");
+                                //Debug.LogFormat("scppppppppppppppppppppppppp114514 has parent");
                             }
                             newPortsGizmos[__instance.portsGizmos.Length + i] = instantiatedGameObject.transform;
                         }
                         __instance.portsGizmos = newPortsGizmos;
-                        Debug.LogFormat("scppppppppppppppppppppppppp114514 portsGizmos {0}, array2 {1}", __instance.portsGizmos.Length, array2.Length);
+                        //Debug.LogFormat("scppppppppppppppppppppppppp114514 portsGizmos {0}, array2 {1}", __instance.portsGizmos.Length, array2.Length);
                     }
                     for (int j = 0; j < array2.Length; j++)
                     {
@@ -419,6 +419,29 @@ namespace ProjectOrbitalRing.Patches.Logic
                 }
             }
             return true;
+        }
+
+        // 修复空轨可以通过吸附建造在16层以下的问题
+        [HarmonyPostfix]
+        [HarmonyPatch(typeof(BuildTool_Path), "CheckBuildConditions")]
+        public static void BuildTool_Path_CheckBuildConditionsPrePatch(BuildTool_Path __instance, ref bool __result)
+        {
+            if (__result == false) return;
+
+            int count = __instance.buildPreviews.Count;
+            for (int i = 0; i < count; i++) {
+                BuildPreview buildPreview = __instance.buildPreviews[i];
+                if (buildPreview.item.ID == ProtoID.I空轨) {
+                    if (__instance.controller.cmd.stage == 0) {
+                        continue;
+                    }
+                    float num11 = 16 * 1.3333333f + __instance.planet.realRadius;
+                    if (buildPreview.lpos.sqrMagnitude < num11 * num11) {
+                        buildPreview.condition = (EBuildCondition)95;
+                        __result = false;
+                    }
+                }
+            }
         }
 
         /*

@@ -305,9 +305,9 @@
     "ENUS": "Research Speed +10%"
   },
   {
-    "Name": "生态穹顶执行配方自动增产",
-    "ZHCN": "生态穹顶执行配方自动增产",
-    "ENUS": "Ecological dome executes formula to automatically increase production"
+    "Name": "生态温室执行配方自动增产",
+    "ZHCN": "生态温室执行配方自动增产",
+    "ENUS": "Ecological greenhouses executes formula to automatically increase production"
   },
   {
     "Name": "可以从树木采集种子和本土菌种",

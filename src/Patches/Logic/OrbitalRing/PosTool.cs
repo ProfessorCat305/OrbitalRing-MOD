@@ -179,9 +179,9 @@ namespace ProjectOrbitalRing.Patches.Logic.OrbitalRing
                         targetBorder = -3 * 0.36;
                     }
                     if (islimitSide == 2) {
-                        targetBorder = Math.Sign(targetBorder) * 3 * 0.36;
+                        targetBorder = 3 * 0.36;
                     } else if (islimitSide == 1) {
-                        targetBorder = Math.Sign(targetBorder) * -3 * 0.36;
+                        targetBorder = -3 * 0.36;
                     }
                 }
             } else {

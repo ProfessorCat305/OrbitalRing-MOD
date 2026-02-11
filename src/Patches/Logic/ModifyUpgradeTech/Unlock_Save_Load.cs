@@ -682,6 +682,8 @@ namespace ProjectOrbitalRing.Patches.Logic.ModifyUpgradeTech
                 }
                 recipeProto.ResultCounts[0] = AntiMatterOutCounts;
                 recipeProto.ResultCounts[1] = AntiMatterOutCounts;
+                RecipeProto.recipeExecuteData[74].productCounts[0] = AntiMatterOutCounts;
+                RecipeProto.recipeExecuteData[74].productCounts[1] = AntiMatterOutCounts;
             }
         }
 

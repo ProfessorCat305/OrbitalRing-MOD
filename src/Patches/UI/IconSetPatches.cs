@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using HarmonyLib;
 using UnityEngine;
+using UnityEngine.UI.Youthcat;
 
 // ReSharper disable InconsistentNaming
 
@@ -61,6 +62,7 @@ namespace ProjectOrbitalRing.Patches.UI {
             __instance.spriteIndexMap = new Dictionary<Sprite, uint>();
             __instance.texture.SetPixels(new Color[4000000]);
             __instance.texture.Apply();
+            List<TextIconMapping.IconConfig> list = new List<TextIconMapping.IconConfig>();
             uint num1 = 0;
             ItemProto[] dataArray1 = LDB.items.dataArray;
             int length1 = dataArray1.Length;
@@ -182,6 +184,12 @@ namespace ProjectOrbitalRing.Patches.UI {
                         }
                         __instance.spriteIndexMap[iconSprite] = num11;
                     }
+                    if (!string.IsNullOrEmpty(dataArray4[index].IconTag)) {
+                        int num24 = (int)(num11 % 25U);
+                        int num25 = (int)(num11 / 25U);
+                        TextIconMapping.IconConfig iconConfig4 = new TextIconMapping.IconConfig(dataArray4[index].name, dataArray4[index].IconTag, new Vector2((float)num24 / 25f, (float)num25 / 25f), new Vector2((float)(num24 + 1) / 25f, (float)(num25 + 1) / 25f), new Vector2(24f, 24f), true);
+                        list.Add(iconConfig4);
+                    }
                 }
                 __instance.techIconIndex[dataArray4[index].ID] = num11;
                 __instance.signalIconIndex[dataArray4[index].ID + 40000] = num11;
@@ -237,6 +245,10 @@ namespace ProjectOrbitalRing.Patches.UI {
             __instance.loaded = true;
             Debug.Log($"添加图标到图集，共计添加{num1}（需要<=625）");
             Debug.Log($"Icon set generated. Time cost: {highStopwatch.duration:0.000} s");
+            TextIconMapping generalIconMapping = Configs.builtin.generalIconMapping;
+            generalIconMapping.iconMappings = list.ToArray();
+            generalIconMapping.Refresh();
+            Shader.SetGlobalTexture("_Global_IconSet_Tex", __instance.texture);
             return false;
         }
     }
