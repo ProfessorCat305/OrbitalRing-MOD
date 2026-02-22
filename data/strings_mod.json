@@ -21,8 +21,8 @@
   },
   {
     "Name": "OrbitalRingLoadMessage",
-    "ZHCN": "⚠警告，本MOD为以创世之书为基础修改的MOD，还未完成，若您不以测试为目标，请立刻退出。\n若您在主界面中看到了创世之书的图标、无红字报错，且科技树与原版不同，说明MOD已成功加载，图标还未替换完成，看到创世之书是正常现象。\n请注意，本MOD修改了大量原版内容，因此禁用了上传银河系的功能。\n如果您在游玩MOD时遇到了任何问题，或者有宝贵的意见或建议，欢迎加入MOD交流群",
-    "ENUS": "⚠Warning, this MOD is modified based on the Book of Genesis and is not yet completed. If you do not intend to test it, please exit immediately. If you see the icon of the Book of Genesis in the main interface, with no red error message, and the technology tree is different from the original version, it means that the MOD has been successfully loaded and the icon has not been replaced yet. It is normal to see the Book of Genesis. \nPlease note that this mode modifies a lot of content, and you cannot upload the data the galaxy. \nIf have any issues or ideas about the mod, please join our community on Discord."
+    "ZHCN": "⚠警告，本MOD为以创世之书代码为基础修改的MOD，还在内测，若您不以测试为目标，请立刻退出。\n若您在主界面中看到了星环的图标、无红字报错，且科技树与原版不同，说明MOD已成功加载。\n请注意，本MOD修改了大量原版内容，因此禁用了上传银河系的功能。\n如果您在游玩MOD时遇到了任何问题，或者有宝贵的意见或建议，欢迎加入MOD交流群",
+    "ENUS": "⚠Warning, this MOD is modified based on the Book of Genesis code and is still in internal testing. If you do not intend to test it, please exit immediately. If you see the icon of the OrbitalRing in the main interface, with no red error message, and the technology tree is different from the original version, it means that the MOD has been successfully loaded. \nPlease note that this mode modifies a lot of content, and you cannot upload the data the galaxy. \nIf have any issues or ideas about the mod, please join our community on Discord."
   },
   {
     "Name": "BepinExVersionNotMatch",

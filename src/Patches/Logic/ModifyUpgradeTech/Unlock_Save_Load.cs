@@ -135,6 +135,12 @@ namespace ProjectOrbitalRing.Patches.Logic.ModifyUpgradeTech
             SpeedOfLightModification(_techId);
         }
 
+        private static void SyncRecipeExecuteData(RecipeProto recipeProto)
+        {
+            RecipeExecuteData recipeExecuteData = new RecipeExecuteData(recipeProto.Items, recipeProto.ItemCounts, recipeProto.Results, recipeProto.ResultCounts, recipeProto.TimeSpend * 10000, recipeProto.TimeSpend * 10000, recipeProto.productive);
+            RecipeProto.recipeExecuteData[recipeProto.ID] = recipeExecuteData;
+        }
+
         static void UAVHPAndfiringRateUpgrade(int level)
         {
             ItemProto itemProto;
@@ -144,12 +150,15 @@ namespace ProjectOrbitalRing.Patches.Logic.ModifyUpgradeTech
                 recipeProto = LDB.recipes.Select(147);
                 recipeProto.Items = new int[] { 1103, 1407, 1301, 1401 };
                 recipeProto.Type = ERecipeType.None;
+                SyncRecipeExecuteData(recipeProto);
                 recipeProto = LDB.recipes.Select(148);
                 recipeProto.Items = new int[] { 5101, 1405, 1404, 6256 };
                 recipeProto.Type = ERecipeType.None;
+                SyncRecipeExecuteData(recipeProto);
                 recipeProto = LDB.recipes.Select(149);
                 recipeProto.Items = new int[] { 5101, 1303, 1404, 6256 };
                 recipeProto.Type = ERecipeType.None;
+                SyncRecipeExecuteData(recipeProto);
 
                 itemProto = LDB.items.Select(5102);
                 itemProto.Name = "攻击无人机";
@@ -164,12 +173,15 @@ namespace ProjectOrbitalRing.Patches.Logic.ModifyUpgradeTech
                 recipeProto = LDB.recipes.Select(147);
                 recipeProto.Items = new int[] { 1103, 1407, 1303, 1401 };
                 recipeProto.Type = ERecipeType.None;
+                SyncRecipeExecuteData(recipeProto);
                 recipeProto = LDB.recipes.Select(148);
                 recipeProto.Items = new int[] { 5101, 1405, 1404, 1113 };
                 recipeProto.Type = ERecipeType.None;
+                SyncRecipeExecuteData(recipeProto);
                 recipeProto = LDB.recipes.Select(149);
                 recipeProto.Items = new int[] { 5101, 1303, 1404, 1113 };
                 recipeProto.Type = ERecipeType.None;
+                SyncRecipeExecuteData(recipeProto);
 
                 itemProto = LDB.items.Select(5102);
                 itemProto.Name = "攻击无人机A型";
@@ -184,6 +196,7 @@ namespace ProjectOrbitalRing.Patches.Logic.ModifyUpgradeTech
                 recipeProto = LDB.recipes.Select(147);
                 recipeProto.Items = new int[] { 1107, 1407, 1303, 1126 };
                 recipeProto.Type = ERecipeType.None;
+                SyncRecipeExecuteData(recipeProto);
 
                 itemProto = LDB.items.Select(5102);
                 itemProto.Name = "攻击无人机B型";
@@ -198,12 +211,15 @@ namespace ProjectOrbitalRing.Patches.Logic.ModifyUpgradeTech
                 recipeProto = LDB.recipes.Select(147);
                 recipeProto.Items = new int[] { 6225, 1407, 1303, 1126 };
                 recipeProto.Type = ERecipeType.None;
+                SyncRecipeExecuteData(recipeProto);
                 recipeProto = LDB.recipes.Select(148);
                 recipeProto.Items = new int[] { 5101, 1405, 1206, 1113 };
                 recipeProto.Type = ERecipeType.None;
+                SyncRecipeExecuteData(recipeProto);
                 recipeProto = LDB.recipes.Select(149);
                 recipeProto.Items = new int[] { 5101, 1303, 1206, 1113 };
                 recipeProto.Type = ERecipeType.None;
+                SyncRecipeExecuteData(recipeProto);
 
                 itemProto = LDB.items.Select(5102);
                 itemProto.Name = "攻击无人机C型";
@@ -218,12 +234,15 @@ namespace ProjectOrbitalRing.Patches.Logic.ModifyUpgradeTech
                 recipeProto = LDB.recipes.Select(147);
                 recipeProto.Items = new int[] { 6225, 1407, 1303, 1126 };
                 recipeProto.Type = ERecipeType.Assemble;
+                SyncRecipeExecuteData(recipeProto);
                 recipeProto = LDB.recipes.Select(148);
                 recipeProto.Items = new int[] { 5101, 1405, 1206, 1113 };
                 recipeProto.Type = ERecipeType.Assemble;
+                SyncRecipeExecuteData(recipeProto);
                 recipeProto = LDB.recipes.Select(149);
                 recipeProto.Items = new int[] { 5101, 1303, 1206, 1113 };
                 recipeProto.Type = ERecipeType.Assemble;
+                SyncRecipeExecuteData(recipeProto);
 
                 itemProto = LDB.items.Select(5102);
                 itemProto.Name = "攻击无人机D型";
@@ -238,12 +257,15 @@ namespace ProjectOrbitalRing.Patches.Logic.ModifyUpgradeTech
                 recipeProto = LDB.recipes.Select(147);
                 recipeProto.Items = new int[] { 6225, 1407, 1303, 1126 };
                 recipeProto.Type = ERecipeType.Assemble;
+                SyncRecipeExecuteData(recipeProto);
                 recipeProto = LDB.recipes.Select(148);
                 recipeProto.Items = new int[] { 5101, 1405, 6243, 1118 };
                 recipeProto.Type = ERecipeType.Assemble;
+                SyncRecipeExecuteData(recipeProto);
                 recipeProto = LDB.recipes.Select(149);
                 recipeProto.Items = new int[] { 5101, 1303, 6243, 1118 };
                 recipeProto.Type = ERecipeType.Assemble;
+                SyncRecipeExecuteData(recipeProto);
 
                 itemProto = LDB.items.Select(5102);
                 itemProto.Name = "攻击无人机E型";

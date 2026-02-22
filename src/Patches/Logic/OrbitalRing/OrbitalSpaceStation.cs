@@ -8,6 +8,7 @@ using System.Reflection.Emit;
 using static ProjectOrbitalRing.ProjectOrbitalRing;
 using static DebugFactoryData;
 using static UIPlayerDeliveryPanel;
+using static GalacticScale.PatchOnUIGalaxySelect;
 
 namespace ProjectOrbitalRing.Patches.Logic.OrbitalRing
 {
@@ -243,5 +244,38 @@ namespace ProjectOrbitalRing.Patches.Logic.OrbitalRing
             }
         }
 
+        // 拆除深空物流港时如果有深空货舰未取出，需要拦截原函数添加深空货舰到背包而不是运输船
+        private static void TakeBackDeepSpaceCargoShip(PlanetTransport transport, StationComponent station, Player player)
+        {
+            ItemProto itemProto2 = LDB.items.Select((int)transport.factory.entityPool[station.entityId].protoId);
+            if (itemProto2.ID == ProtoID.I深空物流港) {
+                if (station.idleShipCount > 0) {
+                    int upCount3 = player.TryAddItemToPackage(6230, station.idleShipCount, 0, true, station.entityId, false);
+                    UIItemup.Up(6230, upCount3);
+                    station.idleShipCount = 0;
+                }
+            }
+        }
+
+        [HarmonyPatch(typeof(PlanetTransport), nameof(PlanetTransport.TakeBackItems_Station))]
+        [HarmonyTranspiler]
+        public static IEnumerable<CodeInstruction> PlanetTransport_TakeBackItems_Station_Transpiler(IEnumerable<CodeInstruction> instructions,
+            ILGenerator generator)
+        {
+            var matcher = new CodeMatcher(instructions, generator);
+
+            matcher.MatchForward(false,
+                new CodeMatch(OpCodes.Ldc_I4, 5002)
+                );
+
+            matcher.Advance(-1).InsertAndAdvance(
+                new CodeInstruction(OpCodes.Ldarg_0),
+                new CodeInstruction(OpCodes.Ldloc_0),
+                new CodeInstruction(OpCodes.Ldarg_1),
+                new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(OrbitalSpaceStation), nameof(TakeBackDeepSpaceCargoShip)))
+            );
+            //matcher.LogInstructionEnumeration();
+            return matcher.InstructionEnumeration();
+        }
     }
 }

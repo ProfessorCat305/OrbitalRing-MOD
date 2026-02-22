@@ -235,6 +235,7 @@ namespace ProjectOrbitalRing.Patches.Logic.OrbitalRing
             }
         }
 
+        // 更新了recipeExecuteData后，修改recipeExecuteData会导致所有使用recipeExecuteData的配方全都被修改，所以把配方改为30倍堆叠生产的此函数暂时废弃
         public static void CheckRecipeCount(ref AssemblerComponent __instance, int ProductionMultiplier, bool isMoon)
         {
             ProductionMultiplier = isMoon ? (ProductionMultiplier / 2) : ProductionMultiplier;

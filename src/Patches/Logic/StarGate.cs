@@ -404,7 +404,7 @@ namespace ProjectOrbitalRing.Patches.Logic
             {
                 int count = 0;
                 count = r.ReadInt32(); // 先读取元素数量
-                for (int i = 1; i < count; i++)
+                for (int i = 0; i < count; i++)
                 {
                     starGateList.Add(r.ReadInt32()); // 逐个读取元素
                 }
