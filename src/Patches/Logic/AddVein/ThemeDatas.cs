@@ -73,7 +73,7 @@ namespace ProjectOrbitalRing.Patches.Logic.AddVein
             },
             {
                 9, // 熔岩
-                new ThemeData(new[] { 0, 1, 2, 3, 5, 15 }, new[] { 2, 2, 3, 6, 0, 22 }, new[] { 0.2f, 0.2f, 0.3f, 0.4f, 0, 1.0f }, new[] { 0.6f, 0.6f, 0.6f, 0.7f, 0, 1.0f },
+                new ThemeData(new[] { 0, 1, 2, 3, 5, 15 }, new[] { 2, 2, 4, 6, 0, 22 }, new[] { 0.2f, 0.2f, 0.6f, 0.9f, 0, 1.0f }, new[] { 0.6f, 0.6f, 0.8f, 0.9f, 0, 1.0f },
                     new[] { 0, 1, }, new[]
                 {
                     0.0f, 0.5f, 0.8f, 0.3f,

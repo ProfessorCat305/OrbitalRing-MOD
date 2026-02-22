@@ -115,6 +115,7 @@ namespace ProjectOrbitalRing.Patches.Logic.ModifyUpgradeTech
             string conclusion = "能量回路结果";
             string iconPath = "Icons/Tech/2506";
             TechProto NewTechProto = AddOneUpgradeTech(id, name, description, conclusion, iconPath);
+            NewTechProto.HashNeeded = 1800000;
             NewTechProto.UnlockFunctions = new int[] { 2 };
             NewTechProto.UnlockValues = new double[] { 1600000 };
         }

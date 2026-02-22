@@ -56,6 +56,7 @@ namespace ProjectOrbitalRing.Utils
             CopyModelProto(455, ProtoID.M生态温室, Color.HSVToRGB(0.4174f, 0.742f, 0.9686f));
             CopyModelProto(64, ProtoID.M低温工厂, new Color(1f, 1f, 1f));
             CopyModelProto(432, ProtoID.M朗基努斯之枪, Color.red);
+            CopyModelProto(403, ProtoID.M欺骗型广播塔, new Color(0f, 0f, 0f));
 
             //AddHyperRelayReactor();
             ChangeAccumulatorColor();

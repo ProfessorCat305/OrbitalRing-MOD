@@ -48,8 +48,8 @@ namespace ProjectOrbitalRing.Patches.Logic.OrbitalRing
                             return false;
                         } else if (pair.stationType == StationType.SynapticLathe && pair.OrbitalCorePoolId == __instance.id) {
                             if (power == 1) {
-                                
-                                
+
+
                                 var storage = ring.GetElevatorStorage(j);
                                 for (int k = 0; k < storage.Length; k++) {
                                     int itemId = storage[k].itemId;
@@ -68,6 +68,12 @@ namespace ProjectOrbitalRing.Patches.Logic.OrbitalRing
                                         }
                                         return false;
                                     }
+                                }
+                            }
+                        } else if (pair.stationType == StationType.BanDFTinderDispatch && pair.OrbitalCorePoolId == __instance.id) {
+                            if (power == 1) {
+                                if (!BanDFTinderDispatchFromHive.DFTinderShouldNotDispatchStarId.Contains(factory.planet.star.id)) {
+                                    BanDFTinderDispatchFromHive.DFTinderShouldNotDispatchStarId.Add(factory.planet.star.id);
                                 }
                             }
                         }

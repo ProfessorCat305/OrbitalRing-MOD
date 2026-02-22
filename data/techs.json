@@ -1076,7 +1076,8 @@
         ],
         "PreTechs": [],
         "PreTechsImplicit": [
-            1312
+            1312,
+            1203
         ],
         "Items": [
             6279,
@@ -1343,7 +1344,9 @@
         "PreTechs": [
             1922
         ],
-        "PreTechsImplicit": [],
+        "PreTechsImplicit": [
+            1203
+        ],
         "Items": [
             6279,
             6004
@@ -5074,7 +5077,8 @@
             772,
             771,
             709,
-            802
+            802,
+            846
         ],
         "UnlockFunctions": [],
         "UnlockValues": [],
@@ -6101,7 +6105,7 @@
         "IconPath": "Assets/texpack/T太空损管包",
         "IconTag": "ttksgb",
         "Desc": "T太空损管系统描述",
-        "Conclusion": "I太空损管系统描述",
+        "Conclusion": "T太空损管系统描述",
         "IsHiddenTech": false,
         "PreItem": null,
         "Position": [
@@ -6902,7 +6906,7 @@
         ],
         "PreTechsImplicit": [],
         "Items": [
-            6228
+            6532
         ],
         "ItemPoints": [
             1

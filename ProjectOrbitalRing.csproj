@@ -126,6 +126,7 @@
     <Compile Include="src\Patches\Logic\AddVein\ThemeDatas.cs" />
     <Compile Include="src\Patches\Logic\AddVein\UIDetailPatches.cs" />
     <Compile Include="src\Patches\Logic\AddVein\VeinAnimDataPatches.cs" />
+    <Compile Include="src\Patches\Logic\BanDFTinderDispatchFromHive.cs" />
     <Compile Include="src\Patches\Logic\BattleRelated\DisturbWavePatch.cs" />
     <Compile Include="src\Patches\Logic\BattleRelated\HPAdjust.cs" />
     <Compile Include="src\Patches\Logic\BattleRelated\InfiniteReloadAmmo.cs" />

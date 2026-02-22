@@ -543,8 +543,8 @@ namespace ProjectOrbitalRing.Patches.Logic.AddVein
                     array3[17] = 0.5f;
 
                     array[18] = 5;
-                    array2[18] = 0.3f;
-                    array3[18] = 0.5f;
+                    array2[18] = 0.4f;
+                    array3[18] = 0.6f;
 
                     array[19] = 12;
                     array2[19] = 1.0f;

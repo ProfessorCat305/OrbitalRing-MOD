@@ -72,6 +72,12 @@ namespace ProjectOrbitalRing.Compatibility
 
                 switch (recipeProto.ID)
                 {
+                    case 533: //量子隧穿
+                        recipeProto.Items[0] = 1206; // 粒子容器
+                        recipeProto.Items[1] = 1404; // 光子合并器
+                        recipeProto.ItemCounts[1] = 1;
+                        break;
+
                     case 534: //谐振盘
                         recipeProto.Items[2] = 7805; // 量子芯片换成量子计算机
                         break;

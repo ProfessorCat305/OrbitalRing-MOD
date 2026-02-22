@@ -397,13 +397,23 @@ namespace ProjectOrbitalRing.Patches.Logic.ModifyUpgradeTech
                         techProto.IsLabTech = true;
                         break;
                     case 2502:
+                        techProto.HashNeeded = 36000;
+                        break;
                     case 2503:
+                        techProto.HashNeeded = 72000;
                         break;
                     case 2504:
+                        techProto.HashNeeded = 240000;
                         techProto.Items = new int[] { 6003, 6278 };
                         techProto.ItemPoints = new int[] { techProto.ItemPoints[0], techProto.ItemPoints[0] };
                         break;
+                    case 2505:
+                        techProto.HashNeeded = 1080000;
+                        break;
                     case 2506:
+                        techProto.HashNeeded = 9000000;
+                        techProto.LevelCoef1 = -4050000;
+                        techProto.LevelCoef2 = 450000;
                         break;
                     default:
                         break;

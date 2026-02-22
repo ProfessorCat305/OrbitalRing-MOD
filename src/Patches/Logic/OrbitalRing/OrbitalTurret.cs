@@ -96,6 +96,8 @@ namespace ProjectOrbitalRing.Patches.Logic.OrbitalRing
                 planetOrbitalRingData.Rings[ringIndex].AddOrbitalCore(position, thisTurretId, StationType.GlobalIncCore);
             } else if (itemId == ProtoID.I突触凝练机) {
                 planetOrbitalRingData.Rings[ringIndex].AddOrbitalCore(position, thisTurretId, StationType.SynapticLathe);
+            } else if (itemId == ProtoID.I欺骗型广播塔) {
+                planetOrbitalRingData.Rings[ringIndex].AddOrbitalCore(position, thisTurretId, StationType.BanDFTinderDispatch);
             }
 
         }

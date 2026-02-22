@@ -611,5 +611,14 @@
         "AmmoBlastRadius1": 1,
         "AmmoMoveAcc": 10,
         "AmmoTurnAcc": 10
+    },
+    {
+        "ModelID": 838,
+        "powerCoverRadius": 0.0,
+        "workEnergyPerTick": 1050000,
+        "idleEnergyPerTick": 1050000,
+        "beaconSignalRadius": 0.0,
+        "beaconSpaceSignalRange": 0.0,
+        "powerConnectDistance": 0.5
     }
 ]

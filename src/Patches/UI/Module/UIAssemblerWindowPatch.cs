@@ -442,7 +442,7 @@ namespace ProjectOrbitalRing.Patches.UI
                                 }
                                 bool flag8 = AssemblerModuleData.ItemCount >= AssemblerModuleData.NeedCount;
                                 if (flag8) {
-                                    UIRealtimeTip.Popup(StringTranslate.Translate("栏位已满"), true, 0);
+                                    UIRealtimeTip.Popup("栏位已满".TranslateFromJson(), true, 0);
                                 } else {
                                     int inhandItemCount = player.inhandItemCount;
                                     int num = AssemblerModuleData.NeedCount - AssemblerModuleData.ItemCount;

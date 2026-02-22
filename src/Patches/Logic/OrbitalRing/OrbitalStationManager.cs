@@ -21,12 +21,6 @@ namespace ProjectOrbitalRing.Patches.Logic.OrbitalRing
 
         private static readonly Dictionary<int, PlanetOrbitalRingData> AllplanetsOrbitalRings = new Dictionary<int, PlanetOrbitalRingData>();
 
-        
-
-        
-
-        
-
         public static bool StationTypeIsBase(StationType type)
         {
             switch (type)
@@ -138,7 +132,7 @@ namespace ProjectOrbitalRing.Patches.Logic.OrbitalRing
                         }
                         int storageItemCount = r.ReadInt32();
                         for (int y = 0; y < storageItemCount; y++) {
-                            OnePlanetOneRing.orbitalRingStorage.storageItem.Add(r.ReadInt32(), new int[] { r.ReadInt32(), r.ReadInt32() });
+                            OnePlanetOneRing.orbitalRingStorage.storageItem.TryAdd(r.ReadInt32(), new int[] { r.ReadInt32(), r.ReadInt32() });
                         }
                         for (int y = 0; y < 1000; y++) {
                             OnePlanetOneRing.insideRingPositions[y] = r.ReadBoolean();
@@ -513,6 +507,7 @@ namespace ProjectOrbitalRing.Patches.Logic.OrbitalRing
                 case StationType.ATFeildCore:
                 case StationType.GlobalIncCore:
                 case StationType.SynapticLathe:
+                case StationType.BanDFTinderDispatch:
                     return StationType.GlobalSupportBase;
                 default:
                     return type;
@@ -533,7 +528,8 @@ namespace ProjectOrbitalRing.Patches.Logic.OrbitalRing
             EjectorCore = 9,
             GlobalSupportBase = 10,
             ATFeildCore = 11,
-            GlobalIncCore = 12
+            GlobalIncCore = 12,
+            BanDFTinderDispatch = 13
         }
     }
 }

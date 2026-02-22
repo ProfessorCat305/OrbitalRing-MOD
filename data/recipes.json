@@ -1950,7 +1950,7 @@
         ],
         "InCounts": [
             1,
-            10,
+            2,
             1
         ],
         "Output": [
@@ -8848,5 +8848,35 @@
         "Explicit": true,
         "Handcraft": false,
         "NonProductive": true
+    },
+    {
+        "ID": 846,
+        "Name": "欺骗型广播塔",
+        "Description": "I欺骗型广播塔",
+        "IconPath": "",
+        "Type": 12,
+        "GridIndex": 5808,
+        "Time": 1800,
+        "Input": [
+            5206,
+            3007,
+            3006,
+            1613
+        ],
+        "InCounts": [
+            100,
+            2,
+            1,
+            10
+        ],
+        "Output": [
+            6533
+        ],
+        "OutCounts": [
+            1
+        ],
+        "Explicit": false,
+        "Handcraft": false,
+        "NonProductive": false
     }
 ]

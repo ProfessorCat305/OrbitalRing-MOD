@@ -21,6 +21,7 @@ namespace ProjectOrbitalRing.Patches.Logic.OrbitalRing
                 case ProtoID.I智能方尖碑:
                 case ProtoID.I亿万械国:
                 case ProtoID.I突触凝练机:
+                case ProtoID.I欺骗型广播塔:
                     return true;
                 default:
                     return false;
@@ -253,6 +254,10 @@ namespace ProjectOrbitalRing.Patches.Logic.OrbitalRing
                                 if (result.stationType != StationType.GlobalSupportBase) {
                                     flag = true;
                                 }
+                            } else if (previewItem == ProtoID.I欺骗型广播塔) {
+                                if (result.stationType != StationType.GlobalSupportBase) {
+                                    flag = true;
+                                }
                             }
                             if (flag) {
                                 buildPreview.condition = (EBuildCondition)98;
@@ -418,6 +423,12 @@ namespace ProjectOrbitalRing.Patches.Logic.OrbitalRing
                                     return false;
                                 }
                             } else if (previewItem == ProtoID.I突触凝练机) {
+                                if (result.stationType != StationType.GlobalSupportBase) {
+                                    buildPreview.condition = (EBuildCondition)98;
+                                    __result = false;
+                                    return false;
+                                }
+                            } else if (previewItem == ProtoID.I欺骗型广播塔) {
                                 if (result.stationType != StationType.GlobalSupportBase) {
                                     buildPreview.condition = (EBuildCondition)98;
                                     __result = false;
@@ -599,7 +610,7 @@ namespace ProjectOrbitalRing.Patches.Logic.OrbitalRing
                                         __instance.actionBuild.DoDismantleObject(colliderData.objId);
                                     }
 
-                                    if (pair.stationType == StationType.GlobalIncCore || pair.stationType == StationType.SynapticLathe) {
+                                    if (pair.stationType == StationType.GlobalIncCore || pair.stationType == StationType.SynapticLathe || pair.stationType == StationType.BanDFTinderDispatch) {
                                         int colId = __instance.factory.entityPool[__instance.factory.defenseSystem.beacons.buffer[pair.OrbitalCorePoolId].entityId].colliderId;
                                         ColliderData colliderData = __instance.actionBuild.planetPhysics.GetColliderData(colId);
                                         __instance.actionBuild.DoDismantleObject(colliderData.objId);

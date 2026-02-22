@@ -99,6 +99,7 @@ namespace ProjectOrbitalRing.Utils
                            I气云 = 6519,
                            I量子虚拟生命 = 6530,
                            I黑萝卜 = 6531,
+                           I欺骗型广播塔 = 6533,
                            I氨 = 7002,
                            I盐酸 = 7014,
                            I硝酸 = 7017,
@@ -198,7 +199,8 @@ namespace ProjectOrbitalRing.Utils
                            M突触凝练机 = 834,
                            M生态温室 = 835,
                            M低温工厂 = 836,
-                           M朗基努斯之枪 = 837;
+                           M朗基努斯之枪 = 837,
+                           M欺骗型广播塔 = 838;
 
         internal const int T戴森球计划 = 1,
                            T电磁学 = 1001,

@@ -330,9 +330,9 @@
     "ENUS": "The energy consumption required by the server is -50%"
   },
   {
-    "Name": "光伏发电效率 +20%",
-    "ZHCN": "光伏发电效率 +20%",
-    "ENUS": "Solar Panel Efficiency +20%"
+    "Name": "熔炉产物抓出时自带3级增产",
+    "ZHCN": "熔炉产物抓出时自带3级增产",
+    "ENUS": "When the furnace product is taken out, it comes with a level 3 production increase"
   },
   {
     "Name": "聚变发电效率 +10%",
