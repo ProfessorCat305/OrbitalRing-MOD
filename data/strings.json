@@ -2320,8 +2320,8 @@
     },
     {
         "Name": "T低温工厂",
-        "ZHCN": "在探索冰封星球的过程中，工程师发现极端低温环境能显著提升某些反应的分子稳定性，从而实现一些产物的制造，为了解锁这些独特的低温催化工艺，设计了专为极寒星球设计的低温工厂。",
-        "ENUS": "During the exploration of the icy planet, engineers discovered that extreme low-temperature environments can significantly enhance the molecular stability of certain reactions, enabling the production of certain products. To unlock these unique low-temperature catalytic processes, a low-temperature factory specifically designed for extremely cold planets was created."
+        "ZHCN": "在探索冰封星球的过程中，工程师发现极端低温环境能显著提升某些反应的分子稳定性，从而实现一些产物的制造，为了解锁这些独特的低温催化工艺，设计了专为极寒星球设计的低温工厂。\n<color=\"#FD965ECC\">部分配方只能由低温工厂以及量子化工厂制造</color>",
+        "ENUS": "During the exploration of the icy planet, engineers discovered that extreme low-temperature environments can significantly enhance the molecular stability of certain reactions, enabling the production of certain products. To unlock these unique low-temperature catalytic processes, a low-temperature factory specifically designed for extremely cold planets was created.\n<color=\"#FD965ECC\">Some recipes can only be manufactured by Cryogenic Plant and Quantum Chemical Plant</color>"
     },
     {
         "Name": "量子化工厂",
@@ -3839,8 +3839,8 @@
     },
     {
         "Name": "I此科技不需要研究",
-        "ZHCN": "此科技不需要研究，当星环建成，即轨道连接组件连成一环时，此科技自动解锁",
-        "ENUS": "This technology does not require research. Once the orbital ring is built, meaning the orbital connection components are connected into a ring, this technology will be automatically unlocked"
+        "ZHCN": "此科技不需要研究，当解锁条件满足时，此科技自动解锁",
+        "ENUS": "This technology does not require research; it will automatically unlock when the unlocking conditions are met"
     },
     {
         "Name": "太空舰队结构优化",
@@ -4395,8 +4395,8 @@
     },
     {
         "Name": "I星环说明书",
-        "ZHCN": "一个行星上拥有两个<color=\"#FD965ECC\">星环</color>，分别在赤道的上下各一个，每个星环可拥有两个<color=\"#FD965ECC\">组件环</color>，组件环由<color=\"#FD965ECC\">轨道连接组件</color>完整绕星球一圈建造而成，会将属于这个星环的轨道设施串联起来。\n当星环建成一个组件环时，将获得<color=\"#FD965ECC\">共享空间</color>，属于这个星环的太空电梯，若将物品槽的<color=\"#FD965ECC\">存储上限拉到最大</color>，物品数量大于上限的一半时，超过一半的部分会被送入这个星环的共享空间。低于一半时，会尝试从共享空间补充到上限的一半。生产类轨道设施原料的获取和产物的存入会优先选择共享空间。\n 当星环建成第二个组件环时，将获得<color=\"#FD965ECC\">额外20个</color>轨道设施建造点位，夹在原20个点位中间（只有额外20个轨道设施点位，没有太空电梯的，额外的20个轨道设施靠共享空间提供物品存取能力）。",
-        "ENUS": "A planet possesses two <color=\"#FD965ECC\">Orbital Rings</color>, one located above and one below the equator. Each Orbital Ring can have two <color=\"#FD965ECC\">component rings</color>, which are constructed by <color=\"#FD965ECC\">Orbital Connection Components</color> to complete a full orbit around the planet, thereby connecting the orbital facilities belonging to that Orbital Ring. \n When a component ring of the Orbital Ring is completed, it will gain a <color=\"#FD965ECC\">shared space</color>. For the space elevator belonging to this Orbital Ring, if the storage limit of the item slot is <color=\"#FD965ECC\">maximized</color> and the number of items exceeds half of the limit, the excess items will be sent to the shared space of this Orbital Ring. If the number of items is less than half, an attempt will be made to replenish the shared space to half of the limit. For the acquisition of raw materials for production-related orbital facilities and the storage of products, the underlying space elevator will be chosen first, followed by the shared space. \n When the second component ring of the Orbital Ring is completed, an <color=\"#FD965ECC\">additional 20</color> orbital facility construction points will be obtained, sandwiched between the original 20 points (only additional 20 orbital facility points are available, without a space elevator; the additional 20 orbital facilities rely on the shared space to provide item storage and retrieval capabilities)."
+        "ZHCN": "一个行星上拥有两个<color=\"#FD965ECC\">星环</color>，分别在赤道的上下各一个，（小卫星只有赤道一个）每个星环可拥有两个<color=\"#FD965ECC\">组件环</color>，组件环由<color=\"#FD965ECC\">轨道连接组件</color>完整绕星球一圈建造而成，会将属于这个星环的轨道设施串联起来。\n当星环建成一个组件环时，将获得<color=\"#FD965ECC\">共享空间</color>，属于这个星环的太空电梯，若将物品槽的<color=\"#FD965ECC\">存储上限拉到最大</color>，物品数量大于上限的一半时，超过一半的部分会被送入这个星环的共享空间。低于一半时，会尝试从共享空间补充到上限的一半。生产类轨道设施原料的获取和产物的存入会优先选择共享空间。\n 当星环建成第二个组件环时，将获得<color=\"#FD965ECC\">额外20个</color>轨道设施建造点位，夹在原20个点位中间（只有额外20个轨道设施点位，没有太空电梯的，额外的20个轨道设施靠共享空间提供物品存取能力）。",
+        "ENUS": "A planet possesses two <color=\"#FD965ECC\">Orbital Rings</color>, one located above and one below the equator.（The small satellite only has one equator） Each Orbital Ring can have two <color=\"#FD965ECC\">component rings</color>, which are constructed by <color=\"#FD965ECC\">Orbital Connection Components</color> to complete a full orbit around the planet, thereby connecting the orbital facilities belonging to that Orbital Ring. \n When a component ring of the Orbital Ring is completed, it will gain a <color=\"#FD965ECC\">shared space</color>. For the space elevator belonging to this Orbital Ring, if the storage limit of the item slot is <color=\"#FD965ECC\">maximized</color> and the number of items exceeds half of the limit, the excess items will be sent to the shared space of this Orbital Ring. If the number of items is less than half, an attempt will be made to replenish the shared space to half of the limit. For the acquisition of raw materials for production-related orbital facilities and the storage of products, the underlying space elevator will be chosen first, followed by the shared space. \n When the second component ring of the Orbital Ring is completed, an <color=\"#FD965ECC\">additional 20</color> orbital facility construction points will be obtained, sandwiched between the original 20 points (only additional 20 orbital facility points are available, without a space elevator; the additional 20 orbital facilities rely on the shared space to provide item storage and retrieval capabilities)."
     },
     {
         "Name": "太空电梯",
@@ -4455,8 +4455,8 @@
     },
     {
         "Name": "T星环巨构",
-        "ZHCN": "太空的发展是循序渐进的，从一颗小小的卫星，到载人舱，到空间站，再到空间站连接组网，最后沿着赤道不断连接，直至首尾相连时，便是星环：一个巨型的环星轨道结构，这代表了行星开发的高度，也是工程学上的奇迹。\n<color=\"#FD965ECC\">当有一个完整的环时，该星环上的轨道设施以及附属太空电梯获得共享储存空间，物品大于/小于设置上限的一半，自动向共享空间存/取物品，每秒一次。制造类轨道设施自动从共享空间获取原料与输入产物。</color> \n<color=\"#FD965ECC\">当有第二个完整的环时，该星环上的轨道设施可以额外再建造20个。</color>",
-        "ENUS": "The development of space is gradual, from a small satellite, to a manned spacecraft, to a space station, then to a network of space station connections, and finally to continuous connections along the equator, until they are connected end-to-end, which is the ring of stars: a giant orbital structure representing the height of planetary development and also a miracle in engineering.\n<color=\"#FD965ECC\">When there is a complete ring, the orbital facilities and attached space elevators on the ring obtain shared storage space. If the items are greater than/less than half of the set upper limit, they will automatically store/retrieve items from the shared space once per second. Manufacturing track facilities automatically obtain raw materials and input products from shared spaces.</color> \n<color=\"#FD965ECC\">When there is a second complete ring, an additional 20 orbital facilities can be built on that ring.</color>"
+        "ZHCN": "太空的发展是循序渐进的，从一颗小小的卫星，到载人舱，到空间站，再到空间站连接组网，最后沿着赤道不断连接，直至首尾相连时，便是星环：一个巨型的环星轨道结构，这代表了行星开发的高度，也是工程学上的奇迹。\n\n<color=\"#FD965ECC\">当星环建成，即轨道连接组件连成一环时，此科技自动解锁。</color> ",
+        "ENUS": "The development of space is gradual, from a small satellite, to a manned spacecraft, to a space station, then to a network of space station connections, and finally to continuous connections along the equator, until they are connected end-to-end, which is the ring of stars: a giant orbital structure representing the height of planetary development and also a miracle in engineering.\n\n<color=\"#FD965ECC\">Once the orbital ring is built, meaning the orbital connection components are connected into a ring, this technology will be automatically unlocked</color>"
     },
     {
         "Name": "星环电网",
@@ -4600,8 +4600,8 @@
     },
     {
         "Name": "星环解锁",
-        "ZHCN": "使用轨道连接组件，沿着某个纬度建造成首尾相连的完整的圆时，解锁该科技。\n其他描述需要星环的要求也是这个标准：轨道连接组件连成一个环",
-        "ENUS": "Unlock this technology when constructing a complete circle connected end-to-end along a certain latitude using orbital connection components. \nThe other requirements for the Orbital Ring are also based on this standard: the orbital connecting components are connected into a ring"
+        "ZHCN": "当轨道连接组件建造成环时，解锁星环共享空间。\n详情请阅星环说明书",
+        "ENUS": "When the track connection components are built into a ring, the shared space of the orbital ring is unlocked. \nFor details, please refer to the Orbital Ring manual"
     },
     // 巨构mod
     {

@@ -1436,7 +1436,7 @@
             12.0
         ],
         "PreTechs": [
-            1201
+            1941
         ],
         "PreTechsImplicit": [
             1502,
@@ -3887,7 +3887,7 @@
         "Conclusion": "T因为，山就在那里完成",
         "IsHiddenTech": true,
         "PreItem": [
-            6228
+            6532
         ],
         "Position": [
             84.0,
@@ -4412,7 +4412,7 @@
         "Conclusion": "真任务完成",
         "IsHiddenTech": true,
         "PreItem": [
-            6228
+            6532
         ],
         "Position": [
             96.0,
@@ -4423,7 +4423,7 @@
         ],
         "PreTechsImplicit": [],
         "Items": [
-            6228
+            6532
         ],
         "ItemPoints": [
             1
@@ -6151,7 +6151,7 @@
         "Conclusion": "T坐标引擎",
         "IsHiddenTech": true,
         "PreItem": [
-            6228
+            6532
         ],
         "Position": [
             88.0,
@@ -6454,20 +6454,24 @@
         "IsHiddenTech": false,
         "PreItem": null,
         "Position": [
-            36.0,
-            8.0
+            24.0,
+            12.0
         ],
-        "PreTechs": [],
-        "PreTechsImplicit": [
+        "PreTechs": [
             1914
         ],
+        "PreTechsImplicit": [
+            
+        ],
         "Items": [
-            6003
+            6001,
+            6002
         ],
         "ItemPoints": [
+            10,
             10
         ],
-        "HashNeeded": 36000,
+        "HashNeeded": 108000,
         "UnlockRecipes": [
             844,
             815
@@ -6938,7 +6942,7 @@
         "Conclusion": "T穿透现实完成",
         "IsHiddenTech": true,
         "PreItem": [
-            6228
+            6532
         ],
         "Position": [
             88.0,
@@ -6949,7 +6953,7 @@
         ],
         "PreTechsImplicit": [],
         "Items": [
-            6228
+            6532
         ],
         "ItemPoints": [
             1
@@ -7246,7 +7250,7 @@
         "Conclusion": "开弦修正结果",
         "IsHiddenTech": true,
         "PreItem": [
-            6228
+            6532
         ],
         "Position": [
             88.0,
@@ -7285,7 +7289,7 @@
         "Conclusion": "T宇宙的齿轮完成",
         "IsHiddenTech": true,
         "PreItem": [
-            6228
+            6532
         ],
         "Position": [
             92.0,

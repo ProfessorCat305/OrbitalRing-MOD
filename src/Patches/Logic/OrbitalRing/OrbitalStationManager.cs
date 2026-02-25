@@ -60,7 +60,6 @@ namespace ProjectOrbitalRing.Patches.Logic.OrbitalRing
 
                 for (int i = 0; i < outerPair.Value.Rings.Count; i++) {
                     w.Write(outerPair.Value.Rings[i].Capacity);
-                    LogError($"AllplanetsOrbitalRings.Count {AllplanetsOrbitalRings.Count} planetId {outerPair.Key} i {i} Capacity {outerPair.Value.Rings[i].Capacity}");
                     w.Write(outerPair.Value.Rings[i].isParticleCollider);
                     //w.Write(outerPair.Value.Rings[i].SpaceStationCount);
                     for (int j = 0; j < outerPair.Value.Rings[i].Capacity; j++) {
@@ -114,7 +113,6 @@ namespace ProjectOrbitalRing.Patches.Logic.OrbitalRing
                     }
                     for (var j = 0; j < OnePlanetRingsCount; j++) {
                         int Capacity = r.ReadInt32();
-                        LogError($"AllplanetsOrbitalRingsCount {AllplanetsOrbitalRingsCount} planetId {planetId} j {j} Capacity {Capacity}");
                         EquatorRing OnePlanetOneRing = new EquatorRing(Capacity, planetId);
                         //OnePlanetOneRingnew.spaceStationCount = r.ReadInt32();
                         OnePlanetOneRing.isParticleCollider = r.ReadBoolean();

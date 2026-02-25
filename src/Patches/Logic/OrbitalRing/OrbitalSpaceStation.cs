@@ -9,6 +9,8 @@ using static ProjectOrbitalRing.ProjectOrbitalRing;
 using static DebugFactoryData;
 using static UIPlayerDeliveryPanel;
 using static GalacticScale.PatchOnUIGalaxySelect;
+using GalacticScale;
+using static System.Collections.Specialized.BitVector32;
 
 namespace ProjectOrbitalRing.Patches.Logic.OrbitalRing
 {
@@ -75,6 +77,17 @@ namespace ProjectOrbitalRing.Patches.Logic.OrbitalRing
             return true;
         }
 
+        private static bool ShouldLocalPairsRematch(StationComponent station)
+        {
+            if (!station.isStellar) {
+                return true;
+            }
+            if (station.shipDiskPos.Length == 0) {
+                return true;
+            }
+            return false;
+        }
+
         [HarmonyPatch(typeof(StationComponent), nameof(StationComponent.RematchLocalPairs))]
         [HarmonyTranspiler]
         public static IEnumerable<CodeInstruction> StationComponent_RematchLocalPairs_Transpiler(IEnumerable<CodeInstruction> instructions)
@@ -86,13 +99,30 @@ namespace ProjectOrbitalRing.Patches.Logic.OrbitalRing
 
             object IL_00B5 = matcher.Advance(2).Operand;
 
-            // 本地供应判断，需求遍历遇到是星际物流港就跳过
+            // 本地供应判断，遍历遇到是星际物流港，且不是空投站就跳过
             matcher.Advance(1).InsertAndAdvance(
                 new CodeInstruction(OpCodes.Ldarg_1),
                 new CodeInstruction(OpCodes.Ldloc_3),
                 new CodeInstruction(OpCodes.Ldelem_Ref),
-                new CodeInstruction(OpCodes.Ldfld, AccessTools.Field(typeof(StationComponent), nameof(StationComponent.isStellar))),
-                new CodeInstruction(OpCodes.Brtrue, IL_00B5)
+                //new CodeInstruction(OpCodes.Ldfld, AccessTools.Field(typeof(StationComponent), nameof(StationComponent.isStellar))),
+                //new CodeInstruction(OpCodes.Brtrue, IL_00B5)
+                new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(OrbitalSpaceStation), nameof(ShouldLocalPairsRematch))),
+                new CodeInstruction(OpCodes.Brfalse, IL_00B5)
+            );
+
+            matcher.MatchForward(true, new CodeMatch(OpCodes.Ldelem_Ref),
+                new CodeMatch(OpCodes.Ldfld, AccessTools.Field(typeof(StationComponent), nameof(StationComponent.id))));
+
+            object V_7 = matcher.Advance(1).Operand;
+            object IL_0171 = matcher.Advance(1).Operand;
+
+            // 本地需求判断，遍历遇到是星际物流港，且不是空投站就跳过
+            matcher.Advance(1).InsertAndAdvance(
+                new CodeInstruction(OpCodes.Ldarg_1),
+                new CodeInstruction(OpCodes.Ldloc_S, V_7),
+                new CodeInstruction(OpCodes.Ldelem_Ref),
+                new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(OrbitalSpaceStation), nameof(ShouldLocalPairsRematch))),
+                new CodeInstruction(OpCodes.Brfalse, IL_0171)
             );
 
             return matcher.InstructionEnumeration();

@@ -5145,22 +5145,22 @@
         "IconPath": "Assets/texpack/R多板架构",
         "Type": 4,
         "GridIndex": 1405,
-        "Time": 240,
+        "Time": 480,
         "Input": [
             1303,
             1301,
             7019
         ],
         "InCounts": [
-            2,
-            3,
-            1
+            8,
+            5,
+            2
         ],
         "Output": [
             7501
         ],
         "OutCounts": [
-            3
+            8
         ],
         "Explicit": true,
         "Handcraft": true,
@@ -8293,7 +8293,7 @@
             20,
             10,
             30,
-            5
+            15
         ],
         "Output": [
             6279
@@ -8454,7 +8454,7 @@
             7015
         ],
         "InCounts": [
-            3,
+            2,
             1
         ],
         "Output": [
