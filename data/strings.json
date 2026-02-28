@@ -4535,8 +4535,8 @@
     },
     {
         "Name": "I星环护盾组件",
-        "ZHCN": "大型轨道设施，在建设时会将护盾发生器安装在同一星环的其他轨道设施上，经由该组件对全星环内的护盾发生器进行协调组网，最终发射出覆盖全行星的完整行星级护盾。",
-        "ENUS": "During the construction of large-scale orbital facilities, shield generators will be installed on other orbital facilities in the same ring. Through this component, the shield generators within the entire ring will be coordinated and networked, ultimately launching a complete planetary level shield covering the entire planet."
+        "ZHCN": "大型轨道设施，建造于天枢座上，在建设时会将护盾发生器安装在同一星环的其他轨道设施上，经由该组件从天枢座对全星环内的护盾发生器进行协调组网，最终发射出覆盖全行星的完整行星级护盾。",
+        "ENUS": "Large orbital facilities, constructed on the Tianzhu Seat, will have shield generators installed on other orbital facilities in the same ring during their construction. Through this component, the Tianzhu Seat will coordinate and network the shield generators within the entire ring, ultimately launching a complete planetary-scale shield that covers the entire planet."
     },
     {
         "Name": "轨道防御炮台",
