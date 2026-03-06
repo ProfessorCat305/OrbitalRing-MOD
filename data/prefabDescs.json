@@ -190,7 +190,7 @@
     },
     {
         "ModelID": 73,
-        "genEnergyPerTick": 8000000
+        "genEnergyPerTick": 80000000
     },
     {
         "ModelID": 74,
@@ -620,5 +620,8 @@
         "beaconSignalRadius": 0.0,
         "beaconSpaceSignalRange": 0.0,
         "powerConnectDistance": 0.5
+    },
+    {
+        "ModelID": 839
     }
 ]

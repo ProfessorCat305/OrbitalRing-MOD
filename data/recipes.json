@@ -541,9 +541,9 @@
             1301
         ],
         "InCounts": [
-            8,
-            4,
-            4
+            1,
+            1,
+            1
         ],
         "Output": [
             1406
@@ -887,9 +887,9 @@
             1113
         ],
         "InCounts": [
-            5,
-            5,
-            4
+            2,
+            1,
+            2
         ],
         "Output": [
             6277
@@ -1417,7 +1417,7 @@
             1302
         ],
         "OutCounts": [
-            2
+            4
         ],
         "Explicit": true,
         "Handcraft": false,
@@ -5359,15 +5359,15 @@
         "IconPath": "Assets/texpack/R纳米晶体管",
         "Type": 10,
         "GridIndex": 1502,
-        "Time": 180,
+        "Time": 120,
         "Input": [
             1124,
             1106,
-            7101
+            1104
         ],
         "InCounts": [
             2,
-            3,
+            1,
             1
         ],
         "Output": [
@@ -5390,15 +5390,15 @@
         "Time": 3600,
         "Input": [
             1112,
-            7101,
+            1104,
             1124,
             1106
         ],
         "InCounts": [
-            30,
-            4,
             20,
-            10
+            4,
+            5,
+            1
         ],
         "Output": [
             1303
@@ -5534,7 +5534,7 @@
         "ID": 514,
         "Name": "热解",
         "Description": "R热解",
-        "IconPath": "",
+        "IconPath": "Assets/texpack/R热解",
         "Type": 1,
         "GridIndex": 3814,
         "Time": 120,
@@ -7398,7 +7398,7 @@
         "IconPath": "Assets/texpack/R高效光纤",
         "Type": 4,
         "GridIndex": 1406,
-        "Time": 360,
+        "Time": 720,
         "Input": [
             1111,
             1115,
@@ -7406,16 +7406,16 @@
             7018
         ],
         "InCounts": [
-            3,
+            6,
             2,
-            1,
-            1
+            3,
+            2
         ],
         "Output": [
             7804
         ],
         "OutCounts": [
-            3
+            8
         ],
         "Explicit": true,
         "Handcraft": false,
@@ -7764,7 +7764,7 @@
         "IconPath": "",
         "Type": 9,
         "GridIndex": 1611,
-        "Time": 1080,
+        "Time": 720,
         "Input": [
             6512,
             6277
@@ -8171,7 +8171,7 @@
             1104
         ],
         "InCounts": [
-            2,
+            4,
             3,
             2
         ],
@@ -8199,7 +8199,7 @@
             7014
         ],
         "InCounts": [
-            2,
+            4,
             2,
             1
         ],

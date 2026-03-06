@@ -33,6 +33,7 @@ namespace ProjectOrbitalRing.Utils
             { 6222, new OreIconDesc(new Color32(106, 175, 78, 255)) },  // Rads
             //{ 6225, new OreIconDesc(new Color32(130, 235, 139, 255)) }, // U
             { 6201, new OreIconDesc(new Color32(30, 29, 30, 255)) },    // Tungsten
+            { 7706, new OreIconDesc(new Color32(230, 230, 230, 255)) }, // 辉银矿
 
             { 7803, new ComponentIconDesc(new Color32(228, 153, 255, 255)) }, // 光学芯片
             { 7804, new ComponentIconDesc(new Color32(228, 153, 255, 255)) }, // 光学纤维
@@ -101,7 +102,7 @@ namespace ProjectOrbitalRing.Utils
             { 7610, new WhiteIconDesc() }, // 核子单元
             { 7611, new WhiteIconDesc() }, // 反物质单元
 
-            { 7706, new GlassIconDesc(new Color32(91, 91, 91, 255)) }, // 钨玻璃
+            //{ 7706, new GlassIconDesc(new Color32(91, 91, 91, 255)) }, // 钨玻璃
         };
 
         private static readonly IconToolNew.IconDesc Default = new IconToolNew.IconDesc

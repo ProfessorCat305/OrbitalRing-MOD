@@ -8,7 +8,7 @@ using static ProjectOrbitalRing.Patches.Logic.OrbitalRing.EquatorRing;
 using static ProjectOrbitalRing.Patches.Logic.OrbitalRing.PosTool;
 using UnityEngine;
 using System.Reflection.Emit;
-using ProjectOrbitalRing.Patches.Logic.AddVein;
+using ProjectOrbitalRing.Patches.Logic.PlanetFocus;
 using ProjectOrbitalRing.Utils;
 using ProjectOrbitalRing.Patches.Logic.AssemblerModule;
 
@@ -166,22 +166,39 @@ namespace ProjectOrbitalRing.Patches.Logic.OrbitalRing
                     var pair = ring.GetPair(j);
                     if (pair.stationType == StationType.Assembler && pair.elevatorPoolId != -1 && pair.OrbitalStationPoolId == __instance.id) {
                         var storage = ring.GetElevatorStorage(j);
-                        for (int k = 0; k < storage.Length; k++) {
+                        for (int z = 0; z < storage.Length; z++) {
                             for (int needIdx = 0; needIdx < __instance.needs.Length; needIdx++) {
-                                if (storage[k].itemId == __instance.needs[needIdx] && storage[k].count >= 4) {
+                                if (storage[z].itemId == __instance.needs[needIdx] && storage[z].count >= 4) {
                                     __instance.served[needIdx] += 4;
                                     //storage[k].count -= 1;
-                                    int inc = split_inc(ref storage[k].count, ref storage[k].inc, 4);
+                                    int inc = split_inc(ref storage[z].count, ref storage[z].inc, 4);
                                     __instance.incServed[needIdx] += inc;
                                     //storage[k].inc -= inc;
+                                    // 当星环对撞机执行起义物质配方时，记录输入的电池增产的值
+                                    if (__instance.recipeId == 104 && storage[z].itemId == 2207) {
+                                        ValueTuple<int, int> key = new ValueTuple<int, int>(planetId, __instance.id);
+                                        MoonPatch.ColliderAccumulatorIncData.AddOrUpdate(key, inc, (k, v) => v + inc);
+                                    }
                                 }
                             }
                             for (int productIndex = 0; productIndex < __instance.recipeExecuteData.products.Length; productIndex++) {
-                                if (storage[k].itemId == __instance.recipeExecuteData.products[productIndex] && __instance.produced[productIndex] > 0 && storage[k].count <= storage[k].max) {
+                                if (storage[z].itemId == __instance.recipeExecuteData.products[productIndex] && __instance.produced[productIndex] > 0 && storage[z].count <= storage[z].max) {
                                     __instance.produced[productIndex] -= 1;
-                                    storage[k].count += 1;
+                                    storage[z].count += 1;
                                     if (__instance.recipeType == ERecipeType.Smelt) {
-                                        storage[k].inc += 4;
+                                        storage[z].inc += 4;
+                                    }
+                                    // 当星环对撞机执行起义物质配方时，按记录输入的电池增产的值赋给输出的空电池增产
+                                    if (__instance.recipeId == 104 && storage[z].itemId == 2206) {
+                                        ValueTuple<int, int> key = new ValueTuple<int, int>(planetId, __instance.id);
+                                        bool flag = MoonPatch.ColliderAccumulatorIncData.ContainsKey(key) && MoonPatch.ColliderAccumulatorIncData[key] >= 4;
+                                        if (flag) {
+                                            MoonPatch.ColliderAccumulatorIncData[key] -= 4;
+                                            storage[z].inc += 4;
+                                            if (MoonPatch.ColliderAccumulatorIncData[key] < 0) {
+                                                MoonPatch.ColliderAccumulatorIncData[key] = 0;
+                                            }
+                                        }
                                     }
                                 }
                             }

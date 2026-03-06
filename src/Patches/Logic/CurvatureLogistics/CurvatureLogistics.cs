@@ -1,15 +1,9 @@
 ﻿using HarmonyLib;
 using ProjectOrbitalRing.Utils;
-using System;
+using System.Reflection.Emit;
 using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-
 using UnityEngine;
-using static GalacticScale.PatchOnUIGalaxySelect;
-using static System.Collections.Specialized.BitVector32;
+using ProjectOrbitalRing.Patches.Logic.OrbitalRing;
 
 namespace ProjectOrbitalRing.Patches.Logic.CurvatureLogistics
 {
@@ -536,5 +530,33 @@ namespace ProjectOrbitalRing.Patches.Logic.CurvatureLogistics
             return false;
         }
 
+        private static void ChangeShipItemId(ref int shipItemId, StationComponent station, PlanetFactory factory)
+        {
+            if (factory.entityPool[station.entityId].protoId == ProtoID.I太空物流港) {
+                shipItemId = ProtoID.I太空运输船;
+            } else if (factory.entityPool[station.entityId].protoId == ProtoID.I深空物流港) {
+                shipItemId = ProtoID.I深空货舰;
+            }
+        }
+
+        [HarmonyPatch(typeof(PlanetFactory), nameof(PlanetFactory.EntityFastFillIn))]
+        [HarmonyTranspiler]
+        public static IEnumerable<CodeInstruction> RunBehavior_Engage_AttackLaser_Ground_Transpiler(IEnumerable<CodeInstruction> instructions)
+        {
+            var matcher = new CodeMatcher(instructions);
+
+            matcher.MatchForward(true, new CodeMatch(OpCodes.Ldc_I4, 5002));
+            object V_95 = matcher.Advance(1).Operand;
+            object V_85 = matcher.Advance(1).Operand;
+
+            matcher.InsertAndAdvance(
+                new CodeInstruction(OpCodes.Ldloca, V_95),
+                new CodeInstruction(OpCodes.Ldloc_S, V_85),
+                new CodeInstruction(OpCodes.Ldarg_0),
+                new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(CurvatureLogistics), nameof(ChangeShipItemId)))
+                );
+            //matcher.LogInstructionEnumeration();
+            return matcher.InstructionEnumeration();
+        }
     }
 }

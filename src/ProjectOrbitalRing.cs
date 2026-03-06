@@ -65,7 +65,7 @@ namespace ProjectOrbitalRing
     {
         public const string MODGUID = "org.ProfessorCat305.OrbitalRing";
         public const string MODNAME = "OrbitalRing";
-        public const string VERSION = "0.9.32";
+        public const string VERSION = "0.9.37";
         public const string DEBUGVERSION = "";
 
 
@@ -213,6 +213,7 @@ namespace ProjectOrbitalRing
             MoonPatch.Export(w);
             EnergyCalculate.Export(w);
             FarmAssembler.Export(w);
+            InfiniteTank.Export(w);
         }
 
         public void Import(BinaryReader r)
@@ -231,6 +232,7 @@ namespace ProjectOrbitalRing
             MoonPatch.Import(r);
             EnergyCalculate.Import(r);
             FarmAssembler.Import(r);
+            InfiniteTank.Import(r);
         }
 
         public void IntoOtherSave()
@@ -247,6 +249,7 @@ namespace ProjectOrbitalRing
             MoonPatch.IntoOtherSave();
             EnergyCalculate.IntoOtherSave();
             FarmAssembler.IntoOtherSave();
+            InfiniteTank.IntoOtherSave();
         }
 
         public string Version => VERSION;

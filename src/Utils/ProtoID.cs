@@ -60,6 +60,7 @@ namespace ProjectOrbitalRing.Utils
                            I满蓄电器mk1 = 6219,
                            I损伤定义护盾 = 6220,
                            I放射性矿物 = 6222,
+                           I无尽水罐 = 6223,
                            I量子储物仓 = 6231,
                            I文明遗物 = 6234,
                            I空轨 = 6235,
@@ -200,7 +201,8 @@ namespace ProjectOrbitalRing.Utils
                            M生态温室 = 835,
                            M低温工厂 = 836,
                            M朗基努斯之枪 = 837,
-                           M欺骗型广播塔 = 838;
+                           M欺骗型广播塔 = 838,
+                           M无尽水罐 = 839;
 
         internal const int T戴森球计划 = 1,
                            T电磁学 = 1001,

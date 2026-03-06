@@ -67,14 +67,6 @@ namespace ProjectOrbitalRing.Patches.Logic.ModifyUpgradeTech
             tech.Items = Items4;
             tech.ItemPoints = Enumerable.Repeat(12, 4).ToArray();
 
-            tech = LDB.techs.Select(ProtoID.T驱动引擎4);
-            tech.Items = Items4;
-            tech.ItemPoints = Enumerable.Repeat(10, 4).ToArray();
-
-            tech = LDB.techs.Select(ProtoID.T驱动引擎5);
-            tech.Items = Items5;
-            tech.ItemPoints = Enumerable.Repeat(10, 5).ToArray();
-
             tech = LDB.techs.Select(ProtoID.T垂直建造3);
             tech.Items = Items3;
             tech.ItemPoints = new[] { 20, 20, 10, };
@@ -435,25 +427,26 @@ namespace ProjectOrbitalRing.Patches.Logic.ModifyUpgradeTech
             techProto.ItemPoints = new int[] { 200 };
             techProto.HashNeeded = 450;
 
-            techProto = LDB.techs.Select(2902);
+            techProto = LDB.techs.Select(ProtoID.T驱动引擎2);
+            techProto.PreTechsImplicit = new int[] { 1917 }; // 驱动引擎2前置速生林
             techProto.Items = new int[] { 1405 };
             techProto.ItemPoints = new int[] { 150 };
             techProto.HashNeeded = 600;
             techProto.IsLabTech = false;
 
-            techProto = LDB.techs.Select(2903);
+            techProto = LDB.techs.Select(ProtoID.T驱动引擎3);
             techProto.Items = new int[] { 6277 };
             techProto.ItemPoints = new int[] { 100 };
             techProto.HashNeeded = 1800;
             techProto.IsLabTech = false;
 
-            techProto = LDB.techs.Select(2904);
+            techProto = LDB.techs.Select(ProtoID.T驱动引擎4);
             techProto.Items = new int[] { 6227 };
             techProto.ItemPoints = new int[] { 1 };
             techProto.HashNeeded = 3600;
             techProto.IsLabTech = false;
 
-            techProto = LDB.techs.Select(2905);
+            techProto = LDB.techs.Select(ProtoID.T驱动引擎5);
             techProto.Items = new int[] { 6227 };
             techProto.ItemPoints = new int[] { 2 };
             techProto.HashNeeded = 7200;

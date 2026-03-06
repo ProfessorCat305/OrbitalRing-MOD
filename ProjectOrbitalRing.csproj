@@ -155,6 +155,7 @@
     <Compile Include="src\Patches\Logic\FuelRodPatches.cs" />
     <Compile Include="src\Patches\Logic\GeothermalStrengthPatches.cs" />
     <Compile Include="src\Patches\Logic\GlobalPowerSupplyPatches.cs" />
+    <Compile Include="src\Patches\Logic\InfiniteTank.cs" />
     <Compile Include="src\Patches\Logic\InitialTechPatches.cs" />
     <Compile Include="src\Patches\Logic\InserterComponentPatches.cs" />
     <Compile Include="src\Patches\Logic\LogisticsInterchangePatches.cs" />
@@ -235,6 +236,7 @@
     <Compile Include="src\Patches\UI\MultiProductionPatches.cs" />
     <Compile Include="src\Patches\UI\OrbitalRingStorage\UIOrbitalRingStorageDetailExpand.cs" />
     <Compile Include="src\Patches\UI\OrbitalRingStorage\UIOrbitalRingStorageWindow.cs" />
+    <Compile Include="src\Patches\UI\OrbitalRingStorage\UIStationWindowPatch.cs" />
     <Compile Include="src\Patches\UI\PlanetFocus\UIPlanetDetailExpand.cs" />
     <Compile Include="src\Patches\UI\PlanetFocus\UIPlanetFocusWindow.cs" />
     <Compile Include="src\Patches\UI\ResearchLabPatches.cs" />

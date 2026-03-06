@@ -47,7 +47,7 @@ namespace ProjectOrbitalRing.Patches
             matcher.MatchForward(false,
                 new CodeMatch(OpCodes.Stfld, AccessTools.Field(typeof(DysonSphere), nameof(DysonSphere.energyGenPerSail))));
 
-            matcher.InsertAndAdvance(new CodeInstruction(OpCodes.Ldc_I4_2), new CodeInstruction(OpCodes.Conv_I8),
+            matcher.InsertAndAdvance(new CodeInstruction(OpCodes.Ldc_I4, 10), new CodeInstruction(OpCodes.Conv_I8),
                 new CodeInstruction(OpCodes.Mul));
 
             // energyGenPerNode * 2
@@ -68,7 +68,7 @@ namespace ProjectOrbitalRing.Patches
             matcher.MatchForward(false,
                 new CodeMatch(OpCodes.Stfld, AccessTools.Field(typeof(DysonSphere), nameof(DysonSphere.energyGenPerShell))));
 
-            matcher.InsertAndAdvance(new CodeInstruction(OpCodes.Ldc_I4_2), new CodeInstruction(OpCodes.Conv_I8),
+            matcher.InsertAndAdvance(new CodeInstruction(OpCodes.Ldc_I4, 10), new CodeInstruction(OpCodes.Conv_I8),
                 new CodeInstruction(OpCodes.Mul));
 
             return matcher.InstructionEnumeration();
@@ -81,7 +81,7 @@ namespace ProjectOrbitalRing.Patches
         public static IEnumerable<CodeInstruction> EnergyCap_Gamma_Req_Transpiler(IEnumerable<CodeInstruction> instructions)
         {
             var matcher = new CodeMatcher(instructions);
-            // 射线接收站，光子模式功率拉齐发电模式1倍，然后在prefabDescs.json统一改成80倍
+            // 射线接收站，光子模式功率拉齐发电模式1倍，然后在prefabDescs.json统一改成800倍
             matcher.MatchForward(false, new CodeMatch(OpCodes.Ldc_R4, 8f));
             matcher.SetOperandAndAdvance(1f);
             return matcher.InstructionEnumeration();

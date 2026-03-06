@@ -1,4 +1,5 @@
 ﻿using GalacticScale;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
@@ -71,12 +72,23 @@ namespace ProjectOrbitalRing.Patches.Logic.OrbitalRing
                         w.Write(outerPair.Value.Rings[i].incCoreLevel[j]);
                     }
                     w.Write(outerPair.Value.Rings[i].orbitalRingStorage.storageItem.Count);
-                    foreach (var kvp in outerPair.Value.Rings[i].orbitalRingStorage.storageItem) {
-                        int key = kvp.Key;
-                        int[] values = kvp.Value;
-                        w.Write(key);
-                        w.Write(values[0]);
-                        w.Write(values[1]);
+                    foreach (var storageItem in outerPair.Value.Rings[i].orbitalRingStorage.storageItem) {
+                        int itemId = storageItem.Key;
+                        int[] countInc = storageItem.Value;
+                        w.Write(itemId);
+                        w.Write(countInc[0]);
+                        w.Write(countInc[1]);
+                    }
+                    w.Write(outerPair.Value.Rings[i].orbitalRingStorage.storageShare.Count);
+                    foreach (var storageShare in outerPair.Value.Rings[i].orbitalRingStorage.storageShare) {
+                        int stationId = storageShare.Key;
+                        StationStoreIsShares storeShare = storageShare.Value;
+                        w.Write(stationId);
+                        w.Write(storeShare[0]);
+                        w.Write(storeShare[1]);
+                        w.Write(storeShare[2]);
+                        w.Write(storeShare[3]);
+                        w.Write(storeShare[4]);
                     }
 
                     for (int j = 0; j < 1000; j++) {
@@ -135,6 +147,41 @@ namespace ProjectOrbitalRing.Patches.Logic.OrbitalRing
                         int storageItemCount = r.ReadInt32();
                         for (int y = 0; y < storageItemCount; y++) {
                             OnePlanetOneRing.orbitalRingStorage.storageItem.TryAdd(r.ReadInt32(), new int[] { r.ReadInt32(), r.ReadInt32() });
+                        }
+                        if (ProjectOrbitalRing.importVersion < 589858) {
+                            for (int y = 0; y < OnePlanetOneRing.Capacity; y++) {
+                                var pair = OnePlanetOneRing.GetPair(y);
+                                if (pair.stationType == StationType.Station) {
+                                    OnePlanetOneRing.orbitalRingStorage.storageShare.TryAdd(pair.OrbitalStationPoolId, new StationStoreIsShares {
+                                        StoreIsShare1 = false,
+                                        StoreIsShare2 = false,
+                                        StoreIsShare3 = false,
+                                        StoreIsShare4 = false,
+                                        StoreIsShare5 = false
+                                    });
+
+                                }
+                                if (pair.elevatorPoolId != -1) {
+                                    OnePlanetOneRing.orbitalRingStorage.storageShare.TryAdd(pair.elevatorPoolId, new StationStoreIsShares {
+                                        StoreIsShare1 = false,
+                                        StoreIsShare2 = false,
+                                        StoreIsShare3 = false,
+                                        StoreIsShare4 = false,
+                                        StoreIsShare5 = false
+                                    });
+                                }
+                            }
+                        } else {
+                            int storageShareCount = r.ReadInt32();
+                            for (int y = 0; y < storageShareCount; y++) {
+                                OnePlanetOneRing.orbitalRingStorage.storageShare[r.ReadInt32()] = new StationStoreIsShares {
+                                    StoreIsShare1 = r.ReadBoolean(),
+                                    StoreIsShare2 = r.ReadBoolean(),
+                                    StoreIsShare3 = r.ReadBoolean(),
+                                    StoreIsShare4 = r.ReadBoolean(),
+                                    StoreIsShare5 = r.ReadBoolean()
+                                };
+                            }
                         }
                         for (int y = 0; y < 1000; y++) {
                             OnePlanetOneRing.insideRingPositions[y] = r.ReadBoolean();
@@ -280,6 +327,25 @@ namespace ProjectOrbitalRing.Patches.Logic.OrbitalRing
             lock (_lock) {
                 positions[position].ElevatorPoolId = elevatorId;
                 //elevatorToPosition[elevatorId] = position;
+                if (elevatorId != -1) {
+                    if (positions[position].OrbitalStationType == StationType.Station) {
+                        orbitalRingStorage.storageShare.TryAdd(elevatorId, new StationStoreIsShares {
+                            StoreIsShare1 = orbitalRingStorage.storageShare[positions[position].OrbitalStationPoolId][0],
+                            StoreIsShare2 = orbitalRingStorage.storageShare[positions[position].OrbitalStationPoolId][1],
+                            StoreIsShare3 = orbitalRingStorage.storageShare[positions[position].OrbitalStationPoolId][2],
+                            StoreIsShare4 = orbitalRingStorage.storageShare[positions[position].OrbitalStationPoolId][3],
+                            StoreIsShare5 = orbitalRingStorage.storageShare[positions[position].OrbitalStationPoolId][4]
+                        });
+                    } else {
+                        orbitalRingStorage.storageShare.TryAdd(elevatorId, new StationStoreIsShares {
+                            StoreIsShare1 = false,
+                            StoreIsShare2 = false,
+                            StoreIsShare3 = false,
+                            StoreIsShare4 = false,
+                            StoreIsShare5 = false
+                        });
+                    }
+                }
             }
             return true;
         }
@@ -296,6 +362,26 @@ namespace ProjectOrbitalRing.Patches.Logic.OrbitalRing
                 }
                 positions[position].OrbitalStationPoolId = stationId;
                 positions[position].OrbitalStationType = stationType;
+
+                if (stationType == StationType.Station) {
+                    if (positions[position].ElevatorPoolId == -1) {
+                        orbitalRingStorage.storageShare.TryAdd(stationId, new StationStoreIsShares {
+                            StoreIsShare1 = false,
+                            StoreIsShare2 = false,
+                            StoreIsShare3 = false,
+                            StoreIsShare4 = false,
+                            StoreIsShare5 = false
+                        });
+                    } else {
+                        orbitalRingStorage.storageShare.TryAdd(stationId, new StationStoreIsShares {
+                            StoreIsShare1 = orbitalRingStorage.storageShare[positions[position].ElevatorPoolId][0],
+                            StoreIsShare2 = orbitalRingStorage.storageShare[positions[position].ElevatorPoolId][1],
+                            StoreIsShare3 = orbitalRingStorage.storageShare[positions[position].ElevatorPoolId][2],
+                            StoreIsShare4 = orbitalRingStorage.storageShare[positions[position].ElevatorPoolId][3],
+                            StoreIsShare5 = orbitalRingStorage.storageShare[positions[position].ElevatorPoolId][4]
+                        });
+                    }
+                }
                 //stationToPosition[stationId] = position;
 
                 //isOrbitalRingTechunlock();
@@ -325,6 +411,8 @@ namespace ProjectOrbitalRing.Patches.Logic.OrbitalRing
             if (position < 0 || position >= Capacity) return false;
 
             lock (_lock) {
+                orbitalRingStorage.storageShare.Remove(positions[position].ElevatorPoolId);
+
                 positions[position].ElevatorPoolId = -1;
                 SetElevatorStorage(position, null);
             }
@@ -335,6 +423,10 @@ namespace ProjectOrbitalRing.Patches.Logic.OrbitalRing
         {
             if (position < 0 || position >= Capacity) return false;
             lock (_lock) {
+                if (positions[position].OrbitalStationType == StationType.Station) {
+                    orbitalRingStorage.storageShare.Remove(positions[position].OrbitalStationPoolId);
+                }
+
                 positions[position].OrbitalStationPoolId = -1;
                 if (!OrbitalStationManager.StationTypeIsBase(positions[position].OrbitalStationType)) {
                     spaceStationCount--;

@@ -77,9 +77,16 @@ namespace ProjectOrbitalRing.Patches.UI.UIOrbitalRingStorageWindow
                 var planetOrbitalRingData = OrbitalStationManager.Instance.GetPlanetOrbitalRingData(CurPlanetId);
                 if (CheckOrbitalStorageHasVeinMountain(planetOrbitalRingData.Rings[CurStorageIndex].orbitalRingStorage.storageItem, itemId)) {
                     if (planetOrbitalRingData.Rings[CurStorageIndex].orbitalRingStorage.storageItem.ContainsKey(itemId)) {
+                        int tempCount = 2147480000 - planetOrbitalRingData.Rings[CurStorageIndex].orbitalRingStorage.storageItem[itemId][0];
+                        if (tempCount < player.inhandItemCount) {
+                            player.inhandItemCount = tempCount;
+                        }
                         planetOrbitalRingData.Rings[CurStorageIndex].orbitalRingStorage.storageItem[itemId][0] += player.inhandItemCount;
                         planetOrbitalRingData.Rings[CurStorageIndex].orbitalRingStorage.storageItem[itemId][1] += player.inhandItemInc;
                     } else {
+                        if (2147480000 < player.inhandItemCount) {
+                            player.inhandItemCount = 2147480000;
+                        }
                         planetOrbitalRingData.Rings[CurStorageIndex].orbitalRingStorage.storageItem.Add(itemId, new int[] { player.inhandItemCount, player.inhandItemInc });
                     }
                     player.SetHandItemId_Unsafe(0);

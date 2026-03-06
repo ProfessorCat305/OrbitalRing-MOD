@@ -706,8 +706,8 @@
     },
     {
         "Name": "T速生林",
-        "ZHCN": "速生林是轮伐周期短的人工林，在工业造纸、木材加工领域需求较大。由于其速生优势，材质好，造林成活率高等优良特性，因而有很好的经济价值。",
-        "ENUS": "Rapid growth forests are artificial forests with short rotation cycles, and are in high demand in the fields of industrial papermaking and wood processing. Due to its advantages of rapid growth, good material quality, and high survival rate in afforestation, it has great economic value."
+        "ZHCN": "速生林是轮伐周期短的人工林，在工业造纸、木材加工领域需求较大。由于其速生优势，材质好，造林成活率高等优良特性，因而有很好的经济价值。\n<color=\"#FD965ECC\">其生产的木材和生物质经过碳化热解，可以在无生命的外星上代替煤炭和原油</color>",
+        "ENUS": "Rapid growth forests are artificial forests with short rotation cycles, and are in high demand in the fields of industrial papermaking and wood processing. Due to its advantages of rapid growth, good material quality, and high survival rate in afforestation, it has great economic value.\n<color=\"#FD965ECC\">The wood and biomass produced by it, after carbonization and pyrolysis, can serve as substitutes for coal and crude oil on lifeless exoplanets</color>"
     },
     {
         "Name": "速生苗",
@@ -1729,6 +1729,11 @@
         "ENUS": "It is a waste to directly make a warping device from exotic matter. After multiple iterations by engineers, the utilization rate of raw materials for using gravitational lenses to make warping devices is 10 times that of exotic matter."
     },
     {
+        "Name": "I空间翘曲器",
+        "ZHCN": "消耗品，用来激活安装了曲率引擎的机甲和深空货舰的曲率航行。\n使用<color=\"#FD965ECC\">CapsLock</color>键消耗一个翘曲器启动机甲的曲率引擎\n在星环共享空间中储存上限为<color=\"#FD965ECC\">200</color>，且会<color=\"#FD965ECC\">自动填充</color>到深空物流港的翘曲器槽",
+        "ENUS": "Consumables used to activate the curvature navigation of mecha and deep space cargo ships equipped with curvature engines.\nUsing the <color=\"#FD965ECC\">CapsLock</color> key consumes a warp drive to activate the mech's curvature engine \nThe storage capacity limit in the Star Ring shared space is <color=\"#FD965ECC\">200</color>, and it will <color=\"#FD965ECC\">automatically fill up</color> the warp drive slot of the Deep Space Logistics Port"
+    },
+    {
         "Name": "曲率引擎",
         "ZHCN": "曲率引擎",
         "ENUS": "Curvature Engine"
@@ -2665,8 +2670,8 @@
     },
     {
         "Name": "I乾坤-原矿",
-        "ZHCN": "存有巨额矿物资源的次级维度空间，只有星环共享储存空间才有足够的空间让其从次级维度倒出。\n<color=\"#FD965ECC\">手持该物品，在打开的共享储存空间窗口中点击空闲的格子，即可存入，存入时将转化为对应原矿</color>\n\n<color=\"#FD965ECC\">一个星环共享储存空间只允许通过这种方式使一种原矿储存量超过200000，当有其他原矿在共享空间中存入超过200000时，将无法点击空闲的格子存入</color>",
-        "ENUS": "The secondary dimensional space, which holds vast mineral resources, can only be emptied from the secondary dimension by the shared storage space of the orbital ring.\n<color=\"#FD965ECC\">Holding this item, click on an empty slot in the opened shared storage space window to store it. When stored, it will be converted into the corresponding raw ore</color>\n\n<color=\"#FD965ECC\">A shared storage space in a orbital ring only allows one type of raw ore to exceed a storage capacity of 200,000 in this way. When other types of raw ore are stored in the shared space and exceed 200,000, it will be impossible to click on an empty slot to store them</color>"
+        "ZHCN": "存有巨额矿物资源的次级维度空间，只有星环共享储存空间才有足够的空间让其从次级维度倒出。\n<color=\"#FD965ECC\">手持该物品，在打开的共享储存空间窗口中点击空闲的格子，即可存入，存入时将转化为对应原矿</color>\n\n<color=\"#FD965ECC\">一个星环共享储存空间只允许通过这种方式使一种原矿储存量超过200000（但是不得超过21亿），当有其他原矿在共享空间中存入超过200000时，将无法点击空闲的格子存入</color>",
+        "ENUS": "The secondary dimensional space, which holds vast mineral resources, can only be emptied from the secondary dimension by the shared storage space of the orbital ring.\n<color=\"#FD965ECC\">Holding this item, click on an empty slot in the opened shared storage space window to store it. When stored, it will be converted into the corresponding raw ore</color>\n\n<color=\"#FD965ECC\">A shared storage space in a orbital ring only allows one type of raw ore to exceed a storage capacity of 200,000 in this way（But it must not exceed 2.1 billion）. When other types of raw ore are stored in the shared space and exceed 200,000, it will be impossible to click on an empty slot to store them</color>"
     },
     {
         "Name": "生物发酵甲烷",
@@ -4395,8 +4400,8 @@
     },
     {
         "Name": "I星环说明书",
-        "ZHCN": "一个行星上拥有两个<color=\"#FD965ECC\">星环</color>，分别在赤道的上下各一个，（小卫星只有赤道一个）每个星环可拥有两个<color=\"#FD965ECC\">组件环</color>，组件环由<color=\"#FD965ECC\">轨道连接组件</color>完整绕星球一圈建造而成，会将属于这个星环的轨道设施串联起来。\n当星环建成一个组件环时，将获得<color=\"#FD965ECC\">共享空间</color>，属于这个星环的太空电梯，若将物品槽的<color=\"#FD965ECC\">存储上限拉到最大</color>，物品数量大于上限的一半时，超过一半的部分会被送入这个星环的共享空间。低于一半时，会尝试从共享空间补充到上限的一半。生产类轨道设施原料的获取和产物的存入会优先选择共享空间。\n 当星环建成第二个组件环时，将获得<color=\"#FD965ECC\">额外20个</color>轨道设施建造点位，夹在原20个点位中间（只有额外20个轨道设施点位，没有太空电梯的，额外的20个轨道设施靠共享空间提供物品存取能力）。",
-        "ENUS": "A planet possesses two <color=\"#FD965ECC\">Orbital Rings</color>, one located above and one below the equator.（The small satellite only has one equator） Each Orbital Ring can have two <color=\"#FD965ECC\">component rings</color>, which are constructed by <color=\"#FD965ECC\">Orbital Connection Components</color> to complete a full orbit around the planet, thereby connecting the orbital facilities belonging to that Orbital Ring. \n When a component ring of the Orbital Ring is completed, it will gain a <color=\"#FD965ECC\">shared space</color>. For the space elevator belonging to this Orbital Ring, if the storage limit of the item slot is <color=\"#FD965ECC\">maximized</color> and the number of items exceeds half of the limit, the excess items will be sent to the shared space of this Orbital Ring. If the number of items is less than half, an attempt will be made to replenish the shared space to half of the limit. For the acquisition of raw materials for production-related orbital facilities and the storage of products, the underlying space elevator will be chosen first, followed by the shared space. \n When the second component ring of the Orbital Ring is completed, an <color=\"#FD965ECC\">additional 20</color> orbital facility construction points will be obtained, sandwiched between the original 20 points (only additional 20 orbital facility points are available, without a space elevator; the additional 20 orbital facilities rely on the shared space to provide item storage and retrieval capabilities)."
+        "ZHCN": "一个行星上拥有两个<color=\"#FD965ECC\">星环</color>，分别在赤道的上下各一个，（小卫星只有赤道一个）每个星环可拥有两个<color=\"#FD965ECC\">组件环</color>，组件环由<color=\"#FD965ECC\">轨道连接组件</color>完整绕星球一圈建造而成，会将属于这个星环的轨道设施串联起来。\n当星环建成一个组件环时，将获得<color=\"#FD965ECC\">共享空间</color>，属于这个星环的太空电梯，若将物品槽的<color=\"#FD965ECC\">存储上限拉到最大</color>，物品数量大于上限的一半时，超过一半的部分会被送入这个星环的共享空间。低于一半时，会尝试从共享空间补充到上限的一半。生产类轨道设施原料的获取和产物的存入会优先选择共享空间。\n共享空间的存入上限为每种20w，翘曲器为200\n 当星环建成第二个组件环时，将获得<color=\"#FD965ECC\">额外20个</color>轨道设施建造点位，夹在原20个点位中间（只有额外20个轨道设施点位，没有太空电梯的，额外的20个轨道设施靠共享空间提供物品存取能力）。",
+        "ENUS": "A planet possesses two <color=\"#FD965ECC\">Orbital Rings</color>, one located above and one below the equator.（The small satellite only has one equator） Each Orbital Ring can have two <color=\"#FD965ECC\">component rings</color>, which are constructed by <color=\"#FD965ECC\">Orbital Connection Components</color> to complete a full orbit around the planet, thereby connecting the orbital facilities belonging to that Orbital Ring. \n When a component ring of the Orbital Ring is completed, it will gain a <color=\"#FD965ECC\">shared space</color>. For the space elevator belonging to this Orbital Ring, if the storage limit of the item slot is <color=\"#FD965ECC\">maximized</color> and the number of items exceeds half of the limit, the excess items will be sent to the shared space of this Orbital Ring. If the number of items is less than half, an attempt will be made to replenish the shared space to half of the limit. For the acquisition of raw materials for production-related orbital facilities and the storage of products, the underlying space elevator will be chosen first, followed by the shared space. \nThe upper limit for deposits in shared spaces is 200,000 for each type, and 200 for warping devices \n When the second component ring of the Orbital Ring is completed, an <color=\"#FD965ECC\">additional 20</color> orbital facility construction points will be obtained, sandwiched between the original 20 points (only additional 20 orbital facility points are available, without a space elevator; the additional 20 orbital facilities rely on the shared space to provide item storage and retrieval capabilities)."
     },
     {
         "Name": "太空电梯",
@@ -4589,14 +4594,14 @@
         "ENUS": "Equipped with laser beacons, it can guide transport ships in orbit to accurately airdrop goods to the guidance station, completing interstellar material reception without the need to build expensive space elevators and logistics ports.\n<color=\"#FD965ECC\">Cannot choose interstellar supply</color>"
     },
     {
-        "Name": "拆除基座标题",
-        "ZHCN": "错误拆除提示",
-        "ENUS": "Error Removal Prompt"
+        "Name": "T接入共享储存",
+        "ZHCN": "接入共享储存",
+        "ENUS": "Access to shared storage"
     },
     {
-        "Name": "拆除基座文字",
-        "ZHCN": "您正在拆除一个装有核心的建筑基座，请先拆除核心，再尝试拆除基座",
-        "ENUS": "You are dismantling a building base with a core. Please remove the core first and then try to remove the base"
+        "Name": "共享储存",
+        "ZHCN": "该槽位是否接入<color=\"#FD965ECC\">共享空间</color>\n\n只有建成星环才可以勾选\n\n物品<color=\"#FD965ECC\">大于</color>上限一半时，大于一半的部分将<color=\"#FD965ECC\">存入</color>共享空间\n物品<color=\"#FD965ECC\">小于</color>上限一半时，尝试从共享空间<color=\"#FD965ECC\">补足</color>到一半\n\n上层同步轨道生产设施的产物在此设为不接入时，产物将不会输出到共享空间",
+        "ENUS": "Is this slot connected to the <color=\"#FD965ECC\">shared space</color>\n\n Only after the orbital ring is built can it be checked\n\n When the item <color=\"#FD965ECC\">exceeds</color> half of the upper limit, the portion exceeding half will <color=\"#FD965ECC\">be stored</color> in the shared space\n When the item is <color=\"#FD965ECC\">less</color> than half of the upper limit, try to <color=\"#FD965ECC\">replenish</color> it to half from the shared space\n\nWhen the output from the upper-level Orbital production facility is set to not be accessed, it will not be output to the shared space"
     },
     {
         "Name": "星环解锁",
@@ -4839,6 +4844,16 @@
         "Name": "I损伤定义护盾",
         "ZHCN": "在规则修改实验中被异化了的护盾发生器，其容量变得异常的小，并且极易过载烧毁，然而在烧毁前却能接下任意威力的伤害，在规则的至高伟力前，规则以下的攻击都将无能为力。\n处于背包中时，护盾每接下一次攻击，都<color=\"#FD965ECC\">消耗</color>一个损伤定义护盾，并将本次攻击伤害<color=\"#FD965ECC\">强制定义为10点</color>",
         "ENUS": "In the experiment of rule modification, the shield generator, which had been alienated, had its capacity reduced to an abnormally small level and became extremely prone to overload and burnout. However, before it burned out, it could withstand damage of any power. In the face of the supreme power of the rules, attacks below the rules were powerless.\nWhen in the backpack, every time the shield receives an attack, it will <color=\"#FD965ECC\">consume</color> one damage-defining shield, and forcefully <color=\"#FD965ECC\">define the damage of this attack as 10 points</color>"
+    },
+    {
+        "Name": "无尽水罐",
+        "ZHCN": "无尽水罐",
+        "ENUS": "Infinite Tank"
+    },
+    {
+        "Name": "I无尽水罐",
+        "ZHCN": "从人们潜意识里沟壑难平的欲望中打捞出来的水罐，其无限涌出的液体，是否有填平欲望的一天？\n输入5000任意一种流体后，将<color=\"#FD965ECC\">无限</color>输出该流体",
+        "ENUS": "The water jar, salvaged from the deep and unquenchable desires lurking in people's subconscious, will its endless flow of liquid ever fill up those desires one day?\n After inputting 5000 units of any fluid, output the fluid <color=\"#FD965ECC\">infinitely</color>"
     },
     {
         "Name": "光速修改",

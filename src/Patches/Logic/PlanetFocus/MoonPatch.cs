@@ -13,7 +13,7 @@ namespace ProjectOrbitalRing.Patches.Logic.PlanetFocus
 {
     internal class MoonPatch
     {
-        private static ConcurrentDictionary<ValueTuple<int, int>, int> ColliderAccumulatorIncData = new ConcurrentDictionary<ValueTuple<int, int>, int>();
+        public static ConcurrentDictionary<ValueTuple<int, int>, int> ColliderAccumulatorIncData = new ConcurrentDictionary<ValueTuple<int, int>, int>();
 
         public static void ApplyPatch(Harmony harmonyInstance)
         {

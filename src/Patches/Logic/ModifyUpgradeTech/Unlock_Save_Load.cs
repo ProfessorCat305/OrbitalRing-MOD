@@ -75,6 +75,7 @@ namespace ProjectOrbitalRing.Patches.Logic.ModifyUpgradeTech
            new gachaData { item = ProtoID.I黑萝卜, count = 1 },
            new gachaData { item = ProtoID.I朗基努斯之枪, count = 1 },
            new gachaData { item = ProtoID.I损伤定义护盾, count = 500 },
+           new gachaData { item = ProtoID.I无尽水罐, count = 1 },
         };
         private static int gachaIndex = 0;
 

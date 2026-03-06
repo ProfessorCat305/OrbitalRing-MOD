@@ -21,13 +21,7 @@ namespace ProjectOrbitalRing.Patches.UI.UIOrbitalRingStorageWindow
         [HarmonyPostfix]
         public static void Init(UIGame __instance)
         {
-            //if (_planetFocusBtn) return;
-
             ProjectOrbitalRing.OrbitalRingStorageWindow = UIOrbitalRingStorageWindow.CreateWindow();
-
-            //_planetFocusBtn = Util.CreateButton("星球特质".TranslateFromJson());
-            //Util.NormalizeRectWithTopLeft(_planetFocusBtn, 5, -40, __instance.planetDetail.rectTrans);
-            //_planetFocusBtn.onClick += _ => ProjectOrbitalRing.PlanetFocusWindow.OpenWindow();
         }
 
         [HarmonyPatch(typeof(UIGame), nameof(UIGame.OnPlayerInspecteeChange))]
