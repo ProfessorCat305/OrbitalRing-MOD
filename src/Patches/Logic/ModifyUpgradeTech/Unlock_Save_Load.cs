@@ -6,9 +6,7 @@ using static ProjectOrbitalRing.Patches.Logic.ModifyUpgradeTech.ModifyUpgradeTec
 using static ProjectOrbitalRing.Utils.RandomUtils;
 using ProjectOrbitalRing.Utils;
 using static ProjectOrbitalRing.Patches.Logic.MathematicalRateEngine.EnergyCalculate;
-using UnityEngine;
-using UnityEngine.Playables;
-using ProjectOrbitalRing.Patches.Logic.OrbitalRing;
+using static ProjectOrbitalRing.ProjectOrbitalRing;
 
 namespace ProjectOrbitalRing.Patches.Logic.ModifyUpgradeTech
 {
@@ -764,11 +762,33 @@ namespace ProjectOrbitalRing.Patches.Logic.ModifyUpgradeTech
         static void SpeedOfLightModification(int techId)
         {
             if (techId == 1989) {
-                float luminosityChange = (float)(GetRandDouble() / 3);
+                float luminosityChange = (float)(GetRandDouble() / 6);
                 for (int i = 0; i < GameMain.galaxy.starCount; i++) {
                     if (GameMain.galaxy.stars[i].type != EStarType.BlackHole && GameMain.galaxy.stars[i].type != EStarType.NeutronStar) {
                         GameMain.galaxy.stars[i].luminosity += luminosityChange;
                     }
+                }
+                UpdateDysonSpheresEnergyGen();
+            }
+        }
+
+        private static void UpdateDysonSpheresEnergyGen()
+        {
+            for (int j = 0; j < GameMain.data.dysonSpheres.Length; j++) {
+                if (GameMain.data.dysonSpheres[j] == null) continue;
+                if (GameMain.data.dysonSpheres[j].starData.type == EStarType.BlackHole || GameMain.data.dysonSpheres[j].starData.type == EStarType.NeutronStar) continue;
+                GameMain.data.dysonSpheres[j].energyGenPerSail = Configs.freeMode.solarSailEnergyPerTick * 10;
+                GameMain.data.dysonSpheres[j].energyGenPerNode = Configs.freeMode.dysonNodeEnergyPerTick * 2;
+                GameMain.data.dysonSpheres[j].energyGenPerFrame = Configs.freeMode.dysonFrameEnergyPerTick * 2;
+                GameMain.data.dysonSpheres[j].energyGenPerShell = Configs.freeMode.dysonShellEnergyPerTick * 10;
+                if (GameMain.data.dysonSpheres[j].starData != null) {
+                    double num2 = (double)GameMain.data.dysonSpheres[j].starData.dysonLumino;
+                    GameMain.data.dysonSpheres[j].energyGenPerSail = (long)((double)GameMain.data.dysonSpheres[j].energyGenPerSail * num2);
+                    GameMain.data.dysonSpheres[j].energyGenPerNode = (long)((double)GameMain.data.dysonSpheres[j].energyGenPerNode * num2);
+                    GameMain.data.dysonSpheres[j].energyGenPerFrame = (long)((double)GameMain.data.dysonSpheres[j].energyGenPerFrame * num2);
+                    GameMain.data.dysonSpheres[j].energyGenPerShell = (long)((double)GameMain.data.dysonSpheres[j].energyGenPerShell * num2);
+                    GameMain.data.dysonSpheres[j].needRecalculatePower = true;
+                    GameMain.data.dysonSpheres[j].BeforeGameTick(0); // 参数不使用，随便传一个0，调用这个函数让戴森球更新一下发电量
                 }
             }
         }
@@ -944,6 +964,7 @@ namespace ProjectOrbitalRing.Patches.Logic.ModifyUpgradeTech
                     GameMain.galaxy.stars[i].luminosity = StarLuminosity[i];
                 }
             }
+            UpdateDysonSpheresEnergyGen();
         }
 
         public static void AddUniverseObserveBuilding(int itemId)

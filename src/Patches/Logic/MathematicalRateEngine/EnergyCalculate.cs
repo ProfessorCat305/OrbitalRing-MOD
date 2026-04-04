@@ -2,15 +2,14 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using static ProjectOrbitalRing.ProjectOrbitalRing;
 
 namespace ProjectOrbitalRing.Patches.Logic.MathematicalRateEngine
 {
     internal class EnergyCalculate
     {
         public static DysonSphere MathematicalRateEngineDysonSphere = null;
+        private static int MathematicalRateEngineStarIndex = -1;
         public static long SecondLevelEnergy = 0;
         public static int[] SecondLevelLayer = new int[10];
 
@@ -99,6 +98,7 @@ namespace ProjectOrbitalRing.Patches.Logic.MathematicalRateEngine
                     if (GameMain.data.dysonSpheres[j] == null) continue;
                     if (GameMain.data.dysonSpheres[j].starData.index == star.index) {
                         GameMain.data.dysonSpheres[j].swarm.RemoveSailsByOrbit(-1);
+                        MathematicalRateEngineStarIndex = star.index;
                         if (MathematicalRateEngineDysonSphere == null) {
                             MathematicalRateEngineDysonSphere = GameMain.data.dysonSpheres[j];
                         }
@@ -134,11 +134,11 @@ namespace ProjectOrbitalRing.Patches.Logic.MathematicalRateEngine
 
         internal static void Export(BinaryWriter w)
         {
-            if (MathematicalRateEngineDysonSphere == null) {
+            if (MathematicalRateEngineStarIndex == -1) {
                 w.Write(-1);
                 return;
             }
-            w.Write(MathematicalRateEngineDysonSphere.starData.index);
+            w.Write(MathematicalRateEngineStarIndex);
             w.Write(SecondLevelEnergy);
             for (int i = 0; i < SecondLevelLayer.Length; i++) {
                 w.Write(SecondLevelLayer[i]);
@@ -149,21 +149,14 @@ namespace ProjectOrbitalRing.Patches.Logic.MathematicalRateEngine
         {
             IntoOtherSave();
             try {
-                int starIndex = r.ReadInt32();
-                if (starIndex == -1) {
+                MathematicalRateEngineStarIndex = r.ReadInt32();
+                if (MathematicalRateEngineStarIndex == -1) {
                     MathematicalRateEngineDysonSphere = null;
                     return;
                 }
-                for (int j = 0; j < GameMain.data.dysonSpheres.Length; j++) {
-                    if (GameMain.data.dysonSpheres[j] == null) continue;
-                    if (GameMain.data.dysonSpheres[j].starData.index == starIndex) {
-                        MathematicalRateEngineDysonSphere = GameMain.data.dysonSpheres[j];
-                        SecondLevelEnergy = r.ReadInt64();
-                        for (int i = 0; i < SecondLevelLayer.Length; i++) {
-                            SecondLevelLayer[i] = r.ReadInt32();
-                        }
-                        return;
-                    }
+                SecondLevelEnergy = r.ReadInt64();
+                for (int i = 0; i < SecondLevelLayer.Length; i++) {
+                    SecondLevelLayer[i] = r.ReadInt32();
                 }
             } catch (EndOfStreamException) {
                 // ignored

@@ -8567,14 +8567,14 @@
         "ItemPoints": [
             10
         ],
-        "HashNeeded": 360000,
+        "HashNeeded": 720000,
         "UnlockRecipes": [],
         "UnlockFunctions": [],
         "UnlockValues": [],
         "Published": true,
         "Level": 1,
         "MaxLevel": 10000,
-        "LevelCoef1": 0,
+        "LevelCoef1": 720000,
         "LevelCoef2": 0,
         "IsLabTech": true,
         "PreTechsMax": false,

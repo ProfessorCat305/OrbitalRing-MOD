@@ -1,15 +1,9 @@
-﻿using GalacticScale;
-using HarmonyLib;
-using MoreMegaStructure;
+﻿using HarmonyLib;
 using ProjectOrbitalRing.Utils;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
+using static ProjectOrbitalRing.ProjectOrbitalRing;
 
 namespace ProjectOrbitalRing.Patches.Logic.MathematicalRateEngine
 {
@@ -163,30 +157,36 @@ namespace ProjectOrbitalRing.Patches.Logic.MathematicalRateEngine
         [HarmonyPatch(typeof(UIDEOverview), "_OnUpdate")]
         public static void UIValueUpdate()
         {
-            try
-            {
-                if (!ProjectOrbitalRing.MoreMegaStructureCompatibility)
-                {
-                    if (curStar.type == EStarType.BlackHole) {
-                        long DysonEnergy = (curDysonSphere.energyGenCurrentTick - curDysonSphere.energyReqCurrentTick);
+            try {
+                if (curStar.type == EStarType.BlackHole) {
+                    if (ProjectOrbitalRing.MoreMegaStructureCompatibility) {
+                        try {
+                            // 使用反射动态获取类型
+                            var mmType = Type.GetType("MoreMegaStructure.MoreMegaStructure, MoreMegaStructure");
+                            var starMegaType = mmType?.GetField("StarMegaStructureType")?.GetValue(null) as int[];
 
-                        if (!GameMain.history.TechUnlocked(1802)) {
-                            RightMaxPowGenValueText.text = Capacity2Str(DysonEnergy) + "?";
-                        } else if (!GameMain.history.TechUnlocked(1952)) {
-                            RightMaxPowGenValueText.text = Capacity2Str(DysonEnergy) + " g";
-                        } else if (!GameMain.history.TechUnlocked(1960)) {
-                            RightMaxPowGenValueText.text = Capacity2Str(DysonEnergy / 10000) + "休谟".TranslateFromJson();
-                        } else {
-                            long ThirdLevelEnergy = DysonEnergy - EnergyCalculate.SecondLevelEnergy;
-                            double coefficient = ThirdLevelEnergy / EnergyCalculate.ThirdLevelRatio;
-                            RightMaxPowGenValueText.text = Capacity2Str((long)((EnergyCalculate.SecondLevelEnergy / 10000) * coefficient)) + "休谟".TranslateFromJson();
-                            //RightMaxPowGenValueText.text = coefficient.ToString() + "休谟";
+                            if (starMegaType?[curStar.index] != 0) {
+                                return; // 如果是更多巨构mod的其他巨构，则跳过数学率引擎的处理
+                            }
+                        } catch (Exception ex) {
                         }
                     }
+                    long DysonEnergy = (curDysonSphere.energyGenCurrentTick - curDysonSphere.energyReqCurrentTick);
+
+                    if (!GameMain.history.TechUnlocked(1802)) {
+                        RightMaxPowGenValueText.text = Capacity2Str(DysonEnergy) + "?";
+                    } else if (!GameMain.history.TechUnlocked(1952)) {
+                        RightMaxPowGenValueText.text = Capacity2Str(DysonEnergy) + " g";
+                    } else if (!GameMain.history.TechUnlocked(1960)) {
+                        RightMaxPowGenValueText.text = Capacity2Str(DysonEnergy / 10000) + "休谟".TranslateFromJson();
+                    } else {
+                        long ThirdLevelEnergy = DysonEnergy - EnergyCalculate.SecondLevelEnergy;
+                        double coefficient = ThirdLevelEnergy / EnergyCalculate.ThirdLevelRatio;
+                        RightMaxPowGenValueText.text = Capacity2Str((long)((EnergyCalculate.SecondLevelEnergy / 10000) * coefficient)) + "休谟".TranslateFromJson();
+                        //RightMaxPowGenValueText.text = coefficient.ToString() + "休谟";
+                    }
                 }
-            }
-            catch (Exception)
-            {
+            } catch (Exception) {
                 //Debug.LogWarning("Unable to edit the DysonUI's PowerGen Value.");
             }
         }

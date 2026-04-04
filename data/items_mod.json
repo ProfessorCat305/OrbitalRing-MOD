@@ -312,7 +312,7 @@
         "IsFluid": false,
         "Productive": true,
         "SubID": 0,
-        "MiningFrom": "黄铁矿脉",
+        "MiningFrom": "硫磺矿脉",
         "ProduceFrom": "",
         "Grade": 0,
         "Upgrades": [],

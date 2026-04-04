@@ -1,19 +1,10 @@
-﻿using CommonAPI.Systems;
-using GalacticScale;
-using HarmonyLib;
-using ProjectOrbitalRing.Compatibility;
+﻿using HarmonyLib;
 using ProjectOrbitalRing.Patches.Logic.MathematicalRateEngine;
 using ProjectOrbitalRing.Utils;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Reflection;
-using System.Security.Cryptography;
-using System.Text;
-using UnityEngine;
-using WinAPI;
-using static GalacticScale.PatchOnUIGalaxySelect;
+using static ProjectOrbitalRing.ProjectOrbitalRing;
 using static ProjectOrbitalRing.Patches.Logic.ModifyUpgradeTech.AddUpgradeTech;
 
 namespace ProjectOrbitalRing.Patches.Logic.ModifyUpgradeTech
@@ -886,9 +877,9 @@ namespace ProjectOrbitalRing.Patches.Logic.ModifyUpgradeTech
         }
 
         // 检测黑洞巨构功率，达成目标解锁通关科技
-        [HarmonyPatch(typeof(DysonSphere), nameof(DysonSphere.BeforeGameTick))]
+        [HarmonyPatch(typeof(DysonSphere), nameof(DysonSphere.GameTick))]
         [HarmonyPostfix]
-        public static void BeforeGameTickPatch(DysonSphere __instance)
+        public static void DysonSphere_GameTickPatch(DysonSphere __instance)
         {
             if (__instance.starData.type == EStarType.BlackHole) {
                 if (ProjectOrbitalRing.MoreMegaStructureCompatibility) {
@@ -900,7 +891,7 @@ namespace ProjectOrbitalRing.Patches.Logic.ModifyUpgradeTech
                         if (starMegaType?[__instance.starData.index] != 0) {
                             return; // 如果是更多巨构mod的其他巨构，则跳过数学率引擎的处理
                         }
-                    } catch(Exception ex) {
+                    } catch (Exception ex) {
                     }
                 }
                 long DysonEnergy = (__instance.energyGenCurrentTick - __instance.energyReqCurrentTick);
@@ -937,7 +928,7 @@ namespace ProjectOrbitalRing.Patches.Logic.ModifyUpgradeTech
                 } else if (!GameMain.history.TechUnlocked(1814) && GameMain.history.TechUnlocked(1960)) {
                     long ThirdLevelEnergy = DysonEnergy - EnergyCalculate.SecondLevelEnergy;
                     double coefficient = ThirdLevelEnergy / EnergyCalculate.ThirdLevelRatio;
-                    if ((long)((EnergyCalculate.SecondLevelEnergy / 10000) * coefficient) > 20000) {
+                    if ((long)(((double)EnergyCalculate.SecondLevelEnergy / 10000) * coefficient) > 20000) {
                         GameMain.history.UnlockTech(1814);
                     }
                 }
