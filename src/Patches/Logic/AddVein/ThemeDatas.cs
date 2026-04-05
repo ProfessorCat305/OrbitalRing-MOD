@@ -217,7 +217,7 @@ namespace ProjectOrbitalRing.Patches.Logic.AddVein
             },
             {
                 23, // 橙晶荒漠
-                new ThemeData(new[] { 0, 1, 2, 3, 4, 5, 14 }, new[] { 3, 7, 6, 4, 4, 0, 3 }, new[] { 0.2f, 0.6f, 0.6f, 0.7f, 0.5f, 0, 0.5f }, new[] { 0.4f, 0.8f, 0.6f, 0.5f, 0.6f, 0, 0.5f },
+                new ThemeData(new[] { 0, 1, 2, 3, 4, 5, 14 }, new[] { 4, 7, 6, 4, 4, 0, 3 }, new[] { 0.4f, 0.6f, 0.6f, 0.7f, 0.5f, 0, 0.5f }, new[] { 0.4f, 0.8f, 0.6f, 0.5f, 0.6f, 0, 0.5f },
                     Array.Empty<int>(), Array.Empty<float>(), new[] { 17, 18, 19 }, new[]
                 {
                     0.0f, 0.8f, 0.83f, 1.0f, //

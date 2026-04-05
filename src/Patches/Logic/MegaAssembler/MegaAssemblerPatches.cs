@@ -119,7 +119,6 @@ namespace ProjectOrbitalRing.Patches.Logic.MegaAssembler
         public static bool GameTick_AssemblerComponent_InternalUpdate_Patch(ref AssemblerComponent __instance, PlanetFactory factory,
             float power)
         {
-            
             int buildIngItemId = factory.entityPool[__instance.entityId].protoId;
 
             // 更新后配方数据不再每个建筑一份，改数据会改所有使用这个配方的建筑，导致全部30堆叠生产
@@ -132,20 +131,11 @@ namespace ProjectOrbitalRing.Patches.Logic.MegaAssembler
 
             // 水世界星球特质处理入口
             SetAssmeblerWaterFull(ref __instance, factory);
-            bool flag;
             // 如果产物和原料是同一种东西，产物会内部直接填回原料，不再需要在绿塔外拉个回环线
             if (buildIngItemId == ProtoID.I生态温室 || buildIngItemId == ProtoID.I轨道水培舱 || buildIngItemId == 2310 || buildIngItemId == ProtoID.I星环对撞机 || buildIngItemId == ProtoID.I黑盒) {
                 for (int i = 0; i < __instance.produced.Length; i++) {
                     for (int j = 0; j < __instance.recipeExecuteData.requireCounts.Length; j++) {
-                        flag = __instance.recipeExecuteData.products[i] == __instance.needs[j] && __instance.produced[i] > 0;
-                        if (__instance.recipeExecuteData.products[i] == __instance.recipeExecuteData.requires[j]) {
-                            if (__instance.produced[i] > __instance.recipeExecuteData.productCounts[i] * 19) {
-                                if (__instance.served[j] < __instance.recipeExecuteData.requireCounts[i] * 20) {
-                                    flag = true;
-                                }
-                            }
-                        }
-                        if (flag) {
+                        if (__instance.recipeExecuteData.products[i] == __instance.needs[j] && __instance.produced[i] > 0) {
                             if (__instance.produced[i] >= __instance.recipeExecuteData.requireCounts[j] * 2) {
                                 __instance.produced[i] -= __instance.recipeExecuteData.requireCounts[j] * 2;
                                 __instance.served[j] += __instance.recipeExecuteData.requireCounts[j] * 2;

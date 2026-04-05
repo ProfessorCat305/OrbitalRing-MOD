@@ -7287,7 +7287,7 @@
         "ID": 787,
         "Name": "石英砂玻璃",
         "Description": "R石英砂玻璃",
-        "IconPath": "",
+        "IconPath": "Assets/texpack/R石英砂玻璃",
         "Type": 1,
         "GridIndex": 3205,
         "Time": 120,
