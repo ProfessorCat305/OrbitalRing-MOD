@@ -49,6 +49,7 @@ namespace ProjectOrbitalRing.Patches.Logic.AssemblerModule
                 case 29:
                 case 52:
                 case 521:
+                    // 下面的是三级种田
                 case 775:
                 case 778:
                 case 847:

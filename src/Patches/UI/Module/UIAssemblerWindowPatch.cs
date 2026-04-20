@@ -50,11 +50,11 @@ namespace ProjectOrbitalRing.Patches.UI
                     break;
             }
             switch (recipeId) {
-                case 624:
                 case 775:
                 case 778:
                 case 784:
-                case 800:
+                case 847:
+                case 848:
                     return true;
                 default:
                     break;

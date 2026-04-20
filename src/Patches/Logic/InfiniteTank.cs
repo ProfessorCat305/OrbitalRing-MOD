@@ -42,8 +42,9 @@ namespace ProjectOrbitalRing.Patches.Logic
                 } else if (!__instance.isOutput0 && __instance.inputSwitch) {
                     byte b;
                     byte b2;
-                    if (!InfiniteTankDate.Contains((factory.planetId, __instance.id))) {
-                        if (__instance.fluidId > 0 && __instance.fluidCount < __instance.fluidCapacity && cargoTraffic.TryPickItemAtRear(__instance.belt0, __instance.fluidId, null, out b, out b2) > 0) {
+                    //if (!InfiniteTankDate.Contains((factory.planetId, __instance.id))) {
+                    if (__instance.fluidId > 0 && __instance.fluidCount < __instance.fluidCapacity && cargoTraffic.TryPickItemAtRear(__instance.belt0, __instance.fluidId, null, out b, out b2) > 0) {
+                        if (!InfiniteTankDate.Contains((factory.planetId, __instance.id))) {
                             __instance.fluidCount += (int)b;
                             __instance.fluidInc += (int)b2;
                             if (__instance.fluidCount > INFINITE_NUM) {
@@ -52,18 +53,19 @@ namespace ProjectOrbitalRing.Patches.Logic
                                 __instance.fluidCount = 1;
                             }
                         }
-                        if (__instance.fluidId == 0) {
-                            int num3 = cargoTraffic.TryPickItemAtRear(__instance.belt0, 0, ItemProto.fluids, out b, out b2);
-                            if (num3 > 0) {
-                                __instance.fluidId = num3;
-                                __instance.fluidCount += (int)b;
-                                __instance.fluidInc += (int)b2;
-                            }
-                        }
-                        if (__instance.fluidCount >= __instance.fluidCapacity && cargoTraffic.GetItemIdAtRear(__instance.belt0) == __instance.fluidId) {
-                            __instance.TryPickItem(tankPool, cargoTraffic, ref num, __instance.belt0);
+                    }
+                    if (__instance.fluidId == 0) {
+                        int num3 = cargoTraffic.TryPickItemAtRear(__instance.belt0, 0, ItemProto.fluids, out b, out b2);
+                        if (num3 > 0) {
+                            __instance.fluidId = num3;
+                            __instance.fluidCount += (int)b;
+                            __instance.fluidInc += (int)b2;
                         }
                     }
+                    if (__instance.fluidCount >= __instance.fluidCapacity && cargoTraffic.GetItemIdAtRear(__instance.belt0) == __instance.fluidId) {
+                        __instance.TryPickItem(tankPool, cargoTraffic, ref num, __instance.belt0);
+                    }
+                    //}
                 }
             }
 
@@ -87,7 +89,7 @@ namespace ProjectOrbitalRing.Patches.Logic
                 __instance._Close();
                 return;
             }
-            TankComponent tankComponent = __instance.storage.tankPool[__instance.tankId];
+            ref TankComponent tankComponent = ref __instance.storage.tankPool[__instance.tankId];
             if (tankComponent.id != __instance.tankId) {
                 __instance._Close();
                 return;

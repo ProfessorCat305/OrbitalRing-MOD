@@ -37,6 +37,7 @@ namespace ProjectOrbitalRing.Patches.Logic.Farm
                                 break;
                             }
                         } else {
+                            factory.factorySystem.TakeBackItems_Assembler(GameMain.mainPlayer, assemblerId2);
                             factory.factorySystem.assemblerPool[assemblerId2].SetRecipe(factory.factorySystem.assemblerPool[assemblerId].recipeId, factory.entitySignPool);
                             is15 = true;
                         }
@@ -49,6 +50,7 @@ namespace ProjectOrbitalRing.Patches.Logic.Farm
                 }
             }
             if (!is15 && assemblerId2 != 0) {
+                factory.factorySystem.TakeBackItems_Assembler(GameMain.mainPlayer, assemblerId);
                 factory.factorySystem.assemblerPool[assemblerId].SetRecipe(factory.factorySystem.assemblerPool[assemblerId2].recipeId, factory.entitySignPool);
             }
 
@@ -70,6 +72,7 @@ namespace ProjectOrbitalRing.Patches.Logic.Farm
                                 break;
                             }
                         } else {
+                            factory.factorySystem.TakeBackItems_Assembler(GameMain.mainPlayer, assemblerId3);
                             factory.factorySystem.assemblerPool[assemblerId3].SetRecipe(factory.factorySystem.assemblerPool[assemblerId].recipeId, factory.entitySignPool);
                         }
                     }
@@ -78,6 +81,7 @@ namespace ProjectOrbitalRing.Patches.Logic.Farm
                     return;
                 }
             }
+            factory.factorySystem.TakeBackItems_Assembler(GameMain.mainPlayer, assemblerId);
             factory.factorySystem.assemblerPool[assemblerId].SetRecipe(factory.factorySystem.assemblerPool[assemblerId3].recipeId, factory.entitySignPool);
 
             return;

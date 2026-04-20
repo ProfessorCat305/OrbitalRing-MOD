@@ -35,12 +35,12 @@ namespace ProjectOrbitalRing.Patches.Logic.ModifyUpgradeTech
             tech = LDB.techs.Select(ProtoID.T批量建造2);
             tech.IsHiddenTech = true;
             tech.PreItem = new[] { 6228, };
-            //tech.UnlockValues = new[] { 1000100.0, 1000100.0, };
+            tech.UnlockValues = new[] { 1000100.0, 1000100.0, };
 
             tech = LDB.techs.Select(ProtoID.T批量建造3);
             tech.IsHiddenTech = true;
             tech.PreItem = new[] { 6228, };
-            //tech.UnlockValues = new[] { 1000100.0, 1000100.0, };
+            tech.UnlockValues = new[] { 1000100.0, 1000100.0, };
 
             tech = LDB.techs.Select(2704);
             tech.IsHiddenTech = true;
@@ -518,13 +518,13 @@ namespace ProjectOrbitalRing.Patches.Logic.ModifyUpgradeTech
             techProto.ItemPoints = new int[] { 10, 10 };
 
             techProto = LDB.techs.Select(3502);
-            techProto.UnlockValues = new double[] { 2, 5 };
+            techProto.UnlockValues = new double[] { 2, 10 };
             techProto.HashNeeded = 54000;
             techProto.Items = new int[] { 6003 };
             techProto.ItemPoints = new int[] { 10 };
 
             techProto = LDB.techs.Select(3503);
-            techProto.UnlockValues = new double[] { 3, 5, 50 };
+            techProto.UnlockValues = new double[] { 3, 10, 50 };
             techProto.HashNeeded = 108000;
             techProto.Items = new int[] { 6003 };
             techProto.ItemPoints = new int[] { 10 };

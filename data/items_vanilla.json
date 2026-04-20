@@ -1316,7 +1316,7 @@
     "DropRate": 0,
     "EnemyDropLevel": 0,
     "EnemyDropRange": [
-      0.025,
+      0.041,
       0.006
     ],
     "EnemyDropCount": 1.7,

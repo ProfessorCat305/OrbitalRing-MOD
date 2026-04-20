@@ -1811,8 +1811,7 @@
         "HashNeeded": 1800,
         "UnlockRecipes": [
             56,
-            50,
-            792
+            50
         ],
         "UnlockFunctions": [],
         "UnlockValues": [],
@@ -6957,8 +6956,12 @@
             1802
         ],
         "PreTechsImplicit": [],
-        "Items": [],
-        "ItemPoints": [],
+        "Items": [
+            6532
+        ],
+        "ItemPoints": [
+            1
+        ],
         "HashNeeded": 3600,
         "UnlockRecipes": [
             791
