@@ -76,28 +76,34 @@ namespace ProjectOrbitalRing.Compatibility
             MethodInfo OnPlanetDataSet7Prefix =
                 AccessTools.Method(assembly.GetType("GalacticScale.PatchOnUIPlanetDetail"), "OnPlanetDataSet7Prefix");
 
-            HarmonyPatch.Patch(OnPlanetDataSet7Prefix, null, null,
-                new HarmonyMethod(typeof(GalacticScale), nameof(OnPlanetDataSet_Transpiler)));
+            if (OnPlanetDataSet7Prefix != null)
+            {
+                HarmonyPatch.Patch(OnPlanetDataSet7Prefix, null, null,
+                    new HarmonyMethod(typeof(GalacticScale), nameof(OnPlanetDataSet_Transpiler)));
 
-            //HarmonyPatch.Patch(OnPlanetDataSet7Prefix, null, null,
-            //    new HarmonyMethod(typeof(PlanetGasPatches), nameof(PlanetGasPatches.OnDataSet_ChangeWaterId_Transpiler)));
+                //HarmonyPatch.Patch(OnPlanetDataSet7Prefix, null, null,
+                //    new HarmonyMethod(typeof(PlanetGasPatches), nameof(PlanetGasPatches.OnDataSet_ChangeWaterId_Transpiler)));
 
-            HarmonyPatch.Patch(OnPlanetDataSet7Prefix, null, null,
-                new HarmonyMethod(typeof(GalacticScale), nameof(OnPlanetDataSet_ChangeVeinData_Transpiler)));
+                HarmonyPatch.Patch(OnPlanetDataSet7Prefix, null, null,
+                    new HarmonyMethod(typeof(GalacticScale), nameof(OnPlanetDataSet_ChangeVeinData_Transpiler)));
+            }
 
             MethodInfo OnStarDataSet2 = AccessTools.Method(assembly.GetType("GalacticScale.PatchOnUIStarDetail"), "OnStarDataSet2");
 
-            //HarmonyPatch.Patch(OnStarDataSet2, null, null,
-            //    new HarmonyMethod(typeof(PlanetGasPatches), nameof(PlanetGasPatches.OnDataSet_ChangeWaterId_Transpiler)));
+            if (OnStarDataSet2 != null)
+            {
+                //HarmonyPatch.Patch(OnStarDataSet2, null, null,
+                //    new HarmonyMethod(typeof(PlanetGasPatches), nameof(PlanetGasPatches.OnDataSet_ChangeWaterId_Transpiler)));
 
-            //HarmonyPatch.Patch(OnStarDataSet2, null, null,
-            //    new HarmonyMethod(typeof(PlanetGasPatches), nameof(PlanetGasPatches.PlanetGen_SetPlanetTheme_Transpiler)));
+                //HarmonyPatch.Patch(OnStarDataSet2, null, null,
+                //    new HarmonyMethod(typeof(PlanetGasPatches), nameof(PlanetGasPatches.PlanetGen_SetPlanetTheme_Transpiler)));
 
-            //HarmonyPatch.Patch(OnStarDataSet2, null, null,
-            //    new HarmonyMethod(typeof(PlanetGasPatches), nameof(PlanetGasPatches.OnStarDataSet_Transpiler)));
+                //HarmonyPatch.Patch(OnStarDataSet2, null, null,
+                //    new HarmonyMethod(typeof(PlanetGasPatches), nameof(PlanetGasPatches.OnStarDataSet_Transpiler)));
 
-            HarmonyPatch.Patch(OnStarDataSet2, null, null,
-                new HarmonyMethod(typeof(GalacticScale), nameof(OnStarDataSet_ChangeVeinData_Transpiler)));
+                HarmonyPatch.Patch(OnStarDataSet2, null, null,
+                    new HarmonyMethod(typeof(GalacticScale), nameof(OnStarDataSet_ChangeVeinData_Transpiler)));
+            }
         }
 
         public static IEnumerable<CodeInstruction> SetPlanetTheme_Transpiler(IEnumerable<CodeInstruction> instructions)

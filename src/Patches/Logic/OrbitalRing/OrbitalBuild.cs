@@ -10,6 +10,18 @@ namespace ProjectOrbitalRing.Patches.Logic.OrbitalRing
 {
     internal class OrbitalBuild
     {
+        private static readonly HashSet<string> LoggedThemeCheckFailures = new HashSet<string>();
+
+        private static void LogThemeCheckFailure(PlanetData planet, int previewItem, int resolvedTheme, string reason)
+        {
+            if (planet == null) return;
+
+            string key = planet.id + ":" + previewItem + ":" + resolvedTheme + ":" + reason;
+            if (!LoggedThemeCheckFailures.Add(key)) return;
+
+            global::ProjectOrbitalRing.ProjectOrbitalRing.LogWarning($"[{reason}] itemId={previewItem}, {PlanetThemeUtils.GetThemeDebugInfo(planet)}");
+        }
+
         private static bool IsBuildingItemIdisOrbitalCore(int itemId)
         {
             switch (itemId) {
@@ -308,13 +320,17 @@ namespace ProjectOrbitalRing.Patches.Logic.OrbitalRing
 
                 if (previewItem == 2311) {
                     // 电磁轨道弹射器
-                    if (__instance.planet.theme != 11) { // 贫瘠荒漠
+                    if (PlanetThemeUtils.GetVanillaThemeId(__instance.planet) != 11) { // 贫瘠荒漠
+                        LogThemeCheckFailure(__instance.planet, previewItem, PlanetThemeUtils.GetVanillaThemeId(__instance.planet), "电磁轨道弹射器建造条件失败");
                         buildPreview.condition = (EBuildCondition)96;
                         __instance.AddErrorMessage((EBuildCondition)96, buildPreview);
                     }
                 }
                 if (previewItem == ProtoID.I低温工厂) {
-                    if (!(__instance.planet.theme == 7 || __instance.planet.theme == 10 || __instance.planet.theme == 20 || __instance.planet.theme == 24 )) { // 冰星
+                    int vanillaTheme = PlanetThemeUtils.GetVanillaThemeId(__instance.planet);
+                    if (!(vanillaTheme == 7 || vanillaTheme == 10 || vanillaTheme == 20 || vanillaTheme == 24))
+                    { // 冰星
+                        LogThemeCheckFailure(__instance.planet, previewItem, vanillaTheme, "低温工厂建造条件失败");
                         buildPreview.condition = (EBuildCondition)94;
                         __instance.AddErrorMessage((EBuildCondition)94, buildPreview);
                     }
@@ -453,14 +469,18 @@ namespace ProjectOrbitalRing.Patches.Logic.OrbitalRing
 
                 if (previewItem == 2311) {
                     // 电磁轨道弹射器
-                    if (__instance.planet.theme != 11) { // 贫瘠荒漠
+                    if (PlanetThemeUtils.GetVanillaThemeId(__instance.planet) != 11) { // 贫瘠荒漠
+                        LogThemeCheckFailure(__instance.planet, previewItem, PlanetThemeUtils.GetVanillaThemeId(__instance.planet), "电磁轨道弹射器建造条件失败");
                         buildPreview.condition = (EBuildCondition)96;
                         __result = false;
                         return false;
                     }
                 }
                 if (previewItem == ProtoID.I低温工厂) {
-                    if (!(__instance.planet.theme == 7 || __instance.planet.theme == 10 || __instance.planet.theme == 20 || __instance.planet.theme == 24)) { // 冰星
+                    int vanillaTheme = PlanetThemeUtils.GetVanillaThemeId(__instance.planet);
+                    if (!(vanillaTheme == 7 || vanillaTheme == 10 || vanillaTheme == 20 || vanillaTheme == 24))
+                    { // 冰星
+                        LogThemeCheckFailure(__instance.planet, previewItem, vanillaTheme, "低温工厂建造条件失败");
                         buildPreview.condition = (EBuildCondition)94;
                         __result = false;
                         return false;

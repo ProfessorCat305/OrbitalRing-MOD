@@ -1,6 +1,7 @@
 ﻿using HarmonyLib;
 using ProjectOrbitalRing.Patches.Logic.AssemblerModule;
 using ProjectOrbitalRing.Patches.UI;
+using ProjectOrbitalRing.Utils;
 using System;
 using System.Collections;
 using System.Collections.Concurrent;
@@ -153,7 +154,7 @@ namespace ProjectOrbitalRing.Patches.Logic.PlanetFocus
                 if (assemblerId > 0) {
                     AssemblerComponent assembler = __instance.factorySystem.assemblerPool[assemblerId];
                     // 贫瘠荒漠特质，熔炉产物自带增产
-                    if (__instance.planet.theme == 11) {
+                    if (PlanetThemeUtils.GetVanillaThemeId(__instance.planet) == 11) {
                         if ((assembler.recipeType == ERecipeType.Smelt || assembler.recipeType == (ERecipeType)11) && assembler.speed < 40000) {
                             if (__result != 0) {
                                 inc = 4;
@@ -193,7 +194,7 @@ namespace ProjectOrbitalRing.Patches.Logic.PlanetFocus
                                 return;
                             }
                             // 贫瘠荒漠特质，熔炉产物自带增产
-                            if (__instance.planet.theme == 11) {
+                            if (PlanetThemeUtils.GetVanillaThemeId(__instance.planet) == 11) {
                                 if ((ptr.recipeType == ERecipeType.Smelt || ptr.recipeType == (ERecipeType)11) && ptr.speed < 40000) {
                                     if (__result != 0) {
                                         inc = 4;

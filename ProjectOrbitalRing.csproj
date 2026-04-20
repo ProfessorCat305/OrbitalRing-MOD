@@ -263,6 +263,7 @@
     <Compile Include="src\Utils\JsonHelper.cs" />
     <Compile Include="src\Utils\KvpDeconstruct.cs" />
     <Compile Include="src\Utils\MutliPlayerPacket.cs" />
+    <Compile Include="src\Utils\PlanetThemeUtils.cs" />
     <Compile Include="src\Utils\ProtoID.cs" />
     <Compile Include="src\Utils\RandomUtils.cs" />
     <Compile Include="src\Utils\TextureHelper.cs" />

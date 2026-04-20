@@ -1,4 +1,5 @@
-﻿using HarmonyLib;
+﻿using System.Collections.Generic;
+using HarmonyLib;
 using ProjectOrbitalRing.Patches.UI.Utils;
 using ProjectOrbitalRing.Utils;
 
@@ -8,6 +9,18 @@ namespace ProjectOrbitalRing.Patches.UI.PlanetFocus
 {
     public static class UIPlanetDetailExpand
     {
+        private static readonly HashSet<int> LoggedDefaultFocusPlanetIds = new HashSet<int>();
+
+        private static void LogDefaultFocus(PlanetData planet)
+        {
+            if (planet == null) return;
+            if (!LoggedDefaultFocusPlanetIds.Add(planet.id)) return;
+
+            global::ProjectOrbitalRing.ProjectOrbitalRing.LogWarning(
+                $"[星球特质走默认分支 FocusId=6534] {PlanetThemeUtils.GetThemeDebugInfo(planet)}"
+            );
+        }
+
         private static UIButton _planetFocusBtn;
 
         [HarmonyPatch(typeof(UIGame), nameof(UIGame._OnInit))]
@@ -41,7 +54,7 @@ namespace ProjectOrbitalRing.Patches.UI.PlanetFocus
             if (notgas)
             {
                 ProjectOrbitalRing.PlanetFocusWindow.nameText.text = __instance.planet.displayName + " - " + "星球特质".TranslateFromJson();
-                switch (__instance.planet.theme) {
+                switch (PlanetThemeUtils.GetVanillaThemeId(__instance.planet)) {
                     case 1:
                         ProjectOrbitalRing.PlanetFocusWindow.FocusId = 6526;
                         break;
@@ -71,6 +84,7 @@ namespace ProjectOrbitalRing.Patches.UI.PlanetFocus
                         break;
                     default:
                         ProjectOrbitalRing.PlanetFocusWindow.FocusId = 6534;
+                        LogDefaultFocus(__instance.planet);
                         break;
                 }
 

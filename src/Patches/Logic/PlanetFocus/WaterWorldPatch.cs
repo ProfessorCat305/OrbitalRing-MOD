@@ -1,4 +1,5 @@
 ﻿using System;
+using ProjectOrbitalRing.Utils;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,7 +12,7 @@ namespace ProjectOrbitalRing.Patches.Logic.PlanetFocus
         private static readonly int[] UseWaterRecipes = { 5, 16, 24, 64, 403, 404, 512, 513, 517, 518, 702, 708, 711, 714, 797, 813, 836 };
         public static void SetAssmeblerWaterFull(ref AssemblerComponent __instance, PlanetFactory factory)
         {
-            if (factory.planet.theme != 16) {
+            if (PlanetThemeUtils.GetVanillaThemeId(factory.planet) != 16) {
                 return;
             }
             for (int i = 0; i < UseWaterRecipes.Length; i++) {

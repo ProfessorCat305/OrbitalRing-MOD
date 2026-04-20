@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection.Emit;
 using HarmonyLib;
+using ProjectOrbitalRing.Utils;
 using ProjectOrbitalRing.Patches.Logic.OrbitalRing;
 using static ProjectOrbitalRing.ProjectOrbitalRing;
 using static ProjectOrbitalRing.Patches.UI.UIAssemblerWindowPatch;
@@ -399,7 +400,8 @@ namespace ProjectOrbitalRing.Patches.Logic.AssemblerModule
 
 
                 int PowerRatio = 1000;
-                if (factory.planet.theme == 7 || factory.planet.theme == 10 || factory.planet.theme == 20 || factory.planet.theme == 24) {
+                int vanillaTheme = PlanetThemeUtils.GetVanillaThemeId(factory.planet);
+                if (vanillaTheme == 7 || vanillaTheme == 10 || vanillaTheme == 20 || vanillaTheme == 24) {
                     PowerRatio = 500;
                 }
                 var planetOrbitalRingData = OrbitalStationManager.Instance.GetPlanetOrbitalRingData(factory.planetId);

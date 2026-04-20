@@ -111,7 +111,8 @@ namespace ProjectOrbitalRing.Patches.Logic
                     LDB.items.Select(ProtoID.I大型神经网络) == null || LDB.items.Select(ProtoID.I种子) == null) {
                     return;
                 }
-                if (__instance.planet.theme == 8 || __instance.planet.theme == 25) {
+                int vanillaTheme = PlanetThemeUtils.GetVanillaThemeId(__instance.planet);
+                if (vanillaTheme == 8 || vanillaTheme == 25) {
                     //0.0500概率获得高速生长菌群
                     if (random > 0.00001 && random <= 0.05001) {
                         itemProtoID = ProtoID.I高速生长菌群;
@@ -123,7 +124,7 @@ namespace ProjectOrbitalRing.Patches.Logic
                         itemProtoID = ProtoID.I种子;
                         itemCount = randomCount5;
                     }
-                } else if (__instance.planet.theme == 14) {
+                } else if (vanillaTheme == 14) {
                     if (random > 0.00001 && random <= 0.30001) {
                         itemProtoID = ProtoID.I菌丝母株;
                         itemCount = 1;
@@ -158,18 +159,19 @@ namespace ProjectOrbitalRing.Patches.Logic
                         itemCount = 1;
                     }
                 } else {
-                    if (__instance.planet.theme == 17) {
+                    int vanillaTheme2 = PlanetThemeUtils.GetVanillaThemeId(__instance.planet);
+                    if (vanillaTheme2 == 17) {
                         //0.20概率获得未知射线遗留样本
                         if (random > 0.00001 && random <= 0.4001) {
                             itemProtoID = 6216;
                             itemCount = 1;
                         }
-                    } else if (__instance.planet.theme == 6) {
+                    } else if (vanillaTheme2 == 6) {
                         if (random > 0.00001 && random <= 0.3001) {
                             itemProtoID = ProtoID.I黑盒;
                             itemCount = 1;
                         }
-                    } else if (__instance.planet.theme == 15 || __instance.planet.theme == 22) {
+                    } else if (vanillaTheme2 == 15 || vanillaTheme2 == 22) {
                         if (random > 0.00001 && random <= 0.4001) {
                             itemProtoID = ProtoID.I文明遗物;
                             itemCount = 1;
