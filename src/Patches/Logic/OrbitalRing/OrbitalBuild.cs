@@ -239,6 +239,8 @@ namespace ProjectOrbitalRing.Patches.Logic.OrbitalRing
                                 //__result = false;
                                 //return false;
                             }
+                        } else {
+                            continue;
                         }
                         if (IsBuildingItemIdisOrbitalCore(previewItem)) {
                             flag = false;
