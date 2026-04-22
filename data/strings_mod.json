@@ -498,5 +498,75 @@
     "Name": "选择量子频道",
     "ZHCN": "选择量子频道",
     "ENUS": "Select Channel"
+  },
+  {
+    "Name": "OrbitalRingStorageWindowTitle",
+    "ZHCN": "星环共享空间",
+    "ENUS": "Orbital Ring Shared Storage"
+  },
+  {
+    "Name": "OrbitalRingStorageWindowSelectItem",
+    "ZHCN": "请选择一个物品",
+    "ENUS": "Select an item"
+  },
+  {
+    "Name": "OrbitalRingStorageWindowManualInput",
+    "ZHCN": "设置上限：",
+    "ENUS": "Set limit:"
+  },
+  {
+    "Name": "OrbitalRingStorageWindowApply",
+    "ZHCN": "设置",
+    "ENUS": "Apply"
+  },
+  {
+    "Name": "OrbitalRingStorageWindowDefault",
+    "ZHCN": "默认",
+    "ENUS": "Default"
+  },
+  {
+    "Name": "OrbitalRingStorageWindowInputLimit",
+    "ZHCN": "输入上限",
+    "ENUS": "Input limit"
+  },
+  {
+    "Name": "OrbitalRingStorageWindowCurrentCount",
+    "ZHCN": "当前数量：{0}",
+    "ENUS": "Current count: {0}"
+  },
+  {
+    "Name": "OrbitalRingStorageWindowSharedLimitCustom",
+    "ZHCN": "共享上限：{0}（默认 {1}）",
+    "ENUS": "Shared limit: {0} (default {1})"
+  },
+  {
+    "Name": "OrbitalRingStorageWindowSharedLimitDefault",
+    "ZHCN": "共享上限：{0}",
+    "ENUS": "Shared limit: {0}"
+  },
+  {
+    "Name": "OrbitalRingStorageWindowInputRange",
+    "ZHCN": "可设置范围：{0}",
+    "ENUS": "Allowed range: {0}"
+  },
+  {
+    "Name": "OrbitalRingStorageWindowNoSelectionHint",
+    "ZHCN": "选择左侧物品后可调整共享上限。非乾坤原矿上限为 {0}。",
+    "ENUS": "Select an item on the left to adjust its shared limit. Non-Qiankun items are capped at {0}."
+  },
+  {
+    "Name": "OrbitalRingStorageWindowInvalidLimit",
+    "ZHCN": "请输入有效的整数上限",
+    "ENUS": "Please enter a valid integer limit"
+  },
+  {
+    "Name": "OrbitalRingStorageWindowQianKunItemLimitExceeded",
+    "ZHCN": "该矿物已通过乾坤原矿突破 {0}，不再支持调整上限。",
+    "ENUS": "This ore has exceeded {0} through a QianKun item. Limit adjustment is disabled."
+  },
+  {
+    "Name": "OrbitalRingStorageWindowLimitReached",
+    "ZHCN": "达到上限后停止存入。非乾坤原矿上限为 {0}。",
+    "ENUS": "Input stops at the limit. Non-Qiankun items are capped at {0}."
   }
 ]

@@ -1135,8 +1135,8 @@
     },
     {
         "Name": "I小型运载火箭",
-        "ZHCN": "戴森球组件的运载工具。如果想加快戴森球的建造速度，就需要发送更多的火箭。\n在星环共享空间中储存上限为<color=\"#FD965ECC\">200</color>",
-        "ENUS": "The carrier vehicle for Dyson sphere components. If we want to speed up the construction of the Dyson sphere, we need to send more rockets.\nThe storage capacity limit in the Star Ring shared space is <color=\"#FD965ECC\">200</color>"
+        "ZHCN": "戴森球组件的运载工具。如果想加快戴森球的建造速度，就需要发送更多的火箭。\n在星环共享空间中的默认储存上限为<color=\"#FD965ECC\">200</color>",
+        "ENUS": "The carrier vehicle for Dyson sphere components. If we want to speed up the construction of the Dyson sphere, we need to send more rockets.\nThe default storage capacity limit in the Star Ring shared space is <color=\"#FD965ECC\">200</color>"
     },
     {
         "Name": "激光钻井平台",
@@ -1730,8 +1730,8 @@
     },
     {
         "Name": "I空间翘曲器",
-        "ZHCN": "消耗品，用来激活安装了曲率引擎的机甲和深空货舰的曲率航行。\n使用<color=\"#FD965ECC\">CapsLock</color>键消耗一个翘曲器启动机甲的曲率引擎\n在星环共享空间中储存上限为<color=\"#FD965ECC\">200</color>，且会<color=\"#FD965ECC\">自动填充</color>到深空物流港的翘曲器槽",
-        "ENUS": "Consumables used to activate the curvature navigation of mecha and deep space cargo ships equipped with curvature engines.\nUsing the <color=\"#FD965ECC\">CapsLock</color> key consumes a warp drive to activate the mech's curvature engine \nThe storage capacity limit in the Star Ring shared space is <color=\"#FD965ECC\">200</color>, and it will <color=\"#FD965ECC\">automatically fill up</color> the warp drive slot of the Deep Space Logistics Port"
+        "ZHCN": "消耗品，用来激活安装了曲率引擎的机甲和深空货舰的曲率航行。\n使用<color=\"#FD965ECC\">CapsLock</color>键消耗一个翘曲器启动机甲的曲率引擎\n在星环共享空间中的默认储存上限为<color=\"#FD965ECC\">200</color>，且会<color=\"#FD965ECC\">自动填充</color>到深空物流港的翘曲器槽",
+        "ENUS": "Consumables used to activate the curvature navigation of mecha and deep space cargo ships equipped with curvature engines.\nUsing the <color=\"#FD965ECC\">CapsLock</color> key consumes a warp drive to activate the mech's curvature engine \nThe default storage capacity limit in the Star Ring shared space is <color=\"#FD965ECC\">200</color>, and it will <color=\"#FD965ECC\">automatically fill up</color> the warp drive slot of the Deep Space Logistics Port"
     },
     {
         "Name": "曲率引擎",
@@ -1770,8 +1770,8 @@
     },
     {
         "Name": "I轨道反物质堆核心",
-        "ZHCN": "湮灭反应堆核心，由最精密的湮灭控制系统组成，看似暴露的核心结构实则在最强大的护盾系统保护下。湮灭释放的能量大多转化为伽马射线，只有少数转化为蓝紫色可见光谱。<color=\"#FD965ECC\">必须建造在轨道反物质堆基座上</color>\n在星环共享空间中储存上限为<color=\"#FD965ECC\">50</color>",
-        "ENUS": "The core of the annihilation reactor is composed of the most sophisticated annihilation control system, and the seemingly exposed core structure is actually protected by the strongest shield system. The energy released by annihilation is mostly converted into gamma rays, with only a few converted into the blue purple visible spectrum.<color=\"#FD965ECC\">Must be built on Orbital Antimatter Reactor Base</color>\nThe storage capacity limit in the Star Ring shared space is <color=\"#FD965ECC\">50</color>"
+        "ZHCN": "湮灭反应堆核心，由最精密的湮灭控制系统组成，看似暴露的核心结构实则在最强大的护盾系统保护下。湮灭释放的能量大多转化为伽马射线，只有少数转化为蓝紫色可见光谱。<color=\"#FD965ECC\">必须建造在轨道反物质堆基座上</color>\n在星环共享空间中的默认储存上限为<color=\"#FD965ECC\">50</color>",
+        "ENUS": "The core of the annihilation reactor is composed of the most sophisticated annihilation control system, and the seemingly exposed core structure is actually protected by the strongest shield system. The energy released by annihilation is mostly converted into gamma rays, with only a few converted into the blue purple visible spectrum.<color=\"#FD965ECC\">Must be built on Orbital Antimatter Reactor Base</color>\nThe default storage capacity limit in the Star Ring shared space is <color=\"#FD965ECC\">50</color>"
     },
     {
         "Name": "轨道反物质堆基座",
@@ -1780,8 +1780,8 @@
     },
     {
         "Name": "I轨道反物质堆基座",
-        "ZHCN": "反物质堆的外围设施，巨大的框架内部集成了4套互纠错安全系统和3套冗余系统。身处同步轨道可以保证最后预案都失效的情况下不会波及行星，外露核心的设计可以使爆炸威力尽量向太空爆发。\n<color=\"#FD965ECC\">需要由底下的太空电梯提供物品的输入输出。</color>\n在星环共享空间中储存上限为<color=\"#FD965ECC\">50</color>",
-        "ENUS": "The peripheral facilities of the antimatter stack are integrated with four sets of mutual error correction safety systems and three sets of redundant systems within a huge framework. Being in a synchronous orbit can ensure that the planet will not be affected in the event that the final plan fails, and the design of the exposed core can maximize the explosive power to burst into space.\n<color=\"#FD965ECC\">The input and output of items need to be provided by the space elevator below</color>\nThe storage capacity limit in the Star Ring shared space is <color=\"#FD965ECC\">50</color>"
+        "ZHCN": "反物质堆的外围设施，巨大的框架内部集成了4套互纠错安全系统和3套冗余系统。身处同步轨道可以保证最后预案都失效的情况下不会波及行星，外露核心的设计可以使爆炸威力尽量向太空爆发。\n<color=\"#FD965ECC\">需要由底下的太空电梯提供物品的输入输出。</color>\n在星环共享空间中的默认储存上限为<color=\"#FD965ECC\">50</color>",
+        "ENUS": "The peripheral facilities of the antimatter stack are integrated with four sets of mutual error correction safety systems and three sets of redundant systems within a huge framework. Being in a synchronous orbit can ensure that the planet will not be affected in the event that the final plan fails, and the design of the exposed core can maximize the explosive power to burst into space.\n<color=\"#FD965ECC\">The input and output of items need to be provided by the space elevator below</color>\nThe default storage capacity limit in the Star Ring shared space is <color=\"#FD965ECC\">50</color>"
     },
     {
         "Name": "深空物流港",
@@ -1795,8 +1795,8 @@
     },
     {
         "Name": "I深空物流港",
-        "ZHCN": "一座巨型物流港，包含数个集装起重机、由奇异物质组成的重力井，作为通知飞船退出曲率航行的重力灯塔，以及跨星系量子通讯调度塔台。只有它才能撑起一个跨星系文明的物流需求。\n<color=\"#FD965ECC\">需要由底下的太空电梯提供物资的行星内转运</color>\n在星环共享空间中储存上限为<color=\"#FD965ECC\">50</color>",
-        "ENUS": "A giant logistics port consisting of several container cranes, a gravity well composed of exotic matter, serving as a gravity lighthouse for notifying spacecraft to exit curvature navigation, and a cross galaxy quantum communication dispatch tower. Only it can sustain the logistics needs of a cross galaxy civilization.\n<color=\"#FD965ECC\">The planetary transportation of supplies needs to be provided by the space elevator below</color>\nThe storage capacity limit in the Star Ring shared space is <color=\"#FD965ECC\">50</color>"
+        "ZHCN": "一座巨型物流港，包含数个集装起重机、由奇异物质组成的重力井，作为通知飞船退出曲率航行的重力灯塔，以及跨星系量子通讯调度塔台。只有它才能撑起一个跨星系文明的物流需求。\n<color=\"#FD965ECC\">需要由底下的太空电梯提供物资的行星内转运</color>\n在星环共享空间中的默认储存上限为<color=\"#FD965ECC\">50</color>",
+        "ENUS": "A giant logistics port consisting of several container cranes, a gravity well composed of exotic matter, serving as a gravity lighthouse for notifying spacecraft to exit curvature navigation, and a cross galaxy quantum communication dispatch tower. Only it can sustain the logistics needs of a cross galaxy civilization.\n<color=\"#FD965ECC\">The planetary transportation of supplies needs to be provided by the space elevator below</color>\nThe default storage capacity limit in the Star Ring shared space is <color=\"#FD965ECC\">50</color>"
     },
     {
         "Name": "生态温室",
@@ -2455,8 +2455,8 @@
     },
     {
         "Name": "I太空船坞",
-        "ZHCN": "巨大的同步轨道组装厂，设有大型零重力总装厂房，由太空电梯输送物资部件后，负责建造组装火箭，飞船以及大型太空结构。\n<color=\"#FD965ECC\">需要由底下的太空电梯提供物品的输入输出。</color>\n在星环共享空间中储存上限为<color=\"#FD965ECC\">50</color>",
-        "ENUS": "A huge synchronous orbit assembly plant, equipped with a large zero gravity assembly plant, is responsible for building and assembling rockets, spacecraft, and large space structures after transporting material components by space elevators.\n<color=\"#FD965ECC\">The input and output of items need to be provided by the space elevator below</color>\nThe storage capacity limit in the Star Ring shared space is <color=\"#FD965ECC\">50</color>"
+        "ZHCN": "巨大的同步轨道组装厂，设有大型零重力总装厂房，由太空电梯输送物资部件后，负责建造组装火箭，飞船以及大型太空结构。\n<color=\"#FD965ECC\">需要由底下的太空电梯提供物品的输入输出。</color>\n在星环共享空间中的默认储存上限为<color=\"#FD965ECC\">50</color>",
+        "ENUS": "A huge synchronous orbit assembly plant, equipped with a large zero gravity assembly plant, is responsible for building and assembling rockets, spacecraft, and large space structures after transporting material components by space elevators.\n<color=\"#FD965ECC\">The input and output of items need to be provided by the space elevator below</color>\nThe default storage capacity limit in the Star Ring shared space is <color=\"#FD965ECC\">50</color>"
     },
     {
         "Name": "T太空船坞",
@@ -2755,8 +2755,8 @@
     },
     {
         "Name": "I深空货舰",
-        "ZHCN": "更大的货仓，更坚固的船体，更强大的推进器，组成了深空曲速货舰，它是专门为跨星系运输而生的专业远洋货舰，装备的曲率引擎只要消耗翘曲器，就能以令太空运输船望尘莫及的速度通过星系之间遥远的荒芜地带，保证物流系统的即时性。\n在星环共享空间中储存上限为<color=\"#FD965ECC\">100</color>",
-        "ENUS": "A larger cargo warehouse, a more sturdy hull, and a more powerful propulsion system make up the Deep Space Warplane Cargo Ship. It is a specialized ocean freight ship designed for cross galaxy transportation, equipped with a curvature engine that can travel through distant barren areas between galaxies at a speed far beyond the reach of space transport ships, ensuring the immediacy of the logistics system.\nThe storage capacity limit in the Star Ring shared space is <color=\"#FD965ECC\">100</color>"
+        "ZHCN": "更大的货仓，更坚固的船体，更强大的推进器，组成了深空曲速货舰，它是专门为跨星系运输而生的专业远洋货舰，装备的曲率引擎只要消耗翘曲器，就能以令太空运输船望尘莫及的速度通过星系之间遥远的荒芜地带，保证物流系统的即时性。\n在星环共享空间中的默认储存上限为<color=\"#FD965ECC\">100</color>",
+        "ENUS": "A larger cargo warehouse, a more sturdy hull, and a more powerful propulsion system make up the Deep Space Warplane Cargo Ship. It is a specialized ocean freight ship designed for cross galaxy transportation, equipped with a curvature engine that can travel through distant barren areas between galaxies at a speed far beyond the reach of space transport ships, ensuring the immediacy of the logistics system.\nThe default storage capacity limit in the Star Ring shared space is <color=\"#FD965ECC\">100</color>"
     },
     {
         "Name": "铀235提纯",
@@ -3642,8 +3642,8 @@
     },
     {
         "Name": "I电磁弹射井",
-        "ZHCN": "发射装载有戴森球组件的小型运载火箭到戴森球轨道上，形成节点与框架。\n在星环共享空间中储存上限为<color=\"#FD965ECC\">100</color>",
-        "ENUS": "Launch small carrier rockets loaded with Dyson sphere components into Dyson sphere orbit to form nodes and frameworks.\nThe storage capacity limit in the Star Ring shared space is <color=\"#FD965ECC\">100</color>"
+        "ZHCN": "发射装载有戴森球组件的小型运载火箭到戴森球轨道上，形成节点与框架。\n在星环共享空间中的默认储存上限为<color=\"#FD965ECC\">100</color>",
+        "ENUS": "Launch small carrier rockets loaded with Dyson sphere components into Dyson sphere orbit to form nodes and frameworks.\nThe default storage capacity limit in the Star Ring shared space is <color=\"#FD965ECC\">100</color>"
     },
     {
         "Name": "物流立交",
@@ -3652,8 +3652,8 @@
     },
     {
         "Name": "I物流立交",
-        "ZHCN": "地表物流网络的节点，物品在上下两层出入口进行分发和集成运输，在高度发达的工业星球，四通八达的高层的物流传送带将在高空组成新一层“人造地面”。\n<color=\"#FD965ECC\">传送带抬升至17层可对接上层接口</color>\n在星环共享空间中储存上限为<color=\"#FD965ECC\">100</color>",
-        "ENUS": "The nodes of the surface logistics network, where goods are distributed and integrated for transportation at the upper and lower entrances and exits, will form a new layer of \"artificial ground\" in the highly developed industrial planet, with high-level logistics conveyor belts extending in all directions.\n<color=\"#FD965ECC\">The belt can be lifted to the 17th floor to dock with the upper interface</color>\nThe storage capacity limit in the Star Ring shared space is <color=\"#FD965ECC\">100</color>"
+        "ZHCN": "地表物流网络的节点，物品在上下两层出入口进行分发和集成运输，在高度发达的工业星球，四通八达的高层的物流传送带将在高空组成新一层“人造地面”。\n<color=\"#FD965ECC\">传送带抬升至17层可对接上层接口</color>\n在星环共享空间中的默认储存上限为<color=\"#FD965ECC\">100</color>",
+        "ENUS": "The nodes of the surface logistics network, where goods are distributed and integrated for transportation at the upper and lower entrances and exits, will form a new layer of \"artificial ground\" in the highly developed industrial planet, with high-level logistics conveyor belts extending in all directions.\n<color=\"#FD965ECC\">The belt can be lifted to the 17th floor to dock with the upper interface</color>\nThe default storage capacity limit in the Star Ring shared space is <color=\"#FD965ECC\">100</color>"
     },
     {
         "Name": "空轨",
@@ -3708,18 +3708,18 @@
     },
     {
         "Name": "I预制星舰模块",
-        "ZHCN": "星舰的通用船结构模块，以框架材料构建船体结构，填充损管包在其中，确保任意一处破损都能得到即时的损管控制，主板通过光纤完成模块的内部子系统控制，在恶劣的环境下，模块甚至可以在完全脱离主体的情况下自主决策，自主控制剩下的部分逃脱或还击。\n在星环共享空间中储存上限为<color=\"#FD965ECC\">200</color>",
-        "ENUS": "The universal ship structure module of the starship is constructed with frame materials to build the hull structure, filled with damaged pipes to ensure that any damage can be immediately controlled by the damaged pipes. The main board controls the internal subsystems of the module through optical fibers. In harsh environments, the module can even make autonomous decisions completely detached from the main body, autonomously controlling the remaining parts to escape or retaliate.\nThe storage capacity limit in the Star Ring shared space is <color=\"#FD965ECC\">200</color>"
+        "ZHCN": "星舰的通用船结构模块，以框架材料构建船体结构，填充损管包在其中，确保任意一处破损都能得到即时的损管控制，主板通过光纤完成模块的内部子系统控制，在恶劣的环境下，模块甚至可以在完全脱离主体的情况下自主决策，自主控制剩下的部分逃脱或还击。\n在星环共享空间中的默认储存上限为<color=\"#FD965ECC\">200</color>",
+        "ENUS": "The universal ship structure module of the starship is constructed with frame materials to build the hull structure, filled with damaged pipes to ensure that any damage can be immediately controlled by the damaged pipes. The main board controls the internal subsystems of the module through optical fibers. In harsh environments, the module can even make autonomous decisions completely detached from the main body, autonomously controlling the remaining parts to escape or retaliate.\nThe default storage capacity limit in the Star Ring shared space is <color=\"#FD965ECC\">200</color>"
     },
     {
         "Name": "I驱逐舰",
-        "ZHCN": "标准型无人驱逐舰，是COSMO太空部队的主力战舰，全舰使用零素装甲一体成型，可以免疫击碎原子能级以下的任何攻击。除了常规舰炮之外，还拥有贯穿舰身的巨型船轴主炮，这门巨炮由独立的反应堆供电，高强度磁场将狂暴的等离子团约束并发射出去，能对目标造成高额破坏。\n在星环共享空间中储存上限为<color=\"#FD965ECC\">50</color>",
-        "ENUS": "The standard type unmanned destroyer is the main warship of the COSMO Space Force. The entire ship is equipped with zero element armor and can withstand any attack below the atomic level. In addition to conventional naval guns, it also has a giant ship shaft main gun that runs through the ship's hull. This giant gun is powered by an independent reactor, and a high-intensity magnetic field restrains and fires the violent plasma mass, causing significant damage to the target.\nThe storage capacity limit in the Star Ring shared space is <color=\"#FD965ECC\">50</color>"
+        "ZHCN": "标准型无人驱逐舰，是COSMO太空部队的主力战舰，全舰使用零素装甲一体成型，可以免疫击碎原子能级以下的任何攻击。除了常规舰炮之外，还拥有贯穿舰身的巨型船轴主炮，这门巨炮由独立的反应堆供电，高强度磁场将狂暴的等离子团约束并发射出去，能对目标造成高额破坏。\n在星环共享空间中的默认储存上限为<color=\"#FD965ECC\">50</color>",
+        "ENUS": "The standard type unmanned destroyer is the main warship of the COSMO Space Force. The entire ship is equipped with zero element armor and can withstand any attack below the atomic level. In addition to conventional naval guns, it also has a giant ship shaft main gun that runs through the ship's hull. This giant gun is powered by an independent reactor, and a high-intensity magnetic field restrains and fires the violent plasma mass, causing significant damage to the target.\nThe default storage capacity limit in the Star Ring shared space is <color=\"#FD965ECC\">50</color>"
     },
     {
         "Name": "I护卫舰",
-        "ZHCN": "护卫舰，是COSMO太空作战舰队序列中最小，最快的一批舰船之一，可以辅助伊卡洛斯进行太空作战，廉价的无人标准型护卫舰可以靠数量压制对手。\n在星环共享空间中储存上限为<color=\"#FD965ECC\">100</color>",
-        "ENUS": "The frigate is one of the smallest and fastest ships in the COSMO space fleet sequence, capable of assisting Icarus in space operations. The low-cost unmanned standard frigate can suppress opponents by quantity.\nThe storage capacity limit in the Star Ring shared space is <color=\"#FD965ECC\">100</color>"
+        "ZHCN": "护卫舰，是COSMO太空作战舰队序列中最小，最快的一批舰船之一，可以辅助伊卡洛斯进行太空作战，廉价的无人标准型护卫舰可以靠数量压制对手。\n在星环共享空间中的默认储存上限为<color=\"#FD965ECC\">100</color>",
+        "ENUS": "The frigate is one of the smallest and fastest ships in the COSMO space fleet sequence, capable of assisting Icarus in space operations. The low-cost unmanned standard frigate can suppress opponents by quantity.\nThe default storage capacity limit in the Star Ring shared space is <color=\"#FD965ECC\">100</color>"
     },
     {
         "Name": "R碳基裂解",
@@ -3754,8 +3754,8 @@
 
     {
         "Name": "I轨道采集器",
-        "ZHCN": "用来采集气态行星上的资源，使用同位素温差发电来维持在轨道上工作所需的能量。\n在星环共享空间中储存上限为<color=\"#FD965ECC\">50</color>",
-        "ENUS": "It is used to collect resources from gas giants. It use radioisotope thermoelectric generator to power the collector to work in orbit.\nThe storage capacity limit in the Star Ring shared space is <color=\"#FD965ECC\">50</color>"
+        "ZHCN": "用来采集气态行星上的资源，使用同位素温差发电来维持在轨道上工作所需的能量。\n在星环共享空间中的默认储存上限为<color=\"#FD965ECC\">50</color>",
+        "ENUS": "It is used to collect resources from gas giants. It use radioisotope thermoelectric generator to power the collector to work in orbit.\nThe default storage capacity limit in the Star Ring shared space is <color=\"#FD965ECC\">50</color>"
     },
     {
         "Name": "太空运输船",
@@ -3764,8 +3764,8 @@
     },
     {
         "Name": "I太空运输船",
-        "ZHCN": "轻量坚韧的钛合金船身，成熟可靠的离子推进器，以及除了引擎就是货仓的大容量设计，构成了串联起星球之间物流系统的运输船。\n在星环共享空间中储存上限为<color=\"#FD965ECC\">100</color>",
-        "ENUS": "The lightweight and tough titanium alloy hull, mature and reliable ion thrusters, and large capacity design of both the engine and the cargo warehouse form a transport ship that connects the logistics systems between planets.\nThe storage capacity limit in the Star Ring shared space is <color=\"#FD965ECC\">100</color>"
+        "ZHCN": "轻量坚韧的钛合金船身，成熟可靠的离子推进器，以及除了引擎就是货仓的大容量设计，构成了串联起星球之间物流系统的运输船。\n在星环共享空间中的默认储存上限为<color=\"#FD965ECC\">100</color>",
+        "ENUS": "The lightweight and tough titanium alloy hull, mature and reliable ion thrusters, and large capacity design of both the engine and the cargo warehouse form a transport ship that connects the logistics systems between planets.\nThe default storage capacity limit in the Star Ring shared space is <color=\"#FD965ECC\">100</color>"
     },
     {
         "Name": "闪速炼钢",
@@ -4264,8 +4264,8 @@
     },
     {
         "Name": "I太空物流港",
-        "ZHCN": "巨大的同步轨道物流港，比起“天勾”系统，物流港能实现行星之间更便捷的物资运输，它是行星内文明迈向星际文明的第一步，是将星球工厂连结成一个庞大的工业帝国的开始。\n<color=\"#FD965ECC\">需要由底下的太空电梯提供物资的行星内转运</color>\n在星环共享空间中储存上限为<color=\"#FD965ECC\">50</color>",
-        "ENUS": "The huge synchronous orbit logistics port, compared to the \"Sky Hook\" system, can achieve more convenient material transportation between planets. It is the first step for planetary civilizations to move towards interstellar civilization and the beginning of connecting planetary factories into a huge industrial empire.\n<color=\"#FD965ECC\">The planetary transportation of supplies needs to be provided by the space elevator below</color>\nThe storage capacity limit in the Star Ring shared space is <color=\"#FD965ECC\">50</color>"
+        "ZHCN": "巨大的同步轨道物流港，比起“天勾”系统，物流港能实现行星之间更便捷的物资运输，它是行星内文明迈向星际文明的第一步，是将星球工厂连结成一个庞大的工业帝国的开始。\n<color=\"#FD965ECC\">需要由底下的太空电梯提供物资的行星内转运</color>\n在星环共享空间中的默认储存上限为<color=\"#FD965ECC\">50</color>",
+        "ENUS": "The huge synchronous orbit logistics port, compared to the \"Sky Hook\" system, can achieve more convenient material transportation between planets. It is the first step for planetary civilizations to move towards interstellar civilization and the beginning of connecting planetary factories into a huge industrial empire.\n<color=\"#FD965ECC\">The planetary transportation of supplies needs to be provided by the space elevator below</color>\nThe default storage capacity limit in the Star Ring shared space is <color=\"#FD965ECC\">50</color>"
     },
     {
         "Name": "超空间中继器",
@@ -4284,8 +4284,8 @@
     },
     {
         "Name": "I超空间中继器基座",
-        "ZHCN": "这是一种巨行星用的大型轨道设施，它工作在气巨轨道，将就地抽取的氘并输入内部的聚变堆组，以实现能源自维持。大型谐振盘阵列将共鸣核心发出的引力波，以构建出横跨星系的曲率通道。\n<color=\"#FD965ECC\">需要安装核心才能发挥作用</color>\n在星环共享空间中储存上限为<color=\"#FD965ECC\">50</color>",
-        "ENUS": "This is a large-scale orbital facility used for giant planets, which operates in gas giant orbits, extracting deuterium locally and inputting it into the internal fusion reactor group to achieve self-sustaining energy. The large resonant disk array generates gravitational waves from the resonant core to construct curvature channels across the galaxy.\n<color=\"#FD965ECC\">Core installation is required to be effective</color>\nThe storage capacity limit in the Star Ring shared space is <color=\"#FD965ECC\">50</color>"
+        "ZHCN": "这是一种巨行星用的大型轨道设施，它工作在气巨轨道，将就地抽取的氘并输入内部的聚变堆组，以实现能源自维持。大型谐振盘阵列将共鸣核心发出的引力波，以构建出横跨星系的曲率通道。\n<color=\"#FD965ECC\">需要安装核心才能发挥作用</color>\n在星环共享空间中的默认储存上限为<color=\"#FD965ECC\">50</color>",
+        "ENUS": "This is a large-scale orbital facility used for giant planets, which operates in gas giant orbits, extracting deuterium locally and inputting it into the internal fusion reactor group to achieve self-sustaining energy. The large resonant disk array generates gravitational waves from the resonant core to construct curvature channels across the galaxy.\n<color=\"#FD965ECC\">Core installation is required to be effective</color>\nThe default storage capacity limit in the Star Ring shared space is <color=\"#FD965ECC\">50</color>"
     },
     {
         "Name": "超空间中继器核心",
@@ -4294,8 +4294,8 @@
     },
     {
         "Name": "I超空间中继器核心",
-        "ZHCN": "由曲率引擎组搭建的人造奇点，将空间翘曲至极点形成简陋的人造微型黑洞，只需要稍稍震荡下这个人造黑洞，在巨行星的重力场增幅下就能成倍放大引力波，再经由中继器基座的谐振盘阵列共鸣，最终与另一个超空间中继器同频搭建成一条跨星系的曲率通道。\n<color=\"#FD965ECC\">需要安装在超空间中继器基座</color>\n如果<color=\"#FD965ECC\">两个星系都有超空间中继器</color>，那么这两星系之间的<color=\"#FD965ECC\">太空运输船</color>可以跨星系物流，这两星系之间太空运输船和深空货舰的跨星系物流<color=\"#FD965ECC\">不消耗翘曲器</color>，并能量消耗<color=\"#FD965ECC\">-80%</color>\n在星环共享空间中储存上限为<color=\"#FD965ECC\">50</color>",
-        "ENUS": "The artificial singularity built by the curvature engine group distorts space to the poles to form a rudimentary artificial micro black hole. With only a slight oscillation of this artificial black hole, gravitational waves can be multiplied by the amplification of the giant planet's gravity field. Then, through the resonant disk array of the relay base, it resonates with another hyperspace relay and finally builds a cross galaxy curvature channel at the same frequency.\n<color=\"#FD965ECC\">Need to be installed on the Hyper Relay Base</color> \n If <color=\"#FD965ECC\">both galaxies have Hyper Relay</color>, then <color=\"#FD965ECC\">the space transport ships</color> between these two galaxies can have cross galaxy logistics, and the cross galaxy logistics of space transport ships and deep space cargo ships between these two galaxies <color=\"#FD965ECC\">do not consume warping devices</color>, and energy consumption <color=\"#FD965ECC\">-80%</color>\nThe storage capacity limit in the Star Ring shared space is <color=\"#FD965ECC\">50</color>"
+        "ZHCN": "由曲率引擎组搭建的人造奇点，将空间翘曲至极点形成简陋的人造微型黑洞，只需要稍稍震荡下这个人造黑洞，在巨行星的重力场增幅下就能成倍放大引力波，再经由中继器基座的谐振盘阵列共鸣，最终与另一个超空间中继器同频搭建成一条跨星系的曲率通道。\n<color=\"#FD965ECC\">需要安装在超空间中继器基座</color>\n如果<color=\"#FD965ECC\">两个星系都有超空间中继器</color>，那么这两星系之间的<color=\"#FD965ECC\">太空运输船</color>可以跨星系物流，这两星系之间太空运输船和深空货舰的跨星系物流<color=\"#FD965ECC\">不消耗翘曲器</color>，并能量消耗<color=\"#FD965ECC\">-80%</color>\n在星环共享空间中的默认储存上限为<color=\"#FD965ECC\">50</color>",
+        "ENUS": "The artificial singularity built by the curvature engine group distorts space to the poles to form a rudimentary artificial micro black hole. With only a slight oscillation of this artificial black hole, gravitational waves can be multiplied by the amplification of the giant planet's gravity field. Then, through the resonant disk array of the relay base, it resonates with another hyperspace relay and finally builds a cross galaxy curvature channel at the same frequency.\n<color=\"#FD965ECC\">Need to be installed on the Hyper Relay Base</color> \n If <color=\"#FD965ECC\">both galaxies have Hyper Relay</color>, then <color=\"#FD965ECC\">the space transport ships</color> between these two galaxies can have cross galaxy logistics, and the cross galaxy logistics of space transport ships and deep space cargo ships between these two galaxies <color=\"#FD965ECC\">do not consume warping devices</color>, and energy consumption <color=\"#FD965ECC\">-80%</color>\nThe default storage capacity limit in the Star Ring shared space is <color=\"#FD965ECC\">50</color>"
     },
     {
         "Name": "勘察卫星",
@@ -4324,8 +4324,8 @@
     },
     {
         "Name": "I轨道观测站",
-        "ZHCN": "大型的同步轨道观测站，由高强度钛化玻璃组成的大型透镜组能精细地观测宇宙，在算法的加持下甚至能扫描出6光年内其他星系中不主动发光的行星的矿物分布情况。\n其强大的观测扫描能力后续也能成为质量投射器的炮座\n在星环共享空间中储存上限为<color=\"#FD965ECC\">50</color>",
-        "ENUS": "A large synchronous orbit observation station, consisting of a large lens group made of high-strength titanium glass, can finely observe the universe. With the support of algorithms, it can even scan the mineral distribution of planets in other galaxies that do not actively emit light within 6 light years.\n Its powerful observation and scanning capabilities can also serve as a gun mount for mass projectors in the future\nThe storage capacity limit in the Star Ring shared space is <color=\"#FD965ECC\">50</color>"
+        "ZHCN": "大型的同步轨道观测站，由高强度钛化玻璃组成的大型透镜组能精细地观测宇宙，在算法的加持下甚至能扫描出6光年内其他星系中不主动发光的行星的矿物分布情况。\n其强大的观测扫描能力后续也能成为质量投射器的炮座\n在星环共享空间中的默认储存上限为<color=\"#FD965ECC\">50</color>",
+        "ENUS": "A large synchronous orbit observation station, consisting of a large lens group made of high-strength titanium glass, can finely observe the universe. With the support of algorithms, it can even scan the mineral distribution of planets in other galaxies that do not actively emit light within 6 light years.\n Its powerful observation and scanning capabilities can also serve as a gun mount for mass projectors in the future\nThe default storage capacity limit in the Star Ring shared space is <color=\"#FD965ECC\">50</color>"
     },
     {
         "Name": "T轨道观测站",
@@ -4339,8 +4339,8 @@
     },
     {
         "Name": "I勘探船",
-        "ZHCN": "COSMO现役的无人探测船，会自动探测沿途的星系的信息，造价低廉，使用广泛，拥有众多改型，通过加装额外的装甲和火力，便是COSMO最通用的护卫舰。\n在星环共享空间中储存上限为<color=\"#FD965ECC\">100</color>",
-        "ENUS": "The unmanned exploration ships currently in service at COSMO automatically detect information about galaxies along the way. They are low-cost, widely used, and have numerous modifications. By adding additional armor and firepower, they are the most versatile frigates of COSMO.\nThe storage capacity limit in the Star Ring shared space is <color=\"#FD965ECC\">100</color>"
+        "ZHCN": "COSMO现役的无人探测船，会自动探测沿途的星系的信息，造价低廉，使用广泛，拥有众多改型，通过加装额外的装甲和火力，便是COSMO最通用的护卫舰。\n在星环共享空间中的默认储存上限为<color=\"#FD965ECC\">100</color>",
+        "ENUS": "The unmanned exploration ships currently in service at COSMO automatically detect information about galaxies along the way. They are low-cost, widely used, and have numerous modifications. By adding additional armor and firepower, they are the most versatile frigates of COSMO.\nThe default storage capacity limit in the Star Ring shared space is <color=\"#FD965ECC\">100</color>"
     },
     {
         "Name": "T勘探船",
@@ -4450,8 +4450,8 @@
     },
     {
         "Name": "I太空电梯",
-        "ZHCN": "作为有史以来最高的人造建筑，太空电梯是跨越行星与太空的垂直运输枢纽，千米级的高强度碳纳米管缆固定的电梯将为后续建造的同步轨道设施提供运力支撑。作为戴森球计划中最先接触到的航天工程，它将是文明迈向星际的起点。\n<color=\"#FD965ECC\">选择物品的槽位自动收/送上层轨道设施对应的需求物品/产出物品</color>\n<color=\"#FD965ECC\">只能建造在固定位置，纬度为赤道上下10格，经度为从0开始每隔50格</color>\n在星环共享空间中储存上限为<color=\"#FD965ECC\">100</color>",
-        "ENUS": "As the tallest man-made building in history, the space elevator is a vertical transportation hub that spans planets and space. The kilometer level high-strength carbon nanotube cable fixed elevator will provide transportation support for the subsequent construction of synchronous orbit facilities. As the first aerospace project to be encountered in the Dyson Sphere program, it will be the starting point for civilization to move towards interstellar space.\n<color=\"#FD965ECC\">Select the slot for the item to automatically receive/deliver the required/output items corresponding to the upper level track facilities</color>\n<color=\"#FD965ECC\">It can only be built in a fixed location, with a latitude of 10 grids above and below the equator and a longitude of every 25 grids starting from 0</color>\nThe storage capacity limit in the Star Ring shared space is <color=\"#FD965ECC\">100</color>"
+        "ZHCN": "作为有史以来最高的人造建筑，太空电梯是跨越行星与太空的垂直运输枢纽，千米级的高强度碳纳米管缆固定的电梯将为后续建造的同步轨道设施提供运力支撑。作为戴森球计划中最先接触到的航天工程，它将是文明迈向星际的起点。\n<color=\"#FD965ECC\">选择物品的槽位自动收/送上层轨道设施对应的需求物品/产出物品</color>\n<color=\"#FD965ECC\">只能建造在固定位置，纬度为赤道上下10格，经度为从0开始每隔50格</color>\n在星环共享空间中的默认储存上限为<color=\"#FD965ECC\">100</color>",
+        "ENUS": "As the tallest man-made building in history, the space elevator is a vertical transportation hub that spans planets and space. The kilometer level high-strength carbon nanotube cable fixed elevator will provide transportation support for the subsequent construction of synchronous orbit facilities. As the first aerospace project to be encountered in the Dyson Sphere program, it will be the starting point for civilization to move towards interstellar space.\n<color=\"#FD965ECC\">Select the slot for the item to automatically receive/deliver the required/output items corresponding to the upper level track facilities</color>\n<color=\"#FD965ECC\">It can only be built in a fixed location, with a latitude of 10 grids above and below the equator and a longitude of every 25 grids starting from 0</color>\nThe default storage capacity limit in the Star Ring shared space is <color=\"#FD965ECC\">100</color>"
     },
     {
         "Name": "T太空电梯",
@@ -4485,8 +4485,8 @@
     },
     {
         "Name": "I轨道熔炼站",
-        "ZHCN": "巨大的同步轨道熔炉车间，覆有大面积的铜箔散热鳍，熔炼太空电梯输入的原料，同步轨道的真空环境是天然的无尘车间，无重力环境可以避免熔炼中的金属因重力而分层，由此同步轨道熔炉车间可以产出高质量熔炼金属。\n此建筑<color=\"#FD965ECC\">30倍</color>速度生产\n此建筑产出无条件获得<color=\"#FD965ECC\">三级增产</color>效果\n<color=\"#FD965ECC\">需要由底下的太空电梯提供物品的输入输出。</color>\n在星环共享空间中储存上限为<color=\"#FD965ECC\">50</color>",
-        "ENUS": "The huge synchronous orbit furnace workshop is covered with large areas of copper foil heat dissipation fins, which melt the raw materials input by the space elevator. The vacuum environment of the synchronous orbit is a natural dust-free workshop, and the gravity free environment can avoid the layering of metals during melting due to gravity. Therefore, the synchronous orbit furnace workshop can produce high-quality melted metals.\nThis building guarantees an unconditional <color=\"#FD965ECC\">Level 3 Production Boost</color> effect in its output.\nThis building is <color=\"#FD965ECC\">30 times</color> speed for production\n<color=\"#FD965ECC\">The input and output of items need to be provided by the space elevator below</color>\nThe storage capacity limit in the Star Ring shared space is <color=\"#FD965ECC\">50</color>"
+        "ZHCN": "巨大的同步轨道熔炉车间，覆有大面积的铜箔散热鳍，熔炼太空电梯输入的原料，同步轨道的真空环境是天然的无尘车间，无重力环境可以避免熔炼中的金属因重力而分层，由此同步轨道熔炉车间可以产出高质量熔炼金属。\n此建筑<color=\"#FD965ECC\">30倍</color>速度生产\n此建筑产出无条件获得<color=\"#FD965ECC\">三级增产</color>效果\n<color=\"#FD965ECC\">需要由底下的太空电梯提供物品的输入输出。</color>\n在星环共享空间中的默认储存上限为<color=\"#FD965ECC\">50</color>",
+        "ENUS": "The huge synchronous orbit furnace workshop is covered with large areas of copper foil heat dissipation fins, which melt the raw materials input by the space elevator. The vacuum environment of the synchronous orbit is a natural dust-free workshop, and the gravity free environment can avoid the layering of metals during melting due to gravity. Therefore, the synchronous orbit furnace workshop can produce high-quality melted metals.\nThis building guarantees an unconditional <color=\"#FD965ECC\">Level 3 Production Boost</color> effect in its output.\nThis building is <color=\"#FD965ECC\">30 times</color> speed for production\n<color=\"#FD965ECC\">The input and output of items need to be provided by the space elevator below</color>\nThe default storage capacity limit in the Star Ring shared space is <color=\"#FD965ECC\">50</color>"
     },
     {
         "Name": "T轨道熔炼站",
@@ -4540,8 +4540,8 @@
     },
     {
         "Name": "I星环对撞机总控站",
-        "ZHCN": "星环对撞机在轨总控设施，建造时会将各节加速轨道加装到星环上的各轨道设施上。星环对撞机总控站负责控制整个星环的加速轨道，以及目标粒子的输入输出。\n因为以整个星环为加速轨道，因此<color=\"#FD965ECC\">一个星环只能建造一个星环对撞机总控站。</color>\n此建筑<color=\"#FD965ECC\">50倍</color>速度生产（在卫星为<color=\"#FD965ECC\">25倍</color>）\n且需要<color=\"#FD965ECC\">星环完整</color>才能运作\n<color=\"#FD965ECC\">需要由底下的太空电梯提供物品的输入输出。</color>\n在星环共享空间中储存上限为<color=\"#FD965ECC\">50</color>",
-        "ENUS": "The in orbit control facility of the Star Ring Collider will be constructed by installing each section of the acceleration orbit onto the various orbital facilities on the Orbital Ring. The main control station of the Star Ring Collider is responsible for controlling the acceleration orbit of the entire Orbital Ring and the input and output of target particles.\n Because the entire ring is used as the acceleration orbit, only <color=\"#FD965ECC\">one ring collider control station can be built for each ring.</color>\nThis building is <color=\"#FD965ECC\">50 times</color> speed for production (<color=\"#FD965ECC\">25 times</color> on satellite)\n And it requires the <color=\"#FD965ECC\">complete orbital ring</color> to operate \n<color=\"#FD965ECC\">The input and output of items need to be provided by the space elevator below</color>\nThe storage capacity limit in the Star Ring shared space is <color=\"#FD965ECC\">50</color>"
+        "ZHCN": "星环对撞机在轨总控设施，建造时会将各节加速轨道加装到星环上的各轨道设施上。星环对撞机总控站负责控制整个星环的加速轨道，以及目标粒子的输入输出。\n因为以整个星环为加速轨道，因此<color=\"#FD965ECC\">一个星环只能建造一个星环对撞机总控站。</color>\n此建筑<color=\"#FD965ECC\">50倍</color>速度生产（在卫星为<color=\"#FD965ECC\">25倍</color>）\n且需要<color=\"#FD965ECC\">星环完整</color>才能运作\n<color=\"#FD965ECC\">需要由底下的太空电梯提供物品的输入输出。</color>\n在星环共享空间中的默认储存上限为<color=\"#FD965ECC\">50</color>",
+        "ENUS": "The in orbit control facility of the Star Ring Collider will be constructed by installing each section of the acceleration orbit onto the various orbital facilities on the Orbital Ring. The main control station of the Star Ring Collider is responsible for controlling the acceleration orbit of the entire Orbital Ring and the input and output of target particles.\n Because the entire ring is used as the acceleration orbit, only <color=\"#FD965ECC\">one ring collider control station can be built for each ring.</color>\nThis building is <color=\"#FD965ECC\">50 times</color> speed for production (<color=\"#FD965ECC\">25 times</color> on satellite)\n And it requires the <color=\"#FD965ECC\">complete orbital ring</color> to operate \n<color=\"#FD965ECC\">The input and output of items need to be provided by the space elevator below</color>\nThe default storage capacity limit in the Star Ring shared space is <color=\"#FD965ECC\">50</color>"
     },
     {
         "Name": "粒子加速轨道",
@@ -4560,8 +4560,8 @@
     },
     {
         "Name": "I天枢座",
-        "ZHCN": "星环作为一个行星级巨型结构，承载着统筹全球资源，协调各工厂运作的能力，而星环本身，也需要一个控制空间站，协调星环的资源分配，各组件的协调运作，这就是天枢座的职能。通过接入不同的组件，天枢座便能承担起不同的全球功能支持。\n在星环共享空间中储存上限为<color=\"#FD965ECC\">50</color>",
-        "ENUS": "As a planetary giant structure, the Star Ring carries the ability to coordinate global resources and coordinate the operation of various factories. However, the Star Ring itself also requires a control space station to coordinate the allocation of resources and the coordinated operation of various components. This is the function of the Celestial Pivot constellation. By connecting different components, the Tianzhu constellation can undertake different global functional support.\nThe storage capacity limit in the Star Ring shared space is <color=\"#FD965ECC\">50</color>"
+        "ZHCN": "星环作为一个行星级巨型结构，承载着统筹全球资源，协调各工厂运作的能力，而星环本身，也需要一个控制空间站，协调星环的资源分配，各组件的协调运作，这就是天枢座的职能。通过接入不同的组件，天枢座便能承担起不同的全球功能支持。\n在星环共享空间中的默认储存上限为<color=\"#FD965ECC\">50</color>",
+        "ENUS": "As a planetary giant structure, the Star Ring carries the ability to coordinate global resources and coordinate the operation of various factories. However, the Star Ring itself also requires a control space station to coordinate the allocation of resources and the coordinated operation of various components. This is the function of the Celestial Pivot constellation. By connecting different components, the Tianzhu constellation can undertake different global functional support.\nThe default storage capacity limit in the Star Ring shared space is <color=\"#FD965ECC\">50</color>"
     },
     {
         "Name": "星环护盾",
@@ -4600,8 +4600,8 @@
     },
     {
         "Name": "I轨道炮座",
-        "ZHCN": "原是同步轨道宇宙观测站，其高精镜头组不仅可以观测深空，也可以为近处的射击提供火控演算诸元，只要稍加做下改造，就是一座不错的轨道炮座。\n可以加载重型电磁弹射器或者重型电浆炮\n在星环共享空间中储存上限为<color=\"#FD965ECC\">50</color>",
-        "ENUS": "Originally a synchronous orbit space observation station, its high-precision lens group can not only observe deep space, but also provide fire control calculation elements for nearby shooting. With a little modification, it is a good orbital gun mount.\nCan load Heavy Duty Electromagnetic Catapult or Heavy Plasma Cannon\nThe storage capacity limit in the Star Ring shared space is <color=\"#FD965ECC\">50</color>"
+        "ZHCN": "原是同步轨道宇宙观测站，其高精镜头组不仅可以观测深空，也可以为近处的射击提供火控演算诸元，只要稍加做下改造，就是一座不错的轨道炮座。\n可以加载重型电磁弹射器或者重型电浆炮\n在星环共享空间中的默认储存上限为<color=\"#FD965ECC\">50</color>",
+        "ENUS": "Originally a synchronous orbit space observation station, its high-precision lens group can not only observe deep space, but also provide fire control calculation elements for nearby shooting. With a little modification, it is a good orbital gun mount.\nCan load Heavy Duty Electromagnetic Catapult or Heavy Plasma Cannon\nThe default storage capacity limit in the Star Ring shared space is <color=\"#FD965ECC\">50</color>"
     },
     {
         "Name": "重型电磁弹射器",
@@ -4630,8 +4630,8 @@
     },
     {
         "Name": "I轨道空投引导站",
-        "ZHCN": "装备了激光信标，可以引导在轨的运输船将货物精准空投到引导站，完成物资的星际接收，而不需要建造昂贵的太空电梯和物流港。\n<color=\"#FD965ECC\">不可选择星际供应</color>\n在星环共享空间中储存上限为<color=\"#FD965ECC\">100</color>",
-        "ENUS": "Equipped with laser beacons, it can guide transport ships in orbit to accurately airdrop goods to the guidance station, completing interstellar material reception without the need to build expensive space elevators and logistics ports.\n<color=\"#FD965ECC\">Cannot choose interstellar supply</color>\nThe storage capacity limit in the Star Ring shared space is <color=\"#FD965ECC\">100</color>"
+        "ZHCN": "装备了激光信标，可以引导在轨的运输船将货物精准空投到引导站，完成物资的星际接收，而不需要建造昂贵的太空电梯和物流港。\n<color=\"#FD965ECC\">不可选择星际供应</color>\n在星环共享空间中的默认储存上限为<color=\"#FD965ECC\">100</color>",
+        "ENUS": "Equipped with laser beacons, it can guide transport ships in orbit to accurately airdrop goods to the guidance station, completing interstellar material reception without the need to build expensive space elevators and logistics ports.\n<color=\"#FD965ECC\">Cannot choose interstellar supply</color>\nThe default storage capacity limit in the Star Ring shared space is <color=\"#FD965ECC\">100</color>"
     },
     {
         "Name": "轨道水培舱",
@@ -4640,8 +4640,8 @@
     },
     {
         "Name": "I轨道水培舱",
-        "ZHCN": "建造于同步轨道的大型雾化水培舱，曾经我们用它来完成空间站集群粮食的自给自足，如今，这种舱段则被用于经济作物的培养。太空级的气密循环系统将保证所有生化反应的安全。\n<color=\"#FD965ECC\">产物和原料为同一种东西时将自动从产物回填到原料</color>\n<color=\"#FD965ECC\">需要超高效过滤器的配方在本建筑无需过滤器</color>\n在星环共享空间中储存上限为<color=\"#FD965ECC\">50</color>",
-        "ENUS": "The large-scale atomized hydroponic cabin, built in geosynchronous orbit, was once utilized to achieve self-sufficiency in food production for the space station cluster. Nowadays, this type of cabin is employed for cultivating economic crops.The space-grade airtight circulation system will ensure the safety of all biochemical reactions.\n<color=\"#FD965ECC\">When the product and the raw material are the same thing, the product will be automatically refilled into the raw material</color>\n<color=\"#FD965ECC\">The recipe requiring Ultra Low Penetration Air Filter is not necessary for this building</color>\nThe storage capacity limit in the Star Ring shared space is <color=\"#FD965ECC\">50</color>"
+        "ZHCN": "建造于同步轨道的大型雾化水培舱，曾经我们用它来完成空间站集群粮食的自给自足，如今，这种舱段则被用于经济作物的培养。太空级的气密循环系统将保证所有生化反应的安全。\n<color=\"#FD965ECC\">产物和原料为同一种东西时将自动从产物回填到原料</color>\n<color=\"#FD965ECC\">需要超高效过滤器的配方在本建筑无需过滤器</color>\n在星环共享空间中的默认储存上限为<color=\"#FD965ECC\">50</color>",
+        "ENUS": "The large-scale atomized hydroponic cabin, built in geosynchronous orbit, was once utilized to achieve self-sufficiency in food production for the space station cluster. Nowadays, this type of cabin is employed for cultivating economic crops.The space-grade airtight circulation system will ensure the safety of all biochemical reactions.\n<color=\"#FD965ECC\">When the product and the raw material are the same thing, the product will be automatically refilled into the raw material</color>\n<color=\"#FD965ECC\">The recipe requiring Ultra Low Penetration Air Filter is not necessary for this building</color>\nThe default storage capacity limit in the Star Ring shared space is <color=\"#FD965ECC\">50</color>"
     },
     {
         "Name": "T轨道水培舱",
@@ -4752,8 +4752,8 @@
     },
     {
         "Name": "I数学率引擎-起振焦点-运载火箭",
-        "ZHCN": "负责运载起振焦点组件的火箭，在预定位置将组件建造为共鸣场节点，利用吸附的引力钻头，拨动-弦-，令其起振，并将焦点集中在黑洞奇点，以此来控制并改写宇宙底层最基础的信息：数学率。\n在星环共享空间中储存上限为<color=\"#FD965ECC\">200</color>",
-        "ENUS": "The rocket responsible for transporting the oscillating focus component constructs the component as a resonance field node at the predetermined location, utilizes the adsorbed gravitational drill to stir the -string-, causing it to oscillate, and focuses the focus on the black hole singularity, thereby controlling and rewriting the most fundamental information at the bottom layer of the universe: mathematical laws.\nThe storage capacity limit in the Star Ring shared space is <color=\"#FD965ECC\">200</color>"
+        "ZHCN": "负责运载起振焦点组件的火箭，在预定位置将组件建造为共鸣场节点，利用吸附的引力钻头，拨动-弦-，令其起振，并将焦点集中在黑洞奇点，以此来控制并改写宇宙底层最基础的信息：数学率。\n在星环共享空间中的默认储存上限为<color=\"#FD965ECC\">200</color>",
+        "ENUS": "The rocket responsible for transporting the oscillating focus component constructs the component as a resonance field node at the predetermined location, utilizes the adsorbed gravitational drill to stir the -string-, causing it to oscillate, and focuses the focus on the black hole singularity, thereby controlling and rewriting the most fundamental information at the bottom layer of the universe: mathematical laws.\nThe default storage capacity limit in the Star Ring shared space is <color=\"#FD965ECC\">200</color>"
     },
     {
         "Name": "数学率引擎-深蓝之井-运载火箭",
@@ -4762,8 +4762,8 @@
     },
     {
         "Name": "I数学率引擎-深蓝之井-运载火箭",
-        "ZHCN": "为了使数学率引擎全功率运转，需要建造有史以来最强大的发电站：环黑洞反物质堆发电巨构，将反物质堆核心拆分打包到各个火箭上，送到指定位置再展开重组装为反物质堆，接受弹射到轨道上的反物质燃料棒以供应这座数学率引擎。\n在星环共享空间中储存上限为<color=\"#FD965ECC\">200</color>",
-        "ENUS": "To operate the mathematical rate engine at full power, it is necessary to construct the most powerful power station ever built: a giant structure for generating electricity using a ring of black hole antimatter reactors. The cores of these antimatter reactors would be disassembled and packaged into individual rockets, which would be sent to designated locations and then reassembled into antimatter reactors. These reactors would then receive antimatter fuel rods ejected into orbit to supply the mathematical rate engine.\nThe storage capacity limit in the Star Ring shared space is <color=\"#FD965ECC\">200</color>"
+        "ZHCN": "为了使数学率引擎全功率运转，需要建造有史以来最强大的发电站：环黑洞反物质堆发电巨构，将反物质堆核心拆分打包到各个火箭上，送到指定位置再展开重组装为反物质堆，接受弹射到轨道上的反物质燃料棒以供应这座数学率引擎。\n在星环共享空间中的默认储存上限为<color=\"#FD965ECC\">200</color>",
+        "ENUS": "To operate the mathematical rate engine at full power, it is necessary to construct the most powerful power station ever built: a giant structure for generating electricity using a ring of black hole antimatter reactors. The cores of these antimatter reactors would be disassembled and packaged into individual rockets, which would be sent to designated locations and then reassembled into antimatter reactors. These reactors would then receive antimatter fuel rods ejected into orbit to supply the mathematical rate engine.\nThe default storage capacity limit in the Star Ring shared space is <color=\"#FD965ECC\">200</color>"
     },
     {
         "Name": "数学率引擎零阶",

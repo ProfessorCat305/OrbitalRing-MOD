@@ -49,23 +49,26 @@ namespace ProjectOrbitalRing.Patches.Logic.OrbitalRing
     {
         public Dictionary<int, int[]> storageItem = new Dictionary<int, int[]>(); // itemId itemCount
         public Dictionary<int, StationStoreIsShares> storageShare = new Dictionary<int, StationStoreIsShares>(); // stationId storeShare
+        public Dictionary<int, int> storageLimit = new Dictionary<int, int>(); // itemId customLimit
     }
 
     internal class OrbitalRingStorageCalculate
     {
         private static readonly int OrbitalRingStorageMax = 200000;
-        private static readonly int OrbitalRingStorage200Max = 200;
-        private static readonly int OrbitalRingStorage100Max = 100;
-        private static readonly int OrbitalRingStorage50Max = 50;
+        private static readonly int DefaultStorageLimit200 = 200;
+        private static readonly int DefaultStorageLimit100 = 100;
+        private static readonly int DefaultStorageLimit50 = 50;
 
-        private static readonly HashSet<int> OrbitalRingStorage200MaxItemId = new HashSet<int>() {
+        internal static int StorageHardLimit => OrbitalRingStorageMax;
+
+        private static readonly HashSet<int> DefaultStorageLimit200ItemIds = new HashSet<int>() {
             1210, // 翘曲器
             6512, // 预制星舰模块
             1503, // 小型运载火箭
             6504, // 数学率引擎-起振焦点-运载火箭
             6502, // 数学率引擎-深蓝之井-运载火箭
         };
-        private static readonly HashSet<int> OrbitalRingStorage100MaxItemId = new HashSet<int>() {
+        private static readonly HashSet<int> DefaultStorageLimit100ItemIds = new HashSet<int>() {
             5002, // 太空运输船
             6230, // 深空货舰
             2103, // 物流立交
@@ -75,7 +78,7 @@ namespace ProjectOrbitalRing.Patches.Logic.OrbitalRing
             5111, // 护卫舰
             2312, // 电磁弹射井
         };
-        private static readonly HashSet<int> OrbitalRingStorage50MaxItemId = new HashSet<int>() {
+        private static readonly HashSet<int> DefaultStorageLimit50ItemIds = new HashSet<int>() {
             5112, // 驱逐舰
             2104, // 太空物流港
             6267, // 深空物流港
@@ -92,19 +95,35 @@ namespace ProjectOrbitalRing.Patches.Logic.OrbitalRing
             6511, // 超空间中继器核心
         };
 
-        // \n在星环共享空间中储存上限为<color=\"#FD965ECC\">50</color>
-        // \nThe storage capacity limit in the Star Ring shared space is <color=\"#FD965ECC\">50</color>
+        // 以上配置的是部分物品在星环共享空间中的默认储存上限
+        // These values are default shared-storage limits for selected items
 
-        private static int CheckItemStorageMax(int itemId)
+        internal static int GetDefaultItemStorageLimit(int itemId)
         {
-            if (OrbitalRingStorage200MaxItemId.Contains(itemId)) {
-                return OrbitalRingStorage200Max;
-            } else if (OrbitalRingStorage100MaxItemId.Contains(itemId)) {
-                return OrbitalRingStorage100Max;
-            } else if (OrbitalRingStorage50MaxItemId.Contains(itemId)) {
-                return OrbitalRingStorage50Max;
+            if (DefaultStorageLimit200ItemIds.Contains(itemId)) {
+                return DefaultStorageLimit200;
+            } else if (DefaultStorageLimit100ItemIds.Contains(itemId)) {
+                return DefaultStorageLimit100;
+            } else if (DefaultStorageLimit50ItemIds.Contains(itemId)) {
+                return DefaultStorageLimit50;
             }
             return OrbitalRingStorageMax;
+        }
+
+        internal static int GetEffectiveItemStorageLimit(OrbitalRingStorage orbitalRingStorage, int itemId)
+        {
+            if (orbitalRingStorage != null &&
+                TheMountainMovingMappings.GetQianKunItemId(itemId) != itemId &&
+                orbitalRingStorage.storageItem.TryGetValue(itemId, out int[] countAndInc) &&
+                countAndInc[0] > OrbitalRingStorageMax) {
+                return OrbitalRingStorageMax;
+            }
+
+            if (orbitalRingStorage != null && orbitalRingStorage.storageLimit.TryGetValue(itemId, out int customLimit)) {
+                return customLimit < 0 ? 0 : customLimit;
+            }
+
+            return GetDefaultItemStorageLimit(itemId);
         }
 
         [HarmonyPatch(typeof(PlanetTransport), nameof(PlanetTransport.GameTick))]
@@ -171,13 +190,16 @@ namespace ProjectOrbitalRing.Patches.Logic.OrbitalRing
                             }
                         } else if (storage.count > storage.max / 2) {
                             lock (orbitalRingStorage.storageItem) {
+                                int effectiveStorageLimit = GetEffectiveItemStorageLimit(orbitalRingStorage, storage.itemId);
+                                if (effectiveStorageLimit <= 0) {
+                                    continue;
+                                }
                                 if (!orbitalRingStorage.storageItem.ContainsKey(storage.itemId)) {
                                     orbitalRingStorage.storageItem[storage.itemId] = new int[] { 0, 0 };
                                 }
                                 int count = storage.count - (storage.max / 2);
-                                int StorageMax = CheckItemStorageMax(storage.itemId);
-                                if (orbitalRingStorage.storageItem[storage.itemId][0] < StorageMax) {
-                                    count = (StorageMax - orbitalRingStorage.storageItem[storage.itemId][0]) > count ? count : (StorageMax - orbitalRingStorage.storageItem[storage.itemId][0]);
+                                if (orbitalRingStorage.storageItem[storage.itemId][0] < effectiveStorageLimit) {
+                                    count = (effectiveStorageLimit - orbitalRingStorage.storageItem[storage.itemId][0]) > count ? count : (effectiveStorageLimit - orbitalRingStorage.storageItem[storage.itemId][0]);
                                     orbitalRingStorage.storageItem[storage.itemId][0] += count;
                                     //storage.count -= count;
                                     int inc = split_inc(ref stationComponent.storage[j].count, ref stationComponent.storage[j].inc, count);
@@ -314,13 +336,18 @@ namespace ProjectOrbitalRing.Patches.Logic.OrbitalRing
                                 }
                                 itemId = assemblerComponent.recipeExecuteData.products[i];
                                 lock (storageItem) {
+                                    int effectiveStorageLimit = GetEffectiveItemStorageLimit(planetOrbitalRingData.Rings[ringId].orbitalRingStorage, itemId);
+                                    if (effectiveStorageLimit <= 0) {
+                                        continue;
+                                    }
                                     if (!storageItem.ContainsKey(itemId)) {
                                         storageItem[itemId] = new int[] { 0, 0 };
                                     }
-                                    if (storageItem[itemId][0] < OrbitalRingStorageMax) {
+                                    if (storageItem[itemId][0] < effectiveStorageLimit) {
                                         count = assemblerComponent.produced[i];
+                                        count = (effectiveStorageLimit - storageItem[itemId][0]) > count ? count : (effectiveStorageLimit - storageItem[itemId][0]);
                                         storageItem[itemId][0] += count;
-                                        assemblerComponent.produced[i] = 0;
+                                        assemblerComponent.produced[i] -= count;
                                         if (assemblerComponent.recipeType == ERecipeType.Smelt) {
                                             storageItem[itemId][1] += 4 * count;
                                         }

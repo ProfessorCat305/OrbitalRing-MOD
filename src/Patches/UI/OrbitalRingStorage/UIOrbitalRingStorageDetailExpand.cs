@@ -44,13 +44,8 @@ namespace ProjectOrbitalRing.Patches.UI.UIOrbitalRingStorageWindow
                     for (int i = 0; i < planetOrbitalRingData.Rings[ringId].Capacity; i++) {
                         var pair = planetOrbitalRingData.Rings[ringId].GetPair(i);
                         if (pair.OrbitalStationPoolId == objId) {
+                            ProjectOrbitalRing.OrbitalRingStorageWindow.SetCurrentStorage(factory.planetId, ringId);
                             ProjectOrbitalRing.OrbitalRingStorageWindow.OpenWindow();
-                            ProjectOrbitalRing.OrbitalRingStorageWindow.SetStorageData(planetOrbitalRingData.Rings[ringId].orbitalRingStorage.storageItem);
-                            if (UIOrbitalRingStorageWindow.CurPlanetId != factory.planetId || UIOrbitalRingStorageWindow.CurStorageIndex != ringId) {
-                                UIOrbitalRingStorageWindow.CurPlanetId = factory.planetId;
-                                UIOrbitalRingStorageWindow.CurStorageIndex = ringId;
-                                //ProjectOrbitalRing.CurPlanetIdAndStorageIndex.OnPlanetChanged(UIOrbitalRingStorageWindow.CurPlanetIdAndStorageIndex);
-                            }
                             return;
                         }
                     }
@@ -59,5 +54,14 @@ namespace ProjectOrbitalRing.Patches.UI.UIOrbitalRingStorageWindow
                 ProjectOrbitalRing.OrbitalRingStorageWindow._Close();
             }
         }
+
+        [HarmonyPatch(typeof(UIGame), nameof(UIGame._OnUpdate))]
+        [HarmonyPostfix]
+        public static void UIGame_OnUpdate_Postfix()
+        {
+            // 显式驱动该自定义窗口的 _Update()。
+            ProjectOrbitalRing.OrbitalRingStorageWindow?._Update();
+        }
+
     }
 }
