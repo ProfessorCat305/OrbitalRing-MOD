@@ -185,7 +185,10 @@ namespace ProjectOrbitalRing.Patches.UI.OrbitalRingStorage
             var planetOrbitalRingData = OrbitalStationManager.Instance.GetPlanetOrbitalRingData(planetId);
             if (planetOrbitalRingData == null) return;
             for (int ringId = 0; ringId < planetOrbitalRingData.Rings.Count; ringId++) {
-                if (!planetOrbitalRingData.Rings[ringId].IsOneFull()) continue;
+                if (!planetOrbitalRingData.Rings[ringId].IsOneFull()) {
+                    _uiButton.transform.GetChild(2).GetComponent<Image>().enabled = false;
+                    continue; 
+                }
                 for (int i = 0; i < planetOrbitalRingData.Rings[ringId].Capacity; i++) {
                     var pair = planetOrbitalRingData.Rings[ringId].GetPair(i);
                     if (pair.stationType == StationType.Station && pair.OrbitalStationPoolId == stationId) {

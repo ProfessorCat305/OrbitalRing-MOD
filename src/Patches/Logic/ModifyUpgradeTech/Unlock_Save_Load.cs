@@ -61,6 +61,8 @@ namespace ProjectOrbitalRing.Patches.Logic.ModifyUpgradeTech
 
         public static int PilerEjectorLevel;
 
+        private static bool isUnlockHandcraft;
+
         struct gachaData { public int item; public int count; }
         private static readonly gachaData[] gachaDatas = {
            new gachaData { item = ProtoID.I氢, count = 114 },
@@ -106,6 +108,8 @@ namespace ProjectOrbitalRing.Patches.Logic.ModifyUpgradeTech
             isOrbitalTurretUnlock = false;
 
             PilerEjectorLevel = 1;
+
+            isUnlockHandcraft = false;
         }
 
         public static int GetPilerEjectorLevel()
@@ -132,6 +136,7 @@ namespace ProjectOrbitalRing.Patches.Logic.ModifyUpgradeTech
             PilerEjectorTechs(_techId);
             Gacha(_techId);
             SpeedOfLightModification(_techId);
+            UnlockRecipesHandcraft(_techId);
         }
 
         private static void SyncRecipeExecuteData(RecipeProto recipeProto)
@@ -395,10 +400,41 @@ namespace ProjectOrbitalRing.Patches.Logic.ModifyUpgradeTech
             }
         }
 
+        static void UnlockRecipesHandcraft(int techId)
+        {
+            if (techId == 1947) {
+                isUnlockHandcraft = true;
+                UnlockHandcraft();
+            }
+        }
+
+        static void UnlockHandcraft()
+        {
+            for (int m = 0; m < LDB.items.dataArray.Length; m++) {
+                LDB.items.dataArray[m].recipes = null;
+                LDB.items.dataArray[m].FindRecipes();
+            }
+        }
+
+        [HarmonyTranspiler]
+        [HarmonyPatch(typeof(ItemProto), nameof(ItemProto.FindRecipes))]
+        public static IEnumerable<CodeInstruction> ItemProto_FindRecipes_Transpiler(IEnumerable<CodeInstruction> instructions)
+        {
+            var matcher = new CodeMatcher(instructions);
+
+            matcher.MatchForward(false, new CodeMatch(OpCodes.Ldfld, AccessTools.Field(typeof(RecipeProto), nameof(RecipeProto.Handcraft))));
+
+            matcher.Advance(1);
+            matcher.InsertAndAdvance(new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(Unlock_Save_Load), nameof(isRecipesHandcraftUnlock))));
+
+            //matcher.LogInstructionEnumeration();
+            return matcher.InstructionEnumeration();
+        }
+
         static bool isRecipesHandcraftUnlock(bool Handcraft)
         {
             // 解锁了次级维度工厂后，所有配方全可手搓
-            if (GameMain.history.TechUnlocked(1947)) {
+            if (isUnlockHandcraft) {
                 return true;
             }
             return Handcraft;
@@ -814,6 +850,7 @@ namespace ProjectOrbitalRing.Patches.Logic.ModifyUpgradeTech
             for (int i = 0; i < GameMain.galaxy.starCount; i++) {
                 w.Write(GameMain.galaxy.stars[i].luminosity);
             }
+            w.Write(isUnlockHandcraft);
         }
 
         internal static void Import(BinaryReader r)
@@ -903,6 +940,16 @@ namespace ProjectOrbitalRing.Patches.Logic.ModifyUpgradeTech
                 for (int i = 0; i < starCount; i++) {
                     StarLuminosity[i] = r.ReadSingle();
                 }
+
+                // 次级维度工厂解锁状态，旧版本没有这个数据，旧版本存档移动到GameMain.history实例化后再处理这个逻辑
+                if (ProjectOrbitalRing.importVersion < 16777221) {
+                    isUnlockHandcraft = false;
+                } else {
+                    isUnlockHandcraft = r.ReadBoolean();
+                }
+                if (isUnlockHandcraft) {
+                    UnlockHandcraft();
+                }
             }
             catch (EndOfStreamException)
             {
@@ -947,6 +994,9 @@ namespace ProjectOrbitalRing.Patches.Logic.ModifyUpgradeTech
             techProto.RefreshTranslation();
 
             StarLuminosity = null;
+
+            isUnlockHandcraft = false;
+            UnlockHandcraft();
         }
 
         [HarmonyPatch(typeof(GameData), nameof(GameData.Import))]
@@ -965,6 +1015,13 @@ namespace ProjectOrbitalRing.Patches.Logic.ModifyUpgradeTech
                 }
             }
             UpdateDysonSpheresEnergyGen();
+
+            if (ProjectOrbitalRing.importVersion < 16777221) {
+                isUnlockHandcraft = GameMain.history.TechUnlocked(1947);
+                if (isUnlockHandcraft) {
+                    UnlockHandcraft();
+                }
+            }
         }
 
         public static void AddUniverseObserveBuilding(int itemId)

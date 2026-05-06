@@ -250,6 +250,26 @@
         "ENUS": "1. The technological research for the material matrix phase of the Orbital Ring does not require the electrical matrix and chemical matrix.\n2.The fuel rods consumed for leaving the planet will rapidly increase as the items in the backpack increase.\n3.The products from ecological greenhouses can meet the demand for coal and crude oil.\n\nPlease carefully consider the above three points. Do you really need to continuously burn fuel rods and transport titanium for the COS rocket?"
     },
     {
+        "Name": "过滤器介绍标题",
+        "ZHCN": "制造台插件介绍",
+        "ENUS": "Introduction to manufacturing platform plug-in"
+    },
+    {
+        "Name": "过滤器介绍前字",
+        "ZHCN": "制造台新增插件插槽，为选择配方后出现在配方的下方的圆孔\n插件的配方在建筑页的最左下。\n部分配方（比如芯片）需要插入 超高效过滤器 插件才会执行。\n\n可以通过手持插件，摁住ctrl划过制造台批量插入插件",
+        "ENUS": "The manufacturing table has been added with a new plug-in slot, which is the circular hole that appears below the selected recipe.\nThe recipe for the plugin is located at the bottom left corner of the building page.\nSome formulas (such as chips) require the insertion of ultra-high-efficiency filter plugins to execute.\n\nYou can insert plugins in bulk by holding the ctrl key and swiping across the manufacturing table with the handheld plugin"
+    },
+    {
+        "Name": "严禁激光砍树介绍标题",
+        "ZHCN": "不要使用激光砍树MOD",
+        "ENUS": "Do not use the LaserClearing mod"
+    },
+    {
+        "Name": "严禁激光砍树介绍前字",
+        "ZHCN": "不要使用激光砍树MOD（LaserClearing），以及不要使用辅助MOD的加速砍树功能，使用以上功能会使得星环必要流程中的掉落物无法正常掉落，导致<color=\"#FD965ECC\">无法正常进行游戏流程</color>。",
+        "ENUS": "Do not use the LaserClearing mod, nor the accelerated tree-cutting feature of any auxiliary mods. Using these functions will prevent the normal drop of items in the necessary processes of the Star Ring, making it <color=\"#FD965ECC\">impossible to progress through the game normally</color>."
+    },
+    {
         "Name": "行星特质介绍标题",
         "ZHCN": "行星特质",
         "ENUS": "Planetary Characteristics"
@@ -316,8 +336,8 @@
     },
     {
         "Name": "I飞行舱说明书",
-        "ZHCN": "飞行舱拆除可得：\n  4个基础制造台\n  500个低速传送带\n  300个低速分拣器\n  一枚无限装填子弹\n  一个火力发电厂",
-        "ENUS": "Dismantling the flight cabin yields: \n  4 basic manufacturing tables\n  500 Low-speed conveyor belt\n  300 Low-speed sorter\n  1 bullet with unlimited reloading\n  1 thermal Power Plant"
+        "ZHCN": "飞行舱拆除可得：\n  4个基础制造台\n  500个低速传送带\n  300个低速分拣器\n  一枚无限装填子弹\n  一个火力发电厂 \n\n另，自带的满蓄电池在机甲燃料舱用完后，将空电池建造于地上可接受电网多余电力充电，充满时拆除会重新获得满蓄电池",
+        "ENUS": "Dismantling the flight cabin yields: \n  4 basic manufacturing tables\n  500 Low-speed conveyor belt\n  300 Low-speed sorter\n  1 bullet with unlimited reloading\n  1 thermal Power Plant \n\nAdditionally, once the built-in fully charged batteries are depleted in the mecha's fuel tank, the empty batteries can be constructed on the ground to accept excess power from the grid for charging. Upon being fully charged, they can be dismantled to regain fully charged batteries"
     },
     {
         "Name": "钛矿",
@@ -4520,8 +4540,8 @@
     },
     {
         "Name": "I星环电网环路",
-        "ZHCN": "一个无线输电同调组件，借助星环里轨道连接组件提供的支撑和连接，如同连接组件一样建设成首尾相连的星环电网，所有组件相互协调同频，向行星发送覆盖全行星的电力广播，以此达成全球无线电力连接。\n<color=\"#FD965ECC\">连接组件起码连接一环以上和电网环路环必须完整才能使全球供电。</color>",
-        "ENUS": "A wireless transmission synchronization component, with the support and connection provided by the orbital connection component in the Orbital Ring, is constructed as a connected Orbital Ring power grid like a connection component. All components coordinate with each other on the same frequency and send power broadcasts covering the entire planet to achieve global wireless power connection.\n<color=\"#FD965ECC\">The connecting components must be connected to at least one ring and the power grid loop must be complete in order to provide global power supply.</color>"
+        "ZHCN": "一个无线输电同调组件，借助星环里轨道连接组件提供的支撑和连接，如同连接组件一样建设成首尾相连的星环电网，所有组件相互协调同频，向行星发送覆盖全行星的电力广播，以此达成全球无线电力连接。\n<color=\"#FD965ECC\">星环中连接组件起码连接一环以上和电网环路环必须完整才能使全球供电。</color>",
+        "ENUS": "A wireless transmission synchronization component, with the support and connection provided by the orbital connection component in the Orbital Ring, is constructed as a connected Orbital Ring power grid like a connection component. All components coordinate with each other on the same frequency and send power broadcasts covering the entire planet to achieve global wireless power connection.\n<color=\"#FD965ECC\">The connecting components in the orbital ring must be connected to at least one ring and the power grid loop must be complete in order to provide global power supply.</color>"
     },
     {
         "Name": "星环对撞机",
@@ -4550,8 +4570,8 @@
     },
     {
         "Name": "I粒子加速轨道",
-        "ZHCN": "回旋加速器，利用磁场加速并约束带电粒子，在一圈圈的回旋加速轨道中将粒子束加速至亚光速并对撞。曾经，在地面上加速轨道直径达数十公里的粒子对撞机就被称之为超级对撞机，而如今，我们将建造以星球大小为直径的星环对撞机，由一节节加速轨道拼接而成的，星球级回旋加速器。\n<color=\"#FD965ECC\">需要完整连接一圈对应的星环对撞机总控站才能运作</color>",
-        "ENUS": "A cyclotron uses a magnetic field to accelerate and constrain charged particles, accelerating the particle beam to sub light speed and colliding in a circular orbit. Once, particle colliders that accelerated to orbit diameters of tens of kilometers on the ground were called supercolliders, but now we will build ring colliders with diameters the size of planets，A planetary level cyclotron composed of a series of accelerated orbits pieced together."
+        "ZHCN": "回旋加速器，利用磁场加速并约束带电粒子，在一圈圈的回旋加速轨道中将粒子束加速至亚光速并对撞。曾经，在地面上加速轨道直径达数十公里的粒子对撞机就被称之为超级对撞机，而如今，我们将建造以星球大小为直径的星环对撞机，由一节节加速轨道拼接而成的，星球级回旋加速器。\n<color=\"#FD965ECC\">星环中连接组件起码连接一环以上和粒子加速轨道需要完整连接一圈对应的星环对撞机总控站才能运作</color>",
+        "ENUS": "A cyclotron uses a magnetic field to accelerate and constrain charged particles, accelerating the particle beam to sub light speed and colliding in a circular orbit. Once, particle colliders that accelerated to orbit diameters of tens of kilometers on the ground were called supercolliders, but now we will build ring colliders with diameters the size of planets，A planetary level cyclotron composed of a series of accelerated orbits pieced together.\n<color=\"#FD965ECC\">The connecting components in the orbital ring must connect at least one ring, and the particle acceleration track needs to be fully connected around the corresponding star ring to operate the main control station of the collider</color>"
     },
     {
         "Name": "天枢座",

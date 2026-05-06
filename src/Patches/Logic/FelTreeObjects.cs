@@ -97,6 +97,20 @@ namespace ProjectOrbitalRing.Patches.Logic
 
         public static void OnMine(ref PlanetFactory __instance, int id)
         {
+            ItemProto temp = LDB.items.Select(2318);
+            if (temp.handcraft != null) {
+                LogError($"item 2318 handcraft id {temp.handcraft.ID}");
+            } else {
+                LogError($"item 2318 handcraft is null");
+            }
+
+            temp = LDB.items.Select(1302);
+            if (temp.handcraft != null) {
+                LogError($"item 1302 handcraft id {temp.handcraft.ID}");
+            } else {
+                LogError($"item 1302 handcraft is null");
+            }
+
             //参数合法性校验
             if (__instance.vegePool[id].id == 0) { return; }
             int itemProtoID = 0;
