@@ -127,6 +127,14 @@ namespace ProjectOrbitalRing.Utils
             megaPumper = LDB.models.Select(ProtoID.M欺骗型广播塔).prefabDesc;
             megaPumper.beaconSignalRadius = 0f;
 
+            megaPumper = LDB.models.Select(ProtoID.M天枢座).prefabDesc;
+            megaPumper.isPowerNode = true;
+            megaPumper.isPowerConsumer = false;
+
+            megaPumper = LDB.models.Select(ProtoID.M超空间中继器).prefabDesc;
+            megaPumper.isPowerNode = true;
+            megaPumper.isPowerCharger = true;
+
             megaPumper = LDB.models.Select(ProtoID.M生态温室).prefabDesc;
             megaPumper.isLab = false;
 

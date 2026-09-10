@@ -1,9 +1,7 @@
 ﻿using HarmonyLib;
-using Newtonsoft.Json;
 using ProjectOrbitalRing.Patches.Logic.PlanetFocus;
 using System;
 using System.Collections.Generic;
-using ProjectOrbitalRing.Patches.Logic.Farm;
 using static ProjectOrbitalRing.Patches.Logic.OrbitalRing.EquatorRing;
 using static ProjectOrbitalRing.Patches.Logic.OrbitalRing.PosTool;
 using static ProjectOrbitalRing.ProjectOrbitalRing;
@@ -130,8 +128,8 @@ namespace ProjectOrbitalRing.Patches.Logic.OrbitalRing
         [HarmonyPostfix]
         public static void PlanetTransport_GameTick_Patch(ref PlanetTransport __instance, long time)
         {
-            int num = (int)(time % 60);
-            if (num != 0) {
+            int num = (int)Math.Round((double)(time % 60));
+            if (num != __instance.planet.id % 60) {
                 return;
             }
             var planetOrbitalRingData = OrbitalStationManager.Instance.GetPlanetOrbitalRingData(__instance.planet.id);
@@ -382,8 +380,8 @@ namespace ProjectOrbitalRing.Patches.Logic.OrbitalRing
         [HarmonyPostfix]
         public static void EjectorComponent_InternalUpdate_Patch(ref EjectorComponent __instance, long tick)
         {
-            int num = (int)(tick % 60);
-            if (num != 0) {
+            int num = (int)Math.Round((double)(tick % 60));
+            if (num != __instance.id % 60) {
                 return;
             }
             var planetOrbitalRingData = OrbitalStationManager.Instance.GetPlanetOrbitalRingData(__instance.planetId);
@@ -429,8 +427,8 @@ namespace ProjectOrbitalRing.Patches.Logic.OrbitalRing
         [HarmonyPostfix]
         public static void TurretComponent_InternalUpdate_Patch(ref TurretComponent __instance, long time, PlanetFactory factory)
         {
-            int num = (int)(time % 60);
-            if (num != 0) {
+            int num = (int)Math.Round((double)(time % 60));
+            if (num != __instance.id % 60) {
                 return;
             }
             var planetOrbitalRingData = OrbitalStationManager.Instance.GetPlanetOrbitalRingData(factory.planetId);
@@ -485,8 +483,8 @@ namespace ProjectOrbitalRing.Patches.Logic.OrbitalRing
         [HarmonyPostfix]
         public static void PowerSystem_GameTick_Patch(ref PowerSystem __instance, long time)
         {
-            int num = (int)(time % 60);
-            if (num != 0) {
+            int num = (int)Math.Round((double)(time % 60));
+            if (num != __instance.planet.id % 60) {
                 return;
             }
             var planetOrbitalRingData = OrbitalStationManager.Instance.GetPlanetOrbitalRingData(__instance.planet.id);

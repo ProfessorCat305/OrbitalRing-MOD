@@ -92,11 +92,11 @@ namespace ProjectOrbitalRing.Patches.Logic
 
                     switch (component.recipeId)
                     {
-                        case ProtoID.R盐水电解:
-                        case ProtoID.R海水淡化:
+                        //case ProtoID.R盐水电解:
+                        //case ProtoID.R海水淡化:
                         case ProtoID.R高效石墨烯:
                         case ProtoID.R水电解:
-                        case ProtoID.R二氧化硫还原:
+                        //case ProtoID.R二氧化硫还原:
                             //    b = true;
 
                             break;
@@ -121,7 +121,7 @@ namespace ProjectOrbitalRing.Patches.Logic
 
                     switch (component.recipeId)
                     {
-                        case ProtoID.R放射性矿物处理:
+                        case ProtoID.R铀矿处理:
                         //    b = true;
 
                             break;

@@ -4,7 +4,6 @@ using System.Reflection.Emit;
 using System.Collections.Generic;
 using UnityEngine;
 using ProjectOrbitalRing.Patches.Logic.OrbitalRing;
-using static System.Collections.Specialized.BitVector32;
 
 namespace ProjectOrbitalRing.Patches.Logic.CurvatureLogistics
 {
@@ -33,7 +32,6 @@ namespace ProjectOrbitalRing.Patches.Logic.CurvatureLogistics
             }
             else if (stationComponent.isStellar && (_itemId == ProtoID.I太空运输船 || _itemId == ProtoID.I深空货舰))
             {
-                //Debug.LogFormat("scppppppp114514 _itemId {0}", _itemId);
                 if (__instance.shipIconButton.button.interactable)
                 {
                     __instance.OnShipIconClick(_itemId);

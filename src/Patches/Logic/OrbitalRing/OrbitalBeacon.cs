@@ -1,15 +1,10 @@
 ﻿using HarmonyLib;
-using ProjectOrbitalRing.Patches.Logic.PlanetFocus;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
 using System.Reflection.Emit;
 using static ProjectOrbitalRing.Patches.Logic.OrbitalRing.EquatorRing;
 using static ProjectOrbitalRing.ProjectOrbitalRing;
 using ProjectOrbitalRing.Utils;
-using UnityEngine.PostProcessing;
 
 namespace ProjectOrbitalRing.Patches.Logic.OrbitalRing
 {
@@ -22,8 +17,8 @@ namespace ProjectOrbitalRing.Patches.Logic.OrbitalRing
         public static bool GameTickPatch(ref BeaconComponent __instance, PlanetFactory factory, PrefabDesc pdesc, EAggressiveLevel agglv, float power, long time)
         {
             if (pdesc.beaconSignalRadius == 0.0f) {
-                int num = (int)(time % 60);
-                if (num != 0) {
+                int num = (int)Math.Round((double)(time % 60));
+                if (num != __instance.id % 60) {
                     return false;
                 }
                 var planetOrbitalRingData = OrbitalStationManager.Instance.GetPlanetOrbitalRingData(factory.planetId);
@@ -77,7 +72,10 @@ namespace ProjectOrbitalRing.Patches.Logic.OrbitalRing
                                 if (!BanDFTinderDispatchFromHive.DFTinderShouldNotDispatchStarId.Contains(factory.planet.star.id)) {
                                     BanDFTinderDispatchFromHive.DFTinderShouldNotDispatchStarId.Add(factory.planet.star.id);
                                 }
+                            } else {
+                                BanDFTinderDispatchFromHive.DFTinderShouldNotDispatchStarId.Remove(factory.planet.star.id);
                             }
+                            return false;
                         }
                     }
                 }

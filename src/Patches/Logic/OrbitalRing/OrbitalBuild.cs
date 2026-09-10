@@ -1,7 +1,6 @@
 ﻿using HarmonyLib;
 using ProjectOrbitalRing.Utils;
 using System.Collections.Generic;
-using System.Security.Cryptography;
 using UnityEngine;
 using static ProjectOrbitalRing.Patches.Logic.OrbitalRing.EquatorRing;
 using static ProjectOrbitalRing.Patches.Logic.OrbitalRing.PosTool;
@@ -593,6 +592,9 @@ namespace ProjectOrbitalRing.Patches.Logic.OrbitalRing
                     if (OrbitalBeacon.SynapticLathePlanet.ContainsKey(__instance.factorySystem)) {
                         OrbitalBeacon.SynapticLathePlanet.Remove(__instance.factorySystem);
                     }
+                }
+                if (protoId == ProtoID.I欺骗型广播塔) {
+                    BanDFTinderDispatchFromHive.DFTinderShouldNotDispatchStarId.Remove(__instance.planet.star.id);
                 }
                 if (protoId == ProtoID.I星环对撞机) { // 星环对撞机，拆除，放开再建
                     if (planetOrbitalRingData == null)

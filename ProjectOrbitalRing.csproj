@@ -136,6 +136,7 @@
     <Compile Include="src\Patches\Logic\BattleRelated\StopCircleAround.cs" />
     <Compile Include="src\Patches\Logic\Build\BuildingModelIndexRecord.cs" />
     <Compile Include="src\Patches\Logic\CurvatureLogistics\CurvatureLogistics.cs" />
+    <Compile Include="src\Patches\Logic\CurvatureLogistics\DeepSpaceLogisticShipRenderer.cs" />
     <Compile Include="src\Patches\Logic\DamageDefinitionShield.cs" />
     <Compile Include="src\Patches\Logic\DisableLDBToolCachePatches.cs" />
     <Compile Include="src\Patches\Logic\DysonSpherePatches.cs" />
@@ -278,15 +279,16 @@
     <Content Include="assets\sprite\V黄铁矿脉-80px.png" />
     <Content Include="assets\sprite\钨矿脉-80px.png" />
     <EmbeddedResource Include="assets\sprite\*.png" />
+    <EmbeddedResource Include="assets\texture\chemical-plant-recipe-fcol-for-orbitalring.png" />
     <EmbeddedResource Include="assets\texture\chemical-plant-recipe-fcol.png" />
     <EmbeddedResource Include="assets\texture\中文图标.png" />
     <EmbeddedResource Include="assets\texture\人造恒星MK2材质.png" />
     <EmbeddedResource Include="assets\texture\创世Logo新春贺岁版.png" />
-    <EmbeddedResource Include="assets\texture\化工厂渲染索引.png" />
     <EmbeddedResource Include="assets\texture\大矿机渲染索引.png" />
     <EmbeddedResource Include="assets\texture\矿机渲染索引.png" />
     <EmbeddedResource Include="assets\texture\能量枢纽贴图.png" />
     <EmbeddedResource Include="assets\texture\英文图标.png" />
+    <EmbeddedResource Include="assets\texture\黑盒-a.png" />
     <EmbeddedResource Include="assets\texture\黑雾中文图标.png" />
     <EmbeddedResource Include="assets\texture\黑雾中文图标1.png" />
     <EmbeddedResource Include="assets\texture\黑雾英文图标.png" />

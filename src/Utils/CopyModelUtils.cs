@@ -95,35 +95,38 @@ namespace ProjectOrbitalRing.Utils
             RegisterNewBuildingModel(ProtoID.M太空物流港, ProtoID.M太空船坞, prefabPath, Color.HSVToRGB(0.5571f, 0.3188f, 0.8980f));
 
             prefabPath = "Assets/orbitalrings-models/entities/prefabs/orbital-antimatter-reactor";
-            RegisterNewBuildingModel(ProtoID.M太空物流港, ProtoID.M轨道反物质堆基座, prefabPath, new Color(0f, 0.28f, 1f));
+            RegisterNewBuildingModel(ProtoID.M太空物流港, ProtoID.M轨道反物质堆基座, prefabPath);
 
             prefabPath = "Assets/orbitalrings-models/entities/prefabs/orbital-observation-station";
             RegisterNewBuildingModel(ProtoID.M太空物流港, ProtoID.M轨道观测站, prefabPath, Color.HSVToRGB(0.2275f, 0.3804f, 0.6431f));
 
-            prefabPath = "Assets/orbitalrings-models/entities/prefabs/orbital-smelting-station";
+            prefabPath = "Assets/orbitalrings-models/entities/prefabs/orbital-smelting-station1-J";
             RegisterNewBuildingModel(ProtoID.M太空物流港, ProtoID.M轨道熔炼站, prefabPath, Color.HSVToRGB(0.0710f, 0.7412f, 0.8941f));
 
             prefabPath = "Assets/orbitalrings-models/entities/prefabs/orbital-hydroponic-cabin";
             RegisterNewBuildingModel(ProtoID.M太空物流港, ProtoID.M轨道水培舱, prefabPath, new Color(0.3216F, 0.8157F, 0.09020F));
 
-            prefabPath = "Assets/orbitalrings-models/entities/prefabs/deep-space-logistics-port";
+            prefabPath = "Assets/orbitalrings-models/entities/prefabs/deep-space-station";
             RegisterNewBuildingModel(ProtoID.M太空物流港, ProtoID.M深空物流港, prefabPath, new Color32(60, 179, 113, 255));
 
             prefabPath = "Assets/orbitalrings-models/entities/prefabs/tianzhu-seat";
             RegisterNewBuildingModel(ProtoID.M太空物流港, ProtoID.M天枢座, prefabPath, new Color(0.7373f, 0.2118f, 0.8510f));
 
-            prefabPath = "Assets/orbitalrings-models/entities/prefabs/orbitalring-particle-accelerator-collider";
+            prefabPath = "Assets/orbitalrings-models/entities/prefabs/orbitalring-particle-accelerator-collider1-JJ";
             RegisterNewBuildingModel(ProtoID.M太空物流港, ProtoID.M星环对撞机, prefabPath, new Color(0.3059F, 0.2196F, 0.4941F));
 
             prefabPath = "Assets/orbitalrings-models/entities/prefabs/space-logistics-port";
             RegisterNewBuildingModel(ProtoID.M太空物流港, ProtoID.M太空物流港, prefabPath, new Color(0.8275F, 0.8275F, 0.8275F));
+
+            prefabPath = "Assets/orbitalrings-models/entities/prefabs/deep-space-Cargo-Ship1-toab";
+            RegisterNewBuildingModel(ProtoID.M太空运输船, ProtoID.M深空货舰, prefabPath);
         }
 
-        private static void RegisterNewBuildingModel(int oriModelId, int registerModelId, string prefabPath, Color color)
+        private static void RegisterNewBuildingModel(int oriModelId, int registerModelId, string prefabPath, Color? color = null)
         {
             ModelProto oriModel = LDB.models.Select(oriModelId);
             PrefabDesc desc = oriModel.prefabDesc;
-            
+
             var newMats = new List<Material>();
 
             foreach (Material[] lodMats in desc.lodMaterials) {
@@ -133,15 +136,17 @@ namespace ProjectOrbitalRing.Utils
                     if (mat == null) continue;
 
                     var newMaterial = new Material(mat);
-                    newMaterial.SetColor("_Color", color);
+                    if (color.HasValue) {
+                        newMaterial.SetColor("_Color", color.Value);
+                    }
                     newMats.Add(newMaterial);
                 }
             }
 
             switch (registerModelId) {
-                //case ProtoID.M深空物流港:
-                //    AddMaterial806(ref newMats);
-                //    break;
+                case ProtoID.M深空物流港:
+                    AddMaterial806(ref newMats);
+                    break;
 
                 case ProtoID.M轨道熔炼站:
                     AddMaterial801(ref newMats);
@@ -158,6 +163,19 @@ namespace ProjectOrbitalRing.Utils
                 case ProtoID.M星环对撞机:
                     AddMaterial811(ref newMats);
                     break;
+
+                case ProtoID.M天枢座:
+                    AddMaterial820(ref newMats);
+                    break;
+
+                case ProtoID.M太空船坞:
+                    AddMaterial803(ref newMats);
+                    break;
+
+                // 明明模型加了环的不知道为什么环就是不出来，力竭了
+                //case ProtoID.M深空货舰:
+                //    AddMaterial819(ref newMats);
+                //    break;
             }
 
             ModelProto registerModel = ProtoRegistry.RegisterModel(registerModelId, prefabPath, newMats.ToArray());
@@ -168,13 +186,24 @@ namespace ProjectOrbitalRing.Utils
             registerModel.RuinCount = 1;
         }
 
-        //private static void AddMaterial806(ref List<Material> newMats)
-        //{
-        //    ModelProto oriModel = LDB.models.Select(403); // 信号塔modelindex
-        //    var collectEffectMat = new Material(oriModel.prefabDesc.lodMaterials[0][0]);
+        private static void AddMaterial806(ref List<Material> newMats)
+        {
+            ModelProto oriModel = LDB.models.Select(63); // 原油精炼厂
+            PrefabDesc desc = oriModel.prefabDesc;
+            int i = 0;
+            // 导入ab包的大塔模型的材质没有station back，所以这里踢掉
+            newMats.RemoveAt(1);
+            foreach (Material[] lodMats in desc.lodMaterials) {
+                if (lodMats == null) continue;
+                foreach (Material mat in lodMats) {
+                    if (mat == null) continue;
 
-        //    newMats.Add(collectEffectMat);
-        //}
+                    var newMaterial = new Material(mat);
+                    newMats.Add(newMaterial);
+                    i++;
+                }
+            }
+        }
 
         private static void AddMaterial801(ref List<Material> newMats)
         {
@@ -212,14 +241,14 @@ namespace ProjectOrbitalRing.Utils
                         i++;
                         continue;
                     }
-                    if (i == 1) {
-                        mat.SetVector("_SpherePos", new Vector4(0f, 32.22f, 0f, 7.2f));
-                    }
-                    if (i == 3) {
-                        mat.SetVector("_SpherePos", new Vector4(0f, 32.22f, 0f, 7.2f));
-                    }
 
                     var newMaterial = new Material(mat);
+                    if (i == 1) {
+                        newMaterial.SetVector("_SpherePos", new Vector4(0f, 32.22f, 0f, 7.2f));
+                    }
+                    if (i == 3) {
+                        newMaterial.SetVector("_SpherePos", new Vector4(0f, 32.22f, 0f, 7.2f));
+                    }
                     newMats.Add(newMaterial);
                     i++;
                 }
@@ -229,7 +258,7 @@ namespace ProjectOrbitalRing.Utils
 
         private static void AddMaterial804(ref List<Material> newMats)
         {
-            ModelProto oriModel = LDB.models.Select(63); // 原油精炼厂
+            ModelProto oriModel = LDB.models.Select(453); // 战场分析基站
             PrefabDesc desc = oriModel.prefabDesc;
             int i = 0;
             // 导入ab包的大塔模型的材质没有station back，所以这里踢掉
@@ -256,6 +285,58 @@ namespace ProjectOrbitalRing.Utils
             int i = 0;
             // 导入ab包的大塔模型的材质没有station back，所以这里踢掉
             newMats.RemoveAt(1);
+            foreach (Material[] lodMats in desc.lodMaterials) {
+                if (lodMats == null) continue;
+                foreach (Material mat in lodMats) {
+                    if (mat == null) continue;
+                    var newMaterial = new Material(mat);
+                    newMats.Add(newMaterial);
+                    i++;
+                }
+            }
+        }
+
+        private static void AddMaterial820(ref List<Material> newMats)
+        {
+            ModelProto oriModel = LDB.models.Select(403); // 信号塔
+            PrefabDesc desc = oriModel.prefabDesc;
+            int i = 0;
+            // 导入ab包的大塔模型的材质没有station back，所以这里踢掉
+            newMats.RemoveAt(1);
+            foreach (Material[] lodMats in desc.lodMaterials) {
+                if (lodMats == null) continue;
+                foreach (Material mat in lodMats) {
+                    if (mat == null) continue;
+                    var newMaterial = new Material(mat);
+                    newMats.Add(newMaterial);
+                    i++;
+                }
+            }
+        }
+
+        private static void AddMaterial803(ref List<Material> newMats)
+        {
+            ModelProto oriModel = LDB.models.Select(61); // 激光钻井平台
+            PrefabDesc desc = oriModel.prefabDesc;
+            int i = 0;
+            // 导入ab包的大塔模型的材质没有station back，所以这里踢掉
+            newMats.RemoveAt(1);
+            foreach (Material[] lodMats in desc.lodMaterials) {
+                if (lodMats == null) continue;
+                foreach (Material mat in lodMats) {
+                    if (mat == null) continue;
+                    var newMaterial = new Material(mat);
+                    newMats.Add(newMaterial);
+                    i++;
+                }
+            }
+        }
+
+        private static void AddMaterial819(ref List<Material> newMats)
+        {
+            ModelProto oriModel = LDB.models.Select(117); // 轨道采集器
+            PrefabDesc desc = oriModel.prefabDesc;
+            int i = 0;
             foreach (Material[] lodMats in desc.lodMaterials) {
                 if (lodMats == null) continue;
                 foreach (Material mat in lodMats) {

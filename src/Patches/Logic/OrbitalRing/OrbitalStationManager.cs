@@ -1,10 +1,6 @@
-﻿using GalacticScale;
-using ProjectOrbitalRing.Utils;
-using System;
+﻿using ProjectOrbitalRing.Utils;
 using System.Collections.Generic;
 using System.IO;
-using UnityEngine;
-using WinAPI;
 using static ProjectOrbitalRing.Patches.Logic.GlobalPowerSupplyPatches;
 using static ProjectOrbitalRing.Patches.Logic.OrbitalRing.EquatorRing;
 using static ProjectOrbitalRing.ProjectOrbitalRing;
@@ -445,6 +441,7 @@ namespace ProjectOrbitalRing.Patches.Logic.OrbitalRing
             lock (_lock) {
                 positions[position].OrbitalCorePoolId = -1;
                 positions[position].OrbitalStationType = (GetBase(positions[position].OrbitalStationType));
+                // 清零全球增产，反正全球增产每秒一刷，拆的如果不是全球增产那增产状态会刷回来，清零无所谓的
                 incCoreLevel[position] = 0;
                 spaceStationCount--;
             }

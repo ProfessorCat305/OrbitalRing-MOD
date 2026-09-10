@@ -2,6 +2,7 @@
 using System.IO;
 using System.Reflection;
 using UnityEngine;
+using static ProjectOrbitalRing.ProjectOrbitalRing;
 
 namespace ProjectOrbitalRing.Utils
 {
@@ -24,7 +25,7 @@ namespace ProjectOrbitalRing.Utils
 
             using (var stream = Assembly.GetManifestResourceStream($"ProjectOrbitalRing.assets.{type}.{name}.png")) {
                 if (stream == null) {
-                    ProjectOrbitalRing.LogInfo($"Could not find texture for {name}");
+                    LogError($"Could not find texture for {name}");
                     return null;
                 }
 
@@ -41,7 +42,7 @@ namespace ProjectOrbitalRing.Utils
                         texture = new Texture2D(2, 2, TextureFormat.ARGB32, true, false); // 加了这句后换贴图生效了，不过=======括住的部分不知道有没有一起生效，先留着了
                         //=====================
                         if (!texture.LoadImage(bytes, markNonReadable: false)) {
-                            ProjectOrbitalRing.LogInfo($"LoadImage failed for {name}");
+                            LogError($"LoadImage failed for {name}");
                             UnityEngine.Object.DestroyImmediate(texture);
                             return null;
                         }

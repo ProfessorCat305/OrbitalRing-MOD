@@ -92,8 +92,6 @@ namespace ProjectOrbitalRing.Patches.Logic
 
         public static void OnMine(ref PlanetFactory __instance, int id)
         {
-            
-
             //参数合法性校验
             if (__instance.vegePool[id].id == 0) { return; }
             int itemProtoID = 0;

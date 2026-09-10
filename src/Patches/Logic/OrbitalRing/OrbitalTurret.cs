@@ -1,9 +1,4 @@
 ﻿using HarmonyLib;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using static ProjectOrbitalRing.Patches.Logic.OrbitalRing.EquatorRing;
 using static ProjectOrbitalRing.Patches.Logic.OrbitalRing.PosTool;
 using UnityEngine;
@@ -127,7 +122,7 @@ namespace ProjectOrbitalRing.Patches.Logic.OrbitalRing
         public static void NewBeaconComponentPatch(ref DefenseSystem __instance, int entityId, PrefabDesc desc, int __result)
         {
             var itemId = __instance.factory.entityPool[entityId].protoId;
-            if (itemId == ProtoID.I伺服天穹组件 || itemId == ProtoID.I智能方尖碑 || itemId == ProtoID.I亿万械国 || itemId == ProtoID.I突触凝练机) {
+            if (itemId == ProtoID.I伺服天穹组件 || itemId == ProtoID.I智能方尖碑 || itemId == ProtoID.I亿万械国 || itemId == ProtoID.I突触凝练机 || itemId == ProtoID.I欺骗型广播塔) {
                 BuildOrbitalDefense(__instance, __result, entityId, itemId);
             }
         }

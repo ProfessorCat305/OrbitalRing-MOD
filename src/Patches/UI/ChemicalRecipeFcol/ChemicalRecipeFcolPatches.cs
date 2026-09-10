@@ -3,6 +3,7 @@ using System.Reflection.Emit;
 using HarmonyLib;
 using ProjectOrbitalRing.Utils;
 using UnityEngine;
+using static ProjectOrbitalRing.ProjectOrbitalRing;
 
 // ReSharper disable Unity.UnknownResource
 
@@ -11,6 +12,7 @@ namespace ProjectOrbitalRing.Patches.UI
     public static partial class ChemicalRecipeFcolPatches
     {
         [HarmonyPatch(typeof(FactorySystem), nameof(FactorySystem.GameTick), typeof(long), typeof(bool))]
+        [HarmonyPatch(typeof(GameLogic), nameof(GameLogic._assembler_parallel))]
         [HarmonyTranspiler]
         public static IEnumerable<CodeInstruction> FactorySystem_GameTick_Transpiler(IEnumerable<CodeInstruction> instructions)
         {
@@ -41,14 +43,18 @@ namespace ProjectOrbitalRing.Patches.UI
 
         internal static void SetChemicalRecipeFcol()
         {
-            Texture texture = TextureHelper.GetTexture("chemical-plant-recipe-fcol");
+            Texture texture = TextureHelper.GetTexture("chemical-plant-recipe-fcol-for-orbitalring");
             int fluidTex = Shader.PropertyToID("_FluidTex");
-
+            
             ref PrefabDesc prefabDesc = ref LDB.models.Select(64).prefabDesc;
             prefabDesc.lodMaterials[0][1].SetTexture(fluidTex, texture);
             prefabDesc.lodMaterials[1][1].SetTexture(fluidTex, texture);
 
             prefabDesc = ref LDB.models.Select(376).prefabDesc;
+            prefabDesc.lodMaterials[0][1].SetTexture(fluidTex, texture);
+            prefabDesc.lodMaterials[1][1].SetTexture(fluidTex, texture);
+
+            prefabDesc = ref LDB.models.Select(836).prefabDesc;
             prefabDesc.lodMaterials[0][1].SetTexture(fluidTex, texture);
             prefabDesc.lodMaterials[1][1].SetTexture(fluidTex, texture);
         }

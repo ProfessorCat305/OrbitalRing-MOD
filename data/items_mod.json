@@ -611,7 +611,7 @@
         "IconTag": "zmlx",
         "GridIndex": 1704,
         "StackSize": 50,
-        "Type": 12,
+        "Type": 10,
         "PreTechOverride": 0,
         "DescFields": [
             1,
@@ -1114,7 +1114,7 @@
         "IconTag": "qlyq",
         "GridIndex": 1511,
         "StackSize": 50,
-        "Type": 10,
+        "Type": 3,
         "PreTechOverride": 0,
         "DescFields": [
             1,
@@ -2052,7 +2052,7 @@
         "IconTag": "tkdt",
         "GridIndex": 2701,
         "StackSize": 20,
-        "Type": 6,
+        "Type": 5,
         "PreTechOverride": 0,
         "DescFields": [
             53,
@@ -2572,7 +2572,7 @@
         "IconTag": "gdpz",
         "GridIndex": 2706,
         "StackSize": 10,
-        "Type": 5,
+        "Type": 9,
         "PreTechOverride": 0,
         "DescFields": [
             53,
@@ -2625,7 +2625,7 @@
         "IconTag": "lztjq",
         "GridIndex": 1112,
         "StackSize": 100,
-        "Type": 2,
+        "Type": 3,
         "PreTechOverride": 0,
         "DescFields": [
             1,
@@ -2772,7 +2772,7 @@
         "IconTag": "ktc",
         "GridIndex": 1611,
         "StackSize": 20,
-        "Type": 9,
+        "Type": 4,
         "PreTechOverride": 0,
         "DescFields": [
             1,
@@ -2871,7 +2871,7 @@
         "IconTag": "gdrlz",
         "GridIndex": 2703,
         "StackSize": 10,
-        "Type": 5,
+        "Type": 6,
         "PreTechOverride": 0,
         "DescFields": [
             53,
@@ -2924,7 +2924,7 @@
         "IconTag": "slzjhj",
         "GridIndex": 1712,
         "StackSize": 20,
-        "Type": 10,
+        "Type": 4,
         "PreTechOverride": 0,
         "DescFields": [
             1,
@@ -2973,7 +2973,7 @@
         "IconTag": "qzjdzj",
         "GridIndex": 1713,
         "StackSize": 50,
-        "Type": 10,
+        "Type": 3,
         "PreTechOverride": 0,
         "DescFields": [
             1,
@@ -3022,7 +3022,7 @@
         "IconTag": "qzjdhj",
         "GridIndex": 1714,
         "StackSize": 20,
-        "Type": 10,
+        "Type": 4,
         "PreTechOverride": 0,
         "DescFields": [
             1,
@@ -3257,7 +3257,7 @@
         "IconTag": "zjqhx",
         "GridIndex": 2614,
         "StackSize": 2,
-        "Type": 7,
+        "Type": 5,
         "PreTechOverride": 1,
         "DescFields": [
             40
@@ -3461,7 +3461,7 @@
         "IconTag": "gdlzzj",
         "GridIndex": 2707,
         "StackSize": 200,
-        "Type": 7,
+        "Type": 3,
         "PreTechOverride": 0,
         "DescFields": [
             1,
@@ -3510,7 +3510,7 @@
         "IconTag": "lzjsgd",
         "GridIndex": 2609,
         "StackSize": 200,
-        "Type": 7,
+        "Type": 3,
         "PreTechOverride": 0,
         "DescFields": [
             1,
@@ -3559,7 +3559,7 @@
         "IconTag": "xhdw",
         "GridIndex": 2710,
         "StackSize": 200,
-        "Type": 7,
+        "Type": 3,
         "PreTechOverride": 1,
         "DescFields": [
             1,
@@ -3608,7 +3608,7 @@
         "IconTag": "xhhd",
         "GridIndex": 2608,
         "StackSize": 10,
-        "Type": 7,
+        "Type": 3,
         "PreTechOverride": 1,
         "DescFields": [
             1,
@@ -3709,7 +3709,7 @@
         "IconTag": "flx",
         "GridIndex": 4207,
         "StackSize": 300,
-        "Type": 7,
+        "Type": 2,
         "PreTechOverride": 0,
         "DescFields": [
             2,
@@ -3759,7 +3759,7 @@
         "IconTag": "flc",
         "GridIndex": 4307,
         "StackSize": 300,
-        "Type": 7,
+        "Type": 2,
         "PreTechOverride": 0,
         "DescFields": [
             2,
@@ -3809,7 +3809,7 @@
         "IconTag": "flxnqy",
         "GridIndex": 4407,
         "StackSize": 250,
-        "Type": 1,
+        "Type": 2,
         "PreTechOverride": 0,
         "DescFields": [
             1,
@@ -3858,7 +3858,7 @@
         "IconTag": "yjcj",
         "GridIndex": 1708,
         "StackSize": 100,
-        "Type": 1,
+        "Type": 2,
         "PreTechOverride": 0,
         "DescFields": [
             1,
@@ -4312,7 +4312,7 @@
         "IconTag": "qpxgbt",
         "GridIndex": 5808,
         "StackSize": 10,
-        "Type": 3,
+        "Type": 9,
         "PreTechOverride": 0,
         "DescFields": [
             53,
@@ -4771,7 +4771,7 @@
         "IconTag": "gsljq",
         "GridIndex": 1206,
         "StackSize": 200,
-        "Type": 1,
+        "Type": 3,
         "PreTechOverride": 0,
         "DescFields": [
             1,

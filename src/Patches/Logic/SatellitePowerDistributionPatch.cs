@@ -39,6 +39,9 @@ namespace ProjectOrbitalRing.Patches.Logic
             oriModel = LDB.models.Select(ProtoID.M勘察卫星);
             oriModel.prefabDesc.powerPoint.y += 55; // 将卫星的电点上移55
 
+            oriModel = LDB.models.Select(ProtoID.M天枢座);
+            oriModel.prefabDesc.powerPoint.y += 20; // 将卫星的电点上移20
+
             oriModel = LDB.models.Select(ProtoID.M超空间中继器);
             oriModel.prefabDesc.powerPoint = new UnityEngine.Vector3
             {

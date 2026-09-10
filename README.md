@@ -15,31 +15,33 @@ You will build a truly towering space elevator at the equator of the planet
 
 Constructing synchronous orbit facilities on space elevators
 
-<a href="https://ibb.co/7dvpH8RQ"><img src="https://i.ibb.co/gLyWGHPd/11.png" alt="11" border="0"></a>
+<a href="https://ibb.co/k2t7XWHr"><img src="https://i.ibb.co/PGdLgfmb/111.png" alt="111" border="0"></a>
 
 当各种各样的同步轨道设施越来越多的时候
 
 When there are more and more kinds of synchronous orbital facilities
 
-<a href="https://ibb.co/hJWvMnrv"><img src="https://i.ibb.co/C37FtX4F/111.png" alt="111" border="0"></a>
+<a href="https://ibb.co/pvP58N2T"><img src="https://i.ibb.co/1fnj5BZN/222.png" alt="222" border="0"></a>
 
 使用【轨道连接组件】将它们串联起来
 
 Cross them in series using [Orbital Connection Components]
 
-<a href="https://ibb.co/sv5S4y4w"><img src="https://i.ibb.co/C5Jdyhy7/1111.png" alt="1111" border="0"></a>
+<a href="https://ibb.co/Psm9chtw"><img src="https://i.ibb.co/6cn1HPNg/22332.png" alt="22332" border="0"></a>
 
 直至头尾相连，形成环赤道同步轨道设施巨构：星环，以此获得星环强大的功能支持
 
 Until the head and tail are connected, forming a giant structure of equatorial synchronous orbit facilities: Orbital Ring, in order to obtain the powerful function support of Orbital Ring
 
-<a href="https://ibb.co/rRvw8CZx"><img src="https://i.ibb.co/JwCs6fzv/11111.png" alt="11111" border="0"></a>
+<a href="https://ibb.co/hxQ9KWQS"><img src="https://i.ibb.co/ZR4Xh840/2244432.png" alt="2244432" border="0"></a>
 
 星球产线以星环为中心，构建为更加强大的工业行星
 
 The planet production line is centered on the Orbital Ring and built into a more powerful industrial planet
 
-<a href="https://ibb.co/bMYk17cC"><img src="https://i.ibb.co/zTCzsNqB/111111.png" alt="111111" border="0"></a>
+<a href="https://ibb.co/FCB1sRd"><img src="https://i.ibb.co/DT7FG0j/225552.png" alt="225552" border="0"></a>
+
+<a href="https://ibb.co/9kBhN40L"><img src="https://i.ibb.co/B5vGt6Jx/22666652.png" alt="22666652" border="0"></a>
 
 科技树一览
 

@@ -1,21 +1,10 @@
 ﻿using HarmonyLib;
-using ProjectOrbitalRing.Patches.Logic.AddVein;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
 using System.Reflection.Emit;
 using UnityEngine;
-using System.Text;
-using System.Threading.Tasks;
-using static UIPlayerDeliveryPanel;
-using CommonAPI;
 using ProjectOrbitalRing.Utils;
-using MoreMegaStructure;
 using System.IO;
-using System.Runtime.Remoting.Messaging;
-using UnityEngine.Playables;
-using ProjectOrbitalRing.Patches.Logic.OrbitalRing;
 using static ProjectOrbitalRing.Patches.Logic.OrbitalRing.EquatorRing;
 
 namespace ProjectOrbitalRing.Patches.Logic
@@ -149,6 +138,14 @@ namespace ProjectOrbitalRing.Patches.Logic
                         buildPreview.condition = EBuildCondition.BuildInEquator;
                         __result = false;
                     }
+                    for (int j = 0; j < __instance.factory.entityPool.Length; j++) {
+                        if ((__instance.factory.entityPool[j].pos - buildPreview.lpos).sqrMagnitude < 14297f) {
+                            buildPreview.condition = EBuildCondition.TowerTooClose;
+                            __result = false;
+                        }
+                    }
+                }
+                if (buildPreview.item.ID == ProtoID.I轨道采集器) {
                     for (int j = 0; j < __instance.factory.entityPool.Length; j++) {
                         if ((__instance.factory.entityPool[j].pos - buildPreview.lpos).sqrMagnitude < 14297f) {
                             buildPreview.condition = EBuildCondition.TowerTooClose;
@@ -425,6 +422,8 @@ namespace ProjectOrbitalRing.Patches.Logic
         {
             starGateList.Clear();
         }
+
+        // 1.0.16超空间中继器本质已经从station换成电线杆，不再需要下面这些关闭station窗口的逻辑了，留着是为了兼容旧存档
 
         [HarmonyPatch(typeof(UIStationWindow), nameof(UIStationWindow._OnOpen))]
         [HarmonyPostfix]

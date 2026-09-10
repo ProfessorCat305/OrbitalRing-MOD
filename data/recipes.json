@@ -7403,6 +7403,7 @@
         "Handcraft": false,
         "NonProductive": false
     },
+    // 废弃待回收
     {
         "ID": 792,
         "Name": "黄铁矿炼铁",

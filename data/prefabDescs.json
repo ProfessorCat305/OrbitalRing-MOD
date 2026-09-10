@@ -328,8 +328,8 @@
     },
     {
         "ModelID": 802,
-        "isStation": true,
-        "isStellarStation": true,
+        "isStation": false,
+        "isStellarStation": false,
         "isCollectStation": false,
         "stationCollectSpeed": 0,
         "stationMaxItemKinds": 0,
@@ -338,9 +338,9 @@
         "stationMaxShipCount": 0,
         "stationMaxEnergyAcc": 1000,
         "isPowerConsumer": true,
-        "isPowerNode": true,
         "workEnergyPerTick": 1000,
-        "idleEnergyPerTick": 1000
+        "idleEnergyPerTick": 1000,
+        "powerConnectDistance": 0.5
     },
     {
         "ModelID": 803,
@@ -490,7 +490,12 @@
     // 819是深空货舰
     {
         "ModelID": 820,
-        "isStation": false
+        "isStation": false,
+        "powerCoverRadius": 0.0,
+        "workEnergyPerTick": 1000,
+        "idleEnergyPerTick": 1000,
+        "powerConnectDistance": 0,
+        "isPowerConsumer": false
     },
     {
         "ModelID": 821,
