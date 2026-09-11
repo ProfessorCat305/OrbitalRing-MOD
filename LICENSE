@@ -1,3 +1,19 @@
+ProjectOrbitalRing ("星环") — Dyson Sphere Program Mod
+Copyright (C) 2025-2026 ProfessorCat305 and ProjectOrbitalRing contributors
+
+本程序遵循 GNU General Public License version 3 (GPL-3.0-only) 许可。
+本许可覆盖源代码（src/、packer/、preloader/、devtools/）与游戏数据（data/）。
+美术资源（图标、模型、纹理等）不在本许可范围内，遵循 assets/LICENSE.assets。
+
+This program is licensed under the GNU General Public License version 3 only (GPL-3.0-only).
+This license covers source code (src/, packer/, preloader/, devtools/) and game data (data/).
+Creative assets (icons, models, textures, etc.) are NOT covered by this license;
+see assets/LICENSE.assets.
+
+------------------------------------------------------------------
+以下是 GNU GPLv3 许可证全文（来自 Free Software Foundation 原文）：
+The following is the full text of the GNU GPLv3 (canonical text):
+
                     GNU GENERAL PUBLIC LICENSE
                        Version 3, 29 June 2007
 
