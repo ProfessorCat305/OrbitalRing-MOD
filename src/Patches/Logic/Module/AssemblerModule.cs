@@ -362,7 +362,7 @@ namespace ProjectOrbitalRing.Patches.Logic.AssemblerModule
 
                             if (planetValuePair.Key.assemblerPool[__instance.id].Equals(__instance)) {
                                 // 所有修改__instance的逻辑都在锁内，确保原子性
-                                BioChemicalProcess(planetValuePair.Key.factory.planet.theme, ref __instance);
+                                BioChemicalProcess(PlanetThemeUtils.GetVanillaThemeId(planetValuePair.Key.factory.planet), ref __instance);
                                 AssemblerExtraProcess(planetValuePair.Key.factory, ref __instance);
                             }
                         }

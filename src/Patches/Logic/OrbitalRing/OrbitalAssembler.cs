@@ -58,7 +58,7 @@ namespace ProjectOrbitalRing.Patches.Logic.OrbitalRing
             if (entityData.protoId == ProtoID.I星环对撞机) { 
                 //LogError($"CheckParticleColliderShouldRunning");
                 Vector3 pos = entityData.pos;
-                int ringIndex = isBuildingPosYCorrect(pos, (factorySystem.planet.radius == 100f));
+                int ringIndex = isBuildingPosYCorrect(pos, GetLayout(factorySystem.planet));
                 var planetOrbitalRingData = OrbitalStationManager.Instance.GetPlanetOrbitalRingData(factorySystem.planet.id);
                 if (planetOrbitalRingData != null) {
                     //LogError($" {ringIndex} ring not complete IsOneFull {planetOrbitalRingData.Rings[ringIndex].IsOneFull()} isLowInsideRingComplete {planetOrbitalRingData.Rings[ringIndex].isLowInsideRingComplete}");
@@ -224,9 +224,10 @@ namespace ProjectOrbitalRing.Patches.Logic.OrbitalRing
         public static void BuildOrbitalAssembler(FactorySystem __instance, int thisAssemblerId, int thisEntityId, int itemId)
         {
             Vector3 thisPos = __instance.factory.entityPool[thisEntityId].pos;
-            int position = IsBuildingPosXZCorrect(thisPos.x, thisPos.z, true, __instance.planet.radius == 100f);
-            int ringIndex = isBuildingPosYCorrect(thisPos, __instance.planet.radius == 100f);
-            OrbitalStationManager.Instance.AddPlanetId(__instance.planet.id, __instance.planet.radius == 100f);
+            var layout = GetLayout(__instance.planet);
+            int position = IsBuildingPosXZCorrect(thisPos.x, thisPos.z, true, layout);
+            int ringIndex = isBuildingPosYCorrect(thisPos, layout);
+            OrbitalStationManager.Instance.AddPlanetId(__instance.planet.id, layout);
             var planetOrbitalRingData = OrbitalStationManager.Instance.GetPlanetOrbitalRingData(__instance.planet.id);
             // 在赤道上/下圈？号位置添加轨道设施
             if (itemId != ProtoID.I重型电磁弹射器) {
@@ -249,8 +250,11 @@ namespace ProjectOrbitalRing.Patches.Logic.OrbitalRing
             }
 
             if (itemId == ProtoID.I星环对撞机) {
-                if (__instance.planet.radius == 100f) {
-                    __instance.assemblerPool[__result].speed = 250000;
+                float radius = GetSurfaceRadius(__instance.planet);
+                if (radius != 200f) {
+                    // 半径 200 的模型速度为 500000；星环对撞机速度按赤道环长度线性缩放。
+                    __instance.assemblerPool[__result].speed = Math.Max(1,
+                        Mathf.RoundToInt(500000f * radius / 200f));
                 }
             }
         }

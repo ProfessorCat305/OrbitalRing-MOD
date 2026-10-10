@@ -19,9 +19,10 @@ namespace ProjectOrbitalRing.Patches.Logic.OrbitalRing
         public static void BuildElevator(PlanetTransport __instance, int thisEntityId, ref StationComponent thisStation)
         {
             Vector3 thisPos = __instance.factory.entityPool[thisEntityId].pos;
-            int position = IsBuildingPosXZCorrect(thisPos.x, thisPos.z, false, __instance.planet.radius == 100f);
-            int ringIndex = isBuildingPosYCorrect(thisPos, __instance.planet.radius == 100f);
-            OrbitalStationManager.Instance.AddPlanetId(__instance.planet.id, __instance.planet.radius == 100f);
+            var layout = GetLayout(__instance.planet);
+            int position = IsBuildingPosXZCorrect(thisPos.x, thisPos.z, false, layout);
+            int ringIndex = isBuildingPosYCorrect(thisPos, layout);
+            OrbitalStationManager.Instance.AddPlanetId(__instance.planet.id, layout);
             var planetOrbitalRingData = OrbitalStationManager.Instance.GetPlanetOrbitalRingData(__instance.planet.id);
             // 在赤道上/下圈？号位置添加电梯
             planetOrbitalRingData.Rings[ringIndex].AddElevator(position, thisStation.id);
@@ -39,9 +40,10 @@ namespace ProjectOrbitalRing.Patches.Logic.OrbitalRing
         public static void BuildOrbitalStation(PlanetTransport __instance, int thisEntityId, ref StationComponent thisStation)
         {
             Vector3 thisPos = __instance.factory.entityPool[thisEntityId].pos;
-            int position = IsBuildingPosXZCorrect(thisPos.x, thisPos.z, true, __instance.planet.radius == 100f);
-            int ringIndex = isBuildingPosYCorrect(thisPos, __instance.planet.radius == 100f);
-            OrbitalStationManager.Instance.AddPlanetId(__instance.planet.id, __instance.planet.radius == 100f);
+            var layout = GetLayout(__instance.planet);
+            int position = IsBuildingPosXZCorrect(thisPos.x, thisPos.z, true, layout);
+            int ringIndex = isBuildingPosYCorrect(thisPos, layout);
+            OrbitalStationManager.Instance.AddPlanetId(__instance.planet.id, layout);
             var planetOrbitalRingData = OrbitalStationManager.Instance.GetPlanetOrbitalRingData(__instance.planet.id);
             // 在赤道上/下圈？号位置添加轨道设施
             planetOrbitalRingData.Rings[ringIndex].AddOrbitalStation(position, thisStation.id, StationType.Station);

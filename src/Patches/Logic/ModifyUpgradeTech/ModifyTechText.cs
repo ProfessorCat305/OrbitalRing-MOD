@@ -25,7 +25,9 @@ namespace ProjectOrbitalRing.Patches.Logic.ModifyUpgradeTech {
                     break;
 
                 case ProtoID.T驱动引擎2:
-                    __result += "\r\n" + "离星燃料消耗描述".TranslateFromJson();
+                    string sailFuelDescription = ProjectOrbitalRing.GalacticScale2Compatibility
+                        ? "GS离星燃料消耗描述" : "离星燃料消耗描述";
+                    __result += "\r\n" + sailFuelDescription.TranslateFromJson();
                     break;
                 case ProtoID.T驱动引擎3:
                     __result += "\r\n" + "离星燃料消耗减少描述".TranslateFromJson();

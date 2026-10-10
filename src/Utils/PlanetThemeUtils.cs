@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Runtime.CompilerServices;
@@ -15,7 +14,7 @@ namespace ProjectOrbitalRing.Utils
         private static readonly Dictionary<string, int> ThemeNameToVanillaThemeId = new Dictionary<string, int>
         {
             ["Mediterranean"] = 1,
-            ["AshenGelisol"] = 1,
+            ["AshenGelisol"] = 7,
             ["GasGiant"] = 2,
             ["GasGiant2"] = 3,
             ["GasGiant3"] = 2,
@@ -44,12 +43,13 @@ namespace ProjectOrbitalRing.Utils
             ["GasGiant5"] = 21,
             ["Savanna"] = 22,
             ["CrystalDesert"] = 23,
+            ["Obsidian"] = 23,
+            ["HotObsidian"] = 23,
             ["FrozenTundra"] = 24,
             ["PandoraSwamp"] = 25,
             ["PandoraSwamp2"] = 25,
         };
 
-        private static readonly ConcurrentDictionary<string, int?> ResolvedThemeNameCache = new ConcurrentDictionary<string, int?>();
         private static readonly ConditionalWeakTable<PlanetData, CachedPlanetThemeValue> CachedPlanetVanillaThemeIds =
             new ConditionalWeakTable<PlanetData, CachedPlanetThemeValue>();
         private static readonly object GS2ReflectionLock = new object();
@@ -140,12 +140,8 @@ namespace ProjectOrbitalRing.Utils
             if (gsPlanet == null) return null;
 
             string themeName = GetMemberValue<string>(gsPlanet, GSPlanetThemeMember);
-            if (TryResolveVanillaThemeIdFromGS2(themeName, out int vanillaThemeId))
-            {
-                return vanillaThemeId;
-            }
-
-            return null;
+            int vanillaThemeId = ResolveGSThemeId(themeName, GetGS2ThemeLibrary());
+            return vanillaThemeId != 0 ? (int?)vanillaThemeId : null;
         }
 
         private static void FillThemeDebugInfoFromGS2(PlanetData planet, out string gsThemeName, out string gsBaseName,
@@ -173,28 +169,18 @@ namespace ProjectOrbitalRing.Utils
             }
         }
 
-        private static bool TryResolveVanillaThemeIdFromGS2(string themeName, out int vanillaThemeId)
+        internal static int ResolveGSThemeId(string themeName, IDictionary themeLibrary)
         {
-            vanillaThemeId = 0;
-
-            if (string.IsNullOrEmpty(themeName)) return false;
-
-            if (ResolvedThemeNameCache.TryGetValue(themeName, out int? cachedVanillaThemeId))
+            if (TryResolveVanillaThemeIdFromGS2(themeName, new HashSet<string>(), themeLibrary, out int themeId))
             {
-                if (cachedVanillaThemeId.HasValue)
-                {
-                    vanillaThemeId = cachedVanillaThemeId.Value;
-                    return true;
-                }
-
-                return false;
+                return themeId;
+            }
+            if (string.IsNullOrEmpty(themeName) || themeLibrary == null || !themeLibrary.Contains(themeName))
+            {
+                return 0;
             }
 
-            IDictionary themeLibrary = GetGS2ThemeLibrary();
-            bool resolved = TryResolveVanillaThemeIdFromGS2(themeName, new HashSet<string>(), themeLibrary, out vanillaThemeId);
-
-            ResolvedThemeNameCache[themeName] = resolved ? (int?)vanillaThemeId : null;
-            return resolved;
+            return GetSimilarThemeId(themeLibrary[themeName]);
         }
 
         private static bool TryResolveVanillaThemeIdFromGS2(string themeName, HashSet<string> visited, IDictionary themeLibrary,
@@ -220,7 +206,8 @@ namespace ProjectOrbitalRing.Utils
             object theme = themeLibrary[themeName];
             if (theme == null) return false;
 
-            string reflectedThemeName = GetMemberValue<string>(theme, GSThemeNameMember);
+            Type themeType = theme.GetType();
+            string reflectedThemeName = GetMemberValue<string>(theme, FindMember(themeType, "Name", false));
             if (!string.IsNullOrEmpty(reflectedThemeName) &&
                 ThemeNameToVanillaThemeId.TryGetValue(reflectedThemeName, out vanillaThemeId))
             {
@@ -233,13 +220,61 @@ namespace ProjectOrbitalRing.Utils
                 return true;
             }
 
-            string baseName = GetMemberValue<string>(theme, GSThemeBaseNameMember);
+            string baseName = GetMemberValue<string>(theme, FindMember(themeType, "BaseName", false));
             if (!string.IsNullOrEmpty(baseName))
             {
-                return TryResolveVanillaThemeIdFromGS2(baseName, visited, themeLibrary, out vanillaThemeId);
+                if (TryResolveVanillaThemeIdFromGS2(baseName, visited, themeLibrary, out vanillaThemeId))
+                {
+                    return true;
+                }
             }
 
             return false;
+        }
+
+        private static int GetSimilarThemeId(object theme)
+        {
+            if (theme == null)
+            {
+                return 0;
+            }
+
+            Type themeType = theme.GetType();
+            EPlanetType planetType = GetMemberValue<EPlanetType>(theme, FindMember(themeType, "PlanetType", false));
+            int waterItemId = GetMemberValue<int>(theme, FindMember(themeType, "WaterItemId", false));
+            int ldbThemeId = GetMemberValue<int>(theme, FindMember(themeType, "LDBThemeId", false));
+            // GS initializes LDBThemeId to 1 even for independent non-ocean themes.
+            if (ldbThemeId > 1 && ldbThemeId <= 25)
+            {
+                return ldbThemeId;
+            }
+
+            switch (planetType)
+            {
+                case EPlanetType.Vocano:
+                    return 9;
+                case EPlanetType.Ice:
+                    return 10;
+                case EPlanetType.Ocean:
+                    return GetMemberValue<int>(theme, FindMember(themeType, "Algo", false)) == 7 ? 16 : 1;
+                case EPlanetType.Desert:
+                    if (waterItemId == ProtoID.I岩浆)
+                    {
+                        return 9;
+                    }
+                    if (waterItemId == ProtoID.I原油 || waterItemId == ProtoID.I重油)
+                    {
+                        return 17;
+                    }
+
+                    float windStrength = GetMemberValue<float>(theme, FindMember(themeType, "Wind", false));
+                    return windStrength == 0f ? 11 : 6;
+                case EPlanetType.Gas:
+                    int[] gasItems = GetMemberValue<int[]>(theme, FindMember(themeType, "GasItems", false));
+                    return gasItems != null && Array.IndexOf(gasItems, ProtoID.I可燃冰) >= 0 ? 4 : 2;
+                default:
+                    return 0;
+            }
         }
 
         private static bool TryResolveSmolThemeIdFromGS2(string themeName, HashSet<string> visited, IDictionary themeLibrary,

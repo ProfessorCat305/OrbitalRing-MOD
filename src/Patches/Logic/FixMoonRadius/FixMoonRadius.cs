@@ -10,6 +10,17 @@ namespace ProjectOrbitalRing.Patches.Logic.FixMoonRadius
 {
     internal class FixMoonRadius
     {
+        [HarmonyPrepare]
+        public static bool Prepare(MethodBase original)
+        {
+            // Guardian engagement and projectile termination retain OrbitalRing radius rules.
+            return original == null || !ProjectOrbitalRing.GalacticScale2Compatibility ||
+                original.DeclaringType == typeof(LocalGeneralProjectile) &&
+                original.Name == nameof(LocalGeneralProjectile.TickSkillLogic) ||
+                original.DeclaringType == typeof(EnemyUnitComponent) &&
+                original.Name == nameof(EnemyUnitComponent.RunBehavior_Engage_GGuardian);
+        }
+
         [HarmonyPostfix]
         [HarmonyPatch(typeof(PlanetRawData), "GetModPlane")]
         public static void GetModPlanePatch(ref PlanetRawData __instance, ref short __result)
@@ -67,7 +78,6 @@ namespace ProjectOrbitalRing.Patches.Logic.FixMoonRadius
 
         public static T GetRadiusFromLocalPlanet<T>(T t)
         {
-            if (ProjectOrbitalRing.GalacticScale2Compatibility) return t;
             var realRadius = ModifyRadius(Convert.ToSingle(t), GameMain.localPlanet?.realRadius ?? 200f);
             // if (VFInput.alt) GS2.Log($"GetRadius Called By {GS2.GetCaller(0)} {GS2.GetCaller(1)} {GS2.GetCaller(2)} orig:{Convert.ToDouble(t)} returning {realRadius}");
             return (T)Convert.ChangeType(realRadius, typeof(T));
@@ -103,18 +113,26 @@ namespace ProjectOrbitalRing.Patches.Logic.FixMoonRadius
 
         private static float GetSquareRadiusFromAstroFactoryId(int astroId)
         {
-            if (GameMain.data.galaxy?.astrosFactory[astroId]?.planet?.radius == 100f) {
-                return 97.5f * 97.5f;
-            } else {
-                return 197.5f * 197.5f;
-            }
+            float radius = GameMain.data.galaxy?.astrosFactory[astroId]?.planet?.realRadius ?? 200f;
+            float collisionRadius = Math.Max(0f, radius - 2.5f);
+            return collisionRadius * collisionRadius;
         }
 
         [HarmonyTranspiler]
+        [HarmonyAfter("dsp.galactic-scale.2")]
         [HarmonyPatch(typeof(LocalGeneralProjectile), nameof(LocalGeneralProjectile.TickSkillLogic))] // 修复月球黑雾防御塔子弹
         public static IEnumerable<CodeInstruction> LocalGeneralProjectile_TickSkillLogic_Patch(IEnumerable<CodeInstruction> instructions)
         {
             var matcher = new CodeMatcher(instructions);
+
+            matcher.MatchForward(false, new CodeMatch(i => i.opcode == Call && i.operand is MethodInfo method &&
+                method.DeclaringType?.FullName == "GalacticScale.Utils" && method.Name == nameof(GetSquareRadiusFromAstroFactoryId)));
+            if (matcher.IsValid)
+            {
+                return matcher.SetOperandAndAdvance(AccessTools.Method(typeof(FixMoonRadius), nameof(GetSquareRadiusFromAstroFactoryId)))
+                        .InstructionEnumeration();
+            }
+            matcher.Start();
 
             matcher.MatchForward(false, new CodeMatch(OpCodes.Ldfld),
                new CodeMatch(OpCodes.Ldarg_0), new CodeMatch(OpCodes.Ldfld));

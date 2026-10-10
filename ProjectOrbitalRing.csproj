@@ -109,6 +109,9 @@
     <Compile Include="src\Compatibility\Bottleneck.cs" />
     <Compile Include="src\Compatibility\FastTravelEnabler.cs" />
     <Compile Include="src\Compatibility\GalacticScale.cs" />
+    <Compile Include="src\Compatibility\GalacticScaleBirthSystem.cs" />
+    <Compile Include="src\Compatibility\GalacticScaleGalaxy.cs" />
+    <Compile Include="src\Compatibility\GalacticScaleVeins.cs" />
     <Compile Include="src\Compatibility\GigaStationsUpdated.cs" />
     <Compile Include="src\Compatibility\InstallationCheckPlugin.cs" />
     <Compile Include="src\Compatibility\LazyOutposting.cs" />

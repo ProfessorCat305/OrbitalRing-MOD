@@ -62,9 +62,10 @@ namespace ProjectOrbitalRing.Patches.Logic.OrbitalRing
             int modelId = __instance.entityPool[entityId].modelIndex;
             if (modelId == ProtoID.M轨道观测站 || modelId == ProtoID.M天枢座) {
                 Vector3 thisPos = __instance.entityPool[entityId].pos;
-                int position = IsBuildingPosXZCorrect(thisPos.x, thisPos.z, true, __instance.planet.radius == 100f);
-                int ringIndex = isBuildingPosYCorrect(thisPos, __instance.planet.radius == 100f);
-                OrbitalStationManager.Instance.AddPlanetId(__instance.planet.id, __instance.planet.radius == 100f);
+                var layout = GetLayout(__instance.planet);
+                int position = IsBuildingPosXZCorrect(thisPos.x, thisPos.z, true, layout);
+                int ringIndex = isBuildingPosYCorrect(thisPos, layout);
+                OrbitalStationManager.Instance.AddPlanetId(__instance.planet.id, layout);
                 var planetOrbitalRingData = OrbitalStationManager.Instance.GetPlanetOrbitalRingData(__instance.planet.id);
                 // 在赤道上/下圈？号位置添加轨道设施
                 if (modelId == ProtoID.M轨道观测站) {
@@ -78,9 +79,10 @@ namespace ProjectOrbitalRing.Patches.Logic.OrbitalRing
         public static void BuildOrbitalDefense(DefenseSystem __instance, int thisTurretId, int thisEntityId, int itemId)
         {
             Vector3 thisPos = __instance.factory.entityPool[thisEntityId].pos;
-            int position = IsBuildingPosXZCorrect(thisPos.x, thisPos.z, true, __instance.planet.radius == 100f);
-            int ringIndex = isBuildingPosYCorrect(thisPos, __instance.planet.radius == 100f);
-            OrbitalStationManager.Instance.AddPlanetId(__instance.planet.id, __instance.planet.radius == 100f);
+            var layout = GetLayout(__instance.planet);
+            int position = IsBuildingPosXZCorrect(thisPos.x, thisPos.z, true, layout);
+            int ringIndex = isBuildingPosYCorrect(thisPos, layout);
+            OrbitalStationManager.Instance.AddPlanetId(__instance.planet.id, layout);
             var planetOrbitalRingData = OrbitalStationManager.Instance.GetPlanetOrbitalRingData(__instance.planet.id);
             // 在赤道上/下圈？号位置添加轨道设施
             if (itemId == ProtoID.I重型电浆炮) {

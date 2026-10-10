@@ -499,8 +499,15 @@ namespace ProjectOrbitalRing.Patches.Logic.AddVein
 
         public static void AddBirthGalaxyRareVein(PlanetAlgorithm algorithm, ref int[] array, ref float[] array2, ref float[] array3)
         {
+            ApplyBirthGalaxyVeins(algorithm.planet.radius, algorithm.planet.index, algorithm.planet.star.id == 1,
+                array, array2, array3);
+        }
+
+        internal static void ApplyBirthGalaxyVeins(float radius, int bodyIndex, bool birthStar,
+            int[] array, float[] array2, float[] array3)
+        {
             // 月球的矿物削减
-            if (algorithm.planet.radius == 100f) {
+            if (radius == 100f) {
                 array3[1] = 0.24f;
                 array3[2] = 0.24f;
                 array3[3] = 0.36f;
@@ -512,14 +519,13 @@ namespace ProjectOrbitalRing.Patches.Logic.AddVein
                 array3[18] = 0.04f;
                 array3[19] = 0.12f;
             }
-            //star id是1，star index是0
-            if (algorithm.planet.star.id == 1) {
-                if (algorithm.planet.index == 0) {
+            if (birthStar) {
+                if (bodyIndex == 0) {
                     array[17] = 5;
                     array2[17] = 0.35f;
                     array3[17] = 0.5f;
                 }
-                if (algorithm.planet.index == 2) {
+                if (bodyIndex == 2) {
                     array[4] = 3;
                     //array2[4] = 0.6f;
                     array3[4] = 0.035f;
@@ -527,7 +533,7 @@ namespace ProjectOrbitalRing.Patches.Logic.AddVein
                     array2[19] = 1.0f;
                     array3[19] = 1.0f;
                 }
-                if (algorithm.planet.index == 4) {
+                if (bodyIndex == 4) {
                     array[3] = 3;
                     array2[3] = 0.8f;
                     array3[3] = 1.2f;
