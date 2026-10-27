@@ -10,6 +10,12 @@ namespace ProjectOrbitalRing.Patches.Logic.FixMoonRadius
 {
     internal class TrashSystemFix
     {
+        [HarmonyPrepare]
+        public static bool Prepare()
+        {
+            return !GalacticScale2Compatibility;
+        }
+
         [HarmonyTranspiler]
         [HarmonyPatch(typeof(TrashSystem), nameof(TrashSystem.Gravity))]
         public static IEnumerable<CodeInstruction> TrashSystem_Gravity_Transpiler(IEnumerable<CodeInstruction> instructions)

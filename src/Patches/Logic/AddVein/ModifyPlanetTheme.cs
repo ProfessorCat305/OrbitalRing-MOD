@@ -16,10 +16,13 @@ namespace ProjectOrbitalRing.Patches.Logic.AddVein
 
         private static void ModifyThemeVanilla(ThemeProto theme)
         {
-            if (theme.PlanetType == EPlanetType.Gas) { GasGiantModify(theme); }
+            if (theme.PlanetType == EPlanetType.Gas) {
+                GasGiantModify(ref theme.GasItems, ref theme.GasSpeeds);
+            }
             else
             {
-                ModifyThemeData(theme);
+                ModifyThemeData(theme.ID, ref theme.VeinSpot, ref theme.VeinCount, ref theme.VeinOpacity,
+                    ref theme.RareVeins, ref theme.RareSettings);
 
                 switch (theme.ID)
                 {
@@ -74,44 +77,48 @@ namespace ProjectOrbitalRing.Patches.Logic.AddVein
             }
         }
 
-        private static void GasGiantModify(ThemeProto theme)
+        internal static void GasGiantModify(ref int[] items, ref float[] speeds)
         {
-            if (theme.GasItems.Length != 2) return;
-
-            if (theme.GasItems[0] == ProtoID.I可燃冰 && theme.GasItems[1] == ProtoID.I氢)
+            if (items.Length != 2)
             {
-                theme.GasItems = new[] { ProtoID.I氢, ProtoID.I甲烷, ProtoID.I气云, };
-                theme.GasSpeeds = new float[] { theme.GasSpeeds[0], theme.GasSpeeds[1], (theme.GasSpeeds[1] / 18) + (theme.GasSpeeds[0] / 18), };
-            } else if (theme.GasItems[0] == ProtoID.I氢 && theme.GasItems[1] == ProtoID.I重氢) {
-                theme.GasItems = new[] { ProtoID.I氢, ProtoID.I重氢, ProtoID.I气云, };
-                theme.GasSpeeds = new float[] { theme.GasSpeeds[0], theme.GasSpeeds[1], (theme.GasSpeeds[1] / 18) + (theme.GasSpeeds[0] / 18), };
+                return;
+            }
+
+            if (items[0] == ProtoID.I可燃冰 && items[1] == ProtoID.I氢)
+            {
+                items = new[] { ProtoID.I氢, ProtoID.I甲烷, ProtoID.I气云, };
+                speeds = new float[] { speeds[0], speeds[1], (speeds[1] / 18) + (speeds[0] / 18), };
+            } else if (items[0] == ProtoID.I氢 && items[1] == ProtoID.I重氢) {
+                items = new[] { ProtoID.I氢, ProtoID.I重氢, ProtoID.I气云, };
+                speeds = new float[] { speeds[0], speeds[1], (speeds[1] / 18) + (speeds[0] / 18), };
             }
         }
 
-        private static void ModifyThemeData(ThemeProto theme)
+        internal static void ModifyThemeData(int themeId, ref int[] spots, ref float[] counts,
+            ref float[] richness, ref int[] rareVeins, ref float[] rareSettings)
         {
-            Array.Resize(ref theme.VeinSpot, 16);
-            Array.Resize(ref theme.VeinCount, 16);
-            Array.Resize(ref theme.VeinOpacity, 16);
+            Array.Resize(ref spots, 16);
+            Array.Resize(ref counts, 16);
+            Array.Resize(ref richness, 16);
 
-            if (ThemeDatas.TryGetValue(theme.ID, out ThemeData value))
+            if (ThemeDatas.TryGetValue(themeId, out ThemeData value))
             {
 
                 for (int i = 0; i < value.VeinId.Length; i++)
                 {
-                    theme.VeinSpot[value.VeinId[i]] = value.VeinSpot[i];
-                    theme.VeinCount[value.VeinId[i]] = value.VeinCount[i];
-                    theme.VeinOpacity[value.VeinId[i]] = value.VeinOpacity[i];
+                    spots[value.VeinId[i]] = value.VeinSpot[i];
+                    counts[value.VeinId[i]] = value.VeinCount[i];
+                    richness[value.VeinId[i]] = value.VeinOpacity[i];
                 }
                 for (int i = 0; i < value.VanillaRareVeins.Length; i++)
                 {
-                    theme.RareSettings[value.VanillaRareVeins[i] * 4] = value.VanillaRareSettings[i * 4];
-                    theme.RareSettings[value.VanillaRareVeins[i] * 4 + 1] = value.VanillaRareSettings[i * 4 + 1];
-                    theme.RareSettings[value.VanillaRareVeins[i] * 4 + 2] = value.VanillaRareSettings[i * 4 + 2];
-                    theme.RareSettings[value.VanillaRareVeins[i] * 4 + 3] = value.VanillaRareSettings[i * 4 + 3];
+                    rareSettings[value.VanillaRareVeins[i] * 4] = value.VanillaRareSettings[i * 4];
+                    rareSettings[value.VanillaRareVeins[i] * 4 + 1] = value.VanillaRareSettings[i * 4 + 1];
+                    rareSettings[value.VanillaRareVeins[i] * 4 + 2] = value.VanillaRareSettings[i * 4 + 2];
+                    rareSettings[value.VanillaRareVeins[i] * 4 + 3] = value.VanillaRareSettings[i * 4 + 3];
                 }
-                theme.RareVeins = theme.RareVeins.Concat(value.RareVeins).ToArray();
-                theme.RareSettings = theme.RareSettings.Concat(value.RareSettings).ToArray();
+                rareVeins = rareVeins.Concat(value.RareVeins).ToArray();
+                rareSettings = rareSettings.Concat(value.RareSettings).ToArray();
             }
         }
     }

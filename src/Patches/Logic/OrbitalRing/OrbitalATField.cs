@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Reflection.Emit;
 using UnityEngine;
 using static ProjectOrbitalRing.Patches.Logic.OrbitalRing.EquatorRing;
+using static ProjectOrbitalRing.Patches.Logic.OrbitalRing.PosTool;
 
 namespace ProjectOrbitalRing.Patches.Logic.OrbitalRing
 {
@@ -104,7 +105,7 @@ namespace ProjectOrbitalRing.Patches.Logic.OrbitalRing
         public static void PlanetATField_UpdateGeneratorMatrix_Postfix(PlanetATField __instance)
         {
             bool flag = false;
-            OrbitalStationManager.Instance.AddPlanetId(__instance.planet.id, __instance.planet.radius == 100f);
+            OrbitalStationManager.Instance.AddPlanetId(__instance.planet.id, GetLayout(__instance.planet));
             var planetOrbitalRingData = OrbitalStationManager.Instance.GetPlanetOrbitalRingData(__instance.planet.id);
             if (planetOrbitalRingData != null) {
                 for (int i = 0; i < planetOrbitalRingData.Rings.Count; i++) {
@@ -143,8 +144,9 @@ namespace ProjectOrbitalRing.Patches.Logic.OrbitalRing
 
             // 惑星全体を包めるようにジェネレータを配置したことにする
             // 配置位置はシールドの半径をshieldRadiusと仮定して隙間がないようかつ最小限の数に抑える
-            double shieldRadius = 80.0; // 実験した範囲だとこの値で大丈夫そう
             double realRadius = __instance.planet.realRadius; // 惑星の半径
+            // Scale angular sampling without exceeding the fixed generator-matrix capacity.
+            double shieldRadius = Math.Max(80.0, realRadius * 0.4);
             int rCount = (int)Math.Ceiling((Math.PI * realRadius) / (2.0 * shieldRadius));
 
             // 緯度方向に等間隔に配置する
