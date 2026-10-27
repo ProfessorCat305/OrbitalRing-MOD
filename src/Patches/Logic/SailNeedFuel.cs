@@ -75,16 +75,23 @@ namespace ProjectOrbitalRing.Patches.Logic
                 item = LDB.items.Select(instance.player.inhandItemId);
                 weight += (double)instance.player.inhandItemCount / item.StackSize;
             }
-            if (instance.player.planetData.radius == 100f) {
+            bool satelliteDiscount = !GalacticScale2Compatibility && instance.player.planetData.radius == 100f;
+            if (satelliteDiscount)
+            {
                 weight *= 0.1d;
             }
             int count = (int)Math.Ceiling(weight * rodNeeded);
             double extraFuelWeight = (double)(rodCount - count) / 30;
             if (extraFuelWeight > 0) {
-                if (instance.player.planetData.radius == 100f) {
-                    extraFuelWeight *= 0.1;
+                if (satelliteDiscount)
+                {
+                    extraFuelWeight *= 0.1d;
                 }
                 count += (int)Math.Ceiling(extraFuelWeight * rodNeeded);
+            }
+            if (GalacticScale2Compatibility) {
+                double radiusRatio = Math.Min(instance.player.planetData.realRadius / 200d, 1d);
+                count = (int)Math.Ceiling(count * radiusRatio * radiusRatio * radiusRatio);
             }
             //Debug.LogFormat("weight {0} count {1} rodNeeded {2}", weight, count, rodNeeded);
             if (instance.player.package.GetItemCount(ProtoID.I化学燃料罐) < count) {

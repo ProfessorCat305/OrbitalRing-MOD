@@ -413,7 +413,7 @@ namespace ProjectOrbitalRing.Patches.UI
                     }
                     if (__instance.factory.entityPool[Assembler.entityId].protoId == ProtoID.I星环对撞机) {
                         Vector3 pos = __instance.factory.entityPool[Assembler.entityId].pos;
-                        int ringIndex = PosTool.isBuildingPosYCorrect(pos, (factorySystem.planet.radius == 100f));
+                        int ringIndex = PosTool.isBuildingPosYCorrect(pos, PosTool.GetLayout(factorySystem.planet));
                         var planetOrbitalRingData = OrbitalStationManager.Instance.GetPlanetOrbitalRingData(factorySystem.planet.id);
                         if (planetOrbitalRingData != null) {
                             //LogError($" {ringIndex} ring not complete IsOneFull {planetOrbitalRingData.Rings[ringIndex].IsOneFull()} isLowInsideRingComplete {planetOrbitalRingData.Rings[ringIndex].isLowInsideRingComplete}");

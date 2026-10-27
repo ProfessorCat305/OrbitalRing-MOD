@@ -10,6 +10,12 @@ namespace ProjectOrbitalRing.Patches.Logic.FixMoonRadius
 {
     internal class RadiusFixTranspiler
     {
+        [HarmonyPrepare]
+        public static bool Prepare()
+        {
+            return !ProjectOrbitalRing.GalacticScale2Compatibility;
+        }
+
         [HarmonyTranspiler]
         [HarmonyPatch(typeof(BlueprintUtils), nameof(BlueprintUtils.GetNormalizedDir))]
         [HarmonyPatch(typeof(BlueprintUtils), nameof(BlueprintUtils.GetNormalizedPos))]

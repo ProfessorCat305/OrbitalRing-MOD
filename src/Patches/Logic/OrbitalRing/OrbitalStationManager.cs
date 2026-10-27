@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using static ProjectOrbitalRing.Patches.Logic.GlobalPowerSupplyPatches;
 using static ProjectOrbitalRing.Patches.Logic.OrbitalRing.EquatorRing;
+using static ProjectOrbitalRing.Patches.Logic.OrbitalRing.PosTool;
 using static ProjectOrbitalRing.ProjectOrbitalRing;
 
 namespace ProjectOrbitalRing.Patches.Logic.OrbitalRing
@@ -32,13 +33,11 @@ namespace ProjectOrbitalRing.Patches.Logic.OrbitalRing
             }
         }
 
-        public void AddPlanetId(int planetId, bool isMoon)
+        public void AddPlanetId(int planetId, OrbitalRingLayout layout)
         {
-            if (AllplanetsOrbitalRings.ContainsKey(planetId)) return;
-            if (isMoon) {
-                AllplanetsOrbitalRings[planetId] = new PlanetOrbitalRingData(planetId, 20);
-            } else {
-                AllplanetsOrbitalRings[planetId] = new PlanetOrbitalRingData(planetId, 40);
+            if (!AllplanetsOrbitalRings.ContainsKey(planetId))
+            {
+                AllplanetsOrbitalRings[planetId] = new PlanetOrbitalRingData(planetId, layout);
             }
         }
 
@@ -216,6 +215,7 @@ namespace ProjectOrbitalRing.Patches.Logic.OrbitalRing
         internal static void IntoOtherSave()
         {
             AllplanetsOrbitalRings.Clear();
+            ClearLayoutCache();
         }
 
     }
@@ -236,13 +236,12 @@ namespace ProjectOrbitalRing.Patches.Logic.OrbitalRing
             PlanetId = planetId;
         }
 
-        public PlanetOrbitalRingData(int planetId, int ringCapacity)
+        internal PlanetOrbitalRingData(int planetId, OrbitalRingLayout layout)
         {
             PlanetId = planetId;
-            // 初始创建两圈（可根据需求动态调整）
-            Rings.Add(new EquatorRing(ringCapacity, planetId));
-            if (ringCapacity > 20) {
-                Rings.Add(new EquatorRing(ringCapacity, planetId));
+            for (int i = 0; i < layout.StationRingCount; i++)
+            {
+                Rings.Add(new EquatorRing(layout.StationCapacity, planetId));
             }
         }
 

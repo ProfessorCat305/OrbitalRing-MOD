@@ -36,15 +36,18 @@ namespace ProjectOrbitalRing.Compatibility
                 GSThemeModify.ModifyTheme(ref theme);
             }
 
-            GSVeinType.saneVeinTypes["Graphite"] = (EVeinType)15;
-            GSVeinType.saneVeinTypes["Radioactive"] = (EVeinType)16;
-            GSVeinType.saneVeinTypes["Water"] = (EVeinType)17;
-            GSVeinType.saneVeinTypes["IronPyrite"] = (EVeinType)18;
+            GSVeinType.saneVeinTypes["Graphite"] = EVeinType.Graphite;
+            GSVeinType.saneVeinTypes["DeepMagma"] = EVeinType.DeepMagma;
+            GSVeinType.saneVeinTypes["Radioactive"] = EVeinType.Radioactive;
+            GSVeinType.saneVeinTypes["Water"] = EVeinType.Ice;
+            GSVeinType.saneVeinTypes["Ice"] = EVeinType.Ice;
+            GSVeinType.saneVeinTypes["IronPyrite"] = EVeinType.IronPyrite;
 
-            GSVeinType.insaneVeinTypes[(EVeinType)15] = "Graphite";
-            GSVeinType.insaneVeinTypes[(EVeinType)16] = "Radioactive";
-            GSVeinType.insaneVeinTypes[(EVeinType)17] = "Water";
-            GSVeinType.insaneVeinTypes[(EVeinType)18] = "IronPyrite";
+            GSVeinType.insaneVeinTypes[EVeinType.Graphite] = "Graphite";
+            GSVeinType.insaneVeinTypes[EVeinType.DeepMagma] = "DeepMagma";
+            GSVeinType.insaneVeinTypes[EVeinType.Radioactive] = "Radioactive";
+            GSVeinType.insaneVeinTypes[EVeinType.Ice] = "Water";
+            GSVeinType.insaneVeinTypes[EVeinType.IronPyrite] = "IronPyrite";
 
             HarmonyPatch.Patch(AccessTools.Method(assembly.GetType("GalacticScale.GS2"), "SetPlanetTheme"), null,
                 new HarmonyMethod(typeof(GalacticScale), nameof(SetPlanetTheme_Postfix)),
@@ -53,7 +56,17 @@ namespace ProjectOrbitalRing.Compatibility
             HarmonyPatch.Patch(AccessTools.Method(assembly.GetType("GalacticScale.GSTheme"), "ToProto"), null,
                 new HarmonyMethod(typeof(GalacticScale), nameof(GSTheme_ToProto_Postfix)));
 
+            HarmonyPatch.Patch(AccessTools.Method(assembly.GetType("GalacticScale.PatchOnPlayerMove_Fly"), "GameTick"),
+                transpiler: new HarmonyMethod(typeof(GalacticScale), nameof(PlayerMove_Fly_GameTick_Transpiler)));
+
+            HarmonyPatch.Patch(AccessTools.Method(typeof(BuildTool_BlueprintCopy), nameof(BuildTool_BlueprintCopy.DetermineDivideLine)),
+                prefix: new HarmonyMethod(typeof(GalacticScale), nameof(BuildTool_BlueprintCopy_DetermineDivideLine_Prefix)));
+
+            PatchGenerator(assembly, "GalacticScale.Generators.GS2Generator2");
+            PatchGenerator(assembly, "GalacticScale.Generators.GS2Generator3");
+
             Type VeinAlgorithms = assembly.GetType("GalacticScale.VeinAlgorithms");
+            GalacticScaleVeins.BindGenerationMethods(VeinAlgorithms);
 
             HarmonyPatch.Patch(AccessTools.Method(VeinAlgorithms, "DisableVeins"), null, null,
                 new HarmonyMethod(typeof(GalacticScale), nameof(DisableVeins_Transpiler)));
@@ -65,13 +78,21 @@ namespace ProjectOrbitalRing.Compatibility
                 new HarmonyMethod(typeof(GalacticScale), nameof(GenBirthPoints_Postfix)));
 
             HarmonyPatch.Patch(AccessTools.Method(VeinAlgorithms, "CalculateVectorsGS2"), null,
-                new HarmonyMethod(typeof(GalacticScale), nameof(CalculateVectorsGS2_Postfix)));
+                new HarmonyMethod(typeof(GalacticScale), nameof(CalculateVectorsGS2_Postfix)),
+                new HarmonyMethod(typeof(GalacticScale), nameof(OilLikeVeinType_Transpiler)));
+
+            HarmonyPatch.Patch(AccessTools.Method(VeinAlgorithms, "AddVeinsToPlanetGS2"), null,
+                new HarmonyMethod(typeof(GalacticScaleVeins), nameof(GalacticScaleVeins.EnsureGeneratedResources)),
+                new HarmonyMethod(typeof(GalacticScale), nameof(OilLikeVeinType_Transpiler)));
 
             HarmonyPatch.Patch(AccessTools.Method(VeinAlgorithms, "InitBirthVeinVectors"),
-                new HarmonyMethod(typeof(GalacticScale), nameof(InitBirthVeinVectors_Postfix)));
+                postfix: new HarmonyMethod(typeof(GalacticScale), nameof(InitBirthVeinVectors_Postfix)));
 
             HarmonyPatch.Patch(AccessTools.PropertyGetter(assembly.GetType("GalacticScale.GS2MainSettings"), "VeinTips"), null, null,
                 new HarmonyMethod(typeof(GalacticScale), nameof(GS2MainSettings_VeinTips_Getter_Transpiler)));
+
+            HarmonyPatch.Patch(AccessTools.Method(typeof(GameData), nameof(GameData.Import)), null,
+                new HarmonyMethod(typeof(GalacticScale), nameof(GameData_Import_Postfix)));
 
             MethodInfo OnPlanetDataSet7Prefix =
                 AccessTools.Method(assembly.GetType("GalacticScale.PatchOnUIPlanetDetail"), "OnPlanetDataSet7Prefix");
@@ -107,6 +128,109 @@ namespace ProjectOrbitalRing.Compatibility
             ProjectOrbitalRing.GalacticScale2Compatibility = true;
         }
 
+        public static void BuildTool_BlueprintCopy_DetermineDivideLine_Prefix(BuildTool_BlueprintCopy __instance)
+        {
+            if (__instance == null || __instance.equatorWidth <= 0)
+            {
+                return;
+            }
+
+            int requiredLength = GetBlueprintReformBufferLength(__instance.equatorWidth);
+            if (requiredLength == 0)
+            {
+                return;
+            }
+
+            requiredLength = Math.Max(requiredLength, Math.Max(__instance.selectedReformIds?.Length ?? 0, __instance.preSelectedReformIds?.Length ?? 0));
+            bool changed = EnsureReformBuffer(ref __instance.selectedReformIds, ref __instance.selectedReformBuffer, requiredLength);
+            changed |= EnsureReformBuffer(ref __instance.preSelectedReformIds, ref __instance.preSelectedReformBuffer, requiredLength);
+            if (changed)
+            {
+                __instance.reformFlagIsDirty = true;
+            }
+        }
+
+        private static int GetBlueprintReformBufferLength(int equatorWidth)
+        {
+            if (equatorWidth <= 0)
+            {
+                return 0;
+            }
+
+            // Divide-line scanning addresses a half-sphere bitmap with equatorWidth-bit rows.
+            long requiredLength = (long)equatorWidth * equatorWidth / 2 / 32 + 1;
+            return requiredLength <= int.MaxValue ? (int)requiredLength : 0;
+        }
+
+        private static bool EnsureReformBuffer(ref uint[] ids, ref ComputeBuffer buffer, int requiredLength)
+        {
+            if (requiredLength <= 0)
+            {
+                return false;
+            }
+
+            bool resized = false;
+            if (ids == null) {
+                ids = new uint[requiredLength];
+                resized = true;
+            } else if (ids.Length < requiredLength) {
+                Array.Resize(ref ids, requiredLength);
+                resized = true;
+            }
+
+            if (buffer == null || buffer.count < requiredLength) {
+                buffer?.Dispose();
+                buffer = new ComputeBuffer(requiredLength, 4);
+                resized = true;
+            }
+
+            if (resized) {
+                buffer.SetData((Array)ids);
+            }
+            return resized;
+        }
+
+        public static IEnumerable<CodeInstruction> PlayerMove_Fly_GameTick_Transpiler(IEnumerable<CodeInstruction> instructions)
+        {
+            var matcher = new CodeMatcher(instructions);
+            matcher.MatchForward(false,
+                new CodeMatch(OpCodes.Ldfld, AccessTools.Field(typeof(Mecha), nameof(Mecha.thrusterLevel))),
+                new CodeMatch(OpCodes.Ldc_I4_2));
+            if (matcher.IsValid)
+            {
+                matcher.Advance(2).MatchForward(false, new CodeMatch(instruction =>
+                        instruction.opcode == OpCodes.Blt || instruction.opcode == OpCodes.Blt_S ||
+                        instruction.opcode == OpCodes.Brfalse || instruction.opcode == OpCodes.Brfalse_S));
+            }
+            if (!matcher.IsValid)
+            {
+                throw new InvalidOperationException("Unsupported GS sail transition.");
+            }
+
+            object skipSail = matcher.Operand;
+            matcher.Advance(1).InsertAndAdvance(
+                new CodeInstruction(OpCodes.Ldarg_0),
+                new CodeInstruction(OpCodes.Ldind_Ref),
+                new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(SailNeedFuel), "CheckSailFuel")),
+                new CodeInstruction(OpCodes.Brfalse, skipSail));
+            return matcher.InstructionEnumeration();
+        }
+
+        private static void PatchGenerator(Assembly assembly, string typeName)
+        {
+            Type generatorType = assembly.GetType(typeName);
+            MethodInfo selectPlanetThemes = AccessTools.Method(generatorType, "SelectPlanetThemes");
+            if (selectPlanetThemes == null)
+            {
+                return;
+            }
+
+            GalacticScaleBirthSystem.PatchGenerator(HarmonyPatch, generatorType);
+            HarmonyPatch.Patch(selectPlanetThemes, null,
+                new HarmonyMethod(typeof(GalacticScale), nameof(SelectPlanetThemes_Postfix)),
+                new HarmonyMethod(typeof(GalacticScaleGalaxy), nameof(GalacticScaleGalaxy.SelectPlanetThemes_Transpiler)));
+        }
+
         public static IEnumerable<CodeInstruction> SetPlanetTheme_Transpiler(IEnumerable<CodeInstruction> instructions)
         {
             var matcher = new CodeMatcher(instructions);
@@ -130,55 +254,153 @@ namespace ProjectOrbitalRing.Compatibility
 
         public static void DistributeVeinTypes_Prefix(GSPlanet gsPlanet)
         {
-            if (GSSettings.BirthPlanet != gsPlanet) return;
-
-            var vt1 = GSVeinType.Generate((EVeinType)16, 1, 1, 0.6f, 0.6f, 6, 6, false);
-            var vt2 = GSVeinType.Generate(EVeinType.Fireice, 1, 1, 0.6f, 0.6f, 6, 6, false);
-            var vt3 = GSVeinType.Generate((EVeinType)18, 10, 10, 0.3f, 0.3f, 5, 5, false);
-
-            var eveinTypeList = gsPlanet.veinSettings.VeinTypes.Select(veinType => veinType.type).ToList();
-
-            if (!eveinTypeList.Contains((EVeinType)16)) gsPlanet.veinSettings.VeinTypes.Add(vt1);
-
-            if (!eveinTypeList.Contains(EVeinType.Fireice)) gsPlanet.veinSettings.VeinTypes.Add(vt2);
-
-            if (!eveinTypeList.Contains((EVeinType)18)) gsPlanet.veinSettings.VeinTypes.Add(vt3);
-
-            for (var index = 0; index < gsPlanet.veinSettings.VeinTypes.Count; index++)
+            if (gsPlanet?.veinSettings?.VeinTypes == null)
             {
-                GSVeinType veinType = gsPlanet.veinSettings.VeinTypes[index];
-
-                switch (veinType.type)
-                {
-                    case (EVeinType)16:
-                        gsPlanet.veinSettings.VeinTypes[index] = vt1;
-
-                        break;
-
-                    case EVeinType.Fireice:
-                        gsPlanet.veinSettings.VeinTypes[index] = vt2;
-
-                        break;
-
-                    case (EVeinType)18:
-                        gsPlanet.veinSettings.VeinTypes[index] = vt3;
-
-                        break;
-                }
+                return;
             }
+            if (gsPlanet.Scale == 10f)
+            {
+                return;
+            }
+
+            if (gsPlanet.planetData?.star != null) {
+                bool birthStar = GS2.GetGSStar(gsPlanet.planetData.star).Bodies.Contains(GSSettings.BirthPlanet);
+                GalacticScaleVeins.InitializePlanetResources(gsPlanet, birthStar);
+            }
+        }
+
+        public static void SelectPlanetThemes_Postfix(object __instance, GSStar star)
+        {
+            if (star?.Planets == null)
+            {
+                return;
+            }
+
+            FieldInfo birthStarField = AccessTools.Field(__instance.GetType(), "birthStar");
+            FieldInfo birthPlanetField = AccessTools.Field(__instance.GetType(), "birthPlanet");
+            if (birthStarField?.GetValue(__instance) == star)
+            {
+                GalacticScaleBirthSystem.ApplyThemes(star, birthPlanetField?.GetValue(__instance) as GSPlanet);
+            }
+        }
+
+        private static bool IsOilLikeVeinType(EVeinType type)
+        {
+            return type == EVeinType.Oil || type == EVeinType.DeepMagma || type == EVeinType.Ice;
+        }
+
+        public static IEnumerable<CodeInstruction> OilLikeVeinType_Transpiler(IEnumerable<CodeInstruction> instructions, MethodBase __originalMethod)
+        {
+            var codes = instructions.ToList();
+            MethodInfo isOilLikeVeinType = AccessTools.Method(typeof(GalacticScale), nameof(IsOilLikeVeinType));
+            IList<LocalVariableInfo> locals = __originalMethod.GetMethodBody().LocalVariables;
+            int replacements = 0;
+
+            for (var index = 1; index < codes.Count - 1; index++)
+            {
+                if (!LoadsOilVeinType(codes[index]) || !LoadsVeinType(codes[index - 1], locals))
+                {
+                    continue;
+                }
+                OpCode comparison = codes[index + 1].opcode;
+                if (comparison == OpCodes.Ceq)
+                {
+                    codes[index + 1].opcode = OpCodes.Nop;
+                    codes[index + 1].operand = null;
+                }
+                else if (comparison == OpCodes.Beq || comparison == OpCodes.Beq_S)
+                {
+                    codes[index + 1].opcode = OpCodes.Brtrue;
+                }
+                else if (comparison == OpCodes.Bne_Un || comparison == OpCodes.Bne_Un_S)
+                {
+                    codes[index + 1].opcode = OpCodes.Brfalse;
+                }
+                else
+                {
+                    continue;
+                }
+
+                codes[index].opcode = OpCodes.Call;
+                codes[index].operand = isOilLikeVeinType;
+                replacements++;
+            }
+
+            int expected = __originalMethod.Name == "CalculateVectorsGS2" ? 1 : 5;
+            if (replacements != expected)
+            {
+                throw new InvalidOperationException("Unsupported GS oil comparisons in " + __originalMethod.Name +
+                        ": expected " + expected + ", found " + replacements);
+            }
+            return codes;
+        }
+
+        private static bool LoadsVeinType(CodeInstruction instruction, IList<LocalVariableInfo> locals)
+        {
+            if (instruction.opcode == OpCodes.Ldfld && instruction.operand is FieldInfo field)
+            {
+                return field.FieldType == typeof(EVeinType);
+            }
+
+            int index;
+            if (instruction.opcode == OpCodes.Ldloc_0)
+            {
+                index = 0;
+            }
+            else if (instruction.opcode == OpCodes.Ldloc_1)
+            {
+                index = 1;
+            }
+            else if (instruction.opcode == OpCodes.Ldloc_2)
+            {
+                index = 2;
+            }
+            else if (instruction.opcode == OpCodes.Ldloc_3)
+            {
+                index = 3;
+            }
+            else if (instruction.opcode == OpCodes.Ldloc || instruction.opcode == OpCodes.Ldloc_S)
+            {
+                index = instruction.operand is LocalBuilder local ? local.LocalIndex : Convert.ToInt32(instruction.operand);
+            }
+            else
+            {
+                return false;
+            }
+            return index >= 0 && index < locals.Count && locals[index].LocalType == typeof(EVeinType);
+        }
+
+        private static bool LoadsOilVeinType(CodeInstruction instruction)
+        {
+            if (instruction.opcode == OpCodes.Ldc_I4_7)
+            {
+                return true;
+            }
+            if (instruction.opcode == OpCodes.Ldc_I4 && instruction.operand is int intValue)
+            {
+                return intValue == 7;
+            }
+            if (instruction.opcode == OpCodes.Ldc_I4_S && instruction.operand is sbyte sbyteValue)
+            {
+                return sbyteValue == 7;
+            }
+
+            return false;
         }
 
         public static void CalculateVectorsGS2_Postfix(GSPlanet gsPlanet, List<GSVeinDescriptor> __result)
         {
             if (gsPlanet.planetData.id == GSSettings.BirthPlanetId)
+            {
                 __result.Add(new GSVeinDescriptor
-                {
-                    count = 6,
-                    position = gsPlanet.planetData.birthResourcePoint2,
-                    rare = false,
-                    type = (EVeinType)15,
-                    richness = 0.1f,
-                });
+                    {
+                        count = 6,
+                        position = gsPlanet.planetData.birthResourcePoint2,
+                        rare = false,
+                        type = EVeinType.Graphite,
+                        richness = 0.1f,
+                    });
+            }
         }
 
         public static void GenBirthPoints_Postfix(GSPlanet gsPlanet)
@@ -292,7 +514,7 @@ namespace ProjectOrbitalRing.Compatibility
         public static void InitBirthVeinVectors_Postfix(GSPlanet gsPlanet)
         {
             PlanetData planetData = gsPlanet.planetData;
-            gsPlanet.veinData.types[2] = (EVeinType)15;
+            gsPlanet.veinData.types[2] = EVeinType.Graphite;
             gsPlanet.veinData.vectors[2] = planetData.birthResourcePoint2;
             gsPlanet.veinData.count = 3;
         }
@@ -304,21 +526,58 @@ namespace ProjectOrbitalRing.Compatibility
                 planet.gasHeatValues = new float[planet.gasItems.Length];
                 planet.gasTotalHeat = 0;
             }
+
+            ApplyPlanetThemeData(planet);
         }
 
         public static void GSTheme_ToProto_Postfix(ThemeProto __result)
         {
             switch (__result.name)
             {
+                case "Lava":
+                    __result.WaterItemId = ProtoID.I岩浆;
+
+                    break;
+
                 case "SaltLake":
                     __result.oceanMat = LDB.themes.Select(8).oceanMat;
 
                     break;
+            }
+        }
 
-                case "Gobi":
-                    __result.oceanMat = LDB.themes.Select(22).oceanMat;
+        private static void ApplyPlanetThemeData(PlanetData planet)
+        {
+            if (planet == null || planet.type == EPlanetType.Gas)
+            {
+                return;
+            }
 
-                    break;
+            if (PlanetThemeUtils.GetVanillaThemeId(planet) == 9)
+            {
+                planet.waterItemId = ProtoID.I岩浆;
+            }
+        }
+
+        public static void GameData_Import_Postfix(GameData __instance)
+        {
+            GalaxyData galaxy = __instance?.galaxy;
+            if (galaxy?.stars == null)
+            {
+                return;
+            }
+
+            foreach (StarData star in galaxy.stars)
+            {
+                if (star?.planets == null)
+                {
+                    continue;
+                }
+
+                foreach (PlanetData planet in star.planets)
+                {
+                    ApplyPlanetThemeData(planet);
+                }
             }
         }
 
@@ -429,14 +688,15 @@ namespace ProjectOrbitalRing.Compatibility
     {
         internal static void ModifyTheme(ref GSTheme theme)
         {
-            if (theme.PlanetType == EPlanetType.Gas) { GasGiantModify(ref theme); }
+            if (theme.PlanetType == EPlanetType.Gas) {
+                GasGiantModify(ref theme.GasItems, ref theme.GasSpeeds);
+            }
             else
             {
-                ModifyThemeData(ref theme);
+                ModifyThemeData(GetThemeId(theme), ref theme.VeinSpot, ref theme.VeinCount,
+                    ref theme.VeinOpacity, ref theme.RareVeins, ref theme.RareSettings);
 
-                //if (theme.WaterItemId == ProtoID.I水) theme.WaterItemId = ProtoID.I海水;
-
-                switch (theme.LDBThemeId)
+                switch (GetThemeId(theme))
                 {
                     case 8:
                         theme.WaterItemId = ProtoID.I水;
@@ -444,40 +704,42 @@ namespace ProjectOrbitalRing.Compatibility
 
                         break;
 
-                    case 12:
-                        theme.WaterItemId = ProtoID.I硝酸;
-                        theme.WaterHeight = -0.1f;
+                    case 9:
+                        theme.WaterItemId = ProtoID.I岩浆;
                         theme.Distribute = EThemeDistribute.Interstellar;
-                        Themes.Savanna.InitMaterials();
-                        theme.oceanMat = Themes.Savanna.oceanMat;
-                        RemoveVein(ref theme, 0);
-                        RemoveVein(ref theme, 1);
-                        RemoveVein(ref theme, 2);
-                        RemoveVein(ref theme, 3);
-                        RemoveVein(ref theme, 14);
+                        theme.PlanetType = EPlanetType.Vocano;
+
+                        break;
+
+                    case 10:
+                        theme.WaterItemId = ProtoID.I甲烷;
+                        theme.WaterHeight = -0.5f;
+                        theme.Distribute = EThemeDistribute.Interstellar;
 
                         break;
 
                     case 13:
-                        RemoveVein(ref theme, 0);
-                        RemoveVein(ref theme, 14);
+                        theme.Distribute = EThemeDistribute.Interstellar;
+                        theme.PlanetType = EPlanetType.Vocano;
 
                         break;
 
                     case 17:
-                        theme.WaterItemId = ProtoID.I重油;
-                        theme.WaterHeight = -0.1f;
+                        theme.WaterItemId = ProtoID.I原油;
+                        theme.WaterHeight = 0f;
                         theme.Distribute = EThemeDistribute.Interstellar;
                         theme.Algo = 3;
                         Themes.OceanicJungle.InitMaterials();
                         theme.oceanMat = Themes.OceanicJungle.oceanMat;
-                        RemoveVein(ref theme, 0);
-                        RemoveVein(ref theme, 3);
-                        RemoveVein(ref theme, 14);
 
                         break;
 
                     case 19:
+                        theme.Wind = 8f;
+                        theme.Distribute = EThemeDistribute.Default;
+
+                        break;
+
                     case 25:
                         theme.Distribute = EThemeDistribute.Default;
 
@@ -486,55 +748,10 @@ namespace ProjectOrbitalRing.Compatibility
             }
         }
 
-        private static void GasGiantModify(ref GSTheme theme)
+        private static int GetThemeId(GSTheme theme)
         {
-            if (theme.GasItems.Length != 2) return;
-
-            if (theme.GasItems[0] == ProtoID.I可燃冰 && theme.GasItems[1] == ProtoID.I氢)
-            {
-                theme.GasItems = new[] { ProtoID.I可燃冰, ProtoID.I氢, ProtoID.I气云, };
-                theme.GasSpeeds = new float[] { theme.GasSpeeds[0], theme.GasSpeeds[1], theme.GasSpeeds[1] * 0.7f, };
-            }
-            else if (theme.GasItems[0] == ProtoID.I氢 && theme.GasItems[1] == ProtoID.I重氢)
-            {
-                theme.GasItems = new[] { ProtoID.I氢, ProtoID.I重氢, ProtoID.I气云, };
-                theme.GasSpeeds = new float[] { theme.GasSpeeds[0], theme.GasSpeeds[1], theme.GasSpeeds[1] * 0.5f, };
-            }
-        }
-
-        private static void ModifyThemeData(ref GSTheme theme)
-        {
-
-            if (ThemeDatas.TryGetValue(theme.LDBThemeId, out ThemeData value))
-            {
-                theme.RareVeins = theme.RareVeins.Concat(value.RareVeins).ToArray();
-                theme.RareSettings = theme.RareSettings.Concat(value.RareSettings).ToArray();
-            }
-
-
-            Array.Resize(ref theme.VeinSpot, 15);
-            Array.Resize(ref theme.VeinCount, 15);
-            Array.Resize(ref theme.VeinOpacity, 15);
-
-            // Aluminum
-            theme.VeinSpot[14] = (theme.VeinSpot[0] + theme.VeinSpot[1]) / 2;
-            theme.VeinCount[14] = (theme.VeinCount[0] + theme.VeinCount[1]) / 2;
-            theme.VeinOpacity[14] = (theme.VeinOpacity[0] + theme.VeinOpacity[1]) / 2;
-
-            // Coal
-            if (!theme.GasItems.Contains(ProtoID.I氧)) { RemoveVein(ref theme, 5); }
-            else
-            {
-                theme.VeinSpot[5] += 1;
-                theme.VeinCount[5] *= 1.1f;
-            }
-        }
-
-        private static void RemoveVein(ref GSTheme theme, int id)
-        {
-            theme.VeinSpot[id] = 0;
-            theme.VeinCount[id] = 0f;
-            theme.VeinOpacity[id] = 0f;
+            int knownId = PlanetThemeUtils.ResolveGSThemeId(theme.Name, null);
+            return knownId != 0 ? knownId : theme.LDBThemeId;
         }
     }
 }

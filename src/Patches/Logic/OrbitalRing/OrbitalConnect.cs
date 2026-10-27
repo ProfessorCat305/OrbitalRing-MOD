@@ -13,6 +13,7 @@ namespace ProjectOrbitalRing.Patches.Logic.OrbitalRing
     public static class OrbitalConnect
     {
         static Vector3 startPos = new Vector3(0, 0, 0);
+
         [HarmonyPostfix]
         [HarmonyPatch(typeof(BuildTool_Path), "ConfirmOperation")]
         public static void ConfirmOperation_Patch(BuildTool_Path __instance)
@@ -62,17 +63,23 @@ namespace ProjectOrbitalRing.Patches.Logic.OrbitalRing
             }
 
             int count = __instance.buildPreviews.Count;
+            OrbitalRingLayout? layout = null;
             for (int i = 0; i < count; i++) {
                 BuildPreview preview = __instance.buildPreviews[i];
 
                 if (preview.item.ID == ProtoID.I轨道连接组件 || __instance.handItem.ID == ProtoID.I粒子加速轨道 || __instance.handItem.ID == ProtoID.I星环电网组件) {
+                    if (!layout.HasValue)
+                    {
+                        layout = GetLayout(__instance.planet);
+                    }
+                    var orbitalLayout = layout.Value;
                     Vector3 pos = new Vector3(0, 0, 0);
                     if (preview.item.ID == ProtoID.I轨道连接组件) {
-                        pos = BeltShouldBeAdsorb(preview.lpos, startPos, 0, __instance.planet.radius == 100f);
+                        pos = BeltShouldBeAdsorb(preview.lpos, startPos, 0, orbitalLayout);
                     } else if (preview.item.ID == ProtoID.I粒子加速轨道) {
-                        pos = BeltShouldBeAdsorb(preview.lpos, startPos, 1, __instance.planet.radius == 100f);
+                        pos = BeltShouldBeAdsorb(preview.lpos, startPos, 1, orbitalLayout);
                     } else if (preview.item.ID == ProtoID.I星环电网组件) {
-                        pos = BeltShouldBeAdsorb(preview.lpos, startPos, 2, __instance.planet.radius == 100f);
+                        pos = BeltShouldBeAdsorb(preview.lpos, startPos, 2, orbitalLayout);
                     }
 
                     preview.lpos = pos;
@@ -380,7 +387,7 @@ namespace ProjectOrbitalRing.Patches.Logic.OrbitalRing
             if (itemId != ProtoID.I轨道连接组件 && itemId != ProtoID.I粒子加速轨道 && itemId != ProtoID.I星环电网组件) {
                 return;
             }
-            (int ringBeltIndex, int ringIndex) = CalculateRingPosMark(__instance.entityPool[beltEntityId].pos, __instance.planet.radius == 100f);
+            (int ringBeltIndex, int ringIndex) = CalculateRingPosMark(__instance.entityPool[beltEntityId].pos, GetLayout(__instance.planet));
             var planetOrbitalRingData = OrbitalStationManager.Instance.GetPlanetOrbitalRingData(__instance.planet.id);
             planetOrbitalRingData.Rings[ringIndex].CheckRingIsComplete(__instance, beltId, ringBeltIndex, itemId);
         }
