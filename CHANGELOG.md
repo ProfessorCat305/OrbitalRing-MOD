@@ -1,9 +1,13 @@
 - v1.0.21
-  + 修复 概率掉落物品判断时有3种石头被识别为植物的问题
+  + 修复 砍树/挖石头时概率掉落物品的判断时有3种石头被识别为植物的问题
 
   + 删除 激光砍树mod的不兼容说明
 
-  + 修复 BigTower mod兼容问题，现在点开太空电梯窗口不再报错
+  + 删除 GalacticScale mod的不兼容说明
+
+  + 修复 BigTower mod兼容问题，现在安装了BigTower mod时点开太空电梯窗口不再报错
+
+  + 添加 GalacticScale的兼容，特别感谢 没救了 为此提供的修改pr，同时也感谢 渊曦 为pr提供的测试和反馈
 
 <details>
 <summary>点击展开历史修改 | Click to view all </summary>
