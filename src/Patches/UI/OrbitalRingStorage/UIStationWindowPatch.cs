@@ -116,7 +116,7 @@ namespace ProjectOrbitalRing.Patches.UI.OrbitalRingStorage
                     return;
                 }
                 _obj.SetActive(true);
-                for (int i = 0; i < stationComponent.storage.Length; i++) {
+                for (int i = 0; i < 5; i++) {
                     if (stationComponent.storage[i].itemId == 0) {
                         _uiShareStorage[i].SetEnable(false, __instance.factory.planetId, stationComponent.id, i);
                     } else {

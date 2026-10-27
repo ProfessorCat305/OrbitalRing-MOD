@@ -232,6 +232,8 @@ namespace ProjectOrbitalRing.Patches.Logic
                 return true;
             } else if (protoID >= 611 && protoID <= 734) {
                 return true;
+            } else if (protoID >= 1005 && protoID <= 1007) {
+                return true;
             } else if (protoID >= 1041 && protoID <= 1044) {
                 return true;
             } else if (protoID >= 1051 && protoID <= 1055) {

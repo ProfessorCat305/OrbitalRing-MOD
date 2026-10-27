@@ -4620,8 +4620,8 @@
     },
     {
         "Name": "I轨道连接组件",
-        "ZHCN": "将同步轨道设施连接起来的太空结构，坚固强韧的特种钢保证连接的可靠，光纤连接的电路控制则为后续以环行星巨构为载体的组件提供控制基础。",
-        "ENUS": "The space structure that connects synchronous orbit facilities is made of sturdy and strong special steel to ensure reliable connections, and the circuit control of fiber optic connections provides a control basis for subsequent components carried by planetary structures."
+        "ZHCN": "将同步轨道设施连接起来的太空结构，坚固强韧的特种钢保证连接的可靠，光纤连接的电路控制则为后续以环行星巨构为载体的组件提供控制基础。\n轨道连接组件<color=\"#FD965ECC\">只连接自身</color>，绕赤道一圈<color=\"#FD965ECC\">不连接其他建筑，直接穿过</color>",
+        "ENUS": "The space structure that connects synchronous orbit facilities is made of sturdy and strong special steel to ensure reliable connections, and the circuit control of fiber optic connections provides a control basis for subsequent components carried by planetary structures.\nOrbital Connection Components<color=\"#FD965ECC\">is only connected to itself</color>，It goes around the equator<color=\"#FD965ECC\">without connecting to other buildings and directly passes through</color>"
     },
     {
         "Name": "轨道设施连接工程",

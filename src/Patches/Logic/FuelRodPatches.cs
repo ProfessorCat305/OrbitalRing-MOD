@@ -75,63 +75,63 @@ namespace ProjectOrbitalRing.Patches.Logic
         //    return matcher.InstructionEnumeration();
         //}
 
-        public static void GenEnergyByFuel_Patch_Method(ref PowerGeneratorComponent component, int[] consumeRegister)
-        {
-            int count = GetEmptyRodCount(component.fuelId);
+        //public static void GenEnergyByFuel_Patch_Method(ref PowerGeneratorComponent component, int[] consumeRegister)
+        //{
+        //    int count = GetEmptyRodCount(component.fuelId);
 
-            if (count == 0) return;
+        //    if (count == 0) return;
 
-            component.productCount += count;
-            component.catalystIncPoint += component.fuelIncLevel;
+        //    component.productCount += count;
+        //    component.catalystIncPoint += component.fuelIncLevel;
 
-            if (component.productCount > 30)
-            {
-                var instanceProductCount = (int)component.productCount;
-                component.split_inc(ref instanceProductCount, ref component.catalystIncPoint, instanceProductCount - 30);
-                component.productCount = instanceProductCount;
-            }
+        //    if (component.productCount > 30)
+        //    {
+        //        var instanceProductCount = (int)component.productCount;
+        //        component.split_inc(ref instanceProductCount, ref component.catalystIncPoint, instanceProductCount - 30);
+        //        component.productCount = instanceProductCount;
+        //    }
 
-            // ReSharper disable once LoopCanBePartlyConvertedToQuery
-            foreach (FactoryProductionStat factoryProductionStat in GameMain.data.statistics.production.factoryStatPool)
-            {
-                if (factoryProductionStat.consumeRegister != consumeRegister) continue;
+        //    // ReSharper disable once LoopCanBePartlyConvertedToQuery
+        //    foreach (FactoryProductionStat factoryProductionStat in GameMain.data.statistics.production.factoryStatPool)
+        //    {
+        //        if (factoryProductionStat.consumeRegister != consumeRegister) continue;
 
-                factoryProductionStat.productRegister[ProtoID.I空燃料棒] += count;
+        //        factoryProductionStat.productRegister[ProtoID.I空燃料棒] += count;
 
-                return;
-            }
-        }
+        //        return;
+        //    }
+        //}
 
-        private static int GetEmptyRodCount(int itemId)
-        {
-            var count = 0;
+        //private static int GetEmptyRodCount(int itemId)
+        //{
+        //    var count = 0;
 
-            switch (itemId)
-            {
-                case ProtoID.I氢燃料棒:
-                case ProtoID.I燃油燃料棒:
-                case ProtoID.I四氢双环戊二烯燃料棒:
-                case ProtoID.I铀燃料棒:
-                case ProtoID.I钚燃料棒:
-                case ProtoID.I氘核燃料棒:
-                case ProtoID.I反物质燃料棒:
-                    count = 1;
+        //    switch (itemId)
+        //    {
+        //        case ProtoID.I氢燃料棒:
+        //        case ProtoID.I燃油燃料棒:
+        //        case ProtoID.I四氢双环戊二烯燃料棒:
+        //        case ProtoID.I铀燃料棒:
+        //        case ProtoID.I钚燃料棒:
+        //        case ProtoID.I氘核燃料棒:
+        //        case ProtoID.I反物质燃料棒:
+        //            count = 1;
 
-                    break;
+        //            break;
 
-                case ProtoID.IMOX燃料棒:
-                    count = 3;
+        //        case ProtoID.IMOX燃料棒:
+        //            count = 3;
 
-                    break;
+        //            break;
 
-                case ProtoID.I奇异燃料棒:
-                    count = 4;
+        //        case ProtoID.I奇异燃料棒:
+        //            count = 4;
 
-                    break;
-            }
+        //            break;
+        //    }
 
-            return count;
-        }
+        //    return count;
+        //}
 
         //[HarmonyPatch(typeof(UIInserterBuildTip), nameof(UIInserterBuildTip.SetOutputEntity))]
         //[HarmonyTranspiler]
