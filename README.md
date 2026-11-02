@@ -78,6 +78,11 @@ Other modifications include but are not limited to:
 <a href="https://ibb.co/GfDL6wwz"><img src="https://i.ibb.co/0pLS7NNH/pet1-FMQ-md.png" alt="pet1-FMQ-md" border="0"></a>
 
 
+`BepInEx/config/org.ProfessorCat305.OrbitalRing.cfg` 支持独立开关各类轨道改模及结构建造模式，修改后重启游戏生效。
+
+Track remodeling and structural construction can be enabled independently in this file;
+restart the game to apply changes.
+
 ## 意见和反馈 | Feedback and suggestions
 
 如果您对本Mod有宝贵的意见或建议，
