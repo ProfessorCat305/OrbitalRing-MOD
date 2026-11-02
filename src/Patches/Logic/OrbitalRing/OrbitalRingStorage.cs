@@ -160,7 +160,7 @@ namespace ProjectOrbitalRing.Patches.Logic.OrbitalRing
         public static void ShareStorageForOrbitalStation(ref StationComponent stationComponent, ref OrbitalRingStorage orbitalRingStorage)
         {
             lock (stationComponent.storage) {
-                for (int j = 0; j < stationComponent.storage.Length; j++) {
+                for (int j = 0; j < 5; j++) {
                     StationStore storage = stationComponent.storage[j];
                     if (orbitalRingStorage.storageShare.TryGetValue(stationComponent.id, out var storeShare)) {
                         if (!storeShare[j]) {
@@ -278,7 +278,7 @@ namespace ProjectOrbitalRing.Patches.Logic.OrbitalRing
                                 if (pair.elevatorPoolId != -1) {
                                     StationStore[] storage = factory.factory.transport.stationPool[pair.elevatorPoolId].storage;
                                     bool flag = false;
-                                    for (int z = 0; z < storage.Length; z++) {
+                                    for (int z = 0; z < 5; z++) {
                                         if (storage[z].itemId == itemId) {
                                             if (!planetOrbitalRingData.Rings[ringId].orbitalRingStorage.storageShare[pair.elevatorPoolId][z]) {
                                                 flag = true;
@@ -320,7 +320,7 @@ namespace ProjectOrbitalRing.Patches.Logic.OrbitalRing
                                 if (pair.elevatorPoolId != -1) {
                                     StationStore[] storage = factory.factory.transport.stationPool[pair.elevatorPoolId].storage;
                                     bool flag = false;
-                                    for (int z = 0; z < storage.Length; z++) {
+                                    for (int z = 0; z < 5; z++) {
                                         if (storage[z].itemId == assemblerComponent.recipeExecuteData.products[i]) {
                                             if (!planetOrbitalRingData.Rings[ringId].orbitalRingStorage.storageShare[pair.elevatorPoolId][z]) {
                                                 flag = true;

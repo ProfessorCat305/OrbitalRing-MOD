@@ -560,6 +560,13 @@ namespace ProjectOrbitalRing.Utils
             // 战场分析基站建造范围从60改为200
             item = LDB.items.Select(3009);
             item.prefabDesc.constructionRange = 200f;
+
+            // 重型电磁弹射器与机甲交互范围改为90
+            item = LDB.items.Select(6513);
+            item.prefabDesc.selectDistance = 90f;
+            // 轨道反物质堆核心与机甲交互范围改为90
+            item = LDB.items.Select(6261);
+            item.prefabDesc.selectDistance = 90f;
         }
 
 

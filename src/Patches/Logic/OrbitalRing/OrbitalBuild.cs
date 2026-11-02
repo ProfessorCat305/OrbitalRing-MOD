@@ -312,7 +312,8 @@ namespace ProjectOrbitalRing.Patches.Logic.OrbitalRing
                         }
                     }
                     // 继续原可否建造判断流程
-                    return true;
+                    continue;
+                    //return true;
                 }
                 flag = false;
                 if (previewItem == ProtoID.I轨道连接组件) {
