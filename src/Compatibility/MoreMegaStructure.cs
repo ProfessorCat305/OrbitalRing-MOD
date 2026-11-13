@@ -11,6 +11,7 @@ using PluginInfo = BepInEx.PluginInfo;
 using UnityEngine.UI;
 using ProjectOrbitalRing.Patches.Logic.MathematicalRateEngine;
 using ProjectOrbitalRing.Utils;
+using static GalacticScale.NEB;
 
 // ReSharper disable InconsistentNaming
 // ReSharper disable LoopCanBePartlyConvertedToQuery
@@ -236,6 +237,7 @@ namespace ProjectOrbitalRing.Compatibility
 
         public static void RefreshUILabels_Postfix(StarData star)
         {
+            if (star == null) return;
             if (star.type == EStarType.BlackHole)
             {
                 Type targetType = AccessTools.TypeByName("MoreMegaStructure.MoreMegaStructure");

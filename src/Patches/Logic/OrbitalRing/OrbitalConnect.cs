@@ -1,4 +1,4 @@
-﻿using HarmonyLib;
+using HarmonyLib;
 using ProjectOrbitalRing.Patches.Logic.AddVein;
 using ProjectOrbitalRing.Utils;
 using System.Collections.Generic;
@@ -103,7 +103,7 @@ namespace ProjectOrbitalRing.Patches.Logic.OrbitalRing
 
         public static bool isOrbitalBelt(BuildPreview buildPreview2)
         {
-            if (buildPreview2 == null) {
+            if (buildPreview2 == null || buildPreview2.item == null) {
                 return false;
             }
             int id = buildPreview2.item.ID;
@@ -115,6 +115,75 @@ namespace ProjectOrbitalRing.Patches.Logic.OrbitalRing
                     return true;
             }
             return false;
+        }
+
+        // ---------------- 蓝图内轨道设施预览体碰撞修复 ----------------
+        // 已经建造好（或已是预建造）的轨道设施走的是 CheckBuildConditions 里 planet.physics 的
+        // ColliderData 分支，下面的 isCollideShouldIgnore 能把它们拦下来；
+        // 但同一张蓝图里一起粘贴的轨道设施此时还没建造，只是 BuildPreviewModel（layer 18 的场景碰撞体），
+        // 走的是 collider.gameObject.layer == 18 那个分支，isCollideShouldIgnore 根本没被调用，
+        // 于是重合的轨道连接组件/粒子加速轨道/星环电网组件会被判成 EBuildCondition.Collide。
+        // 这里在检查期间临时关闭这些“尚未建造”的轨道设施预览体碰撞体，检查返回后立即恢复。
+        private static readonly List<BoxCollider> SuppressedStationPreviewColliders = new List<BoxCollider>();
+
+        private static bool BlueprintContainsOrbitalBelt(BuildTool_BlueprintPaste instance)
+        {
+            if (instance.bpPool == null) {
+                return false;
+            }
+            int count = Mathf.Min(instance.bpCursor, instance.bpPool.Length);
+            for (int i = 0; i < count; i++) {
+                if (isOrbitalBelt(instance.bpPool[i])) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        [HarmonyPrefix]
+        [HarmonyPatch(typeof(BuildTool_BlueprintPaste), nameof(BuildTool_BlueprintPaste.CheckBuildConditions))]
+        public static void CheckBuildConditions_SuppressStationPreviewCollider_Prefix(BuildTool_BlueprintPaste __instance)
+        {
+            SuppressedStationPreviewColliders.Clear();
+            if (!BlueprintContainsOrbitalBelt(__instance)) {
+                return;
+            }
+            BuildModel model = __instance.actionBuild != null ? __instance.actionBuild.model : null;
+            if (model == null || model.previewModels == null) {
+                return;
+            }
+            int count = Mathf.Min(model.previewModelCursor, model.previewModels.Count);
+            for (int i = 0; i < count; i++) {
+                BuildPreviewModel previewModel = model.previewModels[i];
+                if (previewModel == null || previewModel.cols == null) {
+                    continue;
+                }
+                BuildPreview preview = previewModel.buildPreview;
+                if (preview == null || preview.desc == null || !isCollideShouldIgnore(preview.desc)) {
+                    continue;
+                }
+                for (int j = 0; j < previewModel.cols.Length; j++) {
+                    BoxCollider collider = previewModel.cols[j];
+                    if (collider == null || !collider.enabled) {
+                        continue;
+                    }
+                    collider.enabled = false;
+                    SuppressedStationPreviewColliders.Add(collider);
+                }
+            }
+        }
+
+        [HarmonyPostfix]
+        [HarmonyPatch(typeof(BuildTool_BlueprintPaste), nameof(BuildTool_BlueprintPaste.CheckBuildConditions))]
+        public static void CheckBuildConditions_SuppressStationPreviewCollider_Postfix()
+        {
+            for (int i = 0; i < SuppressedStationPreviewColliders.Count; i++) {
+                BoxCollider collider = SuppressedStationPreviewColliders[i];
+                if (collider != null) {
+                    collider.enabled = true;
+                }
+            }
+            SuppressedStationPreviewColliders.Clear();
         }
 
         [HarmonyTranspiler]
@@ -194,6 +263,11 @@ namespace ProjectOrbitalRing.Patches.Logic.OrbitalRing
 
         public static bool isCollideShouldIgnore(PrefabDesc prefabDesc2)
         {
+            // BuildTool.GetPrefabDesc(0) 会返回 null（例如蓝图预览体在 planet.physics 里查不到 ColliderData 时
+            // num17 == 0），这里必须兜住，否则补丁插入点会抛空引用
+            if (prefabDesc2 == null) {
+                return false;
+            }
             int modelindex = prefabDesc2.modelIndex;
             switch (modelindex) {
                 case ProtoID.M轨道熔炼站:

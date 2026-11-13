@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" InitialTargets="PublicizeAssembly" ToolsVersion="Current">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <Import Project="DefaultPath.props" />
@@ -85,6 +85,10 @@
     <Reference Include="UnityEngine.ImageConversionModule">
       <HintPath>$(DSPAssemblyPath)UnityEngine.ImageConversionModule.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEngine.PhysicsModule">
+      <HintPath>..\..\Steam\steamapps\common\Dyson Sphere Program\DSPGAME_Data\Managed\UnityEngine.PhysicsModule.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="UnityEngine.TextRenderingModule">
       <HintPath>$(DSPAssemblyPath)UnityEngine.TextRenderingModule.dll</HintPath>
     </Reference>
@@ -156,6 +160,7 @@
     <Compile Include="src\Patches\Logic\FixMoonRadius\FixMoonRadius.cs" />
     <Compile Include="src\Patches\Logic\FixMoonRadius\InitCollectorMaterial.cs" />
     <Compile Include="src\Patches\Logic\FixMoonRadius\LUT Rework.cs" />
+    <Compile Include="src\Patches\Logic\FixMoonRadius\PolarMarkScale.cs" />
     <Compile Include="src\Patches\Logic\FixMoonRadius\RadiusFixTranspiler.cs" />
     <Compile Include="src\Patches\Logic\FixMoonRadius\TrashSystemFix.cs" />
     <Compile Include="src\Patches\Logic\FixMoonRadius\UIBuildingGrid.cs" />
@@ -169,6 +174,7 @@
     <Compile Include="src\Patches\Logic\InitialTechPatches.cs" />
     <Compile Include="src\Patches\Logic\InserterComponentPatches.cs" />
     <Compile Include="src\Patches\Logic\LogisticsInterchangePatches.cs" />
+    <Compile Include="src\Patches\Logic\LogisticDroneDockFix.cs" />
     <Compile Include="src\Patches\Logic\MathematicalRateEngine\EnergyCalculate.cs" />
     <Compile Include="src\Patches\Logic\MathematicalRateEngine\SiloAndEjector.cs" />
     <Compile Include="src\Patches\Logic\MathematicalRateEngine\UI.cs" />
@@ -298,7 +304,12 @@
     <EmbeddedResource Include="assets\texture\黑雾英文图标.png" />
     <EmbeddedResource Include="assets\texture\黑雾英文图标1.png" />
     <EmbeddedResource Include="data\*.json" />
-    <None Include="assets\*" />
+    <None Include="assets\genesis-models" />
+    <None Include="assets\genesis-models-lab" />
+    <None Include="assets\icon.png" />
+    <None Include="assets\LICENSE.assets" />
+    <None Include="assets\orbitalrings-models" />
+    <None Include="assets\atfield-shader" />
     <None Include="lib\Assembly-CSharp-publicized.dll" />
     <None Include="lib\BepInEx.AssemblyPublicizer.Cli.exe" />
     <None Include="lib\GalacticScale-publicized.dll" />
@@ -323,6 +334,7 @@
     <Copy SourceFiles="$(SolutionDir)assets\genesis-models" DestinationFiles="$(BepinExPath)plugins\$(DebugModDir)\genesis-models" />
     <Copy SourceFiles="$(SolutionDir)assets\genesis-models-lab" DestinationFiles="$(BepinExPath)plugins\$(DebugModDir)\genesis-models-lab" />
     <Copy SourceFiles="$(SolutionDir)assets\orbitalrings-models" DestinationFiles="$(BepinExPath)plugins\$(DebugModDir)\orbitalrings-models" />
+    <Copy SourceFiles="$(SolutionDir)assets\atfield-shader" DestinationFiles="$(BepinExPath)plugins\$(DebugModDir)\atfield-shader" Condition="Exists('$(SolutionDir)assets\atfield-shader')" />
     <Copy SourceFiles="$(SolutionDir)lib\Newtonsoft.Json.dll" DestinationFiles="$(BepinExPath)plugins\$(DebugModDir)\Newtonsoft.Json.dll" />
     <Copy SourceFiles="$(TargetPath)" DestinationFiles="$(ReleasePath)plugins\$(TargetName).dll" />
     <Copy SourceFiles="README.md" DestinationFiles="$(ReleasePath)README.md" />
@@ -331,6 +343,7 @@
     <Copy SourceFiles="$(SolutionDir)assets\genesis-models" DestinationFiles="$(ReleasePath)plugins\genesis-models" />
     <Copy SourceFiles="$(SolutionDir)assets\genesis-models-lab" DestinationFiles="$(ReleasePath)plugins\genesis-models-lab" />
     <Copy SourceFiles="$(SolutionDir)assets\orbitalrings-models" DestinationFiles="$(ReleasePath)plugins\orbitalrings-models" />
+    <Copy SourceFiles="$(SolutionDir)assets\atfield-shader" DestinationFiles="$(ReleasePath)plugins\atfield-shader" Condition="Exists('$(SolutionDir)assets\atfield-shader')" />
     <Copy SourceFiles="$(SolutionDir)lib\Newtonsoft.Json.dll" DestinationFiles="$(ReleasePath)plugins\Newtonsoft.Json.dll" />
   </Target>
 </Project>

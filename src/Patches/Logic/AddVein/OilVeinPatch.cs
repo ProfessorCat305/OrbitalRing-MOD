@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static GalacticScale.NEB;
 
 namespace ProjectOrbitalRing.Patches.Logic.AddVein
 {
@@ -258,7 +259,7 @@ namespace ProjectOrbitalRing.Patches.Logic.AddVein
             if (num != __instance.observed)
             {
                 __instance.OnStarDataSet();
-                return true;
+                return false;
             }
 
             __instance.loadingTextGo.SetActive(__instance.observed && !__instance.calculated);
@@ -287,22 +288,22 @@ namespace ProjectOrbitalRing.Patches.Logic.AddVein
                             num4 *= (double)GameMain.history.miningSpeedScale;
                         }
 
-                        StringBuilderUtility.WritePositiveFloat(entry.sb, 0, 8, (float)num4);
+                        StringBuilderUtility.WritePositiveFloat(entry.sb, 0, 8, (float)num4, 2, ' ');
                         entry.DisplayStringBuilder();
                     }
                     else
                     {
                         if (isInfiniteResource)
                         {
-                            StringBuilderUtility.WriteCommaULong(entry.sb, 0, 16, (ulong)value);
+                            StringBuilderUtility.WriteCommaULong(entry.sb, 0, 16, (ulong)value, 1, ' ');
                         }
                         else if (num3 < 1000000000)
                         {
-                            StringBuilderUtility.WriteCommaULong(entry.sb, 0, 16, (ulong)num3);
+                            StringBuilderUtility.WriteCommaULong(entry.sb, 0, 16, (ulong)num3, 1, ' ');
                         }
                         else
                         {
-                            StringBuilderUtility.WriteKMG(entry.sb, 15, num3);
+                            StringBuilderUtility.WriteKMG(entry.sb, 15, num3, false, '\u2009', ' ');
                         }
 
                         entry.DisplayStringBuilder();

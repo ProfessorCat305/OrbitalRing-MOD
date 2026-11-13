@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -265,6 +265,50 @@ namespace ProjectOrbitalRing.Patches.Logic.OrbitalRing
                 return (adjusted, true);
             }
             return (vector, false);
+        }
+
+        // 计算某个轨道设施/太空电梯/核心预览离最近的可建造槽位还差多少（单位：度）：
+        // 纬度差吸到设施圈纬度（单圈 0°，双圈 ±10*AngleUnit），经度差吸到最近的设施/电梯标记。
+        // 蓝图粘贴时用这个差量整体平移蓝图锚点，让整张蓝图一起吸附，而不是单独挪某一栋建筑。
+        public static bool TryGetStationSlotOffset(Vector3 vector, OrbitalRingLayout layout, bool isFullRing,
+            out float latOffsetDeg, out float lonOffsetDeg)
+        {
+            latOffsetDeg = 0f;
+            lonOffsetDeg = 0f;
+            if (vector.sqrMagnitude < 0.01f) {
+                return false;
+            }
+
+            double latitudeDeg = GetLatitudeAngle(vector);
+            double border = 20.5d * layout.AngleUnit;
+            if (latitudeDeg < -border || latitudeDeg > border) {
+                // 不在这颗星球的星环纬度带里，不参与吸附
+                return false;
+            }
+
+            // 双圈星球：保持原来的上下方向，吸到 ±10*AngleUnit；单圈星球：吸到赤道 0°
+            double targetLatDeg = 0d;
+            if (layout.HasLowerStationRing) {
+                targetLatDeg = (latitudeDeg < 0d ? -1d : 1d) * 10d * layout.AngleUnit;
+            }
+            latOffsetDeg = (float)(targetLatDeg - latitudeDeg);
+
+            // 经度吸附到最近标记：环未建满时设施只能建在电梯锚点上，建满后可以用完整设施槽
+            double angle = GetLongitudeAngle(vector.z, vector.x);
+            int markerCount = isFullRing ? layout.StationCapacity : layout.ElevatorAnchorCount;
+            double minDiff = double.MaxValue;
+            double closest = angle;
+            for (int index = 0; index < markerCount; index++) {
+                double marker = isFullRing ? layout.GetStationAngle(index) : layout.GetElevatorAnchorAngle(index);
+                double diff = GetAngleDiff(angle, marker);
+                if (diff < minDiff) {
+                    minDiff = diff;
+                    closest = marker;
+                }
+            }
+            // 取 -180~180 的最短偏移方向，避免跨 0°/360° 时反着转
+            lonOffsetDeg = (float)(((closest - angle) % 360d + 540d) % 360d - 180d);
+            return true;
         }
 
         public static Vector3 BeltShouldBeAdsorb(Vector3 vector, Vector3 startPos, int islimitSide, OrbitalRingLayout layout)

@@ -1,4 +1,4 @@
-﻿using HarmonyLib;
+using HarmonyLib;
 using ProjectOrbitalRing.Utils;
 using System.Collections.Generic;
 using UnityEngine;
@@ -183,6 +183,103 @@ namespace ProjectOrbitalRing.Patches.Logic.OrbitalRing
                     preview.lpos = normalized * (originalMagnitude + 33);
                 }
             }
+        }
+
+        // ===== 蓝图粘贴时的整张蓝图吸附 =====
+        // 原版是把整张蓝图当刚体投影到球面上（只有跨回归线时 SnapTropic 才修一下纬度），
+        // 所以粘贴出来的轨道设施/太空电梯/核心既不在设施圈纬度上，也不在经度标记上，
+        // 结果要么被 CheckBuildConditions 判成不可建造，要么歪在环旁边。
+        // 这里不单独挪某一栋建筑，而是先按"最近槽位"算出整张蓝图还差多少经度/纬度，
+        // 直接平移蓝图锚点 dotsSnapped，再让原版按新锚点重算一遍：
+        // 预览、虚影、格子框、地基数据全部一起走，蓝图内部各建筑的相对位置由原版算法保证不变。
+        private static bool adsorbingBlueprintAnchor;
+
+        [HarmonyPostfix]
+        [HarmonyPatch(typeof(BuildTool_BlueprintPaste), nameof(BuildTool_BlueprintPaste.DeterminePreviewsPrestage))]
+        public static void BlueprintPaste_DeterminePreviewsPrestagePostPatch(BuildTool_BlueprintPaste __instance)
+        {
+            if (adsorbingBlueprintAnchor) {
+                return; // 重算时不要再套一层，避免递归
+            }
+            if (__instance.planet == null || __instance.bpPool == null || __instance.dotsSnapped == null || __instance.bpCursor <= 0) {
+                return;
+            }
+            if (!TryGetBlueprintOrbitalSlotOffset(__instance, out float latOffsetDeg, out float lonOffsetDeg)) {
+                return;
+            }
+            // 已经在槽位上就不要再挪，避免每帧反复重算（0.01° 在半径 250 的星球上不到 5 厘米，判定容差是 0.25°）
+            if (Mathf.Abs(latOffsetDeg) < 0.01f && Mathf.Abs(lonOffsetDeg) < 0.01f) {
+                return;
+            }
+
+            adsorbingBlueprintAnchor = true;
+            try {
+                for (int i = 0; i < __instance.dotsSnapped.Length; i++) {
+                    Vector3 dot = __instance.dotsSnapped[i];
+                    if (dot.sqrMagnitude < 1f) {
+                        continue;
+                    }
+                    __instance.dotsSnapped[i] = ShiftDirection(dot, latOffsetDeg, lonOffsetDeg);
+                }
+                // 锚点变了，格子框和区域判定要一起重算
+                __instance.GenerateBlueprintGratBoxes();
+                // 用修正后的锚点重算整张蓝图：预览位置、虚影、地基数据都会跟着刷新
+                __instance.DeterminePreviewsPrestage(false, true);
+            } finally {
+                adsorbingBlueprintAnchor = false;
+            }
+        }
+
+        private static Vector3 ShiftDirection(Vector3 dot, float latOffsetDeg, float lonOffsetDeg)
+        {
+            float longitude = 0f;
+            float latitude = 0f;
+            BlueprintUtils.GetLongitudeLatitudeRad(dot.normalized, ref longitude, ref latitude);
+            latitude = Mathf.Clamp(latitude + latOffsetDeg * Mathf.Deg2Rad, -1.5707964f, 1.5707964f);
+            longitude += lonOffsetDeg * Mathf.Deg2Rad;
+            return BlueprintUtils.GetDir(longitude, latitude) * dot.magnitude;
+        }
+
+        // 从蓝图里找到需要吸附的轨道设施/核心，算出整张蓝图还需要往哪个方向挪多少度。
+        // 只取第一栋能算出槽位偏差的建筑：同一张蓝图里这些建筑的偏差是一致的，
+        // 用它的偏差整体平移锚点即可让全部建筑落在各自槽位上。
+        private static bool TryGetBlueprintOrbitalSlotOffset(BuildTool_BlueprintPaste __instance, out float latOffsetDeg, out float lonOffsetDeg)
+        {
+            latOffsetDeg = 0f;
+            lonOffsetDeg = 0f;
+            int planetId = __instance.planet.id;
+            OrbitalRingLayout? layout = null;
+            PlanetOrbitalRingData ringData = null;
+            int count = Mathf.Min(__instance.bpCursor, __instance.bpPool.Length);
+            for (int i = 0; i < count; i++) {
+                BuildPreview buildPreview = __instance.bpPool[i];
+                if (buildPreview == null || buildPreview.item == null || buildPreview.desc == null) {
+                    continue;
+                }
+                int itemId = buildPreview.item.ID;
+                if (!IsBuildingItemIdisOrbitalStation(itemId, true) && !IsBuildingItemIdisOrbitalCore(itemId)) {
+                    continue;
+                }
+                if (!layout.HasValue) {
+                    layout = GetLayout(__instance.planet);
+                    OrbitalStationManager.Instance.AddPlanetId(planetId, layout.Value);
+                    ringData = OrbitalStationManager.Instance.GetPlanetOrbitalRingData(planetId);
+                }
+                OrbitalRingLayout orbitalLayout = layout.Value;
+                // 上下设施圈由纬度正负决定，和 isBuildingPosYCorrect 的判定一致
+                int ringIndex = buildPreview.lpos.y >= 0f ? 0 : 1;
+                if (ringData != null && ringIndex >= ringData.Rings.Count) {
+                    ringIndex = ringData.Rings.Count - 1;
+                }
+                bool isFullRing = itemId != ProtoID.I太空电梯
+                    && ringData != null && ringIndex >= 0 && ringIndex < ringData.Rings.Count
+                    && ringData.Rings[ringIndex].IsAllFull();
+                if (!TryGetStationSlotOffset(buildPreview.lpos, orbitalLayout, isFullRing, out latOffsetDeg, out lonOffsetDeg)) {
+                    continue; // 不在星环纬度带里，不吸附
+                }
+                return true;
+            }
+            return false;
         }
 
         [HarmonyPrefix]

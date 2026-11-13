@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Reflection;
 using CommonAPI.Systems;
 using HarmonyLib;
@@ -31,11 +31,11 @@ namespace ProjectOrbitalRing.Utils
             //CopyModelProto(50, ProtoID.M轨道水培舱, new Color(0.3216F, 0.8157F, 0.09020F));
             //CopyModelProto(50, ProtoID.M星环对撞机, new Color(0.3059F, 0.2196F, 0.4941F));
             //CopyModelProto(50, ProtoID.M轨道反物质堆基座);
-            CopyModelProto(432, ProtoID.M启示录聚变弹, new Color(0.3059F, 0.2196F, 0.4941F));
+            CopyModelProto(491, ProtoID.M启示录聚变弹, new Color(0.3059F, 0.2196F, 0.4941F));
             CopyModelProto(375, ProtoID.M聚爆加农炮MK2, new Color(0.2275f, 0.3804f, 0.6431f));
             CopyModelProto(373, ProtoID.M高频激光塔MK2, new Color(0.5765f, 0.4392f, 0.8588f));
-            CopyModelProto(490, ProtoID.M战术核导弹);
-            CopyModelProto(488, ProtoID.M反物质炮弹);
+            CopyModelProto(491, ProtoID.M金属氢单元);
+            CopyModelProto(491, ProtoID.M战术核导弹);
             CopyModelProto(46, ProtoID.M蓄电器, Color.HSVToRGB(0.0833f, 0.8f, 1.0f));
             CopyModelProto(48, ProtoID.M深空货舰);
             //CopyModelProto(50, ProtoID.M天枢座, new Color(0.7373f, 0.2118f, 0.8510f));
@@ -189,6 +189,57 @@ namespace ProjectOrbitalRing.Utils
             registerModel.RuinType = ERuinType.Normal;
             registerModel.RuinCount = 1;
         }
+
+        /// <summary>
+        /// 水培舱的玻璃球是从化工厂拼过来的，玻璃/液体 Shader 用 _SpherePos 定位水球：
+        /// xyz = 水球球心，w = 水球半径。直接在 AddMaterial810 里写死会把它推到玻璃外面。
+        /// 这里在模型加载完成后，用玻璃半球子网格算出完整球心，并沿用化工厂的水球半径。
+        /// 必须在运行时调用，不能在 RegisterModel 后立刻调用（prefabDesc 还没加载）。
+        /// </summary>
+        //internal static void ApplyHydroponicSpherePos(ModelProto model)
+        //{
+        //    if (model == null || model.prefabDesc == null || model.prefabDesc.mesh == null) {
+        //        LogWarning("[Hydroponic] model/prefabDesc/mesh not ready, skip _SpherePos fix");
+        //        return;
+        //    }
+
+        //    Material[] mats = model.prefabDesc.lodMaterials != null && model.prefabDesc.lodMaterials.Length > 0
+        //        ? model.prefabDesc.lodMaterials[0]
+        //        : null;
+        //    if (mats == null) return;
+
+        //    int glassIndex = -1;
+        //    for (int i = 0; i < mats.Length; i++) {
+        //        if (mats[i] != null && mats[i].shader.name == "VF Shaders/Forward/PBR Standard Chemical Glass") {
+        //            glassIndex = i;
+        //            break;
+        //        }
+        //    }
+        //    if (glassIndex < 0 || glassIndex >= model.prefabDesc.mesh.subMeshCount) {
+        //        LogWarning($"[Hydroponic] glass submesh not found (mat={glassIndex})");
+        //        return;
+        //    }
+
+        //    Bounds bounds = model.prefabDesc.mesh.GetSubMesh(glassIndex).bounds;
+        //    float glassRadius = Mathf.Max(bounds.extents.x, bounds.extents.z);
+
+        //    // 化工厂的水球半径（2.8），不是玻璃半球半径
+        //    Material chemGlass = LDB.models.Select(64).prefabDesc.lodMaterials[0][1];
+        //    float waterRadius = chemGlass != null ? chemGlass.GetVector("_SpherePos").w : 0f;
+        //    if (waterRadius <= 0f) waterRadius = glassRadius;
+
+        //    // 水球球心放在玻璃半球中心，半径沿用化工厂水球半径（2.8），
+        //    // 让水球完整悬在玻璃半球内部，而不是沉到半球底面以下。
+        //    float centerY = bounds.center.y;
+        //    Vector4 spherePos = new Vector4(bounds.center.x, centerY, bounds.center.z, waterRadius);
+        //    LogInfo($"[Hydroponic] glassRadius={glassRadius:F2} waterRadius={waterRadius:F2} boundsCenter={bounds.center} boundsMinY={bounds.min.y} -> sphere={spherePos}");
+
+        //    for (int i = 0; i < mats.Length; i++) {
+        //        if (mats[i] != null && mats[i].shader.name.Contains("Chemical Glass")) {
+        //            mats[i].SetVector("_SpherePos", spherePos);
+        //        }
+        //    }
+        //}
 
         private static void AddMaterial806(ref List<Material> newMats)
         {

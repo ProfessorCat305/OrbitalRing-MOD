@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Reflection.Emit;
@@ -18,6 +18,7 @@ namespace ProjectOrbitalRing.Patches.Logic.MegaAssembler
     internal static partial class MegaAssemblerPatches
     {
         private const int MegaAssemblerSpeed = 10000;
+        private static bool hydroponicSphereFixed;
 
         private static readonly FieldInfo EntityData_StationId_Field = AccessTools.Field(typeof(EntityData), nameof(EntityData.stationId)),
                                           EntityData_AssemblerId_Field =
@@ -214,6 +215,17 @@ namespace ProjectOrbitalRing.Patches.Logic.MegaAssembler
             if (factory.entityPool[__instance.entityId].protoId == ProtoID.I低温工厂 && __instance.replicating) {
                 __instance.extraTime += (int)(power * __instance.extraSpeed)
                                       + (int)(power * __instance.speedOverride * __instance.recipeExecuteData.extraTimeSpend / (__instance.recipeExecuteData.timeSpend * 4));
+            }
+
+            // 水培舱的玻璃球复用化工厂的玻璃/液体 Shader。
+            // _SpherePos 的 xyz 是水球球心、w 是水球半径；模型加载后按玻璃半球子网格修正一次，
+            // 否则保留化工厂原值会让水球停在抬升前的位置。
+            if (buildIngItemId == ProtoID.I轨道水培舱 && !hydroponicSphereFixed) {
+                ModelProto hydroponicModel = LDB.models.Select(ProtoID.M轨道水培舱);
+                if (hydroponicModel != null && hydroponicModel.prefabDesc != null && hydroponicModel.prefabDesc.mesh != null) {
+                    hydroponicSphereFixed = true;
+                    CopyModelUtils.ApplyHydroponicSpherePos(hydroponicModel);
+                }
             }
 
             return b;

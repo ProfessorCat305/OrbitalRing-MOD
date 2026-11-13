@@ -161,6 +161,37 @@ namespace ProjectOrbitalRing
                 resources_lab.bundle.LoadAsset<Shader>("Assets/genesis-models/shaders/PBR Standard Vertex Toggle Lab REPLACE.shader");
             SwapShaderPatches.AddSwapShaderMapping("VF Shaders/Forward/PBR Standard Vertex Toggle Lab", labToggleShader);
 
+            // 验证版：用小 bundle atfield-shader，
+            try {
+                bool atFieldShaderLoaded = false;
+                string[] atFieldBundlePaths = {
+                    Path.Combine(ModPath, "atfield-shader"),
+                    Path.Combine(ModPath, "assets", "atfield-shader"),
+                };
+                foreach (string atFieldBundlePath in atFieldBundlePaths) {
+                    if (!File.Exists(atFieldBundlePath)) continue;
+
+                    AssetBundle atFieldBundle = AssetBundle.LoadFromFile(atFieldBundlePath);
+                    if (atFieldBundle == null) continue;
+
+                    Shader atFieldShader = LoadShaderSafe(atFieldBundle, "assets/planet_atfield_shape.shader");
+                    if (atFieldShader != null) {
+                        SwapShaderPatches.AddSwapShaderMapping("Unlit/Planet ATField Shape", atFieldShader);
+                        LogInfo($"已从 {atFieldBundlePath} 加载护盾显示 Shader");
+                        atFieldShaderLoaded = true;
+                        break;
+                    }
+
+                    atFieldBundle.Unload(true);
+                }
+
+                if (!atFieldShaderLoaded) {
+                    LogWarning("未找到 planet_atfield_shape.shader，护盾显示仍用原版 Shader");
+                }
+            } catch (Exception e) {
+                LogError($"加载护盾显示 Shader 失败: {e}");
+            }
+
         #endregion ResourceData
 
         #region NebulaModAPI
@@ -423,6 +454,17 @@ namespace ProjectOrbitalRing
         internal static void LogInfo(object data) => logger.LogInfo(data);
         internal static void LogWarning(object data) => logger.LogWarning(data);
         internal static void LogError(object data) => logger.LogError(data);
+
+        private static Shader LoadShaderSafe(AssetBundle bundle, string assetName)
+        {
+            if (bundle == null) return null;
+            try {
+                return bundle.LoadAsset<Shader>(assetName);
+            } catch (Exception e) {
+                LogWarning($"从 bundle 加载 Shader {assetName} 失败: {e.Message}");
+                return null;
+            }
+        }
 
         internal static int VersionNumber()
         {
