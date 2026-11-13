@@ -11,6 +11,7 @@
     <RootNamespace>ProjectOrbitalRing</RootNamespace>
     <AssemblyName>ProjectOrbitalRing</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <IncludeFrameworkReferencesFromNuGet>false</IncludeFrameworkReferencesFromNuGet>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
     <TargetFrameworkProfile />
@@ -44,7 +45,10 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="System" />
+    <Reference Include="System">
+      <HintPath>$(DSPAssemblyPath)System.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="System.Core" />
     <Reference Include="Assembly-CSharp">
       <HintPath>lib\Assembly-CSharp-publicized.dll</HintPath>

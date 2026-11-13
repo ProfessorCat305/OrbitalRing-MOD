@@ -220,13 +220,13 @@ namespace ProjectOrbitalRing.Patches.Logic.MegaAssembler
             // 水培舱的玻璃球复用化工厂的玻璃/液体 Shader。
             // _SpherePos 的 xyz 是水球球心、w 是水球半径；模型加载后按玻璃半球子网格修正一次，
             // 否则保留化工厂原值会让水球停在抬升前的位置。
-            if (buildIngItemId == ProtoID.I轨道水培舱 && !hydroponicSphereFixed) {
-                ModelProto hydroponicModel = LDB.models.Select(ProtoID.M轨道水培舱);
-                if (hydroponicModel != null && hydroponicModel.prefabDesc != null && hydroponicModel.prefabDesc.mesh != null) {
-                    hydroponicSphereFixed = true;
-                    CopyModelUtils.ApplyHydroponicSpherePos(hydroponicModel);
-                }
-            }
+            //if (buildIngItemId == ProtoID.I轨道水培舱 && !hydroponicSphereFixed) {
+            //    ModelProto hydroponicModel = LDB.models.Select(ProtoID.M轨道水培舱);
+            //    if (hydroponicModel != null && hydroponicModel.prefabDesc != null && hydroponicModel.prefabDesc.mesh != null) {
+            //        hydroponicSphereFixed = true;
+            //        CopyModelUtils.ApplyHydroponicSpherePos(hydroponicModel);
+            //    }
+            //}
 
             return b;
         }
