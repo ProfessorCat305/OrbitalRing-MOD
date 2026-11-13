@@ -1,7 +1,9 @@
 using HarmonyLib;
 using ProjectOrbitalRing.Patches.Logic.AddVein;
 using ProjectOrbitalRing.Utils;
+using System;
 using System.Collections.Generic;
+using System.Reflection;
 using System.Reflection.Emit;
 using UnityEngine;
 using WinAPI;
@@ -12,109 +14,219 @@ namespace ProjectOrbitalRing.Patches.Logic.OrbitalRing
 {
     public static class OrbitalConnect
     {
-        static Vector3 startPos = new Vector3(0, 0, 0);
-
-        [HarmonyPostfix]
-        [HarmonyPatch(typeof(BuildTool_Path), "ConfirmOperation")]
-        public static void ConfirmOperation_Patch(BuildTool_Path __instance)
-        {
-            if (__instance.handItem.ID == ProtoID.I轨道连接组件 || __instance.handItem.ID == ProtoID.I粒子加速轨道 || __instance.handItem.ID == ProtoID.I星环电网组件) {
-                if (__instance.controller.cmd.stage == 1) {
-                    for (int i = 0; i < __instance.buildPreviews.Count; i++) {
-                        BuildPreview preview = __instance.buildPreviews[i];
-
-                        if (preview.item.ID == ProtoID.I轨道连接组件 || preview.item.ID == ProtoID.I粒子加速轨道 || preview.item.ID == ProtoID.I星环电网组件) {
-                            startPos = preview.lpos;
-                        }
-                    }
-                } else {
-                    startPos = new Vector3(0, 0, 0);
-                }
-            }
-        }
-
         [HarmonyPrefix]
         [HarmonyPatch(typeof(BuildTool_Path), "DeterminePreviews")]
         public static void BuildTool_Path_DeterminePreviews_PrePatch(BuildTool_Path __instance)
         {
-            if (__instance.handItem.ID == ProtoID.I空轨) {
-                if (__instance.altitude == 0) {
-                    __instance.altitude = 17;
+            int handItem = __instance.handItem.ID;
+            if (StructuralTrackPolicy.Enabled && TryGetTrackPlacement(handItem, out int side, out int altitude))
+            {
+                __instance.altitude = altitude;
+                var layout = GetLayout(__instance.planet);
+                float radius = __instance.planet.realRadius + 0.2f + __instance.altitude * 1.3333333f;
+                Vector3 anchor = Vector3.zero;
+                if (__instance.controller.cmd.stage == 1)
+                {
+                    Vector3 target = __instance.startTarget;
+                    if (StructuralTrackPolicy.TryReadObject(__instance.factory, __instance.startObjectId,
+                        out int itemId, out Vector3 position) && itemId == handItem)
+                    {
+                        target = position;
+                    }
+                    anchor = SnapTrackTarget(target, Vector3.zero, side, layout, radius);
+                    __instance.startTarget = anchor;
                 }
+                __instance.cursorTarget = SnapTrackTarget(__instance.cursorTarget, anchor, side, layout, radius);
             }
+            else if (handItem == ProtoID.I空轨 && __instance.altitude == 0)
+            {
+                __instance.altitude = 17;
+            }
+        }
+
+        private static Vector3 SnapTrackTarget(Vector3 position, Vector3 anchor, int side,
+            OrbitalRingLayout layout, float radius)
+        {
+            if (position.sqrMagnitude < 0.000001f)
+            {
+                return position;
+            }
+            Vector3 snapped = BeltShouldBeAdsorb(position, anchor, side, layout);
+            if (isBeltBuildingPosYCorrect(snapped, side, layout) < 0)
+            {
+                return position;
+            }
+            // Native endpoint handling receives the start and cursor targets at the final ring latitude.
+            return snapped.normalized * radius;
+        }
+
+        // Path-tool transpilers can use the native sampling call as an anchor.
+        [HarmonyTranspiler]
+        [HarmonyPriority(Priority.Last)]
+        [HarmonyPatch(typeof(BuildTool_Path), nameof(BuildTool_Path.DeterminePreviews))]
+        public static IEnumerable<CodeInstruction> BuildTool_Path_DeterminePreviews_Transpiler(
+            IEnumerable<CodeInstruction> instructions)
+        {
+            var nativeSampler = AccessTools.Method(typeof(PlanetAuxData), nameof(PlanetAuxData.SnapLineNonAlloc));
+            var trackSampler = AccessTools.Method(typeof(OrbitalConnect), nameof(SampleTrackPath));
+            foreach (CodeInstruction instruction in instructions)
+            {
+                if (!instruction.Calls(nativeSampler))
+                {
+                    yield return instruction;
+                    continue;
+                }
+                var loadTool = new CodeInstruction(OpCodes.Ldarg_0);
+                loadTool.labels.AddRange(instruction.labels);
+                instruction.labels.Clear();
+                yield return loadTool;
+                instruction.opcode = OpCodes.Call;
+                instruction.operand = trackSampler;
+                yield return instruction;
+            }
+        }
+
+        private static int SampleTrackPath(PlanetAuxData planetAux, Vector3 begin, Vector3 end, int path,
+            bool geodesic, bool beginFlat, Vector3[] snaps, bool forceVertical, ref float maxGridSlope,
+            bool useOldPath, BuildTool_Path tool)
+        {
+            if (!StructuralTrackPolicy.Enabled || !StructuralTrackPolicy.IsTrackItem(tool.handItem.ID))
+            {
+                return planetAux.SnapLineNonAlloc(begin, end, path, geodesic, beginFlat, snaps,
+                    forceVertical, ref maxGridSlope, useOldPath);
+            }
+            int capacity = Math.Max(0, snaps.Length - 10);
+            if (capacity == 0)
+            {
+                return 0;
+            }
+            Array.Clear(snaps, 0, snaps.Length);
+            maxGridSlope = 0;
+            var layout = GetLayout(tool.planet);
+            double longitudeStep = layout.AngleUnit * (layout.HasLowerStationRing ? 1d : 2d);
+            double startLongitude = Math.Atan2(begin.x, begin.z);
+            double endLongitude = Math.Atan2(end.x, end.z);
+            double longitudeDelta = Math.Atan2(Math.Sin(endLongitude - startLongitude),
+                Math.Cos(endLongitude - startLongitude));
+            if (longitudeDelta == 0d || capacity == 1)
+            {
+                snaps[0] = begin;
+                return 1;
+            }
+            int segmentCount = Mathf.RoundToInt((float)(Math.Abs(longitudeDelta) * 180d / Math.PI / longitudeStep));
+            segmentCount = Math.Min(Math.Max(1, segmentCount), capacity - 1);
+
+            // Sampling longitude at one latitude keeps neighboring ring nodes evenly spaced.
+            double radius = tool.planet.realRadius + 0.2d + tool.altitude * 1.3333333d;
+            double height = begin.normalized.y * radius;
+            double horizontalRadius = Math.Sqrt(Math.Max(0d, radius * radius - height * height));
+            for (int index = 0; index <= segmentCount; index++)
+            {
+                double longitude = startLongitude + longitudeDelta * index / segmentCount;
+                snaps[index] = new Vector3((float)(Math.Sin(longitude) * horizontalRadius),
+                    (float)height, (float)(Math.Cos(longitude) * horizontalRadius));
+            }
+            return segmentCount + 1;
         }
 
         [HarmonyPostfix]
+        [HarmonyPriority(Priority.Last)]
         [HarmonyPatch(typeof(BuildTool_Path), "DeterminePreviews")]
         public static void BuildTool_Path_DeterminePreviews_PostPatch(BuildTool_Path __instance)
         {
-            if (__instance.handItem.ID == ProtoID.I轨道连接组件) {
-                __instance.altitude = 48;
-            } else if (__instance.handItem.ID == ProtoID.I粒子加速轨道 || __instance.handItem.ID == ProtoID.I星环电网组件) {
-                __instance.altitude = 43;
-            } else if (__instance.handItem.ID == ProtoID.I空轨) {
-                if (__instance.altitude < 16) {
-                    __instance.altitude = 16;
+            int handItem = __instance.handItem.ID;
+            if (!TryGetTrackPlacement(handItem, out int side, out int altitude))
+            {
+                if (handItem == ProtoID.I空轨)
+                {
+                    __instance.altitude = Math.Max(16, __instance.altitude);
                 }
-            } else if (__instance.handItem.ID == 2001 || __instance.handItem.ID == 2002 || __instance.handItem.ID == 2003 || __instance.handItem.ID == ProtoID.I空轨) {
-                if (__instance.altitude > 40) {
-                    __instance.altitude = 40;
+                else if (handItem == 2001 || handItem == 2002 || handItem == 2003)
+                {
+                    __instance.altitude = Math.Min(40, __instance.altitude);
+                }
+                return;
+            }
+
+            __instance.altitude = altitude;
+            var layout = GetLayout(__instance.planet);
+            float planetRadius = __instance.planet.realRadius;
+            float trackRadius = planetRadius + 0.2f + altitude * 1.3333333f;
+            Vector3 anchor = Vector3.zero;
+            if (__instance.controller.cmd.stage == 1 && __instance.startTarget.sqrMagnitude > 0)
+            {
+                Vector3 start = BeltShouldBeAdsorb(__instance.startTarget, Vector3.zero, side, layout);
+                if (isBeltBuildingPosYCorrect(start, side, layout) >= 0)
+                {
+                    anchor = start;
                 }
             }
 
-            int count = __instance.buildPreviews.Count;
-            OrbitalRingLayout? layout = null;
-            for (int i = 0; i < count; i++) {
-                BuildPreview preview = __instance.buildPreviews[i];
-
-                if (preview.item.ID == ProtoID.I轨道连接组件 || __instance.handItem.ID == ProtoID.I粒子加速轨道 || __instance.handItem.ID == ProtoID.I星环电网组件) {
-                    if (!layout.HasValue)
-                    {
-                        layout = GetLayout(__instance.planet);
-                    }
-                    var orbitalLayout = layout.Value;
-                    Vector3 pos = new Vector3(0, 0, 0);
-                    if (preview.item.ID == ProtoID.I轨道连接组件) {
-                        pos = BeltShouldBeAdsorb(preview.lpos, startPos, 0, orbitalLayout);
-                    } else if (preview.item.ID == ProtoID.I粒子加速轨道) {
-                        pos = BeltShouldBeAdsorb(preview.lpos, startPos, 1, orbitalLayout);
-                    } else if (preview.item.ID == ProtoID.I星环电网组件) {
-                        pos = BeltShouldBeAdsorb(preview.lpos, startPos, 2, orbitalLayout);
-                    }
-
-                    preview.lpos = pos;
-
-                    // 计算原向量长度
-                    float originalMagnitude = preview.lpos.magnitude;
-                    if (originalMagnitude == 0 || originalMagnitude - __instance.planet.realRadius > 40) {
-                        continue; // 避免除以零
-                    }
-                    // 获取单位向量（原方向）
-                    Vector3 normalized = preview.lpos.normalized;
-                    // 计算新长度并返回结果
-                    preview.lpos = normalized * (__instance.planet.realRadius + 0.2f + __instance.altitude * 1.3333333f);
-                    //Debug.LogFormat("length {0}  altitude {1} ", __instance.planet.realRadius + 0.2f + __instance.altitude * 1.3333333f, __instance.altitude);
-                    //preview.lrot2 *= Quaternion.AngleAxis(180, Vector3.right);
-
+            var previews = __instance.buildPreviews;
+            bool structural = StructuralTrackPolicy.Enabled;
+            foreach (BuildPreview preview in previews)
+            {
+                if (!TryGetTrackPlacement(preview.item?.ID ?? 0, out int previewSide, out _))
+                {
+                    continue;
                 }
+                Vector3 snapped = BeltShouldBeAdsorb(preview.lpos, anchor, previewSide, layout);
+                float magnitude = snapped.magnitude;
+                bool useTrackRadius = magnitude > 0 && (structural
+                    ? isBeltBuildingPosYCorrect(snapped, previewSide, layout) >= 0
+                    : magnitude - planetRadius <= 40);
+                preview.lpos = useTrackRadius ? snapped.normalized * trackRadius : snapped;
+                preview.lpos2 = preview.lpos;
+                if (structural)
+                {
+                    preview.tilt = 0;
+                    preview.lrot = TrackRotation(preview.lpos, preview.lrot, Vector3.zero);
+                    preview.lrot2 = preview.lrot;
+                }
+            }
 
+            if (!structural)
+            {
+                AlignDirectedPreviews(previews);
             }
         }
 
-        public static bool isOrbitalBelt(BuildPreview buildPreview2)
+        private static void AlignDirectedPreviews(List<BuildPreview> previews)
         {
-            if (buildPreview2 == null || buildPreview2.item == null) {
-                return false;
+            for (int index = 0; index < previews.Count; index++)
+            {
+                BuildPreview preview = previews[index];
+                int itemId = preview.item?.ID ?? 0;
+                if (!StructuralTrackPolicy.IsTrackItem(itemId))
+                {
+                    continue;
+                }
+
+                Vector3 forward = preview.lrot * Vector3.forward;
+                if (preview.output?.item?.ID == itemId)
+                {
+                    forward = preview.output.lpos - preview.lpos;
+                }
+                else if (preview.input?.item?.ID == itemId)
+                {
+                    forward = preview.lpos - preview.input.lpos;
+                }
+                else if (previews.Count > 1)
+                {
+                    int neighborIndex = index + 1 < previews.Count ? index + 1 : index - 1;
+                    Vector3 span = previews[neighborIndex].lpos - preview.lpos;
+                    forward = Vector3.Dot(forward, span) < 0 ? -span : span;
+                }
+
+                preview.lrot = TrackRotation(preview.lpos, preview.lrot, forward);
+                preview.lrot2 = preview.lrot;
             }
-            int id = buildPreview2.item.ID;
-            switch (id) {
-                case ProtoID.I轨道连接组件:
-                case ProtoID.I粒子加速轨道:
-                case ProtoID.I星环电网组件:
-                case ProtoID.I空轨:
-                    return true;
-            }
-            return false;
+        }
+
+        public static bool isOrbitalBelt(BuildPreview preview)
+        {
+            int itemId = preview?.item?.ID ?? 0;
+            return itemId == ProtoID.I空轨 || StructuralTrackPolicy.IsTrackItem(itemId);
         }
 
         // ---------------- 蓝图内轨道设施预览体碰撞修复 ----------------
@@ -332,6 +444,82 @@ namespace ProjectOrbitalRing.Patches.Logic.OrbitalRing
             return matcher.InstructionEnumeration();
         }
 
+        [HarmonyTranspiler]
+        [HarmonyPatch(typeof(BuildTool_Path), nameof(BuildTool_Path.CheckBuildConditions))]
+        private static IEnumerable<CodeInstruction> PreserveTrackPathAltitude(IEnumerable<CodeInstruction> instructions)
+        {
+            // 碰撞查询可由其它模组包装；球形和胶囊查询共用自动升降入口。
+            var entry = new[] {
+                new CodeMatch(instruction => instruction.IsStloc()),
+                new CodeMatch(instruction => instruction.IsLdloc()),
+                new CodeMatch(instruction => instruction.opcode == OpCodes.Brtrue ||
+                    instruction.opcode == OpCodes.Brtrue_S),
+                new CodeMatch(instruction => instruction.IsLdloc()),
+                new CodeMatch(instruction => instruction.opcode == OpCodes.Brtrue ||
+                    instruction.opcode == OpCodes.Brtrue_S),
+                new CodeMatch(instruction => instruction.IsLdloc()),
+                new CodeMatch(OpCodes.Ldc_I4_0),
+                new CodeMatch(instruction => instruction.opcode == OpCodes.Ble ||
+                    instruction.opcode == OpCodes.Ble_S),
+                new CodeMatch(OpCodes.Ldc_I4_1),
+                new CodeMatch(instruction => instruction.IsStloc()),
+                new CodeMatch(OpCodes.Ldc_I4_1),
+                new CodeMatch(instruction => instruction.IsStloc())
+            };
+            var matcher = new CodeMatcher(instructions).MatchForward(false, entry);
+            if (matcher.IsInvalid ||
+                PathLocalIndex(matcher.InstructionAt(0)) != PathLocalIndex(matcher.InstructionAt(5)))
+            {
+                throw new InvalidOperationException(
+                    "BuildTool_Path.CheckBuildConditions automatic altitude adjustment block has changed.");
+            }
+            if (matcher.Clone().Advance(1).MatchForward(false, entry).IsValid)
+            {
+                throw new InvalidOperationException(
+                    "BuildTool_Path.CheckBuildConditions automatic altitude adjustment block is ambiguous.");
+            }
+
+            var firstExit = (Label)matcher.InstructionAt(2).operand;
+            var secondExit = (Label)matcher.InstructionAt(4).operand;
+            var overlapExit = (Label)matcher.InstructionAt(7).operand;
+            bool hasCommonExit = false;
+            foreach (CodeInstruction instruction in matcher.InstructionEnumeration())
+            {
+                if (instruction.labels.Contains(firstExit) && instruction.labels.Contains(secondExit) &&
+                    instruction.labels.Contains(overlapExit))
+                {
+                    hasCommonExit = true;
+                    break;
+                }
+            }
+            if (!hasCommonExit)
+            {
+                throw new InvalidOperationException(
+                    "BuildTool_Path.CheckBuildConditions altitude adjustment branches have different targets.");
+            }
+
+            matcher.Advance(1);
+            var loadTool = new CodeInstruction(OpCodes.Ldarg_0);
+            loadTool.MoveLabelsFrom(matcher.Instruction);
+            loadTool.MoveBlocksFrom(matcher.Instruction);
+            matcher.InsertAndAdvance(loadTool,
+                new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(OrbitalConnect), nameof(CanAutoLift))),
+                new CodeInstruction(OpCodes.Brfalse, firstExit));
+            return matcher.InstructionEnumeration();
+        }
+
+        private static int PathLocalIndex(CodeInstruction instruction)
+        {
+            if (instruction.opcode == OpCodes.Ldloc_0 || instruction.opcode == OpCodes.Stloc_0) return 0;
+            if (instruction.opcode == OpCodes.Ldloc_1 || instruction.opcode == OpCodes.Stloc_1) return 1;
+            if (instruction.opcode == OpCodes.Ldloc_2 || instruction.opcode == OpCodes.Stloc_2) return 2;
+            if (instruction.opcode == OpCodes.Ldloc_3 || instruction.opcode == OpCodes.Stloc_3) return 3;
+            return instruction.operand is LocalVariableInfo local ? local.LocalIndex : Convert.ToInt32(instruction.operand);
+        }
+
+        private static bool CanAutoLift(BuildTool_Path tool) =>
+            !StructuralTrackPolicy.Enabled || !StructuralTrackPolicy.IsTrackItem(tool.handItem.ID);
+
         public static bool CheckBeltId(BuildTool_Path instance, ref int num2)
         {
             int modelIndex = instance.GetPrefabDesc(num2).modelIndex;
@@ -458,7 +646,7 @@ namespace ProjectOrbitalRing.Patches.Logic.OrbitalRing
                 return;
             }
             int itemId = __instance.entityPool[beltEntityId].protoId;
-            if (itemId != ProtoID.I轨道连接组件 && itemId != ProtoID.I粒子加速轨道 && itemId != ProtoID.I星环电网组件) {
+            if (!StructuralTrackPolicy.IsTrackItem(itemId)) {
                 return;
             }
             (int ringBeltIndex, int ringIndex) = CalculateRingPosMark(__instance.entityPool[beltEntityId].pos, GetLayout(__instance.planet));

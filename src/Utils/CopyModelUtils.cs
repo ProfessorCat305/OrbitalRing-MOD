@@ -46,7 +46,7 @@ namespace ProjectOrbitalRing.Utils
             CopyModelProto(37, ProtoID.M粒子加速轨道, new Color(1f, 1f, 1f));
             CopyModelProto(402, ProtoID.M星环护盾组件, new Color(1f, 1f, 1f));
             CopyModelProto(51, ProtoID.M黑盒, new Color(0f, 0f, 0f));
-            CopyModelProto(37, ProtoID.M空轨, new Color(0f, 0f, 0f));
+            CopyModelProto(37, ProtoID.M空轨, new Color(0.93f, 0.22f, 0.18f));
             CopyModelProto(403, ProtoID.M伺服天穹组件);
             CopyModelProto(403, ProtoID.M智能方尖碑, new Color(1f, 1f, 1f));
             CopyModelProto(403, ProtoID.M亿万械国, new Color(0f, 0f, 0f));

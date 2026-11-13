@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using ProjectOrbitalRing.Utils;
 using UnityEngine;
 
 namespace ProjectOrbitalRing.Patches.Logic.OrbitalRing
@@ -265,6 +266,40 @@ namespace ProjectOrbitalRing.Patches.Logic.OrbitalRing
                 return (adjusted, true);
             }
             return (vector, false);
+        }
+
+        internal static bool TryGetTrackPlacement(int itemId, out int side, out int altitude)
+        {
+            switch (itemId)
+            {
+                case ProtoID.I轨道连接组件:
+                    side = 0;
+                    altitude = 48;
+                    return true;
+                case ProtoID.I粒子加速轨道:
+                    side = 1;
+                    altitude = 43;
+                    return true;
+                case ProtoID.I星环电网组件:
+                    side = 2;
+                    altitude = 43;
+                    return true;
+                default:
+                    side = 0;
+                    altitude = 0;
+                    return false;
+            }
+        }
+
+        internal static Quaternion TrackRotation(Vector3 position, Quaternion fallback, Vector3 preferredDirection)
+        {
+            Vector3 up = position.normalized;
+            Vector3 tangent = Vector3.Cross(Vector3.up, up).normalized;
+            if (Vector3.Dot(preferredDirection, tangent) < 0)
+            {
+                tangent = -tangent;
+            }
+            return tangent.sqrMagnitude > 0.000001f ? Quaternion.LookRotation(tangent, up) : fallback;
         }
 
         // 计算某个轨道设施/太空电梯/核心预览离最近的可建造槽位还差多少（单位：度）：

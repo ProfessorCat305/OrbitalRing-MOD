@@ -109,6 +109,7 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="src\Rendering\**\*.cs" />
     <Compile Include="src\Compatibility\BlueprintTweaks.cs" />
     <Compile Include="src\Compatibility\Bottleneck.cs" />
     <Compile Include="src\Compatibility\FastTravelEnabler.cs" />
@@ -202,6 +203,9 @@
     <Compile Include="src\Patches\Logic\OrbitalRing\OrbitalRingStorage.cs" />
     <Compile Include="src\Patches\Logic\OrbitalRing\OrbitalSpaceStation.cs" />
     <Compile Include="src\Patches\Logic\OrbitalRing\OrbitalStationManager.cs" />
+    <Compile Include="src\Patches\Logic\OrbitalRing\StructuralTrackPolicy.cs" />
+    <Compile Include="src\Patches\Logic\OrbitalRing\StructuralTrackConstruction.cs" />
+    <Compile Include="src\Patches\Logic\OrbitalRing\StructuralTrackCargo.cs" />
     <Compile Include="src\Patches\Logic\OrbitalRing\OrbitalTurret.cs" />
     <Compile Include="src\Patches\Logic\OrbitalRing\PosTool.cs" />
     <Compile Include="src\Patches\Logic\OrbitalRing\UI.cs" />
@@ -346,4 +350,9 @@
     <Copy SourceFiles="$(SolutionDir)assets\atfield-shader" DestinationFiles="$(ReleasePath)plugins\atfield-shader" Condition="Exists('$(SolutionDir)assets\atfield-shader')" />
     <Copy SourceFiles="$(SolutionDir)lib\Newtonsoft.Json.dll" DestinationFiles="$(ReleasePath)plugins\Newtonsoft.Json.dll" />
   </Target>
+  <ItemGroup>
+    <EmbeddedResource Include="assets\models\orbital-track-models">
+      <LogicalName>ProjectOrbitalRing.assets.models.orbital-track-models</LogicalName>
+    </EmbeddedResource>
+  </ItemGroup>
 </Project>
