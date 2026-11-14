@@ -83,6 +83,14 @@ Other modifications include but are not limited to:
 Track remodeling and structural construction can be enabled independently in this file;
 restart the game to apply changes.
 
+## 联机 | Multiplayer
+
+支持在现有 Nebula 接入上同步星环附加状态、插件装卸、共享空间设置和温室联动。联机双方需使用相同的游戏、模组版本和玩法配置；日常生产与自动搬运由各端计算。
+
+Nebula integration synchronizes Orbital Ring state, module transfers, shared storage settings, and greenhouse recipe changes. Players should use matching game and mod versions and gameplay settings. Production and automatic transfers run locally on each peer.
+
+联机同步范围、词表维护和验收要点见 [联机与多语言维护](docs/multiplayer-and-localization.md)。
+
 ## 意见和反馈 | Feedback and suggestions
 
 如果您对本Mod有宝贵的意见或建议，

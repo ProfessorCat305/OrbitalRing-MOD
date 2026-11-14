@@ -201,12 +201,7 @@ namespace ProjectOrbitalRing
 
             NebulaModAPI.RegisterPackets(executingAssembly);
 
-            NebulaModAPI.OnPlanetLoadRequest += planetId =>
-            {
-                NebulaModAPI.MultiplayerSession.Network.SendPacket(new OrbitalRingPlanetLoadRequest(planetId));
-            };
-
-            NebulaModAPI.OnPlanetLoadFinished += OrbitalRingPlanetDataProcessor.ProcessBytesLater;
+            MultiplayerSync.Initialize();
 
         #endregion NebulaModAPI
 
@@ -245,6 +240,7 @@ namespace ProjectOrbitalRing
 
         private void Update()
         {
+            MultiplayerSync.Update();
             StructuralTrackConstruction.Update();
             OrbitalTrackVisuals.Update();
             if (VFInput.inputing) return;
@@ -252,6 +248,7 @@ namespace ProjectOrbitalRing
 
         private void OnDestroy()
         {
+            MultiplayerSync.Shutdown();
             OrbitalTrackVisuals.Dispose();
         }
 
@@ -303,6 +300,7 @@ namespace ProjectOrbitalRing
 
         public void IntoOtherSave()
         {
+            MultiplayerSync.Reset();
             OrbitalTrackVisuals.Reset();
             MegaAssemblerPatches.IntoOtherSave();
             PlanetFocusPatches.IntoOtherSave();
@@ -320,7 +318,7 @@ namespace ProjectOrbitalRing
             OrbitalBeacon.IntoOtherSave();
         }
 
-        public string Version => VERSION;
+        public string Version => $"{VERSION}.{MultiplayerSync.ProtocolVersion}";
 
         public bool CheckVersion(string hostVersion, string clientVersion) => hostVersion.Equals(clientVersion);
 

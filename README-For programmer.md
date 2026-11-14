@@ -53,3 +53,19 @@ If you have any problems, please open a issue via [github](https://github.com/Pr
    `BepInEx\DumpedAssemblies\DSPGAME\Assembly-CSharp.dll`.
 6. Re-open the project, it will automatically generate `lib\Assembly-CSharp-publicized.dll` in the project. So, the
    preparation work has been completed. The project should not report any errors now.
+
+## 编译注意事项
+
+游戏更新后，`DumpedAssemblies` 与 `lib/Assembly-CSharp-publicized.dll` 必须来自当前游戏版本，并包含本仓库 `preloader/Preloader.cs` 添加的字段。旧参考库可能缺少新的游戏接口；此时应重新准备参考库，不应为了通过编译而把当前源码改回旧接口。
+
+只做编译检查时可使用 Windows MSBuild：
+
+```powershell
+msbuild ProjectOrbitalRing.csproj /t:ResolveReferences,PrepareResources,Compile /p:Configuration=Debug
+```
+
+若此前只调用过 `Compile`，应先把旧的 `obj/Debug/ProjectOrbitalRing.dll` 移到临时目录再执行，避免增量编译复用缺少嵌入资源的产物。最终 DLL 应包含 `ProjectOrbitalRing.data.strings.json`、`ProjectOrbitalRing.data.strings_mod.json` 和 `ProjectOrbitalRing.data.strings_languages.json` 三个词表资源。
+
+该命令不执行项目的 `AfterBuild`。普通 `Build` 会把模组和资源复制到 `DefaultPath.props` 指定的 BepInEx Profile 与发布目录，执行前应确认这些路径。若在临时目录离线准备参考库，应在游戏 DLL 副本上应用本仓库的 `Preloader.Patch` 和 publicizer，不改动已安装游戏；可通过 `DSPAssemblyPath`、`ReferencePath` 和 `BepinExPath` 命令行属性指定所需引用，避免复用旧 Profile 的导出文件。
+
+开始修改联机或译文前，阅读 [联机与多语言维护](docs/multiplayer-and-localization.md)，遵循其中的同步范围、词表增删和验证要求。

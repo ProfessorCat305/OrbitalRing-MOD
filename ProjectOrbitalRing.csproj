@@ -90,7 +90,7 @@
       <HintPath>$(DSPAssemblyPath)UnityEngine.ImageConversionModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.PhysicsModule">
-      <HintPath>..\..\Steam\steamapps\common\Dyson Sphere Program\DSPGAME_Data\Managed\UnityEngine.PhysicsModule.dll</HintPath>
+      <HintPath>$(DSPAssemblyPath)UnityEngine.PhysicsModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.TextRenderingModule">
@@ -287,6 +287,10 @@
     <Compile Include="src\Utils\JsonHelper.cs" />
     <Compile Include="src\Utils\KvpDeconstruct.cs" />
     <Compile Include="src\Utils\MutliPlayerPacket.cs" />
+    <Compile Include="src\Utils\MultiplayerSync.cs" />
+    <Compile Include="src\Utils\MultiplayerTransfers.cs" />
+    <Compile Include="src\Utils\MultiplayerStorage.cs" />
+    <Compile Include="src\Patches\Logic\Module\AssemblerModuleNetwork.cs" />
     <Compile Include="src\Utils\PlanetThemeUtils.cs" />
     <Compile Include="src\Utils\ProtoID.cs" />
     <Compile Include="src\Utils\RandomUtils.cs" />

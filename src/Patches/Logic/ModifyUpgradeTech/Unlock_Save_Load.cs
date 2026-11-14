@@ -139,6 +139,14 @@ namespace ProjectOrbitalRing.Patches.Logic.ModifyUpgradeTech
             UnlockRecipesHandcraft(_techId);
         }
 
+        /// <summary>只在随机配方、恒星光度或数学率引擎记录改变时补发快照。</summary>
+        [HarmonyPatch(typeof(GameHistoryData), nameof(GameHistoryData.NotifyTechUnlock))]
+        [HarmonyPostfix]
+        private static void NotifyTechUnlockMultiplayerPostfix(int _techId)
+        {
+            if (_techId == 1959 || _techId == 1989 || _techId == 1960) MultiplayerSync.BroadcastGlobal();
+        }
+
         private static void SyncRecipeExecuteData(RecipeProto recipeProto)
         {
             RecipeExecuteData recipeExecuteData = new RecipeExecuteData(recipeProto.Items, recipeProto.ItemCounts, recipeProto.Results, recipeProto.ResultCounts, recipeProto.TimeSpend * 10000, recipeProto.TimeSpend * 10000, recipeProto.productive);
@@ -654,7 +662,7 @@ namespace ProjectOrbitalRing.Patches.Logic.ModifyUpgradeTech
                 case 1960:
                     NewGameCompletionLevel = 4;
                     MathematicalRateEngineRemoveSails();
-                    CalculateThirdLevelMathematicalRateEngine();
+                    if (!MultiplayerSync.IsClient) CalculateThirdLevelMathematicalRateEngine();
                     break;
             }
         }
@@ -738,7 +746,7 @@ namespace ProjectOrbitalRing.Patches.Logic.ModifyUpgradeTech
         public static readonly double[] AntiMatterOutCountsUpgrades = { 0.2, 0.4, 0.6 };
 
         static void AntiMatterOutCountsTech(int techId) {
-            if (techId == 1959) {
+            if (techId == 1959 && !MultiplayerSync.IsClient) {
                 RecipeProto recipeProto = LDB.recipes.Select(74);
                 if (AntiMatterOutCounts < 4) {
                     double randDouble = GetRandDouble();
@@ -797,7 +805,7 @@ namespace ProjectOrbitalRing.Patches.Logic.ModifyUpgradeTech
 
         static void SpeedOfLightModification(int techId)
         {
-            if (techId == 1989) {
+            if (techId == 1989 && !MultiplayerSync.IsClient) {
                 float luminosityChange = (float)(GetRandDouble() / 6);
                 for (int i = 0; i < GameMain.galaxy.starCount; i++) {
                     if (GameMain.galaxy.stars[i].type != EStarType.BlackHole && GameMain.galaxy.stars[i].type != EStarType.NeutronStar) {
@@ -1009,15 +1017,8 @@ namespace ProjectOrbitalRing.Patches.Logic.ModifyUpgradeTech
             if (DSPGame.IsMenuDemo) {
                 return;
             }
-            if (StarLuminosity == null) {
-                return;
-            }
-            if (StarLuminosity.Length == GameMain.galaxy.starCount) {
-                for (int i = 0; i < GameMain.galaxy.starCount; i++) {
-                    GameMain.galaxy.stars[i].luminosity = StarLuminosity[i];
-                }
-            }
-            UpdateDysonSpheresEnergyGen();
+            if (StarLuminosity == null) return;
+            ApplyImportedLuminosity();
 
             if (ProjectOrbitalRing.importVersion < 16777221) {
                 isUnlockHandcraft = GameMain.history.TechUnlocked(1947);
@@ -1031,6 +1032,16 @@ namespace ProjectOrbitalRing.Patches.Logic.ModifyUpgradeTech
                 GameMain.history.UnlockTechFunction(37, 2201, 0);
                 GameMain.history.UnlockTechFunction(37, 2202, 0);
             }
+        }
+
+        /// <summary>磁盘读档与联机快照共同恢复已保存的恒星光度。</summary>
+        internal static void ApplyImportedLuminosity()
+        {
+            if (StarLuminosity == null || GameMain.galaxy == null) return;
+            if (StarLuminosity.Length == GameMain.galaxy.starCount) {
+                for (int i = 0; i < StarLuminosity.Length; i++) GameMain.galaxy.stars[i].luminosity = StarLuminosity[i];
+            }
+            UpdateDysonSpheresEnergyGen();
         }
 
         public static void AddUniverseObserveBuilding(int itemId)
