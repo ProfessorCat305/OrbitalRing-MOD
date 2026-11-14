@@ -1,0 +1,6 @@
+<Project>
+  <PropertyGroup>
+    <ProfileDir>C:\Users\YourName\AppData\Roaming\r2modmanPlus-local\DysonSphereProgram\profiles\Default</ProfileDir>
+    <DSPGameDir>D:\Steam\steamapps\common\Dyson Sphere Program</DSPGameDir>
+  </PropertyGroup>
+</Project>

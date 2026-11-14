@@ -89,7 +89,7 @@ restart the game to apply changes.
 
 Nebula integration synchronizes Orbital Ring state, module transfers, shared storage settings, and greenhouse recipe changes. Players should use matching game and mod versions and gameplay settings. Production and automatic transfers run locally on each peer.
 
-联机同步范围、词表维护和验收要点见 [联机与多语言维护](docs/multiplayer-and-localization.md)。
+联机同步范围、词表维护和验收要点见 [联机与多语言维护](docs/multiplayer-and-localization.md)。SDK 项目构建方法见 [开发说明](README-For%20programmer.md)。
 
 ## 意见和反馈 | Feedback and suggestions
 
