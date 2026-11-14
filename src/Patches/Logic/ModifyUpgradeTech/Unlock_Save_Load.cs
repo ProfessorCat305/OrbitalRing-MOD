@@ -795,7 +795,7 @@ namespace ProjectOrbitalRing.Patches.Logic.ModifyUpgradeTech
             if (techId == 1987) {
                 TechProto techProto;
                 techProto = LDB.techs.Select(1987);
-                techProto.Conclusion = "无限应用课题完成".TranslateFromJson() + "\n" + gachaDatas[gachaIndex].count.ToString() + " " + LDB.items.Select(gachaDatas[gachaIndex].item).Name + "\n" + "无限应用课题完成英文结尾".TranslateFromJson();
+                techProto.Conclusion = string.Format("无限应用课题完成".TranslateFromJson(), gachaDatas[gachaIndex].count, LDB.items.Select(gachaDatas[gachaIndex].item).Name);
                 techProto.RefreshTranslation();
                 int package = GameMain.mainPlayer.TryAddItemToPackage(gachaDatas[gachaIndex].item, gachaDatas[gachaIndex].count, 0, true);
 
@@ -1001,7 +1001,7 @@ namespace ProjectOrbitalRing.Patches.Logic.ModifyUpgradeTech
             gachaIndex = GetRandInt(0, gachaDatas.Length);
             TechProto techProto;
             techProto = LDB.techs.Select(1987);
-            techProto.Conclusion = "无限应用课题完成".TranslateFromJson() + "\n" + gachaDatas[gachaIndex].count.ToString() + " " + LDB.items.Select(gachaDatas[gachaIndex].item).Name + "\n" + "无限应用课题完成英文结尾".TranslateFromJson();
+            techProto.Conclusion = string.Format("无限应用课题完成".TranslateFromJson(), gachaDatas[gachaIndex].count, LDB.items.Select(gachaDatas[gachaIndex].item).Name);
             techProto.RefreshTranslation();
 
             StarLuminosity = null;

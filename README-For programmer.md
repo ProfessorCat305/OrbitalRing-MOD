@@ -70,6 +70,6 @@ dotnet build ProjectOrbitalRing.sln --no-restore -c Release -p:DeployOnBuild=fal
 
 主项目的 `System` 和 `mscorlib` 必须引用 `DSPAssemblyPath` 中的游戏版本；游戏提供的 `Array.Fill`、`Dictionary.TryAdd` 等 API 超出了标准 net472 参考库的范围，这两项不能作为普通的冗余系统引用删除。其他系统引用由 SDK 或目标框架提供。
 
-使用完整 `dotnet build` 会自动准备和嵌入资源，不再需要手动串联 `ResolveReferences`、`PrepareResources`、`Compile`。最终主 DLL 应包含`ProjectOrbitalRing.data.strings.json` 和 `ProjectOrbitalRing.data.strings_mod.json` 两份词表和轨道模型资源，新增资源时应保持运行代码使用的完整名称。
+使用完整 `dotnet build` 会自动准备和嵌入资源，不再需要手动串联 `ResolveReferences`、`PrepareResources`、`Compile`。最终主 DLL 应包含唯一的 `ProjectOrbitalRing.data.strings.json` 词表和轨道模型资源，新增资源时应保持运行代码使用的完整名称。
 
 开始修改联机或译文前，阅读 [联机与多语言维护](docs/multiplayer-and-localization.md)，遵循其中的同步范围、词表增删和验证要求。
