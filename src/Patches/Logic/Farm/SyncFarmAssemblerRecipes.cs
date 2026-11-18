@@ -11,7 +11,7 @@ namespace ProjectOrbitalRing.Patches.Logic.Farm
 {
     internal class SyncFarmAssemblerRecipes
     {
-        public static void SyncRecipes(PlanetFactory factory, int assemblerId, bool syncToThisId)
+        public static void SyncRecipes(PlanetFactory factory, int assemblerId, bool syncToThisId, bool returnItems = true)
         {
             int entityId = factory.factorySystem.assemblerPool[assemblerId].entityId;
             if (entityId == 0) {
@@ -28,6 +28,7 @@ namespace ProjectOrbitalRing.Patches.Logic.Farm
                 int num4;
                 factory.ReadObjectConn(num, 14, out flag, out num3, out num4);
                 num = num3;
+                num2++;
                 if (num > 0) {
                     assemblerId2 = factory.entityPool[num].assemblerId;
                     if (assemblerId2 > 0 && factory.factorySystem.assemblerPool[assemblerId2].id == assemblerId2) {
@@ -37,7 +38,7 @@ namespace ProjectOrbitalRing.Patches.Logic.Farm
                                 break;
                             }
                         } else {
-                            factory.factorySystem.TakeBackItems_Assembler(GameMain.mainPlayer, assemblerId2);
+                            if (returnItems) factory.factorySystem.TakeBackItems_Assembler(GameMain.mainPlayer, assemblerId2);
                             factory.factorySystem.assemblerPool[assemblerId2].SetRecipe(factory.factorySystem.assemblerPool[assemblerId].recipeId, factory.entitySignPool);
                             is15 = true;
                         }
@@ -50,7 +51,7 @@ namespace ProjectOrbitalRing.Patches.Logic.Farm
                 }
             }
             if (!is15 && assemblerId2 != 0) {
-                factory.factorySystem.TakeBackItems_Assembler(GameMain.mainPlayer, assemblerId);
+                if (returnItems) factory.factorySystem.TakeBackItems_Assembler(GameMain.mainPlayer, assemblerId);
                 factory.factorySystem.assemblerPool[assemblerId].SetRecipe(factory.factorySystem.assemblerPool[assemblerId2].recipeId, factory.entitySignPool);
             }
 
@@ -64,6 +65,7 @@ namespace ProjectOrbitalRing.Patches.Logic.Farm
                 int num4;
                 factory.ReadObjectConn(num, 15, out flag, out num3, out num4);
                 num = num3;
+                num2++;
                 if (num > 0) {
                     assemblerId3 = factory.entityPool[num].assemblerId;
                     if (assemblerId3 > 0 && factory.factorySystem.assemblerPool[assemblerId3].id == assemblerId3) {
@@ -72,7 +74,7 @@ namespace ProjectOrbitalRing.Patches.Logic.Farm
                                 break;
                             }
                         } else {
-                            factory.factorySystem.TakeBackItems_Assembler(GameMain.mainPlayer, assemblerId3);
+                            if (returnItems) factory.factorySystem.TakeBackItems_Assembler(GameMain.mainPlayer, assemblerId3);
                             factory.factorySystem.assemblerPool[assemblerId3].SetRecipe(factory.factorySystem.assemblerPool[assemblerId].recipeId, factory.entitySignPool);
                         }
                     }
@@ -81,7 +83,7 @@ namespace ProjectOrbitalRing.Patches.Logic.Farm
                     return;
                 }
             }
-            factory.factorySystem.TakeBackItems_Assembler(GameMain.mainPlayer, assemblerId);
+            if (returnItems) factory.factorySystem.TakeBackItems_Assembler(GameMain.mainPlayer, assemblerId);
             factory.factorySystem.assemblerPool[assemblerId].SetRecipe(factory.factorySystem.assemblerPool[assemblerId3].recipeId, factory.entitySignPool);
 
             return;
@@ -111,6 +113,10 @@ namespace ProjectOrbitalRing.Patches.Logic.Farm
             PlanetFactory factory = __instance.factory;
             if (factory.entityPool[factory.factorySystem.assemblerPool[__instance.assemblerId].entityId].protoId == ProtoID.I生态温室) {
                 SyncRecipes(factory, __instance.assemblerId, false);
+                MultiplayerSync.Send(new SyncFarmRecipes {
+                    PlanetId = factory.planetId, AssemblerId = __instance.assemblerId,
+                    RecipeId = factory.factorySystem.assemblerPool[__instance.assemblerId].recipeId
+                });
             }
         }
 
@@ -127,6 +133,10 @@ namespace ProjectOrbitalRing.Patches.Logic.Farm
             PlanetFactory factory = __instance.factory;
             if (factory.entityPool[factory.factorySystem.assemblerPool[__instance.assemblerId].entityId].protoId == ProtoID.I生态温室) {
                 SyncRecipes(factory, __instance.assemblerId, false);
+                MultiplayerSync.Send(new SyncFarmRecipes {
+                    PlanetId = factory.planetId, AssemblerId = __instance.assemblerId,
+                    RecipeId = factory.factorySystem.assemblerPool[__instance.assemblerId].recipeId
+                });
             }
         }
 

@@ -411,6 +411,9 @@ namespace ProjectOrbitalRing.Utils
         public string Name { get; set; }
         public string ZHCN { get; set; }
         public string ENUS { get; set; }
+        public string FRFR { get; set; }
+        public string DEDE { get; set; }
+        public string JAJP { get; set; }
     }
 
     [Serializable]

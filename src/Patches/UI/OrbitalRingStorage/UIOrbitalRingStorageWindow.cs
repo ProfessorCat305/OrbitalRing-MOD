@@ -89,6 +89,7 @@ namespace ProjectOrbitalRing.Patches.UI.UIOrbitalRingStorageWindow
             _refreshFrame = 0;
             MyWindowCtl.OpenWindow(this);
             RefreshCurrentStorage();
+            if (MultiplayerSync.IsClient) MultiplayerSync.Send(new OrbitalRingPlanetLoadRequest(CurPlanetId));
         }
 
         public override void _OnCreate()
@@ -333,6 +334,10 @@ namespace ProjectOrbitalRing.Patches.UI.UIOrbitalRingStorageWindow
                 return false;
             }
 
+            if (NebulaAPI.NebulaModAPI.IsMultiplayerActive) {
+                MultiplayerTransfers.Deposit(CurPlanetId, CurStorageIndex, player);
+                return true;
+            }
             Dictionary<int, int[]> storageItem = orbitalRingStorage.storageItem;
             int acceptedCount = player.inhandItemCount;
             int acceptedInc = player.inhandItemInc;
@@ -604,6 +609,9 @@ namespace ProjectOrbitalRing.Patches.UI.UIOrbitalRingStorageWindow
                 countAndInc[0] > GetStorageHardLimit()) return;
 
             orbitalRingStorage.storageLimit.Remove(_selectedItemId);
+            MultiplayerSync.Send(new SyncOrbitalStorageSetting {
+                Kind = 1, PlanetId = CurPlanetId, RingId = CurStorageIndex, ItemId = _selectedItemId, Value = -1
+            });
             UpdateSelectionPanel();
         }
 
@@ -616,7 +624,10 @@ namespace ProjectOrbitalRing.Patches.UI.UIOrbitalRingStorageWindow
             } else {
                 orbitalRingStorage.storageLimit[_selectedItemId] = newLimit;
             }
-
+            MultiplayerSync.Send(new SyncOrbitalStorageSetting {
+                Kind = 1, PlanetId = CurPlanetId, RingId = CurStorageIndex, ItemId = _selectedItemId,
+                Value = newLimit == defaultLimit ? -1 : newLimit
+            });
             UpdateSelectionPanel();
         }
 

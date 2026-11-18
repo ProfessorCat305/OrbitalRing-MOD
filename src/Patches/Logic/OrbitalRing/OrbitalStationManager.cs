@@ -44,10 +44,14 @@ namespace ProjectOrbitalRing.Patches.Logic.OrbitalRing
         public PlanetOrbitalRingData GetPlanetOrbitalRingData(int planetId) => AllplanetsOrbitalRings.GetValueOrDefault(planetId);
 
 
-        internal static void Export(BinaryWriter w)
+        /// <summary>导出全部星环，或只导出指定星球；省略星球时保持磁盘存档布局。</summary>
+        /// <param name="w">目标数据流。</param>
+        /// <param name="planetId">指定星球，0 表示全部星球。</param>
+        internal static void Export(BinaryWriter w, int planetId = 0)
         {
-            w.Write(AllplanetsOrbitalRings.Count);
+            w.Write(planetId == 0 ? AllplanetsOrbitalRings.Count : AllplanetsOrbitalRings.ContainsKey(planetId) ? 1 : 0);
             foreach (var outerPair in AllplanetsOrbitalRings) {
+                if (planetId != 0 && outerPair.Key != planetId) continue;
                 // 写入planetId
                 w.Write(outerPair.Key);
                 // 写入PlanetOrbitalRingData里Rings个数
@@ -67,13 +71,16 @@ namespace ProjectOrbitalRing.Patches.Logic.OrbitalRing
                         w.Write(pair.OrbitalCorePoolId);
                         w.Write(outerPair.Value.Rings[i].incCoreLevel[j]);
                     }
-                    w.Write(outerPair.Value.Rings[i].orbitalRingStorage.storageItem.Count);
-                    foreach (var storageItem in outerPair.Value.Rings[i].orbitalRingStorage.storageItem) {
-                        int itemId = storageItem.Key;
-                        int[] countInc = storageItem.Value;
-                        w.Write(itemId);
-                        w.Write(countInc[0]);
-                        w.Write(countInc[1]);
+                    var items = outerPair.Value.Rings[i].orbitalRingStorage.storageItem;
+                    lock (items) {
+                        w.Write(items.Count);
+                        foreach (var storageItem in items) {
+                            int itemId = storageItem.Key;
+                            int[] countInc = storageItem.Value;
+                            w.Write(itemId);
+                            w.Write(countInc[0]);
+                            w.Write(countInc[1]);
+                        }
                     }
                     w.Write(outerPair.Value.Rings[i].orbitalRingStorage.storageShare.Count);
                     foreach (var storageShare in outerPair.Value.Rings[i].orbitalRingStorage.storageShare) {
@@ -101,19 +108,24 @@ namespace ProjectOrbitalRing.Patches.Logic.OrbitalRing
                 }
             }
         }
-        internal static void Import(BinaryReader r)
+        /// <summary>读取星环；局部联机快照保留其他星球，按发送端的存档版本解释字段。</summary>
+        /// <param name="r">来源数据流。</param>
+        /// <param name="clear">是否先清空全部星球。</param>
+        /// <param name="version">发送端版本；0 表示当前磁盘导入版本。</param>
+        internal static void Import(BinaryReader r, bool clear = true, int version = 0)
         {
-            IntoOtherSave();
+            if (clear) IntoOtherSave();
+            if (version == 0) version = ProjectOrbitalRing.importVersion;
             try {
                 // 读取外层字典条目数
                 int AllplanetsOrbitalRingsCount = r.ReadInt32();
-                LogError($"scppppppppppppppppppppppppppppppppppppppppppp importVersion {ProjectOrbitalRing.importVersion}");
+
                 for (int i = 0; i < AllplanetsOrbitalRingsCount; i++) {
                     int planetId = r.ReadInt32();
                     PlanetOrbitalRingData data = new PlanetOrbitalRingData(planetId);
                     // 读取内层字典条目数
                     int OnePlanetRingsCount = r.ReadInt32();
-                    if (ProjectOrbitalRing.importVersion < 524314) {
+                    if (version < 524314) {
                         data.planetIncLevel = 0;
                     } else {
                         data.planetIncLevel = r.ReadInt32();
@@ -132,7 +144,7 @@ namespace ProjectOrbitalRing.Patches.Logic.OrbitalRing
                             OnePlanetOneRing.AddElevator(k, elevatorPoolId);
                             OnePlanetOneRing.AddOrbitalStation(k, OrbitalStationPoolId, stationType);
                             OnePlanetOneRing.AddOrbitalCore(k, OrbitalCorePoolId, stationType);
-                            if (ProjectOrbitalRing.importVersion < 524314) {
+                            if (version < 524314) {
                                 OnePlanetOneRing.incCoreLevel[k] = 0;
                             } else {
                                 OnePlanetOneRing.incCoreLevel[k] = r.ReadInt32();
@@ -143,7 +155,7 @@ namespace ProjectOrbitalRing.Patches.Logic.OrbitalRing
                         for (int y = 0; y < storageItemCount; y++) {
                             OnePlanetOneRing.orbitalRingStorage.storageItem.TryAdd(r.ReadInt32(), new int[] { r.ReadInt32(), r.ReadInt32() });
                         }
-                        if (ProjectOrbitalRing.importVersion < 589858) {
+                        if (version < 589858) {
                             for (int y = 0; y < OnePlanetOneRing.Capacity; y++) {
                                 var pair = OnePlanetOneRing.GetPair(y);
                                 if (pair.stationType == StationType.Station) {
@@ -179,7 +191,7 @@ namespace ProjectOrbitalRing.Patches.Logic.OrbitalRing
                             }
                         }
                         // 16777222 = 1.0.6版本，1.0.6之前没有storageLimit
-                        if (ProjectOrbitalRing.importVersion > 16777222) {
+                        if (version > 16777222) {
                             int storageLimitCount = r.ReadInt32();
                             for (int y = 0; y < storageLimitCount; y++) {
                                 OnePlanetOneRing.orbitalRingStorage.storageLimit[r.ReadInt32()] = r.ReadInt32();
@@ -187,7 +199,7 @@ namespace ProjectOrbitalRing.Patches.Logic.OrbitalRing
                         }
 
                         // 1.0.9重构了是否成环判定的逻辑，不再需要记录每个环带子的坐标是否有带子，久版本存档的数据读出来后直接丢弃
-                        if (ProjectOrbitalRing.importVersion <= 16777224) {
+                        if (version <= 16777224) {
                             for (int y = 0; y < 1000; y++) {
                                 r.ReadBoolean();
                                 r.ReadBoolean();
@@ -195,7 +207,7 @@ namespace ProjectOrbitalRing.Patches.Logic.OrbitalRing
                         }
                         OnePlanetOneRing.isInsideRingComplete = r.ReadBoolean();
                         OnePlanetOneRing.isOutsideRingComplete = r.ReadBoolean();
-                        if (ProjectOrbitalRing.importVersion <= 16777224) {
+                        if (version <= 16777224) {
                             for (int y = 0; y < 1000; y++) {
                                 r.ReadBoolean();
                                 r.ReadBoolean();
@@ -209,6 +221,34 @@ namespace ProjectOrbitalRing.Patches.Logic.OrbitalRing
                 }
             } catch (EndOfStreamException) {
                 // ignored
+            }
+        }
+
+        /// <summary>替换一个已加载星球的星环，并重新关联原版物流站的储物槽引用。</summary>
+        /// <param name="r">仅包含该星球的导出数据。</param>
+        /// <param name="planetId">快照所属星球。</param>
+        /// <param name="version">发送端存档版本。</param>
+        internal static void ImportPlanetData(BinaryReader r, int planetId, int version)
+        {
+            AllplanetsOrbitalRings.Remove(planetId);
+            Import(r, false, version);
+            PlanetFactory factory = GameMain.galaxy?.PlanetById(planetId)?.factory;
+            PlanetOrbitalRingData data = Instance.GetPlanetOrbitalRingData(planetId);
+            if (factory?.transport == null || data == null) return;
+            foreach (EquatorRing ring in data.Rings) {
+                for (int i = 0; i < ring.Capacity; i++) {
+                    var pair = ring.GetPair(i);
+                    int stationId = pair.elevatorPoolId;
+                    if (stationId <= 0 || stationId >= factory.transport.stationCursor) continue;
+                    StationComponent station = factory.transport.stationPool[stationId];
+                    if (station == null || station.id != stationId) continue;
+                    ring.SetElevatorStorage(i, station.storage);
+                    int orbitalId = pair.OrbitalStationPoolId;
+                    if (pair.stationType == StationType.Station && orbitalId > 0 && orbitalId < factory.transport.stationCursor) {
+                        StationComponent orbital = factory.transport.stationPool[orbitalId];
+                        if (orbital != null && orbital.id == orbitalId) orbital.storage = station.storage;
+                    }
+                }
             }
         }
 

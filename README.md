@@ -83,6 +83,18 @@ Other modifications include but are not limited to:
 Track remodeling and structural construction can be enabled independently in this file;
 restart the game to apply changes.
 
+## 联机与语言 | Multiplayer and languages
+
+支持在现有 Nebula 接入上同步星环附加状态、插件装卸、共享空间设置和温室联动。联机双方需使用相同的游戏、模组版本和玩法配置；日常生产与自动搬运由各端计算。
+
+Nebula integration synchronizes Orbital Ring state, module transfers, shared storage settings, and greenhouse recipe changes. Players should use matching game and mod versions and gameplay settings. Production and automatic transfers run locally on each peer.
+
+译文覆盖当前原版开放的全部五种语言：简体中文、英语、法语、德语、日语。
+
+Translations cover all five languages currently available in the base game: Simplified Chinese, English, French, German, and Japanese.
+
+联机同步范围、词表维护和验收要点见 [联机与多语言维护](docs/multiplayer-and-localization.md)。SDK 项目构建方法见 [开发说明](README-For%20programmer.md)。
+
 ## 意见和反馈 | Feedback and suggestions
 
 如果您对本Mod有宝贵的意见或建议，

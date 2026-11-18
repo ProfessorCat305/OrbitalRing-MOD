@@ -1,0 +1,16 @@
+<Project>
+  <Import Project="$(MSBuildThisFileDirectory)DefaultPath.props" Condition="Exists('$(MSBuildThisFileDirectory)DefaultPath.props')" />
+
+  <PropertyGroup>
+    <TargetFramework>net472</TargetFramework>
+    <LangVersion>7.3</LangVersion>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <DebugType>full</DebugType>
+    <DebugType Condition="'$(Configuration)' == 'Release'">pdbonly</DebugType>
+    <DeployOnBuild Condition="'$(DeployOnBuild)' == ''">true</DeployOnBuild>
+    <BepinExPath Condition="'$(BepinExPath)' == '' and '$(ProfileDir)' != ''">$(ProfileDir)\BepInEx\</BepinExPath>
+    <DSPAssemblyPath Condition="'$(DSPAssemblyPath)' == '' and '$(DSPGameDir)' != ''">$(DSPGameDir)\DSPGAME_Data\Managed\</DSPAssemblyPath>
+    <ReleasePath Condition="'$(ReleasePath)' == ''">$(MSBuildThisFileDirectory)release\</ReleasePath>
+  </PropertyGroup>
+</Project>

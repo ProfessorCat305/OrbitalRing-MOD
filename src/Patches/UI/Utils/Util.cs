@@ -50,7 +50,7 @@ namespace ProjectOrbitalRing.Patches.UI.Utils
             Text stateText = UIGameAssemblerWindow.stateText;
             Text txt = Object.Instantiate(stateText);
             txt.gameObject.name = "txt_" + label;
-            txt.text = label;
+            txt.text = label.TranslateFromJson();
             txt.color = new Color(1f, 1f, 1f, 0.4f);
             txt.alignment = anchor;
 
@@ -65,7 +65,7 @@ namespace ProjectOrbitalRing.Patches.UI.Utils
             Text txt = Object.Instantiate(obj.GetComponent<Text>(), obj.transform.parent);
             Object.Destroy(txt.gameObject.GetComponent<Localizer>());
             txt.gameObject.name = "txt_" + label;
-            txt.text = label;
+            txt.text = label.TranslateFromJson();
 
             return txt;
         }
@@ -75,7 +75,7 @@ namespace ProjectOrbitalRing.Patches.UI.Utils
             Text src = MyWindowCtl.GetTitleText(UIGameAssemblerWindow);
             Text txt = Object.Instantiate(src);
             txt.gameObject.name = "label";
-            txt.text = label;
+            txt.text = label.TranslateFromJson();
             txt.color = new Color(1f, 1f, 1f, 0.5f);
             ((RectTransform)txt.transform).sizeDelta = new Vector2(txt.preferredWidth + 40f, 30f);
 
@@ -90,7 +90,7 @@ namespace ProjectOrbitalRing.Patches.UI.Utils
             if (btn.transitions.Length >= 1) btn.transitions[0].target.color = new Color(0.2392f, 0.6f, 0.9f, 0.078f);
 
             Text btnText = btn.transform.Find("Text").GetComponent<Text>();
-            btnText.text = label;
+            btnText.text = label.TranslateFromJson();
             btnText.fontSize = 17;
             Object.Destroy(btn.transform.Find("Text").GetComponent<Localizer>());
             var btnRect = (RectTransform)btn.transform;
@@ -207,7 +207,7 @@ namespace ProjectOrbitalRing.Patches.UI.Utils
             Transform child = go.transform.Find("Text");
             Object.DestroyImmediate(child.GetComponent<Localizer>());
             Text txt = child.GetComponent<Text>();
-            txt.text = label;
+            txt.text = label.TranslateFromJson();
             btn.tips.tipText = "";
             btn.tips.tipTitle = "";
 

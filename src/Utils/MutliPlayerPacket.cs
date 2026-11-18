@@ -1,14 +1,18 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using NebulaAPI;
 using NebulaAPI.Interfaces;
 using NebulaAPI.Networking;
 using NebulaAPI.Packets;
 using ProjectOrbitalRing.Patches.Logic;
+using ProjectOrbitalRing.Patches.Logic.Farm;
 using ProjectOrbitalRing.Patches.Logic.MegaAssembler;
 using ProjectOrbitalRing.Patches.Logic.PlanetFocus;
 using ProjectOrbitalRing.Patches.Logic.PowerExchangerOutput;
 using ProjectOrbitalRing.Patches.Logic.QuantumStorage;
+using ProjectOrbitalRing.Patches.Logic.AssemblerModule;
+using ProjectOrbitalRing.Patches.Logic.OrbitalRing;
 
 // ReSharper disable MemberCanBeInternal
 // ReSharper disable MemberCanBePrivate.Global
@@ -49,7 +53,7 @@ namespace ProjectOrbitalRing.Utils
 
         internal static void Sync(int planetId, int entityId, SlotData[] slotsData)
         {
-            if (NebulaModAPI.IsMultiplayerActive)
+            if (NebulaModAPI.IsMultiplayerActive && !MultiplayerSync.IsRemoteFactoryRequest)
                 NebulaModAPI.MultiplayerSession.Network.SendPacket(new SyncSlotsData(planetId, entityId, slotsData));
         }
 
@@ -61,6 +65,7 @@ namespace ProjectOrbitalRing.Utils
             using (BinaryReader r = p.BinaryReader)
             {
                 int length = r.ReadInt32();
+                if (length < 0 || length > 16 || data.Length != 4 + length * 16) return;
                 slotsData = new SlotData[length];
 
                 for (var i = 0; i < length; i++)
@@ -84,8 +89,12 @@ namespace ProjectOrbitalRing.Utils
     [RegisterPacketProcessor]
     public class SyncSlotsDataProcessor : BasePacketProcessor<SyncSlotsData>
     {
-        public override void ProcessPacket(SyncSlotsData packet, INebulaConnection conn) =>
+        public override void ProcessPacket(SyncSlotsData packet, INebulaConnection conn)
+        {
+            if (packet?.SlotsData == null || packet.SlotsData.Length < 4 || packet.SlotsData.Length > 260) return;
             SyncSlotsData.OnReceive(packet.PlanetId, packet.EntityId, packet.SlotsData);
+            MultiplayerSync.Relay(packet, conn);
+        }
     }
 
     public class SyncSlotData
@@ -119,7 +128,7 @@ namespace ProjectOrbitalRing.Utils
 
         internal static void Sync(int planetId, int slotId, int entityId, SlotData slotData)
         {
-            if (NebulaModAPI.IsMultiplayerActive)
+            if (NebulaModAPI.IsMultiplayerActive && !MultiplayerSync.IsRemoteFactoryRequest)
                 NebulaModAPI.MultiplayerSession.Network.SendPacket(new SyncSlotData(planetId, slotId, entityId, slotData));
         }
 
@@ -149,8 +158,12 @@ namespace ProjectOrbitalRing.Utils
     [RegisterPacketProcessor]
     public class SyncSlotDataProcessor : BasePacketProcessor<SyncSlotData>
     {
-        public override void ProcessPacket(SyncSlotData packet, INebulaConnection conn) =>
+        public override void ProcessPacket(SyncSlotData packet, INebulaConnection conn)
+        {
+            if (packet?.SlotData == null || packet.SlotData.Length != 16 || packet.SlotId < 0 || packet.SlotId >= 16) return;
             SyncSlotData.OnReceive(packet.PlanetId, packet.SlotId, packet.EntityId, packet.SlotData);
+            MultiplayerSync.Relay(packet, conn);
+        }
     }
 
     public class SyncPlanetFocusData
@@ -170,7 +183,7 @@ namespace ProjectOrbitalRing.Utils
 
         internal static void Sync(int planetId, int index, int focusId)
         {
-            if (NebulaModAPI.IsMultiplayerActive)
+            if (NebulaModAPI.IsMultiplayerActive && !MultiplayerSync.IsRemoteFactoryRequest)
                 NebulaModAPI.MultiplayerSession.Network.SendPacket(new SyncPlanetFocusData(planetId, index, focusId));
         }
 
@@ -181,8 +194,13 @@ namespace ProjectOrbitalRing.Utils
     [RegisterPacketProcessor]
     public class SyncPlanetFocusDataProcessor : BasePacketProcessor<SyncPlanetFocusData>
     {
-        public override void ProcessPacket(SyncPlanetFocusData packet, INebulaConnection conn) =>
+        public override void ProcessPacket(SyncPlanetFocusData packet, INebulaConnection conn)
+        {
+            if (packet == null || packet.Index < 0 || packet.Index >= PlanetFocusPatches.FocusMaxCount ||
+                !PlanetFocusPatches.FocusIds.ContainsKey(packet.FocusId)) return;
             SyncPlanetFocusData.OnReceive(packet.PlanetId, packet.Index, packet.FocusId);
+            MultiplayerSync.Relay(packet, conn);
+        }
     }
 
     public class SyncNewQuantumStorageData
@@ -202,7 +220,7 @@ namespace ProjectOrbitalRing.Utils
 
         internal static void Sync(int planetId, int storageId, int orbitId)
         {
-            if (NebulaModAPI.IsMultiplayerActive)
+            if (NebulaModAPI.IsMultiplayerActive && !MultiplayerSync.IsRemoteFactoryRequest)
                 NebulaModAPI.MultiplayerSession.Network.SendPacket(new SyncNewQuantumStorageData(planetId, storageId, orbitId));
         }
 
@@ -213,8 +231,12 @@ namespace ProjectOrbitalRing.Utils
     [RegisterPacketProcessor]
     public class SyncNewQuantumStorageDataProcessor : BasePacketProcessor<SyncNewQuantumStorageData>
     {
-        public override void ProcessPacket(SyncNewQuantumStorageData packet, INebulaConnection conn) =>
+        public override void ProcessPacket(SyncNewQuantumStorageData packet, INebulaConnection conn)
+        {
+            if (packet == null || packet.OrbitId < 1 || packet.OrbitId > 10 || packet.StorageId <= 0) return;
             SyncNewQuantumStorageData.OnReceive(packet.PlanetId, packet.StorageId, packet.OrbitId);
+            MultiplayerSync.Relay(packet, conn);
+        }
     }
 
     public class SyncRemoveQuantumStorageData
@@ -234,7 +256,7 @@ namespace ProjectOrbitalRing.Utils
 
         internal static void Sync(int planetId, int storageId, int orbitId)
         {
-            if (NebulaModAPI.IsMultiplayerActive)
+            if (NebulaModAPI.IsMultiplayerActive && !MultiplayerSync.IsRemoteFactoryRequest)
                 NebulaModAPI.MultiplayerSession.Network.SendPacket(new SyncRemoveQuantumStorageData(planetId, storageId, orbitId));
         }
 
@@ -245,8 +267,12 @@ namespace ProjectOrbitalRing.Utils
     [RegisterPacketProcessor]
     public class SyncRemoveQuantumStorageDataProcessor : BasePacketProcessor<SyncRemoveQuantumStorageData>
     {
-        public override void ProcessPacket(SyncRemoveQuantumStorageData packet, INebulaConnection conn) =>
+        public override void ProcessPacket(SyncRemoveQuantumStorageData packet, INebulaConnection conn)
+        {
+            if (packet == null || packet.OrbitId < 1 || packet.OrbitId > 10 || packet.StorageId <= 0) return;
             SyncRemoveQuantumStorageData.OnReceive(packet.PlanetId, packet.StorageId, packet.OrbitId);
+            MultiplayerSync.Relay(packet, conn);
+        }
     }
 
     public class SyncQuantumStorageOrbitChangeData
@@ -266,7 +292,7 @@ namespace ProjectOrbitalRing.Utils
 
         internal static void Sync(int planetId, int storageId, int orbitId)
         {
-            if (NebulaModAPI.IsMultiplayerActive)
+            if (NebulaModAPI.IsMultiplayerActive && !MultiplayerSync.IsRemoteFactoryRequest)
                 NebulaModAPI.MultiplayerSession.Network.SendPacket(new SyncQuantumStorageOrbitChangeData(planetId, storageId, orbitId));
         }
 
@@ -277,8 +303,12 @@ namespace ProjectOrbitalRing.Utils
     [RegisterPacketProcessor]
     public class SyncQuantumStorageOrbitChangeDataProcessor : BasePacketProcessor<SyncQuantumStorageOrbitChangeData>
     {
-        public override void ProcessPacket(SyncQuantumStorageOrbitChangeData packet, INebulaConnection conn) =>
+        public override void ProcessPacket(SyncQuantumStorageOrbitChangeData packet, INebulaConnection conn)
+        {
+            if (packet == null || packet.OrbitId < 1 || packet.OrbitId > 10 || packet.StorageId <= 0) return;
             SyncQuantumStorageOrbitChangeData.OnReceive(packet.PlanetId, packet.StorageId, packet.OrbitId);
+            MultiplayerSync.Relay(packet, conn);
+        }
     }
 
     public class SyncGlobalPowerSupplyNodeIdData
@@ -296,7 +326,7 @@ namespace ProjectOrbitalRing.Utils
 
         internal static void Sync(int planetId, int nodeId)
         {
-            if (NebulaModAPI.IsMultiplayerActive)
+            if (NebulaModAPI.IsMultiplayerActive && !MultiplayerSync.IsRemoteFactoryRequest)
                 NebulaModAPI.MultiplayerSession.Network.SendPacket(new SyncGlobalPowerSupplyNodeIdData(planetId, nodeId));
         }
 
@@ -306,8 +336,12 @@ namespace ProjectOrbitalRing.Utils
     [RegisterPacketProcessor]
     public class SyncGlobalPowerSupplyNodeIdDataProcessor : BasePacketProcessor<SyncGlobalPowerSupplyNodeIdData>
     {
-        public override void ProcessPacket(SyncGlobalPowerSupplyNodeIdData packet, INebulaConnection conn) =>
+        public override void ProcessPacket(SyncGlobalPowerSupplyNodeIdData packet, INebulaConnection conn)
+        {
+            if (packet == null || packet.NodeId <= 0) return;
             SyncGlobalPowerSupplyNodeIdData.OnReceive(packet.PlanetId, packet.NodeId);
+            MultiplayerSync.Relay(packet, conn);
+        }
     }
 
     public class SyncSyncGlobalPowerSupplyRemoveData
@@ -320,7 +354,7 @@ namespace ProjectOrbitalRing.Utils
 
         internal static void Sync(int planetId)
         {
-            if (NebulaModAPI.IsMultiplayerActive)
+            if (NebulaModAPI.IsMultiplayerActive && !MultiplayerSync.IsRemoteFactoryRequest)
                 NebulaModAPI.MultiplayerSession.Network.SendPacket(new SyncSyncGlobalPowerSupplyRemoveData(planetId));
         }
 
@@ -330,8 +364,12 @@ namespace ProjectOrbitalRing.Utils
     [RegisterPacketProcessor]
     public class SyncSyncGlobalPowerSupplyRemoveDataProcessor : BasePacketProcessor<SyncSyncGlobalPowerSupplyRemoveData>
     {
-        public override void ProcessPacket(SyncSyncGlobalPowerSupplyRemoveData packet, INebulaConnection conn) =>
+        public override void ProcessPacket(SyncSyncGlobalPowerSupplyRemoveData packet, INebulaConnection conn)
+        {
+            if (packet == null) return;
             SyncSyncGlobalPowerSupplyRemoveData.OnReceive(packet.PlanetId);
+            MultiplayerSync.Relay(packet, conn);
+        }
     }
 
     public class OrbitalRingPlanetLoadRequest
@@ -348,7 +386,7 @@ namespace ProjectOrbitalRing.Utils
     {
         public override void ProcessPacket(OrbitalRingPlanetLoadRequest packet, INebulaConnection conn)
         {
-            if (IsClient) return;
+            if (!IsHost || packet == null || GameMain.galaxy?.PlanetById(packet.PlanetId) == null) return;
 
             byte[] data;
 
@@ -357,6 +395,11 @@ namespace ProjectOrbitalRing.Utils
                 MegaAssemblerPatches.ExportPlanetData(packet.PlanetId, p.BinaryWriter);
                 PlanetFocusPatches.ExportPlanetFocus(packet.PlanetId, p.BinaryWriter);
                 QuantumStoragePatches.ExportPlanetQuantumStorage(packet.PlanetId, p.BinaryWriter);
+                p.BinaryWriter.Write(ProjectOrbitalRing.VersionNumber());
+                OrbitalStationManager.Export(p.BinaryWriter, packet.PlanetId);
+                AssemblerModulePatches.ExportPlanetData(packet.PlanetId, p.BinaryWriter);
+                FarmAssembler.Export(p.BinaryWriter);
+                InfiniteTank.Export(p.BinaryWriter);
                 data = p.CloseAndGetBytes();
             }
 
@@ -382,25 +425,59 @@ namespace ProjectOrbitalRing.Utils
     public class OrbitalRingPlanetDataProcessor : BasePacketProcessor<OrbitalRingPlanetData>
     {
         internal static readonly Dictionary<int, byte[]> PendingData = new Dictionary<int, byte[]>();
+        private static readonly HashSet<int> LoadingPlanets = new HashSet<int>();
 
+        /// <inheritdoc />
         public override void ProcessPacket(OrbitalRingPlanetData packet, INebulaConnection conn)
         {
-            if (IsHost) return;
-
-            PendingData.Add(packet.PlanetId, packet.BinaryData);
+            if (IsHost || packet?.BinaryData == null || GameMain.galaxy?.PlanetById(packet.PlanetId) == null) return;
+            PendingData[packet.PlanetId] = packet.BinaryData;
+            ProcessBytesLater(packet.PlanetId);
         }
 
+        /// <summary>工厂导入前暂存附加状态，避免读到旧的组件池。</summary>
+        /// <param name="planetId">开始载入的星球。</param>
+        internal static void Loading(int planetId)
+        {
+            LoadingPlanets.Add(planetId);
+            PendingData.Remove(planetId);
+        }
+
+        /// <summary>原版工厂载入完成后恢复插件和星环，包晚到时也能直接恢复。</summary>
+        /// <param name="planetId">已完成载入的星球。</param>
+        internal static void PlanetLoaded(int planetId)
+        {
+            LoadingPlanets.Remove(planetId);
+            ProcessBytesLater(planetId);
+        }
+
+        /// <summary>清除上一房间的载入缓存。</summary>
+        internal static void Reset()
+        {
+            PendingData.Clear();
+            LoadingPlanets.Clear();
+        }
+
+        /// <summary>仅在对应工厂就绪后消费附加快照。</summary>
+        /// <param name="planetId">快照所属星球。</param>
         public static void ProcessBytesLater(int planetId)
         {
-            if (!NebulaModAPI.IsMultiplayerActive || NebulaModAPI.MultiplayerSession.LocalPlayer.IsHost) return;
-
-            if (!PendingData.Remove(planetId, out byte[] bytes)) return;
-
-            using (IReaderProvider p = NebulaModAPI.GetBinaryReader(bytes))
-            {
-                MegaAssemblerPatches.ImportPlanetData(p.BinaryReader);
-                PlanetFocusPatches.ImportPlanetFocus(p.BinaryReader);
-                QuantumStoragePatches.ImportPlanetQuantumStorage(p.BinaryReader);
+            if (!MultiplayerSync.IsClient || LoadingPlanets.Contains(planetId) ||
+                GameMain.galaxy?.PlanetById(planetId)?.factory == null ||
+                !PendingData.Remove(planetId, out byte[] bytes)) return;
+            try {
+                using (IReaderProvider p = NebulaModAPI.GetBinaryReader(bytes)) {
+                    MegaAssemblerPatches.ImportPlanetData(p.BinaryReader);
+                    PlanetFocusPatches.ImportPlanetFocus(p.BinaryReader);
+                    QuantumStoragePatches.ImportPlanetQuantumStorage(p.BinaryReader);
+                    int version = p.BinaryReader.ReadInt32();
+                    OrbitalStationManager.ImportPlanetData(p.BinaryReader, planetId, version);
+                    AssemblerModulePatches.ImportPlanetData(planetId, p.BinaryReader);
+                    FarmAssembler.Import(p.BinaryReader);
+                    InfiniteTank.Import(p.BinaryReader);
+                }
+            } catch (Exception e) when (e is IOException || e is ArgumentException) {
+                ProjectOrbitalRing.LogError($"Cannot import OrbitalRing multiplayer data for planet {planetId}: {e.Message}");
             }
         }
     }

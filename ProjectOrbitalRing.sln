@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31025.194
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjectOrbitalRing", "ProjectOrbitalRing.csproj", "{EFF66744-FAF7-461E-B86E-7130E64E16DF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProjectOrbitalRing", "ProjectOrbitalRing.csproj", "{EFF66744-FAF7-461E-B86E-7130E64E16DF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjectOrbitalRing.Preloader", "preloader/ProjectOrbitalRing.Preloader.csproj", "{E07968B0-4405-43ED-9F89-BCAE7390EEAF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProjectOrbitalRing.Preloader", "preloader/ProjectOrbitalRing.Preloader.csproj", "{E07968B0-4405-43ED-9F89-BCAE7390EEAF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjectOrbitalRing.Packer", "packer/ProjectOrbitalRing.Packer.csproj", "{F7D5FFDE-43BB-4EFB-B3FE-B0219922B0F2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProjectOrbitalRing.Packer", "packer/ProjectOrbitalRing.Packer.csproj", "{F7D5FFDE-43BB-4EFB-B3FE-B0219922B0F2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
