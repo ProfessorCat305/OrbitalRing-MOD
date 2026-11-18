@@ -18,15 +18,26 @@ namespace ProjectOrbitalRing.Rendering
         private static readonly HashSet<Chunk> dirtyChunks = new HashSet<Chunk>();
         private static readonly LinkedList<DetailBuild> detailBuildQueue = new LinkedList<DetailBuild>();
 
+        private enum DetailPriority
+        {
+            Background,
+            VisibleUpgrade,
+            VisibleGeometry,
+        }
+
         private struct DetailBuild
         {
             internal Chunk Chunk;
             internal int Level;
+            internal int LastVisibleGeometryFrame;
             internal IEnumerator<object> Work;
         }
 
-        private static void RequestDetailBuild(PlanetFactory factory, Chunk chunk, int level, bool urgent = false)
+        private static void RequestDetailBuild(PlanetFactory factory, Chunk chunk, int level,
+            DetailPriority priority = DetailPriority.Background)
         {
+            bool visible = priority != DetailPriority.Background;
+            int visibleGeometryFrame = priority == DetailPriority.VisibleGeometry ? Time.frameCount : -1;
             LinkedListNode<DetailBuild> pending = chunk.PendingDetails[level];
             if (pending == null)
             {
@@ -34,14 +45,21 @@ namespace ProjectOrbitalRing.Rendering
                 {
                     Chunk = chunk,
                     Level = level,
+                    LastVisibleGeometryFrame = visibleGeometryFrame,
                     Work = BuildDetailMeshes(factory, chunk, level).GetEnumerator(),
                 };
-                chunk.PendingDetails[level] = urgent ? detailBuildQueue.AddFirst(build) : detailBuildQueue.AddLast(build);
+                chunk.PendingDetails[level] = visible ? detailBuildQueue.AddFirst(build) : detailBuildQueue.AddLast(build);
             }
-            else if (urgent && pending != detailBuildQueue.First)
+            else if (visible)
             {
-                detailBuildQueue.Remove(pending);
-                detailBuildQueue.AddFirst(pending);
+                DetailBuild build = pending.Value;
+                build.LastVisibleGeometryFrame = visibleGeometryFrame;
+                pending.Value = build;
+                if (pending != detailBuildQueue.First)
+                {
+                    detailBuildQueue.Remove(pending);
+                    detailBuildQueue.AddFirst(pending);
+                }
             }
         }
 
@@ -56,24 +74,32 @@ namespace ProjectOrbitalRing.Rendering
         private static bool NeedsDetailBuild(Chunk chunk, int level) =>
             chunk.DetailMeshes[level]?.Revision != chunk.Revision;
 
-        internal static void PrewarmStructureMeshes(PlanetFactory factory, Camera camera)
+        private static void PrewarmStructureMeshes(PlanetFactory factory)
         {
-            if (factory?.cargoTraffic == null || camera == null)
-            {
-                return;
-            }
-
-            Initialize(factory);
             foreach (Chunk chunk in dirtyChunks)
             {
                 InvalidateDetailMeshes(chunk);
-                RequestDetailBuild(factory, chunk, chunk.Key.Distant ? 2 : 1);
+                // Every parent provides a shadow caster; child meshes follow the visible view.
+                if (chunk.Key.Distant)
+                {
+                    RequestDetailBuild(factory, chunk, 2);
+                }
             }
             dirtyChunks.Clear();
+            AdvanceDetailBuilds(visibleGeometryOnly: true);
+        }
 
+        internal static void AdvanceDetailBuilds(bool visibleGeometryOnly = false)
+        {
             while (detailBuildQueue.Count > 0 && OrbitalMeshBuildBudget.HasBuildBudget)
             {
                 LinkedListNode<DetailBuild> pending = detailBuildQueue.First;
+                // Detail upgrades use the budget left after braces and facility attachments.
+                if (visibleGeometryOnly && pending.Value.LastVisibleGeometryFrame < Time.frameCount - 1)
+                {
+                    break;
+                }
+
                 long started = Stopwatch.GetTimestamp();
                 try
                 {
@@ -115,7 +141,7 @@ namespace ProjectOrbitalRing.Rendering
             foreach (Chunk parent in distantChunks.Values)
             {
                 var definition = GetDefinition(parent.Key.ItemId);
-                if (StructureDetailLevel(camera, WorldBounds(parent, definition, true), definition) == 2)
+                if (StructureDetailLevel(camera, WorldBounds(parent, definition), definition) == 2)
                 {
                     yield return parent;
                 }
@@ -129,10 +155,10 @@ namespace ProjectOrbitalRing.Rendering
             }
         }
 
-        private static Bounds WorldBounds(Chunk chunk, TrackDefinition definition, bool usePublishedBounds)
+        private static Bounds WorldBounds(Chunk chunk, TrackDefinition definition)
         {
             Vector3 origin = Origin(chunk.Key);
-            if (usePublishedBounds && chunk.HasBounds)
+            if (chunk.HasBounds)
             {
                 Bounds bounds = chunk.Bounds;
                 bounds.center += origin;
@@ -226,9 +252,48 @@ namespace ProjectOrbitalRing.Rendering
         private static void InvalidateDetailMeshes(Chunk chunk)
         {
             chunk.Revision++;
-            chunk.Dirty = true;
             CancelDetailBuilds(chunk);
+
+            Vector3 origin = Origin(chunk.Key);
+            var bounds = new Bounds();
+            bool hasPoints = false;
+            foreach (int entityId in ChunkEntities(chunk))
+            {
+                NodeShape shape = geometry[entityId];
+                Vector3 offset = shape.Position - origin;
+                if (!hasPoints)
+                {
+                    bounds = new Bounds(offset + shape.Center, Vector3.zero);
+                    hasPoints = true;
+                }
+                else
+                {
+                    bounds.Encapsulate(offset + shape.Center);
+                }
+                foreach (Vector3 end in shape.Ends)
+                {
+                    bounds.Encapsulate(offset + end);
+                }
+            }
+
+            TrackDefinition definition = GetDefinition(chunk.Key.ItemId);
+            float radius = definition.WallRadius;
+            for (int level = 0; level < DetailLevelCount; level++)
+            {
+                radius = Mathf.Max(radius, TrackModelAssets.Get(definition.ItemId, level).CrossSectionRadius);
+            }
+            bounds.Expand(2 * (radius + TrackDefinition.IsolatedHalfLength) + 0.2f);
+            if (chunk.HasBounds)
+            {
+                // The published mesh can still be drawn while its replacement is being built.
+                bounds.Encapsulate(chunk.Bounds);
+            }
+            chunk.Bounds = bounds;
+            chunk.HasBounds = true;
         }
+
+        private static IEnumerable<int> ChunkEntities(Chunk chunk) =>
+            chunk.Entities ?? chunk.Children.Values.SelectMany(child => child.Entities);
 
         private static void DestroyDetailMeshes(StructureLodMeshes meshes)
         {
@@ -252,12 +317,12 @@ namespace ProjectOrbitalRing.Rendering
         private static void PublishDetailMeshes(Chunk chunk, int level, StructureLodMeshes replacement)
         {
             // Keep the previous generation drawable until a complete replacement is available.
-            chunk.Dirty = false;
             chunk.HasBounds = false;
             for (int previousLevel = 0; previousLevel < DetailLevelCount; previousLevel++)
             {
                 StructureLodMeshes meshes = chunk.DetailMeshes[previousLevel];
-                if (meshes != null && (previousLevel == level || meshes.Revision != chunk.Revision))
+                bool discardFallback = !chunk.Key.Distant && level < 2 && previousLevel == 2;
+                if (meshes != null && (previousLevel == level || meshes.Revision != chunk.Revision || discardFallback))
                 {
                     DestroyDetailMeshes(meshes);
                     meshes = null;
@@ -307,8 +372,7 @@ namespace ProjectOrbitalRing.Rendering
                 ? new TrackMesh(definition.WallRadius, origin, detailLevel) : null;
             var core = new TrackMesh();
             var eligible = new HashSet<int>();
-            var entities = chunk.Entities ?? chunk.Children.Values.SelectMany(child => child.Entities);
-            foreach (int entityId in entities)
+            foreach (int entityId in ChunkEntities(chunk))
             {
                 var shape = GetNodeShape(factory, entityId);
                 if (shape.IsThroughNode &&

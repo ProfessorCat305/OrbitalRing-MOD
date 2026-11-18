@@ -254,10 +254,17 @@ namespace ProjectOrbitalRing
 
         private void LateUpdate()
         {
-            TrackRenderer.Update(GameMain.localPlanet?.factory, GameCamera.main);
-            TrackRenderer.Draw(GameMain.localPlanet?.factory, GameCamera.main);
-            OrbitalRingBraces.Draw(GameMain.localPlanet?.factory, GameCamera.main);
-            OrbitalFacilityAttachments.Draw(GameMain.localPlanet?.factory, GameCamera.main);
+            PlanetFactory factory = GameMain.localPlanet?.factory;
+            Camera camera = GameCamera.main;
+            if (factory == null || camera == null || !RemodelSettings.AnyTrack)
+            {
+                return;
+            }
+
+            OrbitalRenderBounds.Prepare(camera);
+            TrackRenderer.Draw(factory, camera);
+            OrbitalRingBraces.Draw(factory, camera);
+            OrbitalFacilityAttachments.Draw(factory, camera);
         }
 
         public void Export(BinaryWriter w)

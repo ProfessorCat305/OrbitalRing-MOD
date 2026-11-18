@@ -47,7 +47,7 @@ namespace ProjectOrbitalRing.Rendering
                 Facility = factory.entityPool[ResolveEntity(factory, ring, slot)];
                 Available = OrbitalTextureLayout.IsFacilitySlotAvailable(factory.planet, ringIndex, slot);
                 Tracks = ((ring.isInsideRingComplete ? 1 : 0) | (ring.isOutsideRingComplete ? 2 : 0)
-                    | functionalTracks) & RemodelSettings.AttachmentTracks;
+                    | (Facility.id > 0 ? functionalTracks : 0)) & RemodelSettings.AttachmentTracks;
             }
 
             internal bool Matches(SlotState other)
@@ -66,10 +66,23 @@ namespace ProjectOrbitalRing.Rendering
             internal List<Mesh> Chunks;
         }
 
+        private sealed class Region
+        {
+            internal readonly List<SlotState> Slots;
+            internal readonly Mesh[] Near = new Mesh[SurfaceCount];
+            internal readonly Mesh[] Distant = new Mesh[SurfaceCount];
+
+            internal Region(List<SlotState> slots)
+            {
+                Slots = slots;
+            }
+        }
+
         private sealed class AttachmentBuild
         {
             internal PlanetFactory Factory;
             internal SlotState[] Slots;
+            internal Dictionary<int, Region> Regions;
             internal readonly SurfaceMeshes[] Near = new SurfaceMeshes[SurfaceCount];
             internal readonly SurfaceMeshes[] Distant = new SurfaceMeshes[SurfaceCount];
             internal IEnumerator<object> Work;
@@ -82,8 +95,7 @@ namespace ProjectOrbitalRing.Rendering
         private static readonly Material[] materials = new Material[SurfaceCount];
         private static Camera detailCamera;
         private static bool useDistantGeometry;
-        private static int[] localTracks = new int[0];
-        private static bool tracksDirty = true;
+        private static int[] localTrackCounts;
         private static readonly MaterialPropertyBlock lighting = new MaterialPropertyBlock();
         private static float nextProbe;
         private static AttachmentBuild build;
@@ -126,32 +138,25 @@ namespace ProjectOrbitalRing.Rendering
             pending.Clear();
             if (data != null)
             {
-                if (tracksDirty)
+                var layout = GetLayout(factory.planet);
+                if (localTrackCounts == null)
                 {
-                    ReadLocalTracks(factory);
-                    tracksDirty = false;
+                    IndexLocalTracks(factory, layout);
                 }
-
                 for (int ringIndex = 0; ringIndex < data.Rings.Count; ringIndex++)
                 {
                     EquatorRing ring = data.Rings[ringIndex];
                     for (int slot = 0; slot < ring.Capacity; slot++)
                     {
-                        int index = ringIndex * GetLayout(factory.planet).StationCapacity + slot;
-                        int presence = index < localTracks.Length ? localTracks[index] : 0;
+                        int index = (ringIndex * layout.StationCapacity + slot) * 2;
+                        int presence = index < localTrackCounts.Length
+                            ? (localTrackCounts[index] > 0 ? 4 : 0) | (localTrackCounts[index + 1] > 0 ? 8 : 0) : 0;
                         pending.Add(new SlotState(factory, ringIndex, slot, ring, presence));
                     }
                 }
             }
 
-            SlotState[] expected = (build ?? published)?.Slots ?? Array.Empty<SlotState>();
-            bool changed = pending.Count != expected.Length;
-            for (int index = 0; !changed && index < pending.Count; index++)
-            {
-                changed = !pending[index].Matches(expected[index]);
-            }
-
-            if (!changed)
+            if (SlotsMatch(pending, (build ?? published)?.Slots ?? Array.Empty<SlotState>()))
             {
                 return;
             }
@@ -160,6 +165,7 @@ namespace ProjectOrbitalRing.Rendering
             {
                 Factory = factory,
                 Slots = pending.ToArray(),
+                Regions = GroupSlots(factory, pending, published),
             };
             candidate.Work = Rebuild(candidate).GetEnumerator();
             build = candidate;
@@ -184,7 +190,7 @@ namespace ProjectOrbitalRing.Rendering
                     {
                         candidate.Work.Dispose();
                         candidate.Work = null;
-                        Release(published);
+                        Release(published, candidate);
                         published = candidate;
                         build = null;
                     }
@@ -206,11 +212,11 @@ namespace ProjectOrbitalRing.Rendering
 
         private static void CancelBuild()
         {
-            Release(build);
+            Release(build, published);
             build = null;
         }
 
-        private static void Release(AttachmentBuild geometry)
+        private static void Release(AttachmentBuild geometry, AttachmentBuild retained = null)
         {
             if (geometry == null)
             {
@@ -218,21 +224,78 @@ namespace ProjectOrbitalRing.Rendering
             }
 
             geometry.Work?.Dispose();
-            foreach (SurfaceMeshes[] level in new[] { geometry.Near, geometry.Distant })
+            for (int index = 0; index < SurfaceCount; index++)
             {
-                foreach (SurfaceMeshes surface in level)
+                if (!ReferenceEquals(geometry.Near[index].Combined, retained?.Near[index].Combined))
                 {
-                    UnityEngine.Object.Destroy(surface.Combined);
-                    if (surface.Chunks == null)
-                    {
-                        continue;
-                    }
-                    foreach (Mesh chunk in surface.Chunks)
-                    {
-                        UnityEngine.Object.Destroy(chunk);
-                    }
+                    UnityEngine.Object.Destroy(geometry.Near[index].Combined);
+                }
+                if (!ReferenceEquals(geometry.Distant[index].Combined, retained?.Distant[index].Combined))
+                {
+                    UnityEngine.Object.Destroy(geometry.Distant[index].Combined);
                 }
             }
+            foreach (var entry in geometry.Regions)
+            {
+                if (retained != null && retained.Regions.TryGetValue(entry.Key, out Region region)
+                    && ReferenceEquals(entry.Value, region))
+                {
+                    continue;
+                }
+                for (int index = 0; index < SurfaceCount; index++)
+                {
+                    UnityEngine.Object.Destroy(entry.Value.Near[index]);
+                    UnityEngine.Object.Destroy(entry.Value.Distant[index]);
+                }
+            }
+        }
+
+        private static bool SlotsMatch(IReadOnlyList<SlotState> first, IReadOnlyList<SlotState> second)
+        {
+            if (first.Count != second.Count)
+            {
+                return false;
+            }
+            for (int index = 0; index < first.Count; index++)
+            {
+                if (!first[index].Matches(second[index]))
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        private static Dictionary<int, Region> GroupSlots(PlanetFactory factory, List<SlotState> slots,
+            AttachmentBuild previous)
+        {
+            float circle = 2 * Mathf.PI;
+            int sectors = Mathf.CeilToInt(circle * (factory.planet.realRadius + 64) / 64);
+            var slotsByRegion = new Dictionary<int, List<SlotState>>();
+            foreach (SlotState slot in slots)
+            {
+                if (slot.Tracks == 0)
+                {
+                    continue;
+                }
+
+                float longitude = OrbitalTextureLayout.FacilityLongitude(factory.planet, slot.Slot);
+                int key = slot.Ring * sectors + Mathf.FloorToInt(Mathf.Repeat(longitude, circle) * sectors / circle);
+                if (!slotsByRegion.TryGetValue(key, out var regionSlots))
+                {
+                    slotsByRegion.Add(key, regionSlots = new List<SlotState>());
+                }
+                regionSlots.Add(slot);
+            }
+
+            var regions = new Dictionary<int, Region>(slotsByRegion.Count);
+            foreach (var entry in slotsByRegion)
+            {
+                Region region = previous != null && previous.Regions.TryGetValue(entry.Key, out Region retained)
+                    && SlotsMatch(entry.Value, retained.Slots) ? retained : new Region(entry.Value);
+                regions.Add(entry.Key, region);
+            }
+            return regions;
         }
 
         private static int ResolveEntity(PlanetFactory factory, EquatorRing ring, int slot)
@@ -263,32 +326,34 @@ namespace ProjectOrbitalRing.Rendering
                 ? entityId : 0;
         }
 
-        internal static void InvalidateTracks(PlanetFactory factory)
+        internal static void UpdateTrackPresence(PlanetFactory factory, int previousItem, Vector3 previousPosition,
+            int currentItem, Vector3 currentPosition)
         {
-            if (factory == observedFactory)
+            if (factory != observedFactory || localTrackCounts == null)
             {
-                tracksDirty = true;
+                return;
+            }
+            var layout = GetLayout(factory.planet);
+            int previous = TrackSlotIndex(factory.planet, layout, previousItem, previousPosition);
+            int current = TrackSlotIndex(factory.planet, layout, currentItem, currentPosition);
+            if (previous == current)
+            {
+                return;
+            }
+            if (previous >= 0 && --localTrackCounts[previous] == 0)
+            {
+                nextProbe = 0;
+            }
+            if (current >= 0 && localTrackCounts[current]++ == 0)
+            {
                 nextProbe = 0;
             }
         }
 
-        internal static bool HasBay(int itemId) =>
-            itemId == ProtoID.I粒子加速轨道 || itemId == ProtoID.I星环电网组件;
-
-        private static void ReadLocalTracks(PlanetFactory factory)
+        private static void IndexLocalTracks(PlanetFactory factory, OrbitalRingLayout layout)
         {
             // Station annexes follow local built segments; ring suspension follows circuit completion.
-            var layout = GetLayout(factory.planet);
-            int count = layout.StationCapacity * layout.StationRingCount;
-            if (localTracks.Length != count)
-            {
-                localTracks = new int[count];
-            }
-            else
-            {
-                Array.Clear(localTracks, 0, localTracks.Length);
-            }
-
+            localTrackCounts = new int[layout.StationCapacity * layout.StationRingCount * 2];
             CargoTraffic traffic = factory.cargoTraffic;
             for (int beltId = 1; beltId < traffic.beltCursor; beltId++)
             {
@@ -299,147 +364,210 @@ namespace ProjectOrbitalRing.Rendering
                 }
 
                 ref EntityData entity = ref factory.entityPool[belt.entityId];
-                if (entity.id != belt.entityId || entity.beltId != beltId || !HasBay(entity.protoId))
+                if (entity.id != belt.entityId || entity.beltId != beltId)
                 {
                     continue;
                 }
-
-                var position = CalculateRingPosMark(entity.pos, layout);
-                if (position.ringIndex < 0)
+                int index = TrackSlotIndex(factory.planet, layout, entity.protoId, entity.pos);
+                if (index >= 0)
                 {
-                    continue;
-                }
-
-                float coordinate = OrbitalTextureLayout.FacilityCoordinate(factory.planet, entity.pos);
-                int slot = Mathf.RoundToInt(coordinate) % layout.StationCapacity;
-                float longitude = OrbitalTextureLayout.FacilityLongitude(factory.planet, slot);
-                float actualLongitude = Mathf.Atan2(entity.pos.z, entity.pos.x);
-                float angle = Mathf.DeltaAngle(longitude * Mathf.Rad2Deg, actualLongitude * Mathf.Rad2Deg);
-                float distance = Mathf.Abs(angle) * Mathf.Deg2Rad * new Vector2(entity.pos.x, entity.pos.z).magnitude;
-                if (distance <= 14f)
-                {
-                    localTracks[position.ringIndex * layout.StationCapacity + slot] |=
-                        entity.protoId == ProtoID.I粒子加速轨道 ? 4 : 8;
+                    localTrackCounts[index]++;
                 }
             }
+        }
+
+        private static int TrackSlotIndex(PlanetData planet, OrbitalRingLayout layout, int itemId, Vector3 position)
+        {
+            if (itemId != ProtoID.I粒子加速轨道 && itemId != ProtoID.I星环电网组件)
+            {
+                return -1;
+            }
+            int ring = CalculateRingPosMark(position, layout).ringIndex;
+            if (ring < 0)
+            {
+                return -1;
+            }
+
+            float coordinate = OrbitalTextureLayout.FacilityCoordinate(planet, position);
+            int slot = Mathf.RoundToInt(coordinate) % layout.StationCapacity;
+            float longitude = OrbitalTextureLayout.FacilityLongitude(planet, slot);
+            float actualLongitude = Mathf.Atan2(position.z, position.x);
+            float angle = Mathf.DeltaAngle(longitude * Mathf.Rad2Deg, actualLongitude * Mathf.Rad2Deg);
+            float distance = Mathf.Abs(angle) * Mathf.Deg2Rad * new Vector2(position.x, position.z).magnitude;
+            int trackOffset = itemId == ProtoID.I粒子加速轨道 ? 0 : 1;
+            return distance <= 14f ? (ring * layout.StationCapacity + slot) * 2 + trackOffset : -1;
         }
 
         private static IEnumerable<object> Rebuild(AttachmentBuild candidate)
         {
+            var uploads = new List<Mesh>();
+            foreach (var entry in candidate.Regions)
+            {
+                Region region = entry.Value;
+                if (published != null && published.Regions.TryGetValue(entry.Key, out Region retained)
+                    && ReferenceEquals(region, retained))
+                {
+                    continue;
+                }
+
+                var near = new OrbitalAttachmentMesh[SurfaceCount];
+                var distant = new OrbitalAttachmentMesh[SurfaceCount];
+                for (int index = 0; index < SurfaceCount; index++)
+                {
+                    near[index] = new OrbitalAttachmentMesh();
+                    distant[index] = new OrbitalAttachmentMesh(1);
+                }
+                var levels = new[] { near, distant };
+                foreach (SlotState slot in region.Slots)
+                {
+                    foreach (object step in BuildSlot(candidate.Factory, slot, levels))
+                    {
+                        yield return step;
+                    }
+                }
+
+                for (int level = 0; level < levels.Length; level++)
+                {
+                    Mesh[] meshes = level == 0 ? region.Near : region.Distant;
+                    for (int index = 0; index < meshes.Length; index++)
+                    {
+                        if (levels[level][index].TriangleCount == 0)
+                        {
+                            continue;
+                        }
+                        Mesh mesh = levels[level][index].Build(index == (int)Surface.PowerPanel);
+                        meshes[index] = mesh;
+                        mesh.name = SurfaceName(index, level != 0) + ".Chunk." + entry.Key;
+                        uploads.Add(mesh);
+                        yield return null;
+                    }
+                }
+            }
+
             foreach (bool distant in new[] { false, true })
             {
-                foreach (object step in RebuildLevel(candidate, distant))
+                foreach (object step in CombineSurfaces(candidate, distant))
                 {
                     yield return step;
                 }
             }
-        }
-
-        private static IEnumerable<object> RebuildLevel(AttachmentBuild candidate, bool distant)
-        {
-            PlanetFactory factory = candidate.Factory;
-            SurfaceMeshes[] destination = distant ? candidate.Distant : candidate.Near;
-            int sectors = Mathf.CeilToInt(2 * Mathf.PI * (factory.planet.realRadius + 64) / 64);
-            var regions = new Dictionary<int, OrbitalAttachmentMesh[]>();
-            foreach (SlotState slot in candidate.Slots)
+            foreach (Mesh mesh in uploads)
             {
-                if (slot.Tracks == 0)
-                {
-                    continue;
-                }
-
-                float longitude = OrbitalTextureLayout.FacilityLongitude(factory.planet, slot.Slot);
-                int region = slot.Ring * sectors + Mathf.FloorToInt(Mathf.Repeat(longitude, 2 * Mathf.PI)
-                    * sectors / (2 * Mathf.PI));
-                if (!regions.TryGetValue(region, out OrbitalAttachmentMesh[] builders))
-                {
-                    builders = new OrbitalAttachmentMesh[SurfaceCount];
-                    for (int index = 0; index < builders.Length; index++)
-                    {
-                        builders[index] = new OrbitalAttachmentMesh(distant ? 1 : 0);
-                    }
-                    regions.Add(region, builders);
-                }
-
-                bool occupied = slot.Facility.id > 0;
-                OrbitalFacilityGeometry.SeatState seatState = occupied ? OrbitalFacilityGeometry.SeatState.Connected
-                    : !slot.Available ? OrbitalFacilityGeometry.SeatState.Unavailable
-                    : OrbitalFacilityGeometry.SeatState.Vacant;
-                Vector2 seatLongitudes = OrbitalFacilityGeometry.SeatLongitudes(factory, slot.Slot);
-                for (int band = 1; band <= 2; band++)
-                {
-                    if ((slot.Tracks & band) == 0)
-                    {
-                        continue;
-                    }
-
-                    foreach (float sign in new[] { -1f, 1f })
-                    {
-                        Vector3 center = OrbitalTextureLayout.TrackCenter(factory, slot.Ring, band,
-                            sign < 0 ? seatLongitudes.x : seatLongitudes.y, ProtoID.I轨道连接组件);
-                        Vector3 up = center.normalized;
-                        Vector3 along = Vector3.Cross(up, Vector3.up).normalized * sign;
-                        Vector3 across = Vector3.Cross(along, up).normalized;
-                        OrbitalFacilityGeometry.Seat(builders, center, across, up, along, seatState);
-                        yield return null;
-                    }
-                }
-
-                if (occupied && (slot.Tracks & 3) != 0)
-                {
-                    OrbitalFacilityGeometry.Support(builders, factory, slot.Ring, longitude,
-                        slot.Facility, slot.Tracks, seatLongitudes);
-                    yield return null;
-                }
-
-                if (occupied && (slot.Tracks & 4) != 0)
-                {
-                    OrbitalFacilityBays.Beam(builders, factory, slot.Ring, longitude, slot.Facility);
-                    yield return null;
-                }
-
-                if (occupied && (slot.Tracks & 8) != 0)
-                {
-                    OrbitalFacilityBays.Power(builders, factory, slot.Ring, longitude, slot.Facility);
-                    yield return null;
-                }
-
+                // Region meshes keep their CPU data for future aggregate combinations.
+                mesh.UploadMeshData(false);
                 yield return null;
             }
+        }
 
+        private static IEnumerable<object> CombineSurfaces(AttachmentBuild candidate, bool distant)
+        {
+            SurfaceMeshes[] destination = distant ? candidate.Distant : candidate.Near;
+            SurfaceMeshes[] previous = distant ? published?.Distant : published?.Near;
             for (int index = 0; index < destination.Length; index++)
             {
-                string name = "OrbitalRing.FacilityAttachments." + (Surface)index + (distant ? ".Distant" : ".Near");
                 var chunks = new List<Mesh>();
                 destination[index].Chunks = chunks;
-                foreach (OrbitalAttachmentMesh[] builders in regions.Values)
+                foreach (Region region in candidate.Regions.Values)
                 {
-                    OrbitalAttachmentMesh builder = builders[index];
-                    if (builder.TriangleCount == 0)
+                    Mesh mesh = (distant ? region.Distant : region.Near)[index];
+                    if (mesh != null)
                     {
-                        continue;
+                        chunks.Add(mesh);
                     }
-                    Mesh mesh = builder.Build(index == (int)Surface.PowerPanel);
-                    mesh.name = name + ".Chunk." + chunks.Count;
-                    chunks.Add(mesh);
-                    yield return null;
-                }
-                if (chunks.Count == 0)
-                {
-                    continue;
                 }
 
                 if (chunks.Count > 1)
                 {
-                    Mesh combined = OrbitalMeshBuffers.Combine(name, chunks);
-                    destination[index].Combined = combined;
-                    combined.UploadMeshData(true);
+                    if (previous != null && MeshesMatch(chunks, previous[index].Chunks))
+                    {
+                        destination[index].Combined = previous[index].Combined;
+                        continue;
+                    }
+
+                    Mesh mesh = OrbitalMeshBuffers.Combine(SurfaceName(index, distant), chunks);
+                    destination[index].Combined = mesh;
+                    mesh.UploadMeshData(true);
                     yield return null;
                 }
-                foreach (Mesh chunk in chunks)
+            }
+        }
+
+        private static string SurfaceName(int index, bool distant) =>
+            "OrbitalRing.FacilityAttachments." + (Surface)index + (distant ? ".Distant" : ".Near");
+
+        private static bool MeshesMatch(List<Mesh> first, List<Mesh> second)
+        {
+            if (first.Count != second.Count)
+            {
+                return false;
+            }
+            for (int index = 0; index < first.Count; index++)
+            {
+                if (!ReferenceEquals(first[index], second[index]))
                 {
-                    chunk.UploadMeshData(true);
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        private static IEnumerable<object> BuildSlot(PlanetFactory factory, SlotState slot,
+            OrbitalAttachmentMesh[][] levels)
+        {
+            bool occupied = slot.Facility.id > 0;
+            OrbitalFacilityGeometry.SeatState seatState = occupied ? OrbitalFacilityGeometry.SeatState.Connected
+                : !slot.Available ? OrbitalFacilityGeometry.SeatState.Unavailable
+                : OrbitalFacilityGeometry.SeatState.Vacant;
+            Vector2 seatLongitudes = OrbitalFacilityGeometry.SeatLongitudes(factory, slot.Slot);
+            for (int band = 1; band <= 2; band++)
+            {
+                if ((slot.Tracks & band) == 0)
+                {
+                    continue;
+                }
+
+                for (int side = 0; side < 2; side++)
+                {
+                    Vector3 center = OrbitalTextureLayout.TrackCenter(factory, slot.Ring, band,
+                        seatLongitudes[side], ProtoID.I轨道连接组件);
+                    Vector3 up = center.normalized;
+                    Vector3 along = Vector3.Cross(up, Vector3.up).normalized * (side == 0 ? -1 : 1);
+                    Vector3 across = Vector3.Cross(along, up).normalized;
+                    foreach (OrbitalAttachmentMesh[] surfaces in levels)
+                    {
+                        OrbitalFacilityGeometry.Seat(surfaces, center, across, up, along, seatState);
+                    }
                     yield return null;
+                }
+            }
+
+            if (!occupied)
+            {
+                yield break;
+            }
+            float longitude = OrbitalTextureLayout.FacilityLongitude(factory.planet, slot.Slot);
+            if ((slot.Tracks & 3) != 0)
+            {
+                foreach (object step in OrbitalFacilityGeometry.Support(levels, factory, slot.Ring, longitude,
+                    slot.Facility, slot.Tracks, seatLongitudes))
+                {
+                    yield return step;
+                }
+            }
+
+            if ((slot.Tracks & 4) != 0)
+            {
+                foreach (object step in OrbitalFacilityBays.Beam(levels, factory, slot.Ring, longitude, slot.Facility))
+                {
+                    yield return step;
+                }
+            }
+
+            if ((slot.Tracks & 8) != 0)
+            {
+                foreach (object step in OrbitalFacilityBays.Power(levels, factory, slot.Ring, longitude, slot.Facility))
+                {
+                    yield return step;
                 }
             }
         }
@@ -452,9 +580,9 @@ namespace ProjectOrbitalRing.Rendering
             {
                 return;
             }
-            OrbitalRenderBounds.Prepare(camera);
             float planetRadius = factory.planet.realRadius - 2;
             bool distant = UseDistantGeometry(camera, factory.planet.realRadius);
+            bool shadowsEnabled = QualitySettings.shadows != ShadowQuality.Disable;
             SurfaceMeshes[] surfaces = distant ? published.Distant : published.Near;
             for (int index = 0; index < surfaces.Length; index++)
             {
@@ -485,7 +613,7 @@ namespace ProjectOrbitalRing.Rendering
 
                 // Shadow geometry remains fixed across camera detail levels and screen-space visibility.
                 SurfaceMeshes shadow = published.Distant[index];
-                if (!signal && shadow.Chunks.Count > 0)
+                if (shadowsEnabled && !signal && shadow.Chunks.Count > 0)
                 {
                     Graphics.DrawMesh(shadow.Combined ?? shadow.Chunks[0], Matrix4x4.identity, material,
                         0, camera, 0, lighting, ShadowCastingMode.ShadowsOnly, false);
@@ -581,7 +709,7 @@ namespace ProjectOrbitalRing.Rendering
             detailCamera = null;
             useDistantGeometry = false;
             nextProbe = 0;
-            tracksDirty = true;
+            localTrackCounts = null;
         }
 
         internal static void Dispose()
