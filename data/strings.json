@@ -26,8 +26,8 @@
     },
     {
         "Name": "I母星特质",
-        "ZHCN": "接下来，砍树很有用。\n<color=\"#FD965ECC\">可以从树木采集种子和本土菌种</color>\n\n<color=\"#FD965ECC\">特别标注：激光砍树【LaserClearing】MOD对此无效</color>",
-        "ENUS": "Next, cutting down trees is very useful.\n<color=\"#FD965ECC\">Seeds and native bacterial strains can be collected from trees</color>\n\n<color=\"#FD965ECC\">Special note: The LaserClearing MOD is not effective for this</color>"
+        "ZHCN": "接下来，砍树很有用。\n<color=\"#FD965ECC\">可以从树木采集种子和本土菌种</color>",
+        "ENUS": "Next, cutting down trees is very useful.\n<color=\"#FD965ECC\">Seeds and native bacterial strains can be collected from trees</color>"
     },
     {
         "Name": "信息素",
@@ -175,9 +175,9 @@
         "ENUS": "A planet primarily composed of ice and rocks. Rich in methane, due to its surface temperature of over minus 170 degrees Celsius, methane becomes like water on Earth and undergoes cyclic gasification and condensation, forming weather and large methane lakes. \r\nThe ecosystems of such planets usually do not have a large size due to the lack of stellar radiation. However, when it serves as a satellite of a gas giant, the ice and permafrost planet where life exists is likely to evolve some kind of seaweed that can grow for several kilometers, and obtain energy by cutting the magnetic field of the gas giant, ingesting hydrogen gas and excreting methane, thus supporting a thriving underground ecosystem as the first trophic level."
     },
     {
-        "Name": "黑海岩滩",
-        "ZHCN": "黑海岩滩",
-        "ENUS": "Black Sea Beach"
+        "Name": "黑海盐滩类型",
+        "ZHCN": "黑海盐滩",
+        "ENUS": "Black Sea Salt Flats"
     },
     {
         "Name": "黑石岩滩介绍",

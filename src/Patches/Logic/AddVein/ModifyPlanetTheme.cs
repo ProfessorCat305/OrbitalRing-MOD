@@ -26,6 +26,10 @@ namespace ProjectOrbitalRing.Patches.Logic.AddVein
 
                 switch (theme.ID)
                 {
+                    case 6:
+                        theme.BriefIntroduction = "干旱荒漠介绍";
+                        break;
+
                     case 8:
                         theme.BriefIntroduction = "海洋丛林介绍";
                         break;
@@ -42,7 +46,7 @@ namespace ProjectOrbitalRing.Patches.Logic.AddVein
                         break;
 
                     case 17:
-                        theme.DisplayName = "黑海盐滩";
+                        theme.DisplayName = "黑海盐滩类型"; 
                         theme.displayName = theme.DisplayName.TranslateFromJson();
                         theme.WaterItemId = ProtoID.I原油;
                         theme.WaterHeight = 0.0f;
