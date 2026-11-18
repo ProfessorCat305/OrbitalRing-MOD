@@ -398,3 +398,4 @@ FodyWeavers.xsd
 lib/Assembly-CSharp-publicized.dll
 /DefaultPath.props
 /lib/Newtonsoft.Json.dll.old
+/.codex/

@@ -167,6 +167,9 @@ namespace ProjectOrbitalRing.Patches.UI.OrbitalRingStorage
                             break;
                         }
                     }
+                    MultiplayerSync.Send(new SyncOrbitalStorageSetting {
+                        PlanetId = LocalPlanetId, RingId = ringId, StationId = LocalStationId, Slot = storeIndex, Value = flag ? 0 : 1
+                    });
                     _uiButton.transform.GetChild(2).GetComponent<Image>().enabled = !flag;
                 }
             }

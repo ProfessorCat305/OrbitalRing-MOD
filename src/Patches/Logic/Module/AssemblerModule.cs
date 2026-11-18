@@ -17,7 +17,7 @@ using System.Threading;
 namespace ProjectOrbitalRing.Patches.Logic.AssemblerModule
 {
     // Token: 0x02000038 RID: 56
-    public static class AssemblerModulePatches
+    public static partial class AssemblerModulePatches
     {
         internal static int GetIncLevel(int moduleItemId)
         {
@@ -160,7 +160,7 @@ namespace ProjectOrbitalRing.Patches.Logic.AssemblerModule
         [HarmonyPatch(typeof(FactorySystem), "TakeBackItems_Assembler")]
         public static void FactorySystem_TakeBackItems_Assembler(ref FactorySystem __instance, Player player, int asmId)
         {
-            AssemblerModulePatches.SetEmpty(__instance, asmId, true);
+            AssemblerModulePatches.SetEmpty(__instance, asmId, true, player);
         }
 
         // Token: 0x06000161 RID: 353 RVA: 0x00010000 File Offset: 0x0000E200
@@ -178,6 +178,10 @@ namespace ProjectOrbitalRing.Patches.Logic.AssemblerModule
                     if (!flag3) {
                         bool flag4 = ShouldModuleButtonActive(ptr.recipeType, ptr.recipeId, ptr.speed);
                         if (flag4) {
+                            if (NebulaAPI.NebulaModAPI.IsMultiplayerActive) {
+                                MultiplayerTransfers.Install(__instance.factorySystem, entityData.assemblerId, GameMain.mainPlayer, fromPackage, itemBundle);
+                                return;
+                            }
                             AssemblerModuleData AssemblerModuleData = GetAssemblerModuleData(__instance.factorySystem, entityData.assemblerId);
                             AssemblerModuleData.NeedCount = 1;
                             int moduleId = AssemblerModulePatches.GetModuleId(ptr.recipeId);
@@ -235,13 +239,22 @@ namespace ProjectOrbitalRing.Patches.Logic.AssemblerModule
                 if (AssemblerModuleData[factorySystem].ContainsKey(assemblerId)) {
                     AssemblerModuleData[factorySystem][assemblerId] = data;
                 }
-                //SyncAssemblerModuleData.Sync(planetId, assemblerId, AssemblerModulePatches.AssemblerModuleData[key]);
+                BroadcastModule(factorySystem, assemblerId);
             }
         }
 
         // Token: 0x06000165 RID: 357 RVA: 0x00010250 File Offset: 0x0000E450
-        internal static void SetEmpty(FactorySystem factorySystem, int assemblerId, bool pop = true)
+        /// <summary>卸下插件并按实际操作者返还；联机回放不使用主机的玩家背包。</summary>
+        /// <param name="factorySystem">插件所在工厂。</param>
+        /// <param name="assemblerId">制造台编号。</param>
+        /// <param name="pop">是否放回背包；false 时优先放在手中。</param>
+        /// <param name="player">实际操作者，省略时为本地玩家。</param>
+        internal static void SetEmpty(FactorySystem factorySystem, int assemblerId, bool pop = true, Player player = null)
         {
+            if (NebulaAPI.NebulaModAPI.IsMultiplayerActive) {
+                MultiplayerTransfers.Remove(factorySystem, assemblerId, player ?? GameMain.mainPlayer, !pop);
+                return;
+            }
             if (AssemblerModuleData.ContainsKey(factorySystem)) {
                 if (!AssemblerModulePatches.AssemblerModuleData[factorySystem].ContainsKey(assemblerId)) {
                     return;

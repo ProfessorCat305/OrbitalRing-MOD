@@ -1,57 +1,21 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" InitialTargets="PublicizeAssembly" ToolsVersion="Current">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
-  <Import Project="DefaultPath.props" />
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{EFF66744-FAF7-461E-B86E-7130E64E16DF}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ProjectOrbitalRing</RootNamespace>
-    <AssemblyName>ProjectOrbitalRing</AssemblyName>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
-    <IncludeFrameworkReferencesFromNuGet>false</IncludeFrameworkReferencesFromNuGet>
-    <FileAlignment>512</FileAlignment>
-    <Deterministic>true</Deterministic>
-    <TargetFrameworkProfile />
-    <LangVersion>7.3</LangVersion>
-    <FileUpgradeFlags>
-    </FileUpgradeFlags>
-    <UpgradeBackupLocation>
-    </UpgradeBackupLocation>
-    <OldToolsVersion>2.0</OldToolsVersion>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin/Debug</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <GameAssemblyPath Condition="'$(GameAssemblyPath)' == ''">$(MSBuildProjectDirectory)\lib\Assembly-CSharp-publicized.dll</GameAssemblyPath>
+    <DumpedAssembliesPath Condition="'$(DumpedAssembliesPath)' == ''">$(BepinExPath)DumpedAssemblies\DSPGAME\Assembly-CSharp.dll</DumpedAssembliesPath>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin/Release</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-  </PropertyGroup>
+
   <ItemGroup>
+    <Compile Remove="preloader\**;packer\**" />
     <Reference Include="System">
       <HintPath>$(DSPAssemblyPath)System.dll</HintPath>
-      <Private>False</Private>
+      <Private>false</Private>
     </Reference>
-    <Reference Include="System.Core" />
+    <Reference Include="mscorlib">
+      <HintPath>$(DSPAssemblyPath)mscorlib.dll</HintPath>
+    </Reference>
     <Reference Include="Assembly-CSharp">
-      <HintPath>lib\Assembly-CSharp-publicized.dll</HintPath>
+      <HintPath>$(GameAssemblyPath)</HintPath>
     </Reference>
     <Reference Include="GalacticScale">
       <HintPath>lib\GalacticScale-publicized.dll</HintPath>
@@ -61,18 +25,6 @@
     </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>lib\Newtonsoft.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="mscorlib">
-      <HintPath>$(DSPAssemblyPath)mscorlib.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Diagnostics.StackTrace">
-      <HintPath>$(DSPAssemblyPath)System.Diagnostics.StackTrace.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Globalization.Extensions">
-      <HintPath>$(DSPAssemblyPath)System.Globalization.Extensions.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Runtime.Serialization.Xml">
-      <HintPath>$(DSPAssemblyPath)System.Runtime.Serialization.Xml.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine">
       <HintPath>$(DSPAssemblyPath)UnityEngine.dll</HintPath>
@@ -90,8 +42,8 @@
       <HintPath>$(DSPAssemblyPath)UnityEngine.ImageConversionModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.PhysicsModule">
-      <HintPath>..\..\Steam\steamapps\common\Dyson Sphere Program\DSPGAME_Data\Managed\UnityEngine.PhysicsModule.dll</HintPath>
-      <Private>False</Private>
+      <HintPath>$(DSPAssemblyPath)UnityEngine.PhysicsModule.dll</HintPath>
+      <Private>false</Private>
     </Reference>
     <Reference Include="UnityEngine.TextRenderingModule">
       <HintPath>$(DSPAssemblyPath)UnityEngine.TextRenderingModule.dll</HintPath>
@@ -103,260 +55,35 @@
       <HintPath>$(DSPAssemblyPath)UnityEngine.UIModule.dll</HintPath>
     </Reference>
   </ItemGroup>
+
   <ItemGroup>
     <PackageReference Include="BepInEx.Core" Version="5.4.17" />
     <PackageReference Include="DysonSphereProgram.Modding.CommonAPI" Version="1.6.5" />
     <PackageReference Include="DysonSphereProgram.Modding.DSPModSave" Version="1.2.0" />
     <PackageReference Include="DysonSphereProgram.Modding.LDBTool" Version="3.0.0" />
-    <PackageReference Include="DysonSphereProgram.Modding.NebulaMultiplayerModApi">
-      <Version>2.1.0</Version>
-    </PackageReference>
+    <PackageReference Include="DysonSphereProgram.Modding.NebulaMultiplayerModApi" Version="2.1.0" />
   </ItemGroup>
+
   <ItemGroup>
-    <Compile Include="src\Rendering\**\*.cs" />
-    <Compile Include="src\Compatibility\BlueprintTweaks.cs" />
-    <Compile Include="src\Compatibility\Bottleneck.cs" />
-    <Compile Include="src\Compatibility\FastTravelEnabler.cs" />
-    <Compile Include="src\Compatibility\GalacticScale.cs" />
-    <Compile Include="src\Compatibility\GalacticScaleBirthSystem.cs" />
-    <Compile Include="src\Compatibility\GalacticScaleGalaxy.cs" />
-    <Compile Include="src\Compatibility\GalacticScaleVeins.cs" />
-    <Compile Include="src\Compatibility\GigaStationsUpdated.cs" />
-    <Compile Include="src\Compatibility\InstallationCheckPlugin.cs" />
-    <Compile Include="src\Compatibility\LazyOutposting.cs" />
-    <Compile Include="src\Compatibility\MoreMegaStructure.cs" />
-    <Compile Include="src\Compatibility\PlanetVeinUtilization.cs" />
-    <Compile Include="src\Compatibility\PlanetwideMining.cs" />
-    <Compile Include="src\Compatibility\Auxilaryfunction.cs" />
-    <Compile Include="src\Compatibility\WeaponPlus.cs" />
-    <Compile Include="src\Patches\Logic\AbnormalityLogicPatches.cs" />
-    <Compile Include="src\Patches\Logic\AddVein\AddEffectEmitterProto.cs" />
-    <Compile Include="src\Patches\Logic\AddVein\AddVeinPatches.cs" />
-    <Compile Include="src\Patches\Logic\AddVein\ModifyPlanetTheme.cs" />
-    <Compile Include="src\Patches\Logic\AddVein\OilVeinPatch.cs" />
-    <Compile Include="src\Patches\Logic\AddVein\StellarStationBanMagma.cs" />
-    <Compile Include="src\Patches\Logic\AddVein\SwapShaderPatches.cs" />
-    <Compile Include="src\Patches\Logic\AddVein\ThemeDatas.cs" />
-    <Compile Include="src\Patches\Logic\AddVein\UIDetailPatches.cs" />
-    <Compile Include="src\Patches\Logic\AddVein\VeinAnimDataPatches.cs" />
-    <Compile Include="src\Patches\Logic\BanDFTinderDispatchFromHive.cs" />
-    <Compile Include="src\Patches\Logic\BattleRelated\BanInitLevelSetting.cs" />
-    <Compile Include="src\Patches\Logic\BattleRelated\DisturbWavePatch.cs" />
-    <Compile Include="src\Patches\Logic\BattleRelated\HPAdjust.cs" />
-    <Compile Include="src\Patches\Logic\BattleRelated\InfiniteReloadAmmo.cs" />
-    <Compile Include="src\Patches\Logic\BattleRelated\LocalPlasmaBanAntimatter.cs" />
-    <Compile Include="src\Patches\Logic\BattleRelated\StopCircleAround.cs" />
-    <Compile Include="src\Patches\Logic\Build\BuildingModelIndexRecord.cs" />
-    <Compile Include="src\Patches\Logic\Build\FixPowerNodeBg2048.cs" />
-    <Compile Include="src\Patches\Logic\CurvatureLogistics\CurvatureLogistics.cs" />
-    <Compile Include="src\Patches\Logic\CurvatureLogistics\DeepSpaceLogisticShipRenderer.cs" />
-    <Compile Include="src\Patches\Logic\DamageDefinitionShield.cs" />
-    <Compile Include="src\Patches\Logic\DisableLDBToolCachePatches.cs" />
-    <Compile Include="src\Patches\Logic\DysonSpherePatches.cs" />
-    <Compile Include="src\Patches\Logic\EjectorPatches.cs" />
-    <Compile Include="src\Patches\Logic\Farm\FarmAssembler.cs" />
-    <Compile Include="src\Patches\Logic\Farm\SyncFarmAssemblerRecipes.cs" />
-    <Compile Include="src\Patches\Logic\FastStartOptionPatches.cs" />
-    <Compile Include="src\Patches\Logic\FastTravelPatches.cs" />
-    <Compile Include="src\Patches\Logic\FelTreeObjects.cs" />
-    <Compile Include="src\Patches\Logic\FixMoonRadius\CalcLocalGridSize.cs" />
-    <Compile Include="src\Patches\Logic\FixMoonRadius\CalcSegmentsAcross.cs" />
-    <Compile Include="src\Patches\Logic\FixMoonRadius\DetermineLongitudeSegmentCount.cs" />
-    <Compile Include="src\Patches\Logic\FixMoonRadius\FixMoonRadius.cs" />
-    <Compile Include="src\Patches\Logic\FixMoonRadius\InitCollectorMaterial.cs" />
-    <Compile Include="src\Patches\Logic\FixMoonRadius\LUT Rework.cs" />
-    <Compile Include="src\Patches\Logic\FixMoonRadius\PolarMarkScale.cs" />
-    <Compile Include="src\Patches\Logic\FixMoonRadius\RadiusFixTranspiler.cs" />
-    <Compile Include="src\Patches\Logic\FixMoonRadius\TrashSystemFix.cs" />
-    <Compile Include="src\Patches\Logic\FixMoonRadius\UIBuildingGrid.cs" />
-    <Compile Include="src\Patches\Logic\FixOpeningAnimationError.cs" />
-    <Compile Include="src\Patches\Logic\FuelRodPatches.cs" />
-    <Compile Include="src\Patches\Logic\GammaPowerSavingPatch.cs" />
-    <Compile Include="src\Patches\Logic\DrawLocalOutlineMeshNowPatches.cs" />
-    <Compile Include="src\Patches\Logic\GeothermalStrengthPatches.cs" />
-    <Compile Include="src\Patches\Logic\GlobalPowerSupplyPatches.cs" />
-    <Compile Include="src\Patches\Logic\InfiniteTank.cs" />
-    <Compile Include="src\Patches\Logic\InitialTechPatches.cs" />
-    <Compile Include="src\Patches\Logic\InserterComponentPatches.cs" />
-    <Compile Include="src\Patches\Logic\LogisticsInterchangePatches.cs" />
-    <Compile Include="src\Patches\Logic\LogisticDroneDockFix.cs" />
-    <Compile Include="src\Patches\Logic\MathematicalRateEngine\EnergyCalculate.cs" />
-    <Compile Include="src\Patches\Logic\MathematicalRateEngine\SiloAndEjector.cs" />
-    <Compile Include="src\Patches\Logic\MathematicalRateEngine\UI.cs" />
-    <Compile Include="src\Patches\Logic\MegaAssembler\InternalFunctions.cs" />
-    <Compile Include="src\Patches\Logic\MegaAssembler\MegaAssemblerPatches.cs" />
-    <Compile Include="src\Patches\Logic\MegaAssembler\NebulaCompat.cs" />
-    <Compile Include="src\Patches\Logic\MegaAssembler\PrebuildParametersPatches.cs" />
-    <Compile Include="src\Patches\Logic\MegaAssembler\SetFilterPatches.cs" />
-    <Compile Include="src\Patches\Logic\MegaAssembler\UIRecipePickerPatches.cs" />
-    <Compile Include="src\Patches\Logic\MegaAssembler\UISlotPickerPatches.cs" />
-    <Compile Include="src\Patches\Logic\ModelLoadingPatches.cs" />
-    <Compile Include="src\Patches\Logic\ModifyUpgradeTech\AddUpgradeTech.cs" />
-    <Compile Include="src\Patches\Logic\ModifyUpgradeTech\ModifyTechText.cs" />
-    <Compile Include="src\Patches\Logic\ModifyUpgradeTech\ModifyUpgradeTech.cs" />
-    <Compile Include="src\Patches\Logic\ModifyUpgradeTech\UniverseObserveTech.cs" />
-    <Compile Include="src\Patches\Logic\ModifyUpgradeTech\Unlock_Save_Load.cs" />
-    <Compile Include="src\Patches\Logic\Module\AssemblerModule.cs" />
-    <Compile Include="src\Patches\Logic\Module\AssemblerModuleData.cs" />
-    <Compile Include="src\Patches\Logic\OrbitalRing\OrbitalAssembler.cs" />
-    <Compile Include="src\Patches\Logic\OrbitalRing\OrbitalATField.cs" />
-    <Compile Include="src\Patches\Logic\OrbitalRing\OrbitalBeacon.cs" />
-    <Compile Include="src\Patches\Logic\OrbitalRing\OrbitalBuild.cs" />
-    <Compile Include="src\Patches\Logic\OrbitalRing\OrbitalConnect.cs" />
-    <Compile Include="src\Patches\Logic\OrbitalRing\OrbitalPowerGen.cs" />
-    <Compile Include="src\Patches\Logic\OrbitalRing\OrbitalRingStorage.cs" />
-    <Compile Include="src\Patches\Logic\OrbitalRing\OrbitalSpaceStation.cs" />
-    <Compile Include="src\Patches\Logic\OrbitalRing\OrbitalStationManager.cs" />
-    <Compile Include="src\Patches\Logic\OrbitalRing\StructuralTrackPolicy.cs" />
-    <Compile Include="src\Patches\Logic\OrbitalRing\StructuralTrackConstruction.cs" />
-    <Compile Include="src\Patches\Logic\OrbitalRing\StructuralTrackCargo.cs" />
-    <Compile Include="src\Patches\Logic\OrbitalRing\OrbitalTurret.cs" />
-    <Compile Include="src\Patches\Logic\OrbitalRing\PosTool.cs" />
-    <Compile Include="src\Patches\Logic\OrbitalRing\UI.cs" />
-    <Compile Include="src\Patches\Logic\OverWriteBirthGalaxy.cs" />
-    <Compile Include="src\Patches\Logic\PlanetFocus\DarkFrogPatches.cs" />
-    <Compile Include="src\Patches\Logic\PlanetFocus\DronePatches.cs" />
-    <Compile Include="src\Patches\Logic\PlanetFocus\FactoryPowerPatches.cs" />
-    <Compile Include="src\Patches\Logic\PlanetFocus\InternalFunctions.cs" />
-    <Compile Include="src\Patches\Logic\PlanetFocus\LabPatches.cs" />
-    <Compile Include="src\Patches\Logic\PlanetFocus\MinerPatches.cs" />
-    <Compile Include="src\Patches\Logic\PlanetFocus\MoonPatch.cs" />
-    <Compile Include="src\Patches\Logic\PlanetFocus\PlanetFocusPatches.cs" />
-    <Compile Include="src\Patches\Logic\PlanetFocus\PowerSystemPatches.cs" />
-    <Compile Include="src\Patches\Logic\PlanetFocus\WaterWorldPatch.cs" />
-    <Compile Include="src\Patches\Logic\PlanetGasPatches.cs" />
-    <Compile Include="src\Patches\Logic\PowerExchangerOutput\PowerExchangerOutputInputPatch.cs" />
-    <Compile Include="src\Patches\Logic\PowerGeneratorEnergyCapPatches.cs" />
-    <Compile Include="src\Patches\Logic\ProbabilisticProduct.cs" />
-    <Compile Include="src\Patches\Logic\ProductOverflowPatches.cs" />
-    <Compile Include="src\Patches\Logic\PumpWaterDoubleSpeed.cs" />
-    <Compile Include="src\Patches\Logic\QuantumStorage\InternalFunctions.cs" />
-    <Compile Include="src\Patches\Logic\QuantumStorage\QuantumStoragePatches.cs" />
-    <Compile Include="src\Patches\Logic\QuantumStorage\UIPatches.cs" />
-    <Compile Include="src\Patches\Logic\SailNeedFuel.cs" />
-    <Compile Include="src\Patches\Logic\SatellitePowerDistributionPatch.cs" />
-    <Compile Include="src\Patches\Logic\SpaceMissilePatches.cs" />
-    <Compile Include="src\Patches\Logic\StarGate.cs" />
-    <Compile Include="src\Patches\Logic\StationOutputPatches.cs" />
-    <Compile Include="src\Patches\Logic\StorageStackMultiplying.cs" />
-    <Compile Include="src\Patches\Logic\TankComponentPatches.cs" />
-    <Compile Include="src\Patches\Logic\TheMountainMovingProject.cs" />
-    <Compile Include="src\Patches\Logic\VFPreloadPatches.cs" />
-    <Compile Include="src\Patches\ResourcesPatches.cs" />
-    <Compile Include="src\Patches\UI\AdvancedLaserPatches.cs" />
-    <Compile Include="src\Patches\UI\BeltColorFix\BeltFixPatches.cs" />
-    <Compile Include="src\Patches\UI\ChemicalRecipeFcol\ChemicalRecipeFcolPatches.cs" />
-    <Compile Include="src\Patches\UI\ChemicalRecipeFcol\TextureGenerator.cs" />
-    <Compile Include="src\Patches\UI\DisplayText\DisplayNamePatches.cs" />
-    <Compile Include="src\Patches\UI\DisplayText\DisplayTextPatches.cs" />
-    <Compile Include="src\Patches\UI\FactoryModelPatches.cs" />
-    <Compile Include="src\Patches\UI\FluidColorPatches.cs" />
-    <Compile Include="src\Patches\UI\FuelRodPatches.cs" />
-    <Compile Include="src\Patches\UI\GridIndexExpand\GridIndexExpandPatches.cs" />
-    <Compile Include="src\Patches\UI\GridIndexExpand\UISignalTagPickerPatches.cs" />
-    <Compile Include="src\Patches\UI\HarmonyLogPatches.cs" />
-    <Compile Include="src\Patches\UI\IconSetPatches.cs" />
-    <Compile Include="src\Patches\UI\Module\UIAssemblerWindowPatch.cs" />
-    <Compile Include="src\Patches\UI\MultiProductionPatches.cs" />
-    <Compile Include="src\Patches\UI\OrbitalRingStorage\UIOrbitalRingStorageDetailExpand.cs" />
-    <Compile Include="src\Patches\UI\OrbitalRingStorage\UIOrbitalRingStorageWindow.cs" />
-    <Compile Include="src\Patches\UI\OrbitalRingStorage\UIStationWindowPatch.cs" />
-    <Compile Include="src\Patches\UI\PlanetFocus\UIPlanetDetailExpand.cs" />
-    <Compile Include="src\Patches\UI\PlanetFocus\UIPlanetFocusWindow.cs" />
-    <Compile Include="src\Patches\UI\ResearchLabPatches.cs" />
-    <Compile Include="src\Patches\UI\U235RecipesResultCountFix.cs" />
-    <Compile Include="src\Patches\UI\UIBuildMenuPatches.cs" />
-    <Compile Include="src\Patches\UI\GridIndexExpand\UILootFilterPatches.cs" />
-    <Compile Include="src\Patches\UI\UIMainMenuPatches.cs" />
-    <Compile Include="src\Patches\UI\UIMonitorPatches.cs" />
-    <Compile Include="src\Patches\UI\UIOptionWindowPatches.cs" />
-    <Compile Include="src\Patches\UI\UIPowerGeneratorWindowPatches.cs" />
-    <Compile Include="src\Patches\UI\GridIndexExpand\UISignalPickerPatches.cs" />
-    <Compile Include="src\Patches\UI\UITechNodePatches.cs" />
-    <Compile Include="src\Patches\UI\UITutorialWindowPatch.cs" />
-    <Compile Include="src\Patches\UI\UITutorialWindowPatches.cs" />
-    <Compile Include="src\Patches\UI\UpdateLogoPatches.cs" />
-    <Compile Include="src\Patches\UI\Utils\MyWindowCtl.cs" />
-    <Compile Include="src\Patches\UI\Utils\Util.cs" />
-    <Compile Include="src\ProjectOrbitalRing.cs" />
-    <Compile Include="src\Utils\CopyModelUtils.cs" />
-    <Compile Include="src\Utils\DictionaryExtend.cs" />
-    <Compile Include="src\Utils\ERecipeType.cs" />
-    <Compile Include="src\Utils\IconDescUtils.cs" />
-    <Compile Include="src\Utils\JsonDataUtils.cs" />
-    <Compile Include="src\Utils\JsonHelper.cs" />
-    <Compile Include="src\Utils\KvpDeconstruct.cs" />
-    <Compile Include="src\Utils\MutliPlayerPacket.cs" />
-    <Compile Include="src\Utils\PlanetThemeUtils.cs" />
-    <Compile Include="src\Utils\ProtoID.cs" />
-    <Compile Include="src\Utils\RandomUtils.cs" />
-    <Compile Include="src\Utils\TextureHelper.cs" />
-    <Compile Include="src\Utils\TranslateUtils.cs" />
-    <Compile Include="src\Utils\TranspilerLogUtils.cs" />
-    <Content Include="assets\sprite\V铀矿脉-80px.png" />
-    <Content Include="assets\sprite\V黄铁矿脉-80px.png" />
-    <Content Include="assets\sprite\钨矿脉-80px.png" />
     <EmbeddedResource Include="assets\sprite\*.png" />
-    <EmbeddedResource Include="assets\texture\chemical-plant-recipe-fcol-for-orbitalring.png" />
-    <EmbeddedResource Include="assets\texture\chemical-plant-recipe-fcol.png" />
-    <EmbeddedResource Include="assets\texture\中文图标.png" />
-    <EmbeddedResource Include="assets\texture\人造恒星MK2材质.png" />
-    <EmbeddedResource Include="assets\texture\创世Logo新春贺岁版.png" />
-    <EmbeddedResource Include="assets\texture\大矿机渲染索引.png" />
-    <EmbeddedResource Include="assets\texture\矿机渲染索引.png" />
-    <EmbeddedResource Include="assets\texture\能量枢纽贴图.png" />
-    <EmbeddedResource Include="assets\texture\英文图标.png" />
-    <EmbeddedResource Include="assets\texture\黑盒-a.png" />
-    <EmbeddedResource Include="assets\texture\黑雾中文图标.png" />
-    <EmbeddedResource Include="assets\texture\黑雾中文图标1.png" />
-    <EmbeddedResource Include="assets\texture\黑雾英文图标.png" />
-    <EmbeddedResource Include="assets\texture\黑雾英文图标1.png" />
+    <EmbeddedResource Include="assets\texture\*.png" Exclude="assets\texture\orbital-brace-mount-normal.png" />
     <EmbeddedResource Include="data\*.json" />
-    <None Include="assets\genesis-models" />
-    <None Include="assets\genesis-models-lab" />
-    <None Include="assets\icon.png" />
-    <None Include="assets\LICENSE.assets" />
-    <None Include="assets\orbitalrings-models" />
-    <None Include="assets\atfield-shader" />
-    <None Include="lib\Assembly-CSharp-publicized.dll" />
-    <None Include="lib\BepInEx.AssemblyPublicizer.Cli.exe" />
-    <None Include="lib\GalacticScale-publicized.dll" />
-    <None Include="lib\MoreMegaStructure.dll" />
-    <None Include="lib\Newtonsoft.Json.dll" />
-    <None Include="*.md" />
-    <None Include="DefaultPath.props" />
-    <None Include="nuget.config" />
-    <Content Include=".gitignore" />
+    <EmbeddedResource Include="assets\models\orbital-track-models" />
   </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <PropertyGroup>
-    <DumpedAssembliesPath>$(BepinExPath)DumpedAssemblies\DSPGAME\Assembly-CSharp.dll</DumpedAssembliesPath>
-  </PropertyGroup>
-  <Target Name="PublicizeAssembly" Condition="Exists($(DumpedAssembliesPath))">
-    <Exec Command="&quot;$(SolutionDir)lib\BepInEx.AssemblyPublicizer.Cli.exe&quot; &quot;$(DumpedAssembliesPath)&quot; --output &quot;$(SolutionDir)lib\Assembly-CSharp-publicized.dll&quot;" />
+
+  <Target Name="PublicizeAssembly" BeforeTargets="ResolveAssemblyReferences"
+          Condition="Exists('$(DumpedAssembliesPath)')"
+          Inputs="$(DumpedAssembliesPath)" Outputs="$(GameAssemblyPath)">
+    <Exec Command="&quot;$(MSBuildProjectDirectory)\lib\BepInEx.AssemblyPublicizer.Cli.exe&quot; &quot;$(DumpedAssembliesPath)&quot; --output &quot;$(GameAssemblyPath)&quot;" />
   </Target>
-  <Target Name="AfterBuild">
-    <MakeDir Directories="$(ReleasePath)" />
-    <MakeDir Directories="$(ReleasePath)plugins/" />
-    <Copy SourceFiles="$(TargetPath)" DestinationFiles="$(BepinExPath)plugins\$(DebugModDir)\$(TargetName).dll" />
-    <Copy SourceFiles="$(SolutionDir)assets\genesis-models" DestinationFiles="$(BepinExPath)plugins\$(DebugModDir)\genesis-models" />
-    <Copy SourceFiles="$(SolutionDir)assets\genesis-models-lab" DestinationFiles="$(BepinExPath)plugins\$(DebugModDir)\genesis-models-lab" />
-    <Copy SourceFiles="$(SolutionDir)assets\orbitalrings-models" DestinationFiles="$(BepinExPath)plugins\$(DebugModDir)\orbitalrings-models" />
-    <Copy SourceFiles="$(SolutionDir)assets\atfield-shader" DestinationFiles="$(BepinExPath)plugins\$(DebugModDir)\atfield-shader" Condition="Exists('$(SolutionDir)assets\atfield-shader')" />
-    <Copy SourceFiles="$(SolutionDir)lib\Newtonsoft.Json.dll" DestinationFiles="$(BepinExPath)plugins\$(DebugModDir)\Newtonsoft.Json.dll" />
-    <Copy SourceFiles="$(TargetPath)" DestinationFiles="$(ReleasePath)plugins\$(TargetName).dll" />
-    <Copy SourceFiles="README.md" DestinationFiles="$(ReleasePath)README.md" />
-    <Copy SourceFiles="CHANGELOG.md" DestinationFiles="$(ReleasePath)CHANGELOG.md" />
-    <Copy SourceFiles="$(SolutionDir)assets\icon.png" DestinationFiles="$(ReleasePath)icon.png" />
-    <Copy SourceFiles="$(SolutionDir)assets\genesis-models" DestinationFiles="$(ReleasePath)plugins\genesis-models" />
-    <Copy SourceFiles="$(SolutionDir)assets\genesis-models-lab" DestinationFiles="$(ReleasePath)plugins\genesis-models-lab" />
-    <Copy SourceFiles="$(SolutionDir)assets\orbitalrings-models" DestinationFiles="$(ReleasePath)plugins\orbitalrings-models" />
-    <Copy SourceFiles="$(SolutionDir)assets\atfield-shader" DestinationFiles="$(ReleasePath)plugins\atfield-shader" Condition="Exists('$(SolutionDir)assets\atfield-shader')" />
-    <Copy SourceFiles="$(SolutionDir)lib\Newtonsoft.Json.dll" DestinationFiles="$(ReleasePath)plugins\Newtonsoft.Json.dll" />
+
+  <Target Name="DeployMod" AfterTargets="Build" Condition="'$(DeployOnBuild)' == 'true'">
+    <ItemGroup>
+      <ModFiles Include="$(TargetPath);$(MSBuildProjectDirectory)\assets\genesis-models;$(MSBuildProjectDirectory)\assets\genesis-models-lab;$(MSBuildProjectDirectory)\assets\orbitalrings-models;$(MSBuildProjectDirectory)\lib\Newtonsoft.Json.dll" />
+      <ModFiles Include="$(MSBuildProjectDirectory)\assets\atfield-shader" Condition="Exists('$(MSBuildProjectDirectory)\assets\atfield-shader')" />
+    </ItemGroup>
+    <Copy SourceFiles="@(ModFiles)" DestinationFolder="$(BepinExPath)plugins\$(DebugModDir)" SkipUnchangedFiles="true" />
+    <Copy SourceFiles="@(ModFiles)" DestinationFolder="$(ReleasePath)plugins" SkipUnchangedFiles="true" />
+    <Copy SourceFiles="$(MSBuildProjectDirectory)\README.md;$(MSBuildProjectDirectory)\CHANGELOG.md;$(MSBuildProjectDirectory)\assets\icon.png" DestinationFolder="$(ReleasePath)" SkipUnchangedFiles="true" />
   </Target>
-  <ItemGroup>
-    <EmbeddedResource Include="assets\models\orbital-track-models">
-      <LogicalName>ProjectOrbitalRing.assets.models.orbital-track-models</LogicalName>
-    </EmbeddedResource>
-  </ItemGroup>
 </Project>

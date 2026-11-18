@@ -441,6 +441,7 @@ namespace ProjectOrbitalRing.Patches.UI
                 ref AssemblerComponent ptr = ref assemblerWindow.factorySystem.assemblerPool[assemblerWindow.assemblerId];
                 bool flag2 = ptr.id != assemblerWindow.assemblerId;
                 if (!flag2) {
+                    if (MultiplayerTransfers.ClickModule(assemblerWindow.factorySystem, assemblerWindow.assemblerId, player)) return;
                     bool flag3 = player.inhandItemId > 0 && player.inhandItemCount == 0;
                     if (flag3) {
                         player.SetHandItems(0, 0, 0);
