@@ -72,21 +72,34 @@ namespace ProjectOrbitalRing.Compatibility
                 new HarmonyMethod(typeof(GalacticScale), nameof(DisableVeins_Transpiler)));
 
             HarmonyPatch.Patch(AccessTools.Method(VeinAlgorithms, "DistributeVeinTypes"),
-                new HarmonyMethod(typeof(GalacticScale), nameof(DistributeVeinTypes_Prefix)));
+                new HarmonyMethod(typeof(GalacticScale), nameof(DistributeVeinTypes_Prefix)),
+                new HarmonyMethod(typeof(GalacticScale), nameof(DistributeVeinTypes_Postfix)));
 
             HarmonyPatch.Patch(AccessTools.Method(VeinAlgorithms, "GenBirthPoints"), null,
                 new HarmonyMethod(typeof(GalacticScale), nameof(GenBirthPoints_Postfix)));
 
-            HarmonyPatch.Patch(AccessTools.Method(VeinAlgorithms, "CalculateVectorsGS2"), null,
-                new HarmonyMethod(typeof(GalacticScale), nameof(CalculateVectorsGS2_Postfix)),
-                new HarmonyMethod(typeof(GalacticScale), nameof(OilLikeVeinType_Transpiler)));
+            var oilLikeVeinType = new HarmonyMethod(typeof(GalacticScale), nameof(OilLikeVeinType_Transpiler));
+            HarmonyPatch.Patch(AccessTools.Method(VeinAlgorithms, "CalculateVectorsGS2"), transpiler: oilLikeVeinType);
 
-            HarmonyPatch.Patch(AccessTools.Method(VeinAlgorithms, "AddVeinsToPlanetGS2"), null,
+            MethodInfo addVeinsToPlanet = AccessTools.Method(VeinAlgorithms, "AddVeinsToPlanetGS2");
+            HarmonyPatch.Patch(addVeinsToPlanet, null,
                 new HarmonyMethod(typeof(GalacticScaleVeins), nameof(GalacticScaleVeins.EnsureGeneratedResources)),
-                new HarmonyMethod(typeof(GalacticScale), nameof(OilLikeVeinType_Transpiler)));
+                oilLikeVeinType);
+
+            MethodInfo overlapCheck = VeinAlgorithms.GetMethod("SurfaceVectorCollisionPreventOverlap",
+                BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic);
+            if (overlapCheck != null)
+            {
+                HarmonyPatch.Patch(overlapCheck, transpiler: oilLikeVeinType);
+                HarmonyPatch.Patch(addVeinsToPlanet,
+                    transpiler: new HarmonyMethod(typeof(GalacticScale), nameof(ProtectGS2BirthGroups_Transpiler)));
+            }
 
             HarmonyPatch.Patch(AccessTools.Method(VeinAlgorithms, "InitBirthVeinVectors"),
                 postfix: new HarmonyMethod(typeof(GalacticScale), nameof(InitBirthVeinVectors_Postfix)));
+
+            HarmonyPatch.Patch(AccessTools.Method(VeinAlgorithms, "AddVeinsToPlanetVanilla"),
+                transpiler: new HarmonyMethod(typeof(GalacticScale), nameof(AddVeinsToPlanetVanilla_Transpiler)));
 
             HarmonyPatch.Patch(AccessTools.PropertyGetter(assembly.GetType("GalacticScale.GS2MainSettings"), "VeinTips"), null, null,
                 new HarmonyMethod(typeof(GalacticScale), nameof(GS2MainSettings_VeinTips_Getter_Transpiler)));
@@ -294,7 +307,7 @@ namespace ProjectOrbitalRing.Compatibility
             var codes = instructions.ToList();
             MethodInfo isOilLikeVeinType = AccessTools.Method(typeof(GalacticScale), nameof(IsOilLikeVeinType));
             IList<LocalVariableInfo> locals = __originalMethod.GetMethodBody().LocalVariables;
-            int replacements = 0;
+            bool patchedOilComparison = false;
 
             for (var index = 1; index < codes.Count - 1; index++)
             {
@@ -323,14 +336,12 @@ namespace ProjectOrbitalRing.Compatibility
 
                 codes[index].opcode = OpCodes.Call;
                 codes[index].operand = isOilLikeVeinType;
-                replacements++;
+                patchedOilComparison = true;
             }
 
-            int expected = __originalMethod.Name == "CalculateVectorsGS2" ? 1 : 5;
-            if (replacements != expected)
+            if (!patchedOilComparison)
             {
-                throw new InvalidOperationException("Unsupported GS oil comparisons in " + __originalMethod.Name +
-                        ": expected " + expected + ", found " + replacements);
+                throw new InvalidOperationException("No supported oil comparison in " + __originalMethod.Name);
             }
             return codes;
         }
@@ -388,135 +399,86 @@ namespace ProjectOrbitalRing.Compatibility
             return false;
         }
 
-        public static void CalculateVectorsGS2_Postfix(GSPlanet gsPlanet, List<GSVeinDescriptor> __result)
+        public static void DistributeVeinTypes_Postfix(GSPlanet gsPlanet, List<GSVeinDescriptor> __result)
         {
-            if (gsPlanet.planetData.id == GSSettings.BirthPlanetId)
+            if (gsPlanet.planetData.id != GSSettings.BirthPlanetId)
             {
-                __result.Add(new GSVeinDescriptor
-                    {
-                        count = 6,
-                        position = gsPlanet.planetData.birthResourcePoint2,
-                        rare = false,
-                        type = EVeinType.Graphite,
-                        richness = 0.1f,
-                    });
+                return;
             }
+
+            // Random groups check spacing against descriptors earlier in the list.
+            __result.InsertRange(0, new[] {
+                new GSVeinDescriptor {
+                    count = 6,
+                    position = gsPlanet.planetData.birthResourcePoint3,
+                    rare = false,
+                    type = EVeinType.Coal,
+                    richness = 0.2f,
+                },
+                new GSVeinDescriptor {
+                    count = 6,
+                    position = gsPlanet.planetData.birthResourcePoint4,
+                    rare = false,
+                    type = EVeinType.Stone,
+                    richness = 0.2f,
+                },
+            });
         }
 
         public static void GenBirthPoints_Postfix(GSPlanet gsPlanet)
         {
-            VeinAlgorithms.random = new GS2.Random(GSSettings.Seed);
-            PlanetData planetData = gsPlanet.planetData;
-            double num1 = 85.0 / planetData.orbitalPeriod + planetData.orbitPhase / 360.0;
-            var num2 = (int)(num1 + 0.1);
-            double num3 = (num1 - num2) * (2.0 * Math.PI);
-            double num4 = 85.0 / planetData.rotationPeriod + planetData.rotationPhase / 360.0;
-            var num5 = (int)(num4 + 0.1);
-            double angle = (num4 - num5) * 360.0;
-            var v = new Vector3((float)Math.Cos(num3) * planetData.orbitRadius, 0.0f, (float)Math.Sin(num3) * planetData.orbitRadius);
-            Vector3 position = Maths.QRotate(planetData.runtimeOrbitRotation, v);
-            Pose pose;
-
-            if (planetData.orbitAroundPlanet != null)
-            {
-                pose = planetData.orbitAroundPlanet.PredictPose(85.0);
-                position.x += pose.position.x;
-                position.y += pose.position.y;
-                position.z += pose.position.z;
-            }
-
-            pose = new Pose(position, planetData.runtimeSystemRotation * Quaternion.AngleAxis((float)angle, Vector3.down));
-            Vector3 vector3_1 = Maths.QInvRotateLF(pose.rotation, planetData.star.uPosition - (VectorLF3)pose.position * 40000.0);
-            vector3_1.Normalize();
-            var vector3_2 = Vector3.Cross(vector3_1, Vector3.up);
-            Vector3 normalized1 = vector3_2.normalized;
-            vector3_2 = Vector3.Cross(normalized1, vector3_1);
-            Vector3 normalized2 = vector3_2.normalized;
-            var num6 = 0;
-
-            while (num6++ < 256)
-            {
-                float num7 = (float)(VeinAlgorithms.random.NextDouble() * 2.0 - 1.0) * 0.5f;
-                float num8 = (float)(VeinAlgorithms.random.NextDouble() * 2.0 - 1.0) * 0.5f;
-                Vector3 vector3_3 = vector3_1 + num7 * normalized1 + num8 * normalized2;
-                vector3_3.Normalize();
-                planetData.birthPoint = vector3_3 * (float)(planetData.realRadius + 0.20000000298023224 + 1.5800000429153442);
-                vector3_2 = Vector3.Cross(vector3_3, Vector3.up);
-                normalized1 = vector3_2.normalized;
-                vector3_2 = Vector3.Cross(normalized1, vector3_3);
-                normalized2 = vector3_2.normalized;
-                var flag = false;
-
-                for (var index = 0; index < 10; ++index)
-                {
-                    Vector2 vector2_1 = new Vector2((float)(VeinAlgorithms.random.NextDouble() * 2.0 - 1.0),
-                        (float)(VeinAlgorithms.random.NextDouble() * 2.0 - 1.0)).normalized * 0.1f;
-                    Vector2 vector2_2 = AddVeinPatches.Rotate(vector2_1, 120);
-                    float num9 = (float)(VeinAlgorithms.random.NextDouble() * 2.0 - 1.0) * 0.006f;
-                    float num10 = (float)(VeinAlgorithms.random.NextDouble() * 2.0 - 1.0) * 0.006f;
-                    vector2_2.x += num9;
-                    vector2_2.y += num10;
-                    Vector2 vector2_3 = AddVeinPatches.Rotate(vector2_1, 240);
-                    float num51 = (float)(VeinAlgorithms.random.NextDouble() * 2.0 - 1.0) * 0.006f;
-                    float num61 = (float)(VeinAlgorithms.random.NextDouble() * 2.0 - 1.0) * 0.006f;
-                    vector2_3.x += num51;
-                    vector2_3.y += num61;
-                    vector3_2 = vector3_3 + vector2_1.x * normalized1 + vector2_1.y * normalized2;
-                    Vector3 normalized3 = vector3_2.normalized;
-                    vector3_2 = vector3_3 + vector2_2.x * normalized1 + vector2_2.y * normalized2;
-                    Vector3 normalized4 = vector3_2.normalized;
-                    vector3_2 = vector3_3 + vector2_3.x * normalized1 + vector2_3.y * normalized2;
-                    Vector3 normalized5 = vector3_2.normalized;
-                    planetData.birthResourcePoint0 = normalized3.normalized;
-                    planetData.birthResourcePoint1 = normalized4.normalized;
-                    planetData.birthResourcePoint2 = normalized5.normalized;
-                    float num11 = planetData.realRadius;
-
-                    if (planetData.data.QueryHeight(vector3_3) > (double)num11 && planetData.data.QueryHeight(normalized3) > (double)num11
-                                                                               && planetData.data.QueryHeight(normalized4) > (double)num11)
-                    {
-                        Vector3 vpos1 = normalized3 + normalized1 * 0.03f;
-                        Vector3 vpos2 = normalized3 - normalized1 * 0.03f;
-                        Vector3 vpos3 = normalized3 + normalized2 * 0.03f;
-                        Vector3 vpos4 = normalized3 - normalized2 * 0.03f;
-                        Vector3 vpos5 = normalized4 + normalized1 * 0.03f;
-                        Vector3 vpos6 = normalized4 - normalized1 * 0.03f;
-                        Vector3 vpos7 = normalized4 + normalized2 * 0.03f;
-                        Vector3 vpos8 = normalized4 - normalized2 * 0.03f;
-                        Vector3 vpos9 = normalized5 + normalized1 * 0.03f;
-                        Vector3 vpos10 = normalized5 - normalized1 * 0.03f;
-                        Vector3 vpos11 = normalized5 + normalized2 * 0.03f;
-                        Vector3 vpos12 = normalized5 - normalized2 * 0.03f;
-
-                        if (planetData.data.QueryHeight(vpos1) > (double)num11 && planetData.data.QueryHeight(vpos2) > (double)num11
-                                                                               && planetData.data.QueryHeight(vpos3) > (double)num11
-                                                                               && planetData.data.QueryHeight(vpos4) > (double)num11
-                                                                               && planetData.data.QueryHeight(vpos5) > (double)num11
-                                                                               && planetData.data.QueryHeight(vpos6) > (double)num11
-                                                                               && planetData.data.QueryHeight(vpos7) > (double)num11
-                                                                               && planetData.data.QueryHeight(vpos8) > (double)num11
-                                                                               && planetData.data.QueryHeight(vpos9) > (double)num11
-                                                                               && planetData.data.QueryHeight(vpos10) > (double)num11
-                                                                               && planetData.data.QueryHeight(vpos11) > (double)num11
-                                                                               && planetData.data.QueryHeight(vpos12) > (double)num11)
-                        {
-                            flag = true;
-
-                            break;
-                        }
-                    }
-                }
-
-                if (flag) break;
-            }
+            PlanetData planet = gsPlanet.planetData;
+            AddVeinPatches.PlaceBirthResources(planet, planet.data, GSSettings.Seed);
         }
 
         public static void InitBirthVeinVectors_Postfix(GSPlanet gsPlanet)
         {
-            PlanetData planetData = gsPlanet.planetData;
-            gsPlanet.veinData.types[2] = EVeinType.Graphite;
-            gsPlanet.veinData.vectors[2] = planetData.birthResourcePoint2;
-            gsPlanet.veinData.count = 3;
+            PlanetData planet = gsPlanet.planetData;
+            gsPlanet.veinData.types[2] = EVeinType.Coal;
+            gsPlanet.veinData.vectors[2] = planet.birthResourcePoint3;
+            gsPlanet.veinData.types[3] = EVeinType.Stone;
+            gsPlanet.veinData.vectors[3] = planet.birthResourcePoint4;
+            gsPlanet.veinData.count = 4;
+        }
+
+        public static IEnumerable<CodeInstruction> ProtectGS2BirthGroups_Transpiler(
+            IEnumerable<CodeInstruction> instructions)
+        {
+            MethodInfo birthPlanetGetter = AccessTools.PropertyGetter(typeof(GSSettings), nameof(GSSettings.BirthPlanet));
+            var matcher = new CodeMatcher(instructions).MatchForward(false,
+                new CodeMatch(instruction => instruction.Calls(birthPlanetGetter)),
+                new CodeMatch(instruction => instruction.IsLdarg(0)),
+                new CodeMatch(instruction => instruction.opcode == OpCodes.Beq || instruction.opcode == OpCodes.Beq_S),
+                new CodeMatch(OpCodes.Ldc_I4_0),
+                new CodeMatch(instruction => instruction.opcode == OpCodes.Br || instruction.opcode == OpCodes.Br_S),
+                new CodeMatch(OpCodes.Ldc_I4_2),
+                new CodeMatch(instruction => instruction.IsStloc()));
+            if (matcher.IsInvalid)
+            {
+                throw new InvalidOperationException("GS2 protected birth vein group limit was not found.");
+            }
+
+            // GS2 prepends iron and copper to the reserved coal and stone descriptors.
+            matcher.Advance(5).SetOpcodeAndAdvance(OpCodes.Ldc_I4_4);
+            return matcher.InstructionEnumeration();
+        }
+
+        public static IEnumerable<CodeInstruction> AddVeinsToPlanetVanilla_Transpiler(IEnumerable<CodeInstruction> instructions)
+        {
+            var matcher = new CodeMatcher(instructions).MatchForward(false,
+                new CodeMatch(instruction => instruction.IsLdarg(4)),
+                new CodeMatch(instruction => instruction.opcode == OpCodes.Brfalse || instruction.opcode == OpCodes.Brfalse_S),
+                new CodeMatch(instruction => instruction.IsLdloc()),
+                new CodeMatch(OpCodes.Ldc_I4_2),
+                new CodeMatch(instruction => instruction.opcode == OpCodes.Clt ||
+                    instruction.opcode == OpCodes.Bge || instruction.opcode == OpCodes.Bge_S));
+            if (matcher.IsInvalid)
+            {
+                throw new InvalidOperationException("GS birth vein group limit was not found.");
+            }
+
+            matcher.Advance(3).SetOpcodeAndAdvance(OpCodes.Ldc_I4_4);
+            return matcher.InstructionEnumeration();
         }
 
         public static void SetPlanetTheme_Postfix(PlanetData planet)
