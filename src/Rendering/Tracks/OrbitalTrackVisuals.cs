@@ -235,10 +235,24 @@ namespace ProjectOrbitalRing.Rendering
             {
                 Reset();
             }
-            if (registered && GameMain.isRunning)
+            bool running = GameMain.isRunning;
+            if (registered && RemodelSettings.AnyTrack && (running || (GameMain.isLoading && !DSPGame.IsMenuDemo)))
             {
-                OrbitalRingBraces.Update(GameMain.localPlanet?.factory);
-                OrbitalFacilityAttachments.Update();
+                PlanetFactory factory = GameMain.localPlanet?.factory;
+                bool canBuildTracks = factory?.cargoTraffic?.beltPool != null && factory.entityPool != null;
+                if (canBuildTracks)
+                {
+                    TrackRenderer.Update(factory);
+                }
+                if (running)
+                {
+                    OrbitalRingBraces.Update(factory);
+                    OrbitalFacilityAttachments.Update();
+                }
+                if (canBuildTracks)
+                {
+                    TrackRenderer.AdvanceDetailBuilds();
+                }
             }
         }
 

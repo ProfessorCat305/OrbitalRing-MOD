@@ -13,6 +13,7 @@ namespace ProjectOrbitalRing.Rendering
     internal static class OrbitalRingBraces
     {
         private const int DetailCount = 3;
+        private const int CoarseDetail = DetailCount - 1;
         private const int AnchorsPerChunk = 4;
 
         private struct BraceDetail
@@ -25,7 +26,7 @@ namespace ProjectOrbitalRing.Rendering
         {
             internal readonly BraceDetail[] Details = new BraceDetail[DetailCount];
             internal Bounds Bounds;
-            internal int DetailLevel = 2;
+            internal int DetailLevel = CoarseDetail;
         }
 
         private sealed class RingPair
@@ -33,12 +34,16 @@ namespace ProjectOrbitalRing.Rendering
             internal PlanetFactory Factory;
             internal int Ring;
             internal int Band;
+            internal bool Active;
+            internal int AvailableDetail = DetailCount;
             internal readonly BraceDetail[] Details = new BraceDetail[DetailCount];
             internal readonly List<BraceChunk> Chunks = new List<BraceChunk>();
             internal IEnumerator<object> Work;
         }
 
         private static readonly Dictionary<int, RingPair> pairs = new Dictionary<int, RingPair>();
+        private static readonly BraceDetail[] acceleratorTemplates = new BraceDetail[DetailCount];
+        private static readonly BraceDetail[] powerTemplates = new BraceDetail[DetailCount];
         private static PlanetFactory observedFactory;
         private static Material metal;
         private static Material signal;
@@ -50,19 +55,16 @@ namespace ProjectOrbitalRing.Rendering
         private static void SetActive(PlanetFactory factory, int ring, int band, bool active)
         {
             int key = ring * 4 + band;
-            if (!active)
+            if (pairs.TryGetValue(key, out RingPair pair))
             {
-                if (pairs.TryGetValue(key, out RingPair pair))
-                {
-                    Release(pair);
-                    pairs.Remove(key);
-                }
+                // Anchor positions follow the planet layout and survive a gap in either ring.
+                pair.Active = active;
                 return;
             }
 
-            if (!pairs.ContainsKey(key))
+            if (active)
             {
-                var pair = new RingPair { Factory = factory, Ring = ring, Band = band };
+                pair = new RingPair { Factory = factory, Ring = ring, Band = band, Active = true };
                 pair.Work = Build(pair).GetEnumerator();
                 pairs.Add(key, pair);
             }
@@ -70,14 +72,18 @@ namespace ProjectOrbitalRing.Rendering
 
         private static void Synchronize(PlanetFactory factory)
         {
+            if (factory == null || !RemodelSettings.RingBraces || !RemodelSettings.Structure)
+            {
+                if (observedFactory != null)
+                {
+                    Clear();
+                }
+                return;
+            }
             if (factory != observedFactory)
             {
                 Clear();
                 observedFactory = factory;
-            }
-            if (factory == null || !RemodelSettings.RingBraces || !RemodelSettings.Structure)
-            {
-                return;
             }
 
             var data = OrbitalStationManager.Instance.GetPlanetOrbitalRingData(factory.planetId);
@@ -103,29 +109,37 @@ namespace ProjectOrbitalRing.Rendering
             long deadline = Stopwatch.GetTimestamp() + Stopwatch.Frequency / 1000;
             foreach (var entry in pairs)
             {
-                RingPair pair = entry.Value;
-                while (pair.Work != null && OrbitalMeshBuildBudget.HasBuildBudget &&
-                    Stopwatch.GetTimestamp() < deadline)
+                AdvanceBuild(entry.Key, entry.Value, deadline, coarseOnly: true);
+            }
+            foreach (var entry in pairs)
+            {
+                AdvanceBuild(entry.Key, entry.Value, deadline, coarseOnly: false);
+            }
+        }
+
+        private static void AdvanceBuild(int key, RingPair pair, long deadline, bool coarseOnly)
+        {
+            while (pair.Active && pair.Work != null && (!coarseOnly || pair.AvailableDetail == DetailCount) &&
+                OrbitalMeshBuildBudget.HasBuildBudget && Stopwatch.GetTimestamp() < deadline)
+            {
+                long started = Stopwatch.GetTimestamp();
+                try
                 {
-                    long started = Stopwatch.GetTimestamp();
-                    try
+                    if (!pair.Work.MoveNext())
                     {
-                        if (!pair.Work.MoveNext())
-                        {
-                            pair.Work.Dispose();
-                            pair.Work = null;
-                        }
+                        pair.Work.Dispose();
+                        pair.Work = null;
                     }
-                    catch
-                    {
-                        pairs.Remove(entry.Key);
-                        Release(pair);
-                        throw;
-                    }
-                    finally
-                    {
-                        OrbitalMeshBuildBudget.RecordBuildTime(started);
-                    }
+                }
+                catch
+                {
+                    pairs.Remove(key);
+                    Release(pair);
+                    throw;
+                }
+                finally
+                {
+                    OrbitalMeshBuildBudget.RecordBuildTime(started);
                 }
             }
         }
@@ -142,10 +156,11 @@ namespace ProjectOrbitalRing.Rendering
 
         private static void ReleaseDetails(BraceDetail[] details)
         {
-            foreach (BraceDetail detail in details)
+            for (int index = 0; index < details.Length; index++)
             {
-                UnityEngine.Object.Destroy(detail.Mesh);
-                UnityEngine.Object.Destroy(detail.Lights);
+                UnityEngine.Object.Destroy(details[index].Mesh);
+                UnityEngine.Object.Destroy(details[index].Lights);
+                details[index] = default;
             }
         }
 
@@ -158,11 +173,10 @@ namespace ProjectOrbitalRing.Rendering
                 return;
             }
 
-            OrbitalRenderBounds.Prepare(camera);
             TrackLighting.Apply(lighting);
             foreach (var pair in pairs.Values)
             {
-                if (pair.Factory != factory || pair.Work != null)
+                if (pair.Factory != factory || !pair.Active || pair.AvailableDetail == DetailCount)
                 {
                     continue;
                 }
@@ -180,28 +194,33 @@ namespace ProjectOrbitalRing.Rendering
             visibleChunks.Clear();
             int commonDetail = -1;
             bool uniformDetail = true;
-            Vector3 cameraPosition = camera.transform.position;
-            float screenScale = camera.orthographic ? camera.pixelHeight / (2 * camera.orthographicSize)
+            bool orthographic = camera.orthographic;
+            Vector3 cameraPosition = orthographic ? Vector3.zero : camera.transform.position;
+            float screenScale = orthographic ? camera.pixelHeight / (2 * camera.orthographicSize)
                 : camera.pixelHeight / (2 * Mathf.Tan(camera.fieldOfView * Mathf.Deg2Rad * 0.5f));
             foreach (BraceChunk chunk in pair.Chunks)
             {
-                float distance = Mathf.Sqrt(Mathf.Max(1, chunk.Bounds.SqrDistance(cameraPosition)));
-                float collarPixels = 0.085f * screenScale / (camera.orthographic ? 1 : distance);
+                float distance = orthographic ? 1 : Mathf.Sqrt(Mathf.Max(1, chunk.Bounds.SqrDistance(cameraPosition)));
+                float collarPixels = 0.085f * screenScale / distance;
                 chunk.DetailLevel = DetailLevel(collarPixels, chunk.DetailLevel);
                 if (OrbitalRenderBounds.IsVisible(camera, chunk.Bounds, pair.Factory.planet.realRadius - 2))
                 {
+                    int detailLevel = Math.Max(chunk.DetailLevel, pair.AvailableDetail);
                     if (commonDetail < 0)
                     {
-                        commonDetail = chunk.DetailLevel;
+                        commonDetail = detailLevel;
                     }
-                    uniformDetail &= commonDetail == chunk.DetailLevel;
+                    uniformDetail &= commonDetail == detailLevel;
                     visibleChunks.Add(chunk);
                 }
             }
 
             // A fixed caster keeps ground shadows independent of view culling and detail transitions.
-            Graphics.DrawMesh(pair.Details[2].Mesh, Matrix4x4.identity, Metal, 0, camera, 0, lighting,
-                ShadowCastingMode.ShadowsOnly, false);
+            if (QualitySettings.shadows != ShadowQuality.Disable)
+            {
+                Graphics.DrawMesh(pair.Details[CoarseDetail].Mesh, Matrix4x4.identity, Metal, 0, camera, 0, lighting,
+                    ShadowCastingMode.ShadowsOnly, false);
+            }
             if (uniformDetail && visibleChunks.Count * 3 > pair.Chunks.Count)
             {
                 DrawDetail(pair.Details[commonDetail], commonDetail, camera);
@@ -210,7 +229,8 @@ namespace ProjectOrbitalRing.Rendering
 
             foreach (BraceChunk chunk in visibleChunks)
             {
-                DrawDetail(chunk.Details[chunk.DetailLevel], chunk.DetailLevel, camera);
+                int detailLevel = Math.Max(chunk.DetailLevel, pair.AvailableDetail);
+                DrawDetail(chunk.Details[detailLevel], detailLevel, camera);
             }
         }
 
@@ -220,7 +240,7 @@ namespace ProjectOrbitalRing.Rendering
             {
                 return 0;
             }
-            return collarPixels > (previous == 2 ? 1.1f : 0.75f) ? 1 : 2;
+            return collarPixels > (previous == CoarseDetail ? 1.1f : 0.75f) ? 1 : CoarseDetail;
         }
 
         private static void DrawDetail(BraceDetail detail, int detailLevel, Camera camera)
@@ -276,43 +296,57 @@ namespace ProjectOrbitalRing.Rendering
         private static IEnumerable<object> Build(RingPair pair)
         {
             bool accelerator = pair.Band == 1;
-            int functionalItem = accelerator ? ProtoID.I粒子加速轨道 : ProtoID.I星环电网组件;
-            var layout = OrbitalTextureLayout.FromBand(pair.Factory.planet, functionalItem, pair.Band,
-                accelerator ? 1.28f : 0.98f);
-            int anchors = Math.Max(1, Mathf.RoundToInt(layout.RepeatCount / (accelerator ? 10f : 5f)));
-            for (int firstAnchor = 0; firstAnchor < anchors; firstAnchor += AnchorsPerChunk)
+            PlanetData planet = pair.Factory.planet;
+            int anchorCount = Math.Max(1, GetLayout(planet).StationCapacity * (accelerator ? 1 : 2));
+            var transforms = new Matrix4x4[anchorCount];
+            for (int index = 0; index < anchorCount; index++)
             {
-                var chunk = new BraceChunk();
-                pair.Chunks.Add(chunk);
-                for (int detailLevel = 0; detailLevel < DetailCount; detailLevel++)
+                float longitude = OrbitalTextureLayout.FacilityLongitude(planet, index * (accelerator ? 1f : 0.5f));
+                Vector3 center = Center(pair, longitude, true);
+                Vector3 up = center.normalized;
+                Vector3 tangent = Vector3.Cross(Vector3.up, up).normalized;
+                Vector3 north = Vector3.Cross(up, tangent).normalized;
+                transforms[index] = new Matrix4x4(tangent, north, up, new Vector4(center.x, center.y, center.z, 1));
+            }
+            for (int firstAnchor = 0; firstAnchor < anchorCount; firstAnchor += AnchorsPerChunk)
+            {
+                pair.Chunks.Add(new BraceChunk());
+            }
+            yield return null;
+
+            for (int detailLevel = CoarseDetail; detailLevel >= 0; detailLevel--)
+            {
+                string lodSuffix = ".Lod" + detailLevel;
+                BraceDetail template = GetTemplate(pair, detailLevel);
+                yield return null;
+                for (int chunkIndex = 0; chunkIndex < pair.Chunks.Count; chunkIndex++)
                 {
-                    var builder = new OrbitalAttachmentMesh(detailLevel);
-                    var indicators = new OrbitalAttachmentMesh(detailLevel);
-                    int lastAnchor = Math.Min(anchors, firstAnchor + AnchorsPerChunk);
-                    for (int index = firstAnchor; index < lastAnchor; index++)
+                    BraceChunk chunk = pair.Chunks[chunkIndex];
+                    int firstAnchor = chunkIndex * AnchorsPerChunk;
+                    int count = Math.Min(anchorCount - firstAnchor, AnchorsPerChunk);
+                    var metalParts = new CombineInstance[count];
+                    var lightParts = new CombineInstance[count];
+                    for (int index = 0; index < count; index++)
                     {
-                        AddAnchor(builder, indicators, pair, index, detailLevel);
-                        yield return null;
+                        Matrix4x4 transform = transforms[firstAnchor + index];
+                        metalParts[index] = new CombineInstance { mesh = template.Mesh, transform = transform };
+                        lightParts[index] = new CombineInstance { mesh = template.Lights, transform = transform };
                     }
 
-                    Mesh metalMesh = builder.Build();
+                    Mesh metalMesh = OrbitalMeshBuffers.Combine("OrbitalRing.BraceMetal" + lodSuffix, metalParts);
                     chunk.Details[detailLevel].Mesh = metalMesh;
-                    metalMesh.name = "OrbitalRing.BraceMetal.Lod" + detailLevel;
-                    Mesh lightMesh = indicators.Build();
+                    yield return null;
+                    Mesh lightMesh = OrbitalMeshBuffers.Combine("OrbitalRing.BraceIndicators" + lodSuffix, lightParts);
                     chunk.Details[detailLevel].Lights = lightMesh;
-                    lightMesh.name = "OrbitalRing.BraceIndicators.Lod" + detailLevel;
-                    if (detailLevel == 0)
+                    if (detailLevel == 0 || detailLevel == CoarseDetail)
                     {
                         chunk.Bounds = metalMesh.bounds;
                         chunk.Bounds.Encapsulate(lightMesh.bounds);
                     }
                     yield return null;
                 }
-            }
 
-            for (int detailLevel = 0; detailLevel < DetailCount; detailLevel++)
-            {
-                string name = "OrbitalRing.Braces.Lod" + detailLevel;
+                string name = "OrbitalRing.Braces" + lodSuffix;
                 pair.Details[detailLevel].Mesh = OrbitalMeshBuffers.Combine(name + ".Metal",
                     pair.Chunks.Select(chunk => chunk.Details[detailLevel].Mesh));
                 yield return null;
@@ -327,26 +361,34 @@ namespace ProjectOrbitalRing.Rendering
                     chunk.Details[detailLevel].Lights.UploadMeshData(true);
                     yield return null;
                 }
+                pair.AvailableDetail = detailLevel;
+                yield return null;
             }
         }
 
-        private static void AddAnchor(OrbitalAttachmentMesh builder, OrbitalAttachmentMesh indicators,
-            RingPair pair, int index, int detailLevel)
+        private static BraceDetail GetTemplate(RingPair pair, int detailLevel)
         {
             bool accelerator = pair.Band == 1;
-            float longitude = OrbitalTextureLayout.FacilityLongitude(pair.Factory.planet,
-                index * (accelerator ? 1f : 0.5f));
-            Vector3 upper = Center(pair, longitude, true);
-            Vector3 lower = Center(pair, longitude, false);
-            Vector3 up = upper.normalized;
-            Vector3 tangent = Vector3.Cross(Vector3.up, up).normalized;
-            Vector3 side = Vector3.Cross(tangent, up).normalized;
+            BraceDetail[] templates = accelerator ? acceleratorTemplates : powerTemplates;
+            BraceDetail detail = templates[detailLevel];
+            if (detail.Mesh != null)
+            {
+                return detail;
+            }
+
+            // Both tracks share the same latitude, so the layer separation is independent of planet radius.
+            float separation = Vector3.Distance(Center(pair, 0, true), Center(pair, 0, false));
+            var builder = new OrbitalAttachmentMesh(detailLevel);
+            var indicators = new OrbitalAttachmentMesh(detailLevel);
+            Vector3 up = Vector3.forward;
+            Vector3 tangent = Vector3.right;
+            Vector3 side = Vector3.down;
+            float lateral = accelerator ? 1.29f : 0.64f;
             for (int sideIndex = 0; sideIndex < 2; sideIndex++)
             {
                 float sign = sideIndex == 0 ? -1 : 1;
-                float lateral = accelerator ? 1.29f : 0.64f;
-                Vector3 top = upper - up * (accelerator ? 0.80f : 0.655f) + side * (sign * lateral);
-                Vector3 bottom = lower + up * (accelerator ? 0 : 0.574f) + side * (sign * lateral);
+                Vector3 top = -up * (accelerator ? 0.80f : 0.655f) + side * (sign * lateral);
+                Vector3 bottom = up * ((accelerator ? 0 : 0.574f) - separation) + side * (sign * lateral);
                 AddMount(builder, top, -up, side, tangent, detailLevel);
                 AddMount(builder, bottom, accelerator ? side * sign : up,
                     accelerator ? up : side, tangent, detailLevel);
@@ -358,6 +400,22 @@ namespace ProjectOrbitalRing.Rendering
                 builder.AddRod("brace-collar", bottom - axis * 0.21f, bottom - axis * 0.09f);
                 indicators.AddRod("brace-indicator", top + axis * 0.22f, top + axis * 0.29f);
                 indicators.AddRod("brace-indicator", bottom - axis * 0.29f, bottom - axis * 0.22f);
+            }
+
+            detail.Mesh = builder.Build();
+            try
+            {
+                detail.Mesh.name = "OrbitalRing.BraceMetal.Template" + detailLevel;
+                detail.Lights = indicators.Build();
+                detail.Lights.name = "OrbitalRing.BraceIndicators.Template" + detailLevel;
+                templates[detailLevel] = detail;
+                return detail;
+            }
+            catch
+            {
+                UnityEngine.Object.Destroy(detail.Mesh);
+                UnityEngine.Object.Destroy(detail.Lights);
+                throw;
             }
         }
 
@@ -382,6 +440,8 @@ namespace ProjectOrbitalRing.Rendering
         internal static void Dispose()
         {
             Clear();
+            ReleaseDetails(acceleratorTemplates);
+            ReleaseDetails(powerTemplates);
             if (metal != null)
             {
                 UnityEngine.Object.Destroy(metal);

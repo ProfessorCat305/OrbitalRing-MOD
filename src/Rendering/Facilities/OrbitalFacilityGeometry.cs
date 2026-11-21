@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using ProjectOrbitalRing.Utils;
 using UnityEngine;
 using static ProjectOrbitalRing.Rendering.OrbitalFacilityAttachments;
@@ -65,7 +66,7 @@ namespace ProjectOrbitalRing.Rendering
             return longitudes;
         }
 
-        internal static void Support(OrbitalAttachmentMesh[] surfaces, PlanetFactory factory, int ring,
+        internal static IEnumerable<object> Support(OrbitalAttachmentMesh[][] levels, PlanetFactory factory, int ring,
             float longitude, EntityData entity, int tracks, Vector2 seatLongitudes)
         {
             Vector3 up = entity.pos.normalized;
@@ -74,13 +75,10 @@ namespace ProjectOrbitalRing.Rendering
             Mesh mesh = LDB.models.Select(entity.modelIndex)?.prefabDesc?.lodMeshes?[0];
             if (mesh == null || !mesh.isReadable)
             {
-                return;
+                yield break;
             }
 
             Vector3[] vertices = mesh.vertices;
-            OrbitalAttachmentMesh armor = surfaces[(int)Surface.Armor];
-            OrbitalAttachmentMesh recess = surfaces[(int)Surface.Recess];
-            OrbitalAttachmentMesh metal = surfaces[(int)Surface.Metal];
             for (int band = 1; band <= 2; band++)
             {
                 if ((tracks & band) == 0)
@@ -96,15 +94,24 @@ namespace ProjectOrbitalRing.Rendering
                     Vector3 foot = footCenter + footCenter.normalized * 1.32f;
                     Vector3 target = entity.pos + up * 30.8f + along * (sign * 13.2f) + across * lateral;
                     Vector3 root = ClosestVertex(vertices, entity, target);
-                    recess.BeveledBeam(foot, root, across, 0.44f, 0.48f, 0.08f);
-                    armor.BeveledBeam(foot + across * 0.17f, root + across * 0.17f, across, 0.27f, 0.15f, 0.04f);
-                    armor.BeveledBeam(foot - across * 0.17f, root - across * 0.17f, across, 0.27f, 0.15f, 0.04f);
-                    armor.BeveledBox(root - up * 0.08f, across, up, along, new Vector3(0.95f, 0.20f, 0.76f), 0.08f);
-                    metal.AddAxialPart("support-hinge", foot, across, up);
                     Vector3 outwardSide = across * (lateral >= 0 ? 1 : -1);
                     Vector3 firstLight = Vector3.Lerp(foot, root, 0.38f) + outwardSide * 0.27f;
                     Vector3 lastLight = Vector3.Lerp(foot, root, 0.65f) + outwardSide * 0.27f;
-                    surfaces[(int)Surface.ConnectedLight].AddRod("support-light", firstLight, lastLight);
+                    foreach (OrbitalAttachmentMesh[] surfaces in levels)
+                    {
+                        OrbitalAttachmentMesh armor = surfaces[(int)Surface.Armor];
+                        OrbitalAttachmentMesh recess = surfaces[(int)Surface.Recess];
+                        recess.BeveledBeam(foot, root, across, 0.44f, 0.48f, 0.08f);
+                        armor.BeveledBeam(foot + across * 0.17f, root + across * 0.17f, across,
+                            0.27f, 0.15f, 0.04f);
+                        armor.BeveledBeam(foot - across * 0.17f, root - across * 0.17f, across,
+                            0.27f, 0.15f, 0.04f);
+                        armor.BeveledBox(root - up * 0.08f, across, up, along,
+                            new Vector3(0.95f, 0.20f, 0.76f), 0.08f);
+                        surfaces[(int)Surface.Metal].AddAxialPart("support-hinge", foot, across, up);
+                        surfaces[(int)Surface.ConnectedLight].AddRod("support-light", firstLight, lastLight);
+                    }
+                    yield return null;
                 }
             }
         }

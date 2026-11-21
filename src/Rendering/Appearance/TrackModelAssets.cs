@@ -13,9 +13,13 @@ namespace ProjectOrbitalRing.Rendering
         internal readonly Vector3[] Normals;
         internal readonly Vector2[] Coordinates;
         internal readonly int[][] Indices;
+        internal readonly Vector2[][] TriangleLongitudinalBounds;
+        internal readonly int[] VertexSections;
+        internal readonly int SectionCount;
         internal readonly float ReferenceArcLength;
         internal readonly float ReferenceCoordinateSpan;
         internal readonly Vector2 LongitudinalBounds;
+        internal readonly float CrossSectionRadius;
 
         internal TrackModelTemplate(Mesh mesh, float arcLength, float longitudeSpan)
         {
@@ -23,13 +27,44 @@ namespace ProjectOrbitalRing.Rendering
             Normals = mesh.normals;
             Coordinates = mesh.uv;
             Indices = new int[mesh.subMeshCount][];
+            TriangleLongitudinalBounds = new Vector2[Indices.Length][];
             for (int surface = 0; surface < Indices.Length; surface++)
             {
-                Indices[surface] = mesh.GetTriangles(surface);
+                int[] indices = mesh.GetTriangles(surface);
+                Indices[surface] = indices;
+                var triangleBounds = new Vector2[indices.Length / 3];
+                for (int triangle = 0; triangle < triangleBounds.Length; triangle++)
+                {
+                    int start = triangle * 3;
+                    float first = Vertices[indices[start]].z;
+                    float second = Vertices[indices[start + 1]].z;
+                    float third = Vertices[indices[start + 2]].z;
+                    triangleBounds[triangle] = new Vector2(Mathf.Min(first, Mathf.Min(second, third)),
+                        Mathf.Max(first, Mathf.Max(second, third)));
+                }
+                TriangleLongitudinalBounds[surface] = triangleBounds;
             }
+
+            // Template vertices on the same cross section share one path frame per cycle.
+            VertexSections = new int[Vertices.Length];
+            var sections = new Dictionary<float, int>();
+            for (int vertex = 0; vertex < Vertices.Length; vertex++)
+            {
+                float longitude = Vertices[vertex].z;
+                if (!sections.TryGetValue(longitude, out int section))
+                {
+                    section = sections.Count;
+                    sections.Add(longitude, section);
+                }
+                VertexSections[vertex] = section;
+            }
+            SectionCount = sections.Count;
 
             Bounds bounds = mesh.bounds;
             LongitudinalBounds = new Vector2(bounds.min.z, bounds.max.z);
+            CrossSectionRadius = new Vector2(
+                Mathf.Max(Mathf.Abs(bounds.min.x), Mathf.Abs(bounds.max.x)),
+                Mathf.Max(Mathf.Abs(bounds.min.y), Mathf.Abs(bounds.max.y))).magnitude;
             ReferenceArcLength = arcLength;
             ReferenceCoordinateSpan = longitudeSpan / (Mathf.PI * 2) * OrbitalTextureLayout.CoordinatePeriod;
         }

@@ -20,6 +20,9 @@ namespace ProjectOrbitalRing.Rendering
 
     internal sealed class TrackMesh
     {
+        private static readonly Vector2[] nearTubeSection = SampleTubeSection(32);
+        private static readonly Vector2[] middleTubeSection = SampleTubeSection(24);
+        private static readonly Vector2[] distantTubeSection = SampleTubeSection(16);
         private readonly List<Vector3> vertices = new List<Vector3>();
         private readonly List<Vector3> normals = new List<Vector3>();
         private readonly List<Vector2> coordinates = new List<Vector2>();
@@ -106,7 +109,8 @@ namespace ProjectOrbitalRing.Rendering
                 int index = retained[row];
                 rows[row] = new TubeRow(samples[index], phases[index] * textureScale);
             }
-            int sides = detailLevel == 0 ? 32 : detailLevel == 1 ? 24 : 16;
+            Vector2[] section = detailLevel == 0 ? nearTubeSection : detailLevel == 1 ? middleTubeSection : distantTubeSection;
+            int sides = section.Length - 1;
             for (int layer = 0; layer < 2; layer++)
             {
                 int first = vertices.Count;
@@ -116,8 +120,8 @@ namespace ProjectOrbitalRing.Rendering
                     var frame = rows[row];
                     for (int column = 0; column <= sides; column++)
                     {
-                        float angle = column * Mathf.PI * 2 / sides;
-                        Vector3 normal = frame.Side * Mathf.Cos(angle) + frame.Radial * Mathf.Sin(angle);
+                        Vector2 vertex = section[column];
+                        Vector3 normal = frame.Side * vertex.x + frame.Radial * vertex.y;
                         AddVertex(frame.Position + normal * layerRadius, layer == 0 ? normal : -normal,
                             new Vector2((float)column / sides, frame.Coordinate));
                     }
@@ -155,6 +159,17 @@ namespace ProjectOrbitalRing.Rendering
                     Cap(rows[last].Position, rows[last].Tangent, lastRing, sides, surface, layer != 0);
                 }
             }
+        }
+
+        private static Vector2[] SampleTubeSection(int sides)
+        {
+            var points = new Vector2[sides + 1];
+            for (int column = 0; column <= sides; column++)
+            {
+                float angle = column * Mathf.PI * 2 / sides;
+                points[column] = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle));
+            }
+            return points;
         }
 
         private List<int> SimplifyRows(IList<TrackSample> samples)

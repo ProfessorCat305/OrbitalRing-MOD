@@ -5,12 +5,27 @@ namespace ProjectOrbitalRing.Rendering
 {
     internal static class OrbitalTrackIntersection
     {
+        private static readonly Vector2[] clipNormals = CreateClipNormals();
+
+        private static Vector2[] CreateClipNormals()
+        {
+            var normals = new Vector2[16];
+            for (int index = 0; index < normals.Length; index++)
+            {
+                float angle = index * Mathf.PI * 2 / normals.Length;
+                normals[index] = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle));
+            }
+            return normals;
+        }
+
         internal sealed class TowerSurface
         {
             private readonly Quaternion inverse;
             private readonly Vector3 towerUp;
             private readonly Vector3[] vertices;
             private readonly int[] triangles;
+            private readonly Dictionary<(float, Vector3, Vector3), float> radii
+                = new Dictionary<(float, Vector3, Vector3), float>();
 
             internal TowerSurface(EntityData entity)
             {
@@ -29,6 +44,12 @@ namespace ProjectOrbitalRing.Rendering
                 if (vertices == null || triangles == null)
                 {
                     return 3.65f;
+                }
+
+                var ray = (height, outward, lateralOffset);
+                if (radii.TryGetValue(ray, out float cached))
+                {
+                    return cached;
                 }
 
                 Vector3 origin = inverse * (towerUp * height + lateralOffset);
@@ -68,7 +89,9 @@ namespace ProjectOrbitalRing.Rendering
                     }
                 }
 
-                return radius > 0 ? radius : 3.65f;
+                radius = radius > 0 ? radius : 3.65f;
+                radii.Add(ray, radius);
+                return radius;
             }
         }
 
@@ -90,7 +113,6 @@ namespace ProjectOrbitalRing.Rendering
                     Vector3.Dot(delta, up), Vector3.Dot(delta, along));
             }
 
-            const int planes = 16;
             var polygon = new List<Vector3>(20);
             var clipped = new List<Vector3>(20);
             int[] indices = mesh.triangles;
@@ -113,10 +135,9 @@ namespace ProjectOrbitalRing.Rendering
                 polygon.Add(first);
                 polygon.Add(second);
                 polygon.Add(third);
-                for (int plane = 0; plane < planes && polygon.Count > 0; plane++)
+                for (int plane = 0; plane < clipNormals.Length && polygon.Count > 0; plane++)
                 {
-                    float angle = plane * Mathf.PI * 2 / planes;
-                    Vector2 normal = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle));
+                    Vector2 normal = clipNormals[plane];
                     clipped.Clear();
                     Vector3 previous = polygon[polygon.Count - 1];
                     float previousDistance = envelopeRadius - normal.x * previous.x - normal.y * previous.y;

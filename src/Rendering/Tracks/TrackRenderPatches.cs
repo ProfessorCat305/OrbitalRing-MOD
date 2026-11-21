@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Reflection.Emit;
 using HarmonyLib;
 
 namespace ProjectOrbitalRing.Rendering
@@ -51,6 +53,40 @@ namespace ProjectOrbitalRing.Rendering
 
         [HarmonyPostfix, HarmonyPatch(typeof(CargoTraffic), nameof(CargoTraffic.ClearStates))]
         private static void ClearStates(CargoTraffic __instance) => TrackRenderer.ClearSelection(__instance.factory);
+
+        [HarmonyTranspiler, HarmonyPatch(typeof(CargoTraffic), nameof(CargoTraffic.AlterBeltRenderer))]
+        private static IEnumerable<CodeInstruction> SkipRemodeledBeltBatchInsert(IEnumerable<CodeInstruction> instructions)
+        {
+            var addNode = AccessTools.Method(typeof(BeltRenderingBatch), nameof(BeltRenderingBatch.AddNodeNoRefresh));
+            var matcher = new CodeMatcher(instructions);
+            matcher.MatchForward(false, new CodeMatch(instruction => instruction.Calls(addNode)));
+            if (matcher.IsInvalid)
+            {
+                ProjectOrbitalRing.LogWarning("Unable to locate the factory belt batch insertion.");
+                return matcher.InstructionEnumeration();
+            }
+
+            var labels = matcher.Instruction.ExtractLabels();
+            matcher.Set(OpCodes.Call, AccessTools.Method(typeof(TrackRenderPatches), nameof(AddFactoryBeltNode)));
+            matcher.Insert(
+                new CodeInstruction(OpCodes.Ldarg_0).WithLabels(labels),
+                new CodeInstruction(OpCodes.Ldarg_1),
+                new CodeInstruction(OpCodes.Ldarg_S, (byte)4));
+            return matcher.InstructionEnumeration();
+        }
+
+        private static int AddFactoryBeltNode(BeltRenderingBatch batch, BeltAnchor[] anchors, CargoTraffic traffic,
+            int beltId, bool isFacting)
+        {
+            if (!isFacting || !IsTrackBelt(traffic, beltId))
+            {
+                return batch.AddNodeNoRefresh(anchors);
+            }
+
+            // A zero batch index marks a belt without a native visual. The collider is updated later in the caller.
+            traffic.beltPool[beltId].modelBatchIndex = 0;
+            return 0;
+        }
 
         [HarmonyPostfix, HarmonyPatch(typeof(CargoTraffic), nameof(CargoTraffic.AlterBeltRenderer))]
         private static void BeltVisual(CargoTraffic __instance, int beltId)

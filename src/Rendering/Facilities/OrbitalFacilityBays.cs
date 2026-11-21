@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using ProjectOrbitalRing.Utils;
 using UnityEngine;
 using static ProjectOrbitalRing.Rendering.OrbitalFacilityAttachments;
@@ -32,20 +33,25 @@ namespace ProjectOrbitalRing.Rendering
             }
         }
 
-        internal static void Beam(OrbitalAttachmentMesh[] surfaces, PlanetFactory factory, int ring,
+        internal static IEnumerable<object> Beam(OrbitalAttachmentMesh[][] levels, PlanetFactory factory, int ring,
             float longitude, EntityData entity)
         {
             if (!TryFrame(factory, ring, 1, longitude, ProtoID.I粒子加速轨道, entity, 1.4f, out BayFrame frame))
             {
-                return;
+                yield break;
             }
 
-            AcceleratorHousing(surfaces, frame);
-            if (entity.protoId == ProtoID.I星环对撞机)
+            var towerSurface = entity.protoId == ProtoID.I星环对撞机
+                ? new OrbitalTrackIntersection.TowerSurface(entity) : null;
+            foreach (OrbitalAttachmentMesh[] surfaces in levels)
             {
-                var towerSurface = new OrbitalTrackIntersection.TowerSurface(entity);
-                ColliderPortSaddle(surfaces, towerSurface, frame);
-                ColliderTransfer(surfaces, towerSurface, frame);
+                AcceleratorHousing(surfaces, frame);
+                if (towerSurface != null)
+                {
+                    ColliderPortSaddle(surfaces, towerSurface, frame);
+                    ColliderTransfer(surfaces, towerSurface, frame);
+                }
+                yield return null;
             }
         }
 
@@ -70,14 +76,25 @@ namespace ProjectOrbitalRing.Rendering
             }
         }
 
-        internal static void Power(OrbitalAttachmentMesh[] surfaces, PlanetFactory factory, int ring,
+        internal static IEnumerable<object> Power(OrbitalAttachmentMesh[][] levels, PlanetFactory factory, int ring,
             float longitude, EntityData entity)
         {
             if (!TryFrame(factory, ring, 2, longitude, ProtoID.I星环电网组件, entity, 0.95f, out BayFrame frame))
             {
-                return;
+                yield break;
             }
 
+            var towerSurface = new OrbitalTrackIntersection.TowerSurface(entity);
+            foreach (OrbitalAttachmentMesh[] surfaces in levels)
+            {
+                PowerHousing(surfaces, frame, towerSurface);
+                yield return null;
+            }
+        }
+
+        private static void PowerHousing(OrbitalAttachmentMesh[] surfaces, BayFrame frame,
+            OrbitalTrackIntersection.TowerSurface towerSurface)
+        {
             OrbitalAttachmentMesh armor = surfaces[(int)Surface.Armor];
             OrbitalAttachmentMesh recess = surfaces[(int)Surface.Recess];
             OrbitalAttachmentMesh metal = surfaces[(int)Surface.Metal];
@@ -115,7 +132,6 @@ namespace ProjectOrbitalRing.Rendering
             Vector3 towerUp = frame.Station.normalized;
             Vector3 outward = Vector3.ProjectOnPlane(frame.Outward, towerUp).normalized;
             float terminalHeight = Vector3.Dot(frame.Center - frame.Station, towerUp) + 3.25f;
-            var towerSurface = new OrbitalTrackIntersection.TowerSurface(entity);
             float terminalRadius = towerSurface.Radius(terminalHeight, outward);
             armor.ArcBand(frame.Station + towerUp * terminalHeight, towerUp, outward,
                 terminalRadius - 0.05f, terminalRadius + 0.20f, 0.58f, 20 * Mathf.Deg2Rad, 12);
