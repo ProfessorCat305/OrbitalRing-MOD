@@ -151,11 +151,6 @@ namespace ProjectOrbitalRing
                 resources_models.bundle.LoadAsset<Shader>("Assets/genesis-models/shaders/PBR Standard Vein Stone COLOR.shader");
             SwapShaderPatches.AddSwapShaderMapping("VF Shaders/Forward/PBR Standard Vein Stone", stoneVeinShader);
 
-
-            //Shader stoneVeinShader =
-            //    orbital_building_models.bundle.LoadAsset<Shader>("Assets/orbitalrings-models/entities/prefabs/PBR Standard Vein Stone COLOR.shader");
-            //SwapShaderPatches.AddSwapShaderMapping("VF Shaders/Forward/PBR Standard Vein Stone", stoneVeinShader);
-
             Shader metalVeinShader =
                 resources_models.bundle.LoadAsset<Shader>("Assets/genesis-models/shaders/PBR Standard Vein Metal COLOR.shader");
             SwapShaderPatches.AddSwapShaderMapping("VF Shaders/Forward/PBR Standard Vein Metal", metalVeinShader);
@@ -163,6 +158,10 @@ namespace ProjectOrbitalRing
             Shader labToggleShader =
                 resources_lab.bundle.LoadAsset<Shader>("Assets/genesis-models/shaders/PBR Standard Vertex Toggle Lab REPLACE.shader");
             SwapShaderPatches.AddSwapShaderMapping("VF Shaders/Forward/PBR Standard Vertex Toggle Lab", labToggleShader);
+
+            Shader courierShader = orbital_building_models.bundle.LoadAsset<Shader>("Assets/orbitalrings-models/shaders/LogisticCourier.shader");
+            Shader courierEffectShader = orbital_building_models.bundle.LoadAsset<Shader>("Assets/orbitalrings-models/shaders/LogisticCourierEffect.shader");
+
 
             // 验证版：用小 bundle atfield-shader，
             try {
