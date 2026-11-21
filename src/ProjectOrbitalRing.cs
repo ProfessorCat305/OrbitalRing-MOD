@@ -161,31 +161,23 @@ namespace ProjectOrbitalRing
 
             Shader courierShader = orbital_building_models.bundle.LoadAsset<Shader>("Assets/orbitalrings-models/shaders/LogisticCourier.shader");
             Shader courierEffectShader = orbital_building_models.bundle.LoadAsset<Shader>("Assets/orbitalrings-models/shaders/LogisticCourierEffect.shader");
+            LogisticCourierHeightFix.SetShaders(courierShader, courierEffectShader);
 
 
             // 验证版：用小 bundle atfield-shader，
             try {
                 bool atFieldShaderLoaded = false;
-                string[] atFieldBundlePaths = {
-                    Path.Combine(ModPath, "atfield-shader"),
-                    Path.Combine(ModPath, "assets", "atfield-shader"),
-                };
-                foreach (string atFieldBundlePath in atFieldBundlePaths) {
-                    if (!File.Exists(atFieldBundlePath)) continue;
+                string atFieldBundlePath = Path.Combine(ModPath, "atfield-shader");
 
-                    AssetBundle atFieldBundle = AssetBundle.LoadFromFile(atFieldBundlePath);
-                    if (atFieldBundle == null) continue;
-
-                    Shader atFieldShader = LoadShaderSafe(atFieldBundle, "assets/planet_atfield_shape.shader");
-                    if (atFieldShader != null) {
-                        SwapShaderPatches.AddSwapShaderMapping("Unlit/Planet ATField Shape", atFieldShader);
-                        LogInfo($"已从 {atFieldBundlePath} 加载护盾显示 Shader");
-                        atFieldShaderLoaded = true;
-                        break;
-                    }
-
-                    atFieldBundle.Unload(true);
+                AssetBundle atFieldBundle = AssetBundle.LoadFromFile(atFieldBundlePath);
+                Shader atFieldShader = LoadShaderSafe(atFieldBundle, "assets/planet_atfield_shape.shader");
+                if (atFieldShader != null) {
+                    SwapShaderPatches.AddSwapShaderMapping("Unlit/Planet ATField Shape", atFieldShader);
+                    LogInfo($"已从 {atFieldBundlePath} 加载护盾显示 Shader");
+                    atFieldShaderLoaded = true;
                 }
+
+                atFieldBundle.Unload(true);
 
                 if (!atFieldShaderLoaded) {
                     LogWarning("未找到 planet_atfield_shape.shader，护盾显示仍用原版 Shader");

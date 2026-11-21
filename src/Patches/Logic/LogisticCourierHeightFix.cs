@@ -1,5 +1,6 @@
 using HarmonyLib;
 using UnityEngine;
+using static ProjectOrbitalRing.ProjectOrbitalRing;
 
 namespace ProjectOrbitalRing.Patches.Logic
 {
@@ -63,7 +64,7 @@ namespace ProjectOrbitalRing.Patches.Logic
             if (Mathf.Abs(planetRadius - VanillaPlanetRadius) < 1f) return;
 
             if (courierShader == null) {
-                Debug.LogWarning("[ProjectOrbitalRing] 配送机替换 shader 未加载，高度修正未生效");
+                LogError("[ProjectOrbitalRing] 配送机替换 shader 未加载，高度修正未生效");
                 return;
             }
 
@@ -90,7 +91,7 @@ namespace ProjectOrbitalRing.Patches.Logic
             }
 
             if (swapped == 0) {
-                Debug.LogWarning("[ProjectOrbitalRing] 配送机材质里没有找到 " + CourierShaderName);
+                LogError("[ProjectOrbitalRing] 配送机材质里没有找到 " + CourierShaderName);
             }
         }
 
