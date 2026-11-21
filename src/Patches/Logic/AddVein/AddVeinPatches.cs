@@ -278,57 +278,69 @@ namespace ProjectOrbitalRing.Patches.Logic.AddVein
         [HarmonyPostfix]
         public static void PlanetData_GenBirthPoints_Postfix(PlanetData __instance, PlanetRawData rawData, int _birthSeed)
         {
-            var dotNet35Random = new DotNet35Random(_birthSeed);
-            Pose pose = __instance.PredictPose(85.0);
-            Vector3 vector3 = Maths.QInvRotateLF(pose.rotation, __instance.star.uPosition - (VectorLF3)pose.position * 40000.0);
-            vector3.Normalize();
-            Vector3 x_direction = Vector3.Cross(vector3, Vector3.up).normalized;
-            Vector3 y_direction = Vector3.Cross(x_direction, vector3).normalized;
-            var num1 = 0;
-            const int num2 = 512;
+            PlaceBirthResources(__instance, rawData, _birthSeed);
+        }
 
-            for (; num1 < num2; ++num1)
+        internal static void PlaceBirthResources(PlanetData planet, PlanetRawData rawData, int seed)
+        {
+            var dotNet35Random = new DotNet35Random(seed);
+            Pose pose = planet.PredictPose(85.0);
+            Vector3 sunDirection = Maths.QInvRotateLF(pose.rotation, planet.star.uPosition - (VectorLF3)pose.position * 40000.0);
+            sunDirection.Normalize();
+            Vector3 tangent = Vector3.Cross(sunDirection, Vector3.up).normalized;
+            Vector3 bitangent = Vector3.Cross(tangent, sunDirection).normalized;
+            const int attemptsPerSearch = 512;
+
+            for (int attempt = 0; attempt < attemptsPerSearch * 2; attempt++)
             {
-                float num3 = (float)(dotNet35Random.NextDouble() * 2.0 - 1.0) * 0.5f;
-                float num4 = (float)(dotNet35Random.NextDouble() * 2.0 - 1.0) * 0.5f;
-                Vector3 random = vector3 + num3 * x_direction + num4 * y_direction;
-                random.Normalize();
-                __instance.birthPoint = random * (float)(__instance.realRadius + 0.20000000298023224 + 1.4500000476837158);
-                var tmpVector3 = Vector3.Cross(random, Vector3.up);
-                x_direction = tmpVector3.normalized;
-                tmpVector3 = Vector3.Cross(x_direction, random);
-                y_direction = tmpVector3.normalized;
+                float tangentOffset = (float)(dotNet35Random.NextDouble() * 2.0 - 1.0) * 0.5f;
+                float bitangentOffset = (float)(dotNet35Random.NextDouble() * 2.0 - 1.0) * 0.5f;
+                Vector3 candidate = sunDirection + tangentOffset * tangent + bitangentOffset * bitangent;
+                // Coastlines can exclude every sun-facing layout for the complete set of birth resources.
+                if (attempt >= attemptsPerSearch)
+                {
+                    candidate = new Vector3(
+                        (float)(dotNet35Random.NextDouble() * 2.0 - 1.0),
+                        (float)(dotNet35Random.NextDouble() * 2.0 - 1.0),
+                        (float)(dotNet35Random.NextDouble() * 2.0 - 1.0));
+                }
+                candidate.Normalize();
+                planet.birthPoint = candidate * (float)(planet.realRadius + 0.20000000298023224 + 1.4500000476837158);
+                tangent = Vector3.Cross(candidate, Vector3.up).normalized;
+                bitangent = Vector3.Cross(tangent, candidate).normalized;
 
                 for (var index = 0; index < 10; ++index)
                 {
-                    Vector2 rotate_0 = new Vector2((float)(dotNet35Random.NextDouble() * 2.0 - 1.0),
+                    Vector2 firstOffset = new Vector2((float)(dotNet35Random.NextDouble() * 2.0 - 1.0),
                         (float)(dotNet35Random.NextDouble() * 2.0 - 1.0)).normalized * 0.1f;
-                    Vector2 rotate_1 = Rotate(rotate_0, 120);
-                    Modify(dotNet35Random, ref rotate_1);
-                    Vector2 rotate_2 = Rotate(rotate_0, 240);
-                    Modify(dotNet35Random, ref rotate_2);
-                    Vector2 rotate_3 = Rotate(rotate_0, 60);
-                    Modify(dotNet35Random, ref rotate_3);
+                    Vector2 secondOffset = Rotate(firstOffset, 120);
+                    Modify(dotNet35Random, ref secondOffset);
+                    Vector2 thirdOffset = Rotate(firstOffset, 240);
+                    Modify(dotNet35Random, ref thirdOffset);
+                    Vector2 stoneOffset = Rotate(firstOffset, 60);
+                    Modify(dotNet35Random, ref stoneOffset);
 
-                    tmpVector3 = random + rotate_0.x * x_direction + rotate_0.y * y_direction;
-                    __instance.birthResourcePoint0 = tmpVector3.normalized;
+                    Vector3 resourceDirection = candidate + firstOffset.x * tangent + firstOffset.y * bitangent;
+                    planet.birthResourcePoint0 = resourceDirection.normalized;
 
-                    tmpVector3 = random + rotate_1.x * x_direction + rotate_1.y * y_direction;
-                    __instance.birthResourcePoint1 = tmpVector3.normalized;
+                    resourceDirection = candidate + secondOffset.x * tangent + secondOffset.y * bitangent;
+                    planet.birthResourcePoint1 = resourceDirection.normalized;
 
-                    tmpVector3 = random + rotate_2.x * x_direction + rotate_2.y * y_direction;
-                    __instance.birthResourcePoint2 = tmpVector3.normalized;
+                    resourceDirection = candidate + thirdOffset.x * tangent + thirdOffset.y * bitangent;
+                    planet.birthResourcePoint2 = resourceDirection.normalized;
 
-                    tmpVector3 = random + rotate_0.x * -2 * x_direction + rotate_0.y * -2 * y_direction;
-                    __instance.birthResourcePoint3 = tmpVector3.normalized;
+                    resourceDirection = candidate + firstOffset.x * -2 * tangent + firstOffset.y * -2 * bitangent;
+                    planet.birthResourcePoint3 = resourceDirection.normalized;
 
-                    tmpVector3 = random + rotate_3.x * 2 * x_direction + rotate_3.y * 2 * y_direction;
-                    __instance.birthResourcePoint4 = tmpVector3.normalized;
+                    resourceDirection = candidate + stoneOffset.x * 2 * tangent + stoneOffset.y * 2 * bitangent;
+                    planet.birthResourcePoint4 = resourceDirection.normalized;
 
-                    if (QueryHeightsNear(rawData, x_direction, y_direction, __instance.realRadius, random, __instance.birthResourcePoint0,
-                        __instance.birthResourcePoint1, __instance.birthResourcePoint2, __instance.birthResourcePoint3,
-                        __instance.birthResourcePoint4))
+                    if (QueryHeightsNear(rawData, tangent, bitangent, planet.realRadius, candidate, planet.birthResourcePoint0,
+                        planet.birthResourcePoint1, planet.birthResourcePoint2, planet.birthResourcePoint3,
+                        planet.birthResourcePoint4))
+                    {
                         return;
+                    }
                 }
             }
         }
