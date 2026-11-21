@@ -6,6 +6,9 @@ namespace ProjectOrbitalRing.Rendering
     {
         private static readonly Plane[] planes = new Plane[6];
         private static Camera preparedCamera;
+        private static bool orthographic;
+        private static Vector3 cameraDirection;
+        private static Vector3 cameraPosition;
 
         internal static void Prepare(Camera camera)
         {
@@ -13,10 +16,25 @@ namespace ProjectOrbitalRing.Rendering
             if (camera != null)
             {
                 GeometryUtility.CalculateFrustumPlanes(camera, planes);
+                orthographic = camera.orthographic;
+                if (orthographic)
+                {
+                    cameraDirection = camera.transform.forward;
+                }
+                else
+                {
+                    cameraPosition = camera.transform.position;
+                }
             }
         }
 
-        internal static bool IsVisible(Camera camera, Bounds bounds, float planetRadius)
+        internal static bool IsVisible(Camera camera, Bounds bounds, float planetRadius) =>
+            TestBounds(camera, bounds, planetRadius, false);
+
+        internal static bool IsDistantTrackVisible(Camera camera, Bounds bounds, float planetRadius) =>
+            TestBounds(camera, bounds, planetRadius, true);
+
+        private static bool TestBounds(Camera camera, Bounds bounds, float planetRadius, bool testCorners)
         {
             if (camera == null)
             {
@@ -33,34 +51,58 @@ namespace ProjectOrbitalRing.Rendering
                 return false;
             }
 
-            float objectRadius = bounds.extents.magnitude;
-            float solidRadius = planetRadius - objectRadius;
-            if (solidRadius <= 0)
+            float radiusSquared = planetRadius * planetRadius;
+            if (planetRadius <= 0 || (testCorners && !orthographic && cameraPosition.sqrMagnitude <= radiusSquared))
             {
                 return true;
             }
 
-            // Orbital meshes and camera positions share a planet-centered coordinate system.
-            if (camera.orthographic)
+            float objectRadius = bounds.extents.magnitude;
+            float solidRadius = planetRadius - objectRadius;
+            if (solidRadius > 0 && IsOccluded(bounds.center, objectRadius, solidRadius * solidRadius))
             {
-                Vector3 forward = camera.transform.forward;
-                float depth = Vector3.Dot(bounds.center, forward);
-                bool occluded = depth > objectRadius &&
-                    (bounds.center - forward * depth).sqrMagnitude < solidRadius * solidRadius;
-                return !occluded;
+                return false;
+            }
+            if (!testCorners)
+            {
+                return true;
             }
 
-            Vector3 position = camera.transform.position;
-            Vector3 line = bounds.center - position;
+            // The planet's occlusion volume is convex, so all corners must be hidden to reject the box.
+            Vector3 min = bounds.min;
+            Vector3 max = bounds.max;
+            for (int corner = 0; corner < 8; corner++)
+            {
+                var position = new Vector3((corner & 1) == 0 ? min.x : max.x,
+                    (corner & 2) == 0 ? min.y : max.y, (corner & 4) == 0 ? min.z : max.z);
+                if (!IsOccluded(position, 0, radiusSquared))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        private static bool IsOccluded(Vector3 center, float objectRadius, float radiusSquared)
+        {
+            // Orbital meshes and camera positions share a planet-centered coordinate system.
+            if (orthographic)
+            {
+                float depth = Vector3.Dot(center, cameraDirection);
+                return depth > objectRadius &&
+                    (center - cameraDirection * depth).sqrMagnitude < radiusSquared;
+            }
+
+            Vector3 line = center - cameraPosition;
             float lengthSquared = line.sqrMagnitude;
             if (lengthSquared < 0.0001f)
             {
-                return true;
+                return false;
             }
 
-            float fraction = -Vector3.Dot(position, line) / lengthSquared;
-            return !(fraction > 0 && fraction < 1 &&
-                (position + line * fraction).sqrMagnitude < solidRadius * solidRadius);
+            float fraction = -Vector3.Dot(cameraPosition, line) / lengthSquared;
+            return fraction > 0 && fraction < 1 &&
+                (cameraPosition + line * fraction).sqrMagnitude < radiusSquared;
         }
     }
 }

@@ -16,6 +16,9 @@ namespace ProjectOrbitalRing.Rendering
         private static HashSet<int> changes = new HashSet<int>();
         private static HashSet<int> processingChanges = new HashSet<int>();
         private static readonly HashSet<int> changedNodes = new HashSet<int>();
+        private static readonly List<(Chunk Chunk, int Level)> visibleGeometry = new List<(Chunk, int)>();
+        private static readonly List<(Chunk Chunk, StructureLodMeshes Meshes)> visibleGroup =
+            new List<(Chunk, StructureLodMeshes)>();
         private static readonly Dictionary<EffectKey, EffectState> effectStates =
             new Dictionary<EffectKey, EffectState>();
         private static PlanetFactory current;
@@ -78,19 +81,20 @@ namespace ProjectOrbitalRing.Rendering
         private sealed class Chunk
         {
             internal readonly ChunkKey Key;
+            internal readonly Chunk Parent;
             internal readonly Dictionary<ChunkKey, Chunk> Children;
             internal readonly HashSet<int> Entities;
             internal int Revision;
             internal readonly StructureLodMeshes[] DetailMeshes = new StructureLodMeshes[DetailLevelCount];
             internal readonly LinkedListNode<DetailBuild>[] PendingDetails =
                 new LinkedListNode<DetailBuild>[DetailLevelCount];
-            internal bool Dirty = true;
             internal Bounds Bounds;
             internal bool HasBounds;
 
-            internal Chunk(ChunkKey key)
+            internal Chunk(ChunkKey key, Chunk parent = null)
             {
                 Key = key;
+                Parent = parent;
                 if (key.Distant)
                 {
                     Children = new Dictionary<ChunkKey, Chunk>();
@@ -226,10 +230,8 @@ namespace ProjectOrbitalRing.Rendering
                 {
                     geometry.Remove(entityId);
                     RemoveChunkEntity(previous.Key, entityId);
-                    if (OrbitalFacilityAttachments.HasBay(previous.ItemId))
-                    {
-                        OrbitalFacilityAttachments.InvalidateTracks(current);
-                    }
+                    OrbitalFacilityAttachments.UpdateTrackPresence(
+                        current, previous.ItemId, previous.Position, 0, default);
                 }
                 return;
             }
@@ -249,11 +251,10 @@ namespace ProjectOrbitalRing.Rendering
             }
             geometry[entityId] = shape;
 
-            if ((OrbitalFacilityAttachments.HasBay(shape.ItemId) ||
-                 (previous != null && OrbitalFacilityAttachments.HasBay(previous.ItemId))) &&
-                (previous == null || shape.ItemId != previous.ItemId || !shape.Position.Equals(previous.Position)))
+            if (previous == null || shape.ItemId != previous.ItemId || !shape.Position.Equals(previous.Position))
             {
-                OrbitalFacilityAttachments.InvalidateTracks(current);
+                OrbitalFacilityAttachments.UpdateTrackPresence(current, previous?.ItemId ?? 0,
+                    previous?.Position ?? default, shape.ItemId, shape.Position);
             }
 
             ChunkKey parentKey = ParentKey(key);
@@ -263,7 +264,7 @@ namespace ProjectOrbitalRing.Rendering
             }
             if (!parent.Children.TryGetValue(key, out Chunk chunk))
             {
-                parent.Children.Add(key, chunk = new Chunk(key));
+                parent.Children.Add(key, chunk = new Chunk(key, parent));
             }
 
             chunk.Entities.Add(entityId);
@@ -403,10 +404,11 @@ namespace ProjectOrbitalRing.Rendering
             return shape;
         }
 
-        internal static void Update(PlanetFactory factory, Camera camera)
+        internal static void Update(PlanetFactory factory)
         {
+            Initialize(factory);
             FlushChanges();
-            PrewarmStructureMeshes(factory, camera);
+            PrewarmStructureMeshes(factory);
         }
 
         internal static int Draw(PlanetFactory factory, Camera camera, int itemId = 0)
@@ -417,16 +419,23 @@ namespace ProjectOrbitalRing.Rendering
             }
 
             var model = factory.planet?.factoryModel;
-            if (model == null || model.disableFactoryEntities ||
-                model.gpuiManager == null || !model.gpuiManager.renderEntity)
+            bool canDraw = model != null && !model.disableFactoryEntities &&
+                model.gpuiManager != null && model.gpuiManager.renderEntity;
+            // Factory data can be ready before the native renderer is enabled on arrival.
+            if (!canDraw && (current != factory || factory.planet.factoryLoaded))
             {
                 return 0;
             }
 
             Initialize(factory);
             FlushChanges();
-            OrbitalRenderBounds.Prepare(camera);
+            visibleGeometry.Clear();
+            visibleGroup.Clear();
+            Chunk currentGroup = null;
+            StructureLodMeshes parentFallback = null;
+            bool useParentMesh = false;
             int drawn = 0;
+            float occluderRadius = factory.planet.realRadius - 2;
             foreach (Chunk chunk in RenderChunks(camera))
             {
                 ChunkKey key = chunk.Key;
@@ -436,52 +445,115 @@ namespace ProjectOrbitalRing.Rendering
                 }
 
                 var definition = GetDefinition(key.ItemId);
-                Vector3 origin = Origin(key);
-                Bounds bounds = WorldBounds(chunk, definition, !chunk.Dirty);
-                if (!OrbitalRenderBounds.IsVisible(camera, bounds, factory.planet.realRadius - 2))
+                Bounds bounds = WorldBounds(chunk, definition);
+                bool visible = key.Distant
+                    ? OrbitalRenderBounds.IsDistantTrackVisible(camera, bounds, occluderRadius)
+                    : OrbitalRenderBounds.IsVisible(camera, bounds, occluderRadius);
+                if (!visible)
                 {
                     continue;
+                }
+
+                Chunk parent = chunk.Parent ?? chunk;
+                if (currentGroup != parent)
+                {
+                    drawn += DrawGroup();
+                    currentGroup = parent;
+                    StructureLodMeshes parentMesh = parent.DetailMeshes[2];
+                    parentFallback = !key.Distant && parentMesh != null && parentMesh.Revision == parent.Revision
+                        && !dirtyChunks.Contains(parent) && (parentMesh.Wall != null || parentMesh.Core != null)
+                        ? parentMesh : null;
+                    useParentMesh = false;
                 }
 
                 int level = key.Distant ? 2 : StructureDetailLevel(camera, bounds, definition);
-                if (NeedsDetailBuild(chunk, level))
-                {
-                    RequestDetailBuild(factory, chunk, level, true);
-                }
-
                 var details = chunk.DetailMeshes;
                 StructureLodMeshes meshes = details[level] ?? details[1] ?? details[0] ?? details[2];
-                if (meshes == null || (meshes.Wall == null && meshes.Core == null))
+                if (meshes == null)
                 {
+                    if (parentFallback != null)
+                    {
+                        useParentMesh = true;
+                        RequestDetailBuild(factory, chunk, level, DetailPriority.VisibleUpgrade);
+                    }
+                    else
+                    {
+                        visibleGeometry.Add((chunk, DetailLevelCount - 1));
+                    }
                     continue;
                 }
-
-                var surfaces = OrbitalTrackAppearance.GetMaterials(definition);
-                Matrix4x4 transform = Matrix4x4.Translate(origin);
-                if (meshes.Wall != null)
+                if (NeedsDetailBuild(chunk, level))
                 {
-                    DrawSurface(factory, camera, key, surfaces, meshes.Wall, transform,
-                        2, TrackSurfaceRole.InnerWall);
-                    DrawSurface(factory, camera, key, surfaces, meshes.Wall, transform,
-                        0, TrackSurfaceRole.Wall);
+                    if (meshes.Revision != chunk.Revision)
+                    {
+                        visibleGeometry.Add((chunk, level));
+                    }
+                    else
+                    {
+                        RequestDetailBuild(factory, chunk, level, DetailPriority.VisibleUpgrade);
+                    }
                 }
-
-                if (meshes.Core != null)
+                if (canDraw && (meshes.Wall != null || meshes.Core != null))
                 {
-                    DrawSurface(factory, camera, key, surfaces, meshes.Core, transform,
-                        0, TrackSurfaceRole.Core);
-                    DrawSurface(factory, camera, key, surfaces, meshes.Core, transform,
-                        1, TrackSurfaceRole.Fittings);
-                    DrawSurface(factory, camera, key, surfaces, meshes.Core, transform,
-                        4, TrackSurfaceRole.Detail);
+                    visibleGroup.Add((chunk, meshes));
                 }
+            }
+            drawn += DrawGroup();
 
-                drawn++;
+            // Queue missing or changed geometry ahead of refinements to meshes already on screen.
+            foreach (var request in visibleGeometry)
+            {
+                RequestDetailBuild(factory, request.Chunk, request.Level, DetailPriority.VisibleGeometry);
+            }
+            visibleGeometry.Clear();
+
+            if (canDraw)
+            {
+                if (QualitySettings.shadows != ShadowQuality.Disable)
+                {
+                    DrawStructureShadows(camera, itemId);
+                }
+                DrawSelection(factory, camera, itemId);
+            }
+            return drawn;
+
+            int DrawGroup()
+            {
+                int count = visibleGroup.Count;
+                if (canDraw && useParentMesh)
+                {
+                    // Submit the entire parent when any visible child is missing.
+                    DrawChunk(factory, camera, currentGroup.Key, parentFallback);
+                    count = 1;
+                }
+                else
+                {
+                    foreach (var entry in visibleGroup)
+                    {
+                        DrawChunk(factory, camera, entry.Chunk.Key, entry.Meshes);
+                    }
+                }
+                visibleGroup.Clear();
+                return count;
+            }
+        }
+
+        private static void DrawChunk(PlanetFactory factory, Camera camera, ChunkKey key, StructureLodMeshes meshes)
+        {
+            var surfaces = OrbitalTrackAppearance.GetMaterials(GetDefinition(key.ItemId));
+            Matrix4x4 transform = Matrix4x4.Translate(Origin(key));
+            if (meshes.Wall != null)
+            {
+                DrawSurface(factory, camera, key, surfaces, meshes.Wall, transform, 2, TrackSurfaceRole.InnerWall);
+                DrawSurface(factory, camera, key, surfaces, meshes.Wall, transform, 0, TrackSurfaceRole.Wall);
             }
 
-            DrawStructureShadows(camera, itemId);
-            DrawSelection(factory, camera, itemId);
-            return drawn;
+            if (meshes.Core != null)
+            {
+                DrawSurface(factory, camera, key, surfaces, meshes.Core, transform, 0, TrackSurfaceRole.Core);
+                DrawSurface(factory, camera, key, surfaces, meshes.Core, transform, 1, TrackSurfaceRole.Fittings);
+                DrawSurface(factory, camera, key, surfaces, meshes.Core, transform, 4, TrackSurfaceRole.Detail);
+            }
         }
 
         private static void DrawSurface(PlanetFactory factory, Camera camera, ChunkKey key,

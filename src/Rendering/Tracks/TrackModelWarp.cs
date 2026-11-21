@@ -14,6 +14,7 @@ namespace ProjectOrbitalRing.Rendering
             internal Vector3 Position;
             internal Vector3 Normal;
             internal Vector2 Coordinate;
+            internal int Section;
 
             internal static ModelVertex Lerp(ModelVertex first, ModelVertex second, float fraction) => new ModelVertex
             {
@@ -48,12 +49,16 @@ namespace ProjectOrbitalRing.Rendering
             private readonly bool reversed;
             private readonly float textureScale;
             internal readonly float[] Phases;
-            private readonly Dictionary<float, WarpFrame> frames = new Dictionary<float, WarpFrame>();
+            private readonly WarpFrame[] frames;
+            private readonly bool[] frameReady;
 
-            internal Path(IList<TrackSample> samples, float[] phases, float textureScale)
+            internal Path(IList<TrackSample> samples, float[] phases, float textureScale, int sectionCount)
             {
                 this.samples = samples;
                 this.textureScale = textureScale;
+                // The two clipping planes can add sections at positions absent from the template.
+                frames = new WarpFrame[sectionCount + 2];
+                frameReady = new bool[frames.Length];
                 Phases = phases;
                 reversed = phases[phases.Length - 1] < phases[0];
                 if (reversed)
@@ -65,17 +70,19 @@ namespace ProjectOrbitalRing.Rendering
             internal void BeginCycle()
             {
                 // The same model Z maps to a different path frame in each geographic period.
-                frames.Clear();
+                Array.Clear(frameReady, 0, frameReady.Length);
             }
 
             internal int Add(TrackMesh target, ModelVertex vertex, float cycle, float referenceLength,
                 float referenceCoordinateSpan, bool localCoordinates)
             {
-                if (!frames.TryGetValue(vertex.Position.z, out var frame))
+                int section = vertex.Section;
+                if (!frameReady[section])
                 {
-                    frame = CreateFrame(vertex.Position.z, cycle, referenceLength);
-                    frames.Add(vertex.Position.z, frame);
+                    frames[section] = CreateFrame(vertex.Position.z, cycle, referenceLength);
+                    frameReady[section] = true;
                 }
+                ref readonly WarpFrame frame = ref frames[section];
 
                 Vector3 crossSectionNormal = frame.Side * vertex.Normal.x + frame.Up * vertex.Normal.y;
                 Vector3 longitudinalNormal = frame.Tangent * (vertex.Normal.z * frame.InverseLongitudinalScale);
@@ -141,13 +148,13 @@ namespace ProjectOrbitalRing.Rendering
         internal static IEnumerable<object> Append(TrackMesh target, int itemId, int detailLevel,
             IList<TrackSample> samples, float[] phases, float textureScale)
         {
-            var path = new Path(samples, phases, textureScale);
+            var model = TrackModelAssets.Get(itemId, detailLevel);
+            var path = new Path(samples, phases, textureScale, model.SectionCount);
             if (path.Phases[path.Phases.Length - 1] - path.Phases[0] < 0.0000001f)
             {
                 yield break;
             }
 
-            var model = TrackModelAssets.Get(itemId, detailLevel);
             var mapping = new int[model.Vertices.Length];
             var polygon = new ModelVertex[6];
             var clipped = new ModelVertex[6];
@@ -162,43 +169,38 @@ namespace ProjectOrbitalRing.Rendering
                     maximumLength < model.LongitudinalBounds.y;
                 for (int surface = 0; surface < model.Indices.Length; surface++)
                 {
-                    var triangles = model.Indices[surface];
-                    if (triangles.Length == 0)
+                    int[] indices = model.Indices[surface];
+                    Vector2[] triangleBounds = model.TriangleLongitudinalBounds[surface];
+                    if (triangleBounds.Length == 0)
                     {
                         continue;
                     }
 
                     Array.Clear(mapping, 0, mapping.Length);
                     bool localCoordinates = itemId == ProtoID.I粒子加速轨道 && (surface == 1 || surface == 4);
-                    for (int triangle = 0; triangle < triangles.Length; triangle += 3)
+                    for (int triangle = 0; triangle < triangleBounds.Length; triangle++)
                     {
-                        if (triangle > 0 && triangle % (TrianglesPerBuildStep * 3) == 0)
+                        if (triangle > 0 && triangle % TrianglesPerBuildStep == 0)
                         {
                             yield return null;
                         }
 
-                        int first = triangles[triangle];
-                        int second = triangles[triangle + 1];
-                        int third = triangles[triangle + 2];
+                        int start = triangle * 3;
                         if (clipCycle)
                         {
-                            float firstLength = model.Vertices[first].z;
-                            float secondLength = model.Vertices[second].z;
-                            float thirdLength = model.Vertices[third].z;
-                            float lower = Mathf.Min(firstLength, Mathf.Min(secondLength, thirdLength));
-                            float upper = Mathf.Max(firstLength, Mathf.Max(secondLength, thirdLength));
-                            if (upper < minimumLength || lower > maximumLength)
+                            Vector2 bounds = triangleBounds[triangle];
+                            if (bounds.y < minimumLength || bounds.x > maximumLength)
                             {
                                 continue;
                             }
-                            if (lower < minimumLength || upper > maximumLength)
+                            if (bounds.x < minimumLength || bounds.y > maximumLength)
                             {
-                                AppendClipped(first, second, third);
+                                AppendClipped(indices[start], indices[start + 1], indices[start + 2]);
                                 continue;
                             }
                         }
 
-                        target.Triangle(surface, Map(first), Map(second), Map(third));
+                        target.Triangle(surface, Map(indices[start]), Map(indices[start + 1]), Map(indices[start + 2]));
                     }
 
                     yield return null;
@@ -208,8 +210,8 @@ namespace ProjectOrbitalRing.Rendering
                         polygon[0] = Read(first);
                         polygon[1] = Read(second);
                         polygon[2] = Read(third);
-                        int count = Clip(polygon, 3, clipped, minimumLength, true);
-                        count = Clip(clipped, count, polygon, maximumLength, false);
+                        int count = Clip(polygon, 3, clipped, minimumLength, model.SectionCount, true);
+                        count = Clip(clipped, count, polygon, maximumLength, model.SectionCount + 1, false);
                         if (count < 3)
                         {
                             return;
@@ -239,6 +241,7 @@ namespace ProjectOrbitalRing.Rendering
                         Position = model.Vertices[index],
                         Normal = model.Normals[index],
                         Coordinate = model.Coordinates[index],
+                        Section = model.VertexSections[index],
                     };
                     int Map(int index)
                     {
@@ -253,7 +256,8 @@ namespace ProjectOrbitalRing.Rendering
             }
         }
 
-        private static int Clip(ModelVertex[] input, int count, ModelVertex[] output, float limit, bool keepGreater)
+        private static int Clip(ModelVertex[] input, int count, ModelVertex[] output, float limit,
+            int section, bool keepGreater)
         {
             if (count == 0)
             {
@@ -272,6 +276,7 @@ namespace ProjectOrbitalRing.Rendering
                     float fraction = (limit - previous.Position.z) / (current.Position.z - previous.Position.z);
                     var intersection = ModelVertex.Lerp(previous, current, fraction);
                     intersection.Position.z = limit;
+                    intersection.Section = section;
                     output[outputCount++] = intersection;
                 }
 
