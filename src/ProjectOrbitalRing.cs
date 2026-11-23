@@ -66,7 +66,7 @@ namespace ProjectOrbitalRing
     {
         public const string MODGUID = "org.ProfessorCat305.OrbitalRing";
         public const string MODNAME = "OrbitalRing";
-        public const string VERSION = "1.0.24";
+        public const string VERSION = "1.0.25";
         public const string DEBUGVERSION = "";
 
 
@@ -177,7 +177,7 @@ namespace ProjectOrbitalRing
                     atFieldShaderLoaded = true;
                 }
 
-                atFieldBundle.Unload(true);
+                //atFieldBundle.Unload(true);
 
                 if (!atFieldShaderLoaded) {
                     LogWarning("未找到 planet_atfield_shape.shader，护盾显示仍用原版 Shader");

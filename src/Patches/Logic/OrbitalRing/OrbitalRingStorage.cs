@@ -176,11 +176,11 @@ namespace ProjectOrbitalRing.Patches.Logic.OrbitalRing
                                         //storageItem[storage.itemId][0] -= count;
                                         int inc = split_inc(ref orbitalRingStorage.storageItem[storage.itemId][0], ref orbitalRingStorage.storageItem[storage.itemId][1], count);
                                         stationComponent.storage[j].count += count;
-                                        stationComponent.storage[j].inc += (short)inc;
+                                        stationComponent.storage[j].inc += inc;
                                     } else {
                                         stationComponent.storage[j].count += orbitalRingStorage.storageItem[storage.itemId][0];
                                         orbitalRingStorage.storageItem[storage.itemId][0] = 0;
-                                        stationComponent.storage[j].inc += (short)orbitalRingStorage.storageItem[storage.itemId][1];
+                                        stationComponent.storage[j].inc += orbitalRingStorage.storageItem[storage.itemId][1];
                                         orbitalRingStorage.storageItem[storage.itemId][1] = 0;
                                         orbitalRingStorage.storageItem.Remove(storage.itemId);
                                     }
