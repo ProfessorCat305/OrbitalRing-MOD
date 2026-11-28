@@ -72,6 +72,24 @@ namespace ProjectOrbitalRing.Patches.Logic
             }
         }
 
+        internal static int FindGlobalPowerNode(PlanetFactory factory)
+        {
+            PowerSystem power = factory.powerSystem;
+            if (power == null || !NodeIds.TryGetValue(factory.planetId, out var ids)) return 0;
+
+            foreach (int nodeId in ids) {
+                if (nodeId <= 0 || nodeId >= power.nodeCursor) continue;
+                ref PowerNodeComponent node = ref power.nodePool[nodeId];
+                int networkId = node.networkId;
+                if (node.id == nodeId && IsGlobalPowerNode(in node) && networkId > 0 &&
+                    networkId < power.netCursor && power.netPool[networkId]?.id == networkId) return nodeId;
+            }
+            return 0;
+        }
+
+        internal static bool IsGlobalPowerNode(in PowerNodeComponent node) =>
+            node.entityId == 0 && node.powerPoint == Pos && node.coverRadius == GlobalPowerCoverRadius;
+
         internal static void SyncGlobalPowerSupplyNodeId(int planetId, int nodeId) => NodeIds.TryAddOrInsert(planetId, nodeId);
 
         internal static void SyncGlobalPowerSupplyRemoved(int planetId)

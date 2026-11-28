@@ -194,39 +194,13 @@ namespace ProjectOrbitalRing.Rendering
 
         private static bool IsColliderWorking(PlanetFactory factory, EquatorRing ring)
         {
-            var assemblers = factory.factorySystem?.assemblerPool;
-            if (assemblers == null || !ring.IsOneFull() || !ring.isLowInsideRingComplete)
-            {
+            if (!ring.IsOneFull() || !ring.isLowInsideRingComplete)
                 return false;
-            }
 
-            for (int slot = 0; slot < ring.Capacity; slot++)
-            {
-                var pair = ring.GetPair(slot);
-                int assemblerId = pair.OrbitalStationPoolId;
-                if (pair.stationType != EquatorRing.StationType.Assembler ||
-                    assemblerId <= 0 || assemblerId >= assemblers.Length)
-                {
-                    continue;
-                }
-
-                ref AssemblerComponent assembler = ref assemblers[assemblerId];
-                int entityId = assembler.entityId;
-                if (assembler.id != assemblerId || !IsEntity(factory, entityId))
-                {
-                    continue;
-                }
-
-                ref EntityData entity = ref factory.entityPool[entityId];
-                if (entity.protoId != ProtoID.I星环对撞机 || entity.assemblerId != assemblerId)
-                {
-                    continue;
-                }
-
-                return assembler.recipeId > 0 && entityId < factory.entityAnimPool.Length &&
-                    factory.entityAnimPool[entityId].state == 1 && factory.entityAnimPool[entityId].power >= 0.1f;
-            }
-            return false;
+            int entityId = ring.FindParticleColliderEntity(factory);
+            return entityId > 0 && entityId < factory.entityAnimPool.Length &&
+                factory.factorySystem.assemblerPool[factory.entityPool[entityId].assemblerId].recipeId > 0 &&
+                factory.entityAnimPool[entityId].state == 1 && factory.entityAnimPool[entityId].power >= 0.1f;
         }
 
         internal static void Update()
