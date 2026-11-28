@@ -4361,11 +4361,11 @@
     },
     {
         "Name": "I乾坤-原矿",
-        "ZHCN": "存有巨额矿物资源的次级维度空间，只有星环共享储存空间才有足够的空间让其从次级维度倒出。\n<color=\"#FD965ECC\">手持该物品，在打开的共享储存空间窗口中点击空闲的格子，即可存入，存入时将转化为对应原矿</color>\n\n<color=\"#FD965ECC\">一个星环共享储存空间只允许通过这种方式使一种原矿储存量超过200000（但是不得超过21亿），当有其他原矿在共享空间中存入超过200000时，将无法点击空闲的格子存入</color>",
-        "ENUS": "The secondary dimensional space, which holds vast mineral resources, can only be emptied from the secondary dimension by the shared storage space of the orbital ring.\n<color=\"#FD965ECC\">Holding this item, click on an empty slot in the opened shared storage space window to store it. When stored, it will be converted into the corresponding raw ore</color>\n\n<color=\"#FD965ECC\">A shared storage space in a orbital ring only allows one type of raw ore to exceed a storage capacity of 200,000 in this way（But it must not exceed 2.1 billion）. When other types of raw ore are stored in the shared space and exceed 200,000, it will be impossible to click on an empty slot to store them</color>",
-        "FRFR": "Un espace subdimensionnel contient d'immenses quantités de minerai. Seul le stockage partagé orbital peut les accueillir.\n<color=\"#FD965ECC\">Tenez cet objet et cliquez sur une case vide de la fenêtre du stockage partagé : il devient le minerai correspondant.</color>\n\n<color=\"#FD965ECC\">Un seul type de minerai peut dépasser 200000 par ce moyen dans un même anneau, sans dépasser 2.1 milliards. Si un autre minerai dépasse déjà 200000, aucun dépôt par case vide n'est possible.</color>",
-        "DEDE": "Ein Subdimensionsraum voller Erz, für das nur ein gemeinsames Orbitallager genug Platz bietet.\n<color=\"#FD965ECC\">Halte das Paket und klicke im geöffneten Lagerfenster auf einen freien Platz. Es wird als entsprechendes Roherz eingelagert.</color>\n\n<color=\"#FD965ECC\">Nur eine Erzsorte darf so pro Ring über 200000 erreichen, höchstens 2.1 Milliarden. Liegt eine andere Sorte über 200000, ist diese Einlagerung nicht möglich.</color>",
-        "JAJP": "膨大な鉱物を収めた副次元空間。星環共有倉庫だけが展開する広さを持つ。\n<color=\"#FD965ECC\">手に持って共有倉庫画面の空きマスを押すと、対応する原鉱へ変換して入庫する。</color>\n\n<color=\"#FD965ECC\">1つの星環でこの方法により200000を超えられる原鉱は1種類のみ、最大21億。他の原鉱が200000を超える間は空きマスから入庫できない。</color>"
+        "ZHCN": "存有巨额矿物资源的次级维度空间，只有星环共享储存空间才有足够的空间让其从次级维度倒出。\n<color=\"#FD965ECC\">手持乾坤原矿，左键点击共享空间内的空白或货物格，也可 Ctrl＋左键点击天枢座。存入时会转化为对应原矿。</color>\n\n<color=\"#FD965ECC\">同一星环只允许一种原矿超过 200,000。已有超限原矿时，其他原矿可填到 200,000，余量留在手中。最高容量为 21 亿。</color>",
+        "ENUS": "The secondary dimensional space, which holds vast mineral resources, can only be emptied from the secondary dimension by the shared storage space of the orbital ring.\n<color=\"#FD965ECC\">While holding this item, left-click a blank area or a cargo slot in shared storage, or Ctrl-left-click the Tianshu Throne. The deposit converts into the corresponding ore.</color>\n\n<color=\"#FD965ECC\">Only one ore type per ring can exceed 200,000. Other ores can be filled to 200,000 and any remainder stays in hand. The maximum capacity is 2.1 billion.</color>",
+        "FRFR": "Un espace subdimensionnel contient d'immenses quantités de minerai. Seul le stockage partagé orbital peut les accueillir.\n<color=\"#FD965ECC\">Tenez l’objet et cliquez dans une zone vide ou une case du stockage partagé, ou faites Ctrl+clic gauche sur le Trône Tianshu. L’objet est converti en minerai.</color>\n\n<color=\"#FD965ECC\">Un seul minerai peut dépasser 200 000 par anneau. Les autres peuvent être complétés jusqu’à 200 000 et le reste reste en main. Le maximum est de 2,1 milliards.</color>",
+        "DEDE": "Ein Subdimensionsraum voller Erz, für das nur ein gemeinsames Orbitallager genug Platz bietet.\n<color=\"#FD965ECC\">Halte das Paket und klicke im gemeinsamen Lager auf eine freie Fläche oder ein Frachtfeld, oder per Strg und Linksklick auf den Tianshu-Thron. Bei der Einlagerung wird es in Erz umgewandelt.</color>\n\n<color=\"#FD965ECC\">Nur eine Erzsorte pro Ring darf 200.000 überschreiten. Andere können dann bis 200.000 aufgefüllt werden. Der Rest bleibt in der Hand. Das Maximum beträgt 2,1 Milliarden.</color>",
+        "JAJP": "膨大な鉱物を収めた副次元空間。星環共有倉庫だけが展開する広さを持つ。\n<color=\"#FD965ECC\">手に持って共有倉庫の空白部分や貨物マスを左クリックするか、天枢座をCtrl＋左クリックすると、対応する原鉱に変換して入庫します。</color>\n\n<color=\"#FD965ECC\">1つの星環で200,000を超えられる原鉱は1種類です。ほかは200,000まで入庫でき、残りは手元に残ります。最大容量は21億です。</color>"
     },
     {
         "Name": "生物发酵甲烷",
@@ -7089,11 +7089,11 @@
     },
     {
         "Name": "I天枢座",
-        "ZHCN": "星环作为一个行星级巨型结构，承载着统筹全球资源，协调各工厂运作的能力，而星环本身，也需要一个控制空间站，协调星环的资源分配，各组件的协调运作，这就是天枢座的职能。通过接入不同的组件，天枢座便能承担起不同的全球功能支持。\n当所属星环的轨道连接组件成环时，<color=\"#FD965ECC\">点击天枢座会打开本星环的共享空间窗口，可调整存入上限</color>\n在星环共享空间中的默认储存上限为<color=\"#FD965ECC\">50</color>",
-        "ENUS": "As a planetary giant structure, the Orbital Ring carries the ability to coordinate global resources and coordinate the operation of various factories. However, the Orbital Ring itself also requires a control space station to coordinate the allocation of resources and the coordinated operation of various components. This is the function of the Celestial Pivot constellation. By connecting different components, the Tianshu Throne constellation can undertake different global functional support.\nWhen the orbit connection component of the orbital ring is in a ring，<color=\"#FD965ECC\">Clicking on Tianshu Throne will open the shared space window of this orbital ring for viewing and adjusting storage limits</color>\nThe default storage capacity limit in the Orbital Ring shared space is <color=\"#FD965ECC\">50</color>",
-        "FRFR": "Cette station coordonne ressources et modules de l'anneau pour les fonctions planétaires.\nAvec un anneau de connecteurs fermé, <color=\"#FD965ECC\">cliquer ouvre la fenêtre du stockage partagé de cet anneau</color>.\nLimite partagée : <color=\"#FD965ECC\">50</color>.",
-        "DEDE": "Die Station koordiniert Ringressourcen und Module für globale Funktionen.\nBei geschlossenem Verbinderring <color=\"#FD965ECC\">öffnet ein Klick das gemeinsame Lagerfenster dieses Rings</color>.\nLagergrenze: <color=\"#FD965ECC\">50</color>.",
-        "JAJP": "星環の資源配分と各モジュールを調整し、接続部品に応じて全惑星機能を担う制御拠点。\n接続部品が環になると<color=\"#FD965ECC\">クリックで所属星環の共有倉庫画面を開く</color>。\n共有倉庫の標準上限：<color=\"#FD965ECC\">50</color>。"
+        "ZHCN": "星环作为一个行星级巨型结构，承载着统筹全球资源，协调各工厂运作的能力，而星环本身，也需要一个控制空间站，协调星环的资源分配，各组件的协调运作，这就是天枢座的职能。通过接入不同的组件，天枢座便能承担起不同的全球功能支持。\n当所属星环的轨道连接组件成环时，<color=\"#FD965ECC\">点击天枢座可打开共享空间，手动存取物品并调整存入上限。手持物品时按 Ctrl 并左键点击可直接存入</color>\n在星环共享空间中的默认储存上限为<color=\"#FD965ECC\">50</color>",
+        "ENUS": "As a planetary giant structure, the Orbital Ring carries the ability to coordinate global resources and coordinate the operation of various factories. However, the Orbital Ring itself also requires a control space station to coordinate the allocation of resources and the coordinated operation of various components. This is the function of the Celestial Pivot constellation. By connecting different components, the Tianshu Throne constellation can undertake different global functional support.\nWhen the orbit connection component of the orbital ring is in a ring，<color=\"#FD965ECC\">Click the Tianshu Throne to open shared storage, transfer items and edit storage limits. Ctrl-left-click while holding items to deposit directly</color>\nThe default storage capacity limit in the Orbital Ring shared space is <color=\"#FD965ECC\">50</color>",
+        "FRFR": "Cette station coordonne ressources et modules de l'anneau pour les fonctions planétaires.\nAvec un anneau de connecteurs fermé, <color=\"#FD965ECC\">cliquez pour ouvrir le stockage partagé, transférer des objets et régler les limites. Faites Ctrl+clic gauche pour déposer les objets en main</color>.\nLimite partagée : <color=\"#FD965ECC\">50</color>.",
+        "DEDE": "Die Station koordiniert Ringressourcen und Module für globale Funktionen.\nBei geschlossenem Verbinderring <color=\"#FD965ECC\">öffnet ein Klick das gemeinsame Lager zum Ein- und Auslagern und Einstellen der Limits. Strg und Linksklick lagern gehaltene Gegenstände direkt ein</color>.\nLagergrenze: <color=\"#FD965ECC\">50</color>.",
+        "JAJP": "星環の資源配分と各モジュールを調整し、接続部品に応じて全惑星機能を担う制御拠点。\n接続部品が環になると<color=\"#FD965ECC\">クリックで共有倉庫を開き、入出庫や上限の変更ができます。アイテムを手に持ってCtrl＋左クリックすると直接入庫します</color>。\n共有倉庫の標準上限：<color=\"#FD965ECC\">50</color>。"
     },
     {
         "Name": "星环护盾",
@@ -8249,26 +8249,26 @@
     },
     {
         "Name": "OrbitalRingStorageWindowApply",
-        "ZHCN": "设置",
+        "ZHCN": "应用",
         "ENUS": "Apply",
-        "FRFR": "Définir",
-        "DEDE": "Festlegen",
-        "JAJP": "設定"
+        "FRFR": "Appliquer",
+        "DEDE": "Anwenden",
+        "JAJP": "適用"
     },
     {
         "Name": "OrbitalRingStorageWindowDefault",
-        "ZHCN": "默认",
-        "ENUS": "Default",
-        "FRFR": "Par défaut",
-        "DEDE": "Standard",
-        "JAJP": "デフォルト"
+        "ZHCN": "恢复默认",
+        "ENUS": "Reset to default",
+        "FRFR": "Réinitialiser",
+        "DEDE": "Standard wiederherstellen",
+        "JAJP": "標準に戻す"
     },
     {
         "Name": "OrbitalRingStorageWindowInputLimit",
         "ZHCN": "输入上限",
-        "ENUS": "Input limit",
-        "FRFR": "Saisir la limite",
-        "DEDE": "Grenze eingeben",
+        "ENUS": "Enter limit",
+        "FRFR": "Saisir une limite",
+        "DEDE": "Limit eingeben",
         "JAJP": "上限を入力"
     },
     {
@@ -8316,8 +8316,8 @@
         "ZHCN": "请输入有效的整数上限",
         "ENUS": "Please enter a valid integer limit",
         "FRFR": "Saisissez une limite entière valide",
-        "DEDE": "Eine gültige ganzzahlige Grenze eingeben",
-        "JAJP": "有効な整数の上限を入力してください"
+        "DEDE": "Gib eine gültige ganze Zahl ein",
+        "JAJP": "有効な整数を入力してください"
     },
     {
         "Name": "OrbitalRingStorageWindowQianKunItemLimitExceeded",
@@ -8358,5 +8358,269 @@
         "FRFR": "Sera supprimé dans la prochaine version",
         "DEDE": "Wird in der nächsten Version entfernt",
         "JAJP": "次のバージョンで削除予定"
+    },
+    {
+        "Name": "OrbitalRingStorageWindowPickItem",
+        "ZHCN": "选择物品",
+        "ENUS": "Choose item",
+        "FRFR": "Choisir un objet",
+        "DEDE": "Gegenstand wählen",
+        "JAJP": "アイテムを選択"
+    },
+    {
+        "Name": "OrbitalRingStorageWindowPickItemHint",
+        "ZHCN": "选择物品后可设置存入上限，即使当前没有该物品的库存。",
+        "ENUS": "Choose an item to set its deposit limit, even if it is out of stock.",
+        "FRFR": "Choisissez un objet pour fixer sa limite, même hors stock.",
+        "DEDE": "Wähle einen Gegenstand, um sein Einlagerungslimit auch ohne Bestand festzulegen.",
+        "JAJP": "在庫にないアイテムも選んで入庫上限を設定できます。"
+    },
+    {
+        "Name": "OrbitalRingStorageWindowSearch",
+        "ZHCN": "按物品名称或编号搜索",
+        "ENUS": "Search by item name or ID",
+        "FRFR": "Rechercher par nom ou ID",
+        "DEDE": "Nach Name oder ID suchen",
+        "JAJP": "名前またはIDで検索"
+    },
+    {
+        "Name": "OrbitalRingStorageWindowDepositTitle",
+        "ZHCN": "存入物品",
+        "ENUS": "Deposit items",
+        "FRFR": "Déposer des objets",
+        "DEDE": "Gegenstände einlagern",
+        "JAJP": "アイテムを入庫"
+    },
+    {
+        "Name": "OrbitalRingStorageWindowDepositHint",
+        "ZHCN": "从背包拿起物品，左键点击共享空间内的空白或货物格即可存入。",
+        "ENUS": "Pick up an item, then left-click a blank area or a cargo slot in shared storage to deposit it.",
+        "FRFR": "Prenez un objet, puis cliquez dans une zone vide ou une case de stockage partagé pour le déposer.",
+        "DEDE": "Nimm einen Gegenstand und klicke im gemeinsamen Lager auf eine freie Fläche oder ein Frachtfeld.",
+        "JAJP": "アイテムを手に持ち、共有倉庫の空白部分や貨物マスを左クリックして入庫します。"
+    },
+    {
+        "Name": "OrbitalRingStorageWindowDepositHeldTitle",
+        "ZHCN": "当前手持物品：{0}",
+        "ENUS": "Held item: {0}",
+        "FRFR": "Objet en main : {0}",
+        "DEDE": "In der Hand: {0}",
+        "JAJP": "手に持っているアイテム：{0}"
+    },
+    {
+        "Name": "OrbitalRingStorageWindowDepositHeldHint",
+        "ZHCN": "左键点击空白或货物格即可存入。",
+        "ENUS": "Left-click a blank area or a cargo slot to deposit.",
+        "FRFR": "Cliquez dans une zone vide ou une case pour déposer.",
+        "DEDE": "Klicke zum Einlagern auf eine freie Fläche oder ein Frachtfeld.",
+        "JAJP": "空白部分や貨物マスを左クリックして入庫。"
+    },
+    {
+        "Name": "OrbitalRingStorageWindowLimitColumn",
+        "ZHCN": "存入上限",
+        "ENUS": "Storage limit",
+        "FRFR": "Limite de stockage",
+        "DEDE": "Einlagerungslimit",
+        "JAJP": "入庫上限"
+    },
+    {
+        "Name": "OrbitalRingStorageWindowEmpty",
+        "ZHCN": "共享空间还没有货物",
+        "ENUS": "Shared storage is empty",
+        "FRFR": "Le stockage partagé est vide",
+        "DEDE": "Das gemeinsame Lager ist leer",
+        "JAJP": "共有倉庫は空です"
+    },
+    {
+        "Name": "OrbitalRingStorageWindowEmptyHint",
+        "ZHCN": "从背包拿起物品，左键点击共享空间内的空白或货物格即可存入。\n在库存图标上按住右键，选择取出数量。",
+        "ENUS": "Pick up an item, then left-click a blank area or a cargo slot in shared storage to deposit it.\nHold the right mouse button on a stocked item to choose how many to take.",
+        "FRFR": "Prenez un objet, puis cliquez dans une zone vide ou une case de stockage partagé pour le déposer.\nMaintenez le clic droit sur un objet stocké pour choisir la quantité à retirer.",
+        "DEDE": "Nimm einen Gegenstand und klicke im gemeinsamen Lager auf eine freie Fläche oder ein Frachtfeld.\nHalte die rechte Maustaste über einem Lagerobjekt, um die Entnahmemenge zu wählen.",
+        "JAJP": "アイテムを手に持ち、共有倉庫の空白部分や貨物マスを左クリックして入庫します。\n在庫アイコンを右クリック長押しすると、取り出す数量を選べます。"
+    },
+    {
+        "Name": "OrbitalRingStorageWindowItemCount",
+        "ZHCN": "{0} 种物品",
+        "ENUS": "Item types: {0}",
+        "FRFR": "Types d’objets : {0}",
+        "DEDE": "Gegenstandsarten: {0}",
+        "JAJP": "{0} 種類のアイテム"
+    },
+    {
+        "Name": "OrbitalRingStorageWindowNoMatches",
+        "ZHCN": "没有符合条件的物品",
+        "ENUS": "No matching items",
+        "FRFR": "Aucun objet trouvé",
+        "DEDE": "Keine passenden Gegenstände",
+        "JAJP": "該当するアイテムがありません"
+    },
+    {
+        "Name": "OrbitalRingStorageWindowNoMatchesHint",
+        "ZHCN": "清空搜索以查看全部物品。",
+        "ENUS": "Clear the search to see all items.",
+        "FRFR": "Effacez la recherche pour afficher tous les objets.",
+        "DEDE": "Leere die Suche, um alle Gegenstände anzuzeigen.",
+        "JAJP": "検索をクリアするとすべてのアイテムが表示されます。"
+    },
+    {
+        "Name": "OrbitalRingStorageWindowPreviousPage",
+        "ZHCN": "上一页",
+        "ENUS": "Previous",
+        "FRFR": "Précédent",
+        "DEDE": "Zurück",
+        "JAJP": "前へ"
+    },
+    {
+        "Name": "OrbitalRingStorageWindowNextPage",
+        "ZHCN": "下一页",
+        "ENUS": "Next",
+        "FRFR": "Suivant",
+        "DEDE": "Weiter",
+        "JAJP": "次へ"
+    },
+    {
+        "Name": "OrbitalRingStorageWindowPage",
+        "ZHCN": "{0} 种物品 · 第 {1}/{2} 页",
+        "ENUS": "{0} item types · Page {1}/{2}",
+        "FRFR": "Types d’objets : {0} · Page {1}/{2}",
+        "DEDE": "Gegenstandsarten: {0} · Seite {1}/{2}",
+        "JAJP": "{0} 種類 · {1}/{2} ページ"
+    },
+    {
+        "Name": "OrbitalRingStorageWindowQianKunTitle",
+        "ZHCN": "乾坤原矿",
+        "ENUS": "Qian Kun ore",
+        "FRFR": "Minerai Qian Kun",
+        "DEDE": "Qian-Kun-Erz",
+        "JAJP": "乾坤原鉱"
+    },
+    {
+        "Name": "OrbitalRingStorageWindowQianKunHelpTitle",
+        "ZHCN": "乾坤原矿存入规则",
+        "ENUS": "Qian Kun deposit rules",
+        "FRFR": "Dépôt de minerai Qian Kun",
+        "DEDE": "Einlagerung von Qian-Kun-Erz",
+        "JAJP": "乾坤原鉱の入庫ルール"
+    },
+    {
+        "Name": "OrbitalRingStorageWindowQianKunHelp",
+        "ZHCN": "乾坤原矿存入时会转换为对应原矿。每个星环只允许一种原矿超过 {0}。已有超限矿物时，其他乾坤原矿可存到 {0}，余量留在手中。",
+        "ENUS": "Qian Kun items convert to the corresponding ore when deposited. Only one ore type can exceed {0} in a ring. When an ore is already over that limit, other ores can be filled up to {0} and any remainder stays in hand.",
+        "FRFR": "Le minerai Qian Kun devient le minerai correspondant au dépôt. Un seul type peut dépasser {0} par anneau. Les autres peuvent être complétés jusqu’à {0} et le reste reste en main.",
+        "DEDE": "Qian-Kun-Erz wird beim Einlagern in das passende Erz umgewandelt. Pro Ring darf nur eine Erzsorte {0} überschreiten. Andere Sorten können dann bis {0} aufgefüllt werden. Der Rest bleibt in der Hand.",
+        "JAJP": "乾坤原鉱は入庫時に対応する原鉱に変換されます。1つの星環で {0} を超えられる原鉱は1種類です。ほかの原鉱は {0} まで入庫でき、残りは手元に残ります。"
+    },
+    {
+        "Name": "OrbitalRingStorageWindowNoOverflow",
+        "ZHCN": "当前没有超限矿物",
+        "ENUS": "No ore above capacity",
+        "FRFR": "Aucun minerai au-dessus du seuil",
+        "DEDE": "Kein Erz über der Kapazitätsgrenze",
+        "JAJP": "上限を超えた原鉱はありません"
+    },
+    {
+        "Name": "OrbitalRingStorageWindowCurrentOverflow",
+        "ZHCN": "超限矿物　{0}",
+        "ENUS": "Above capacity: {0}",
+        "FRFR": "Au-dessus du seuil : {0}",
+        "DEDE": "Über der Kapazitätsgrenze: {0}",
+        "JAJP": "上限超過：{0}"
+    },
+    {
+        "Name": "OrbitalRingStorageWindowOverflowQuantity",
+        "ZHCN": "库存 {0}",
+        "ENUS": "In stock: {0}",
+        "FRFR": "En stock : {0}",
+        "DEDE": "Auf Lager: {0}",
+        "JAJP": "在庫 {0}"
+    },
+    {
+        "Name": "OrbitalRingStorageWindowOtherOverflow",
+        "ZHCN": " · 另有 {0} 种",
+        "ENUS": " · {0} more",
+        "FRFR": " · {0} autre(s)",
+        "DEDE": " · {0} weitere",
+        "JAJP": " · ほか {0} 種類"
+    },
+    {
+        "Name": "OrbitalRingStorageWindowHeldQianKunAllowed",
+        "ZHCN": "手持{0} · 可存入",
+        "ENUS": "Held {0} · Can deposit",
+        "FRFR": "{0} en main · Dépôt possible",
+        "DEDE": "In der Hand: {0} · Einlagerung möglich",
+        "JAJP": "手持ち：{0} · 入庫可能"
+    },
+    {
+        "Name": "OrbitalRingStorageWindowHeldQianKunPartial",
+        "ZHCN": "可存入 {0} / {1}",
+        "ENUS": "Can deposit {0} of {1}",
+        "FRFR": "Dépôt possible : {0} sur {1}",
+        "DEDE": "Einlagerbar: {0} von {1}",
+        "JAJP": "入庫可能：{0} / {1}"
+    },
+    {
+        "Name": "OrbitalRingStorageWindowHeldQianKunBlocked",
+        "ZHCN": "手持{0} · 这批无法存入",
+        "ENUS": "Held {0} · Deposit blocked",
+        "FRFR": "{0} en main · Dépôt impossible",
+        "DEDE": "In der Hand: {0} · Einlagerung nicht möglich",
+        "JAJP": "手持ち：{0} · 入庫不可"
+    },
+    {
+        "Name": "OrbitalRingStorageWindowLimitIdle",
+        "ZHCN": "空手左键物品可调整上限。\n也可选择尚未入库的物品。",
+        "ENUS": "Left-click a stocked item with an empty hand to edit its limit.\nYou can also choose an unstocked item.",
+        "FRFR": "Cliquez sur un objet en stock, les mains libres, pour modifier sa limite.\nVous pouvez aussi choisir un objet hors stock.",
+        "DEDE": "Klicke mit leerer Hand auf einen Lagergegenstand, um das Limit zu ändern.\nDu kannst auch Gegenstände ohne Bestand wählen.",
+        "JAJP": "手ぶらで在庫アイコンを左クリックすると上限を変更できます。\n在庫にないアイテムも選択できます。"
+    },
+    {
+        "Name": "OrbitalRingStorageWindowCurrentLimit",
+        "ZHCN": "当前上限",
+        "ENUS": "Current limit",
+        "FRFR": "Limite actuelle",
+        "DEDE": "Aktuelles Limit",
+        "JAJP": "現在の上限"
+    },
+    {
+        "Name": "OrbitalRingStorageWindowDefaultLimit",
+        "ZHCN": "默认上限",
+        "ENUS": "Default limit",
+        "FRFR": "Limite par défaut",
+        "DEDE": "Standardlimit",
+        "JAJP": "標準上限"
+    },
+    {
+        "Name": "OrbitalRingStorageWindowNewLimit",
+        "ZHCN": "新上限",
+        "ENUS": "New limit",
+        "FRFR": "Nouvelle limite",
+        "DEDE": "Neues Limit",
+        "JAJP": "新しい上限"
+    },
+    {
+        "Name": "OrbitalRingStorageWindowLimitRange",
+        "ZHCN": "0–{0} · 设为 0 停止常规存入",
+        "ENUS": "0–{0} · 0 stops regular deposits",
+        "FRFR": "0–{0} · 0 bloque les dépôts ordinaires",
+        "DEDE": "0–{0} · 0 stoppt normale Einlagerungen",
+        "JAJP": "0～{0} · 0 にすると通常の入庫を停止"
+    },
+    {
+        "Name": "OrbitalRingStorageWindowOverflow",
+        "ZHCN": "取出至常规容量内可调整上限",
+        "ENUS": "Withdraw ore to unlock limit editing",
+        "FRFR": "Retirez du minerai pour modifier la limite",
+        "DEDE": "Erz entnehmen, um das Limit zu ändern",
+        "JAJP": "原鉱を取り出すと上限を編集できます"
+    },
+    {
+        "Name": "OrbitalRingStorageWindowDepositBlocked",
+        "ZHCN": "这批物品无法存入共享空间",
+        "ENUS": "Shared storage cannot accept this deposit",
+        "FRFR": "Le stockage partagé ne peut pas accepter ce dépôt",
+        "DEDE": "Das gemeinsame Lager kann diese Einlagerung nicht annehmen",
+        "JAJP": "このアイテムは共有倉庫に入庫できません"
     }
 ]

@@ -550,6 +550,26 @@ namespace ProjectOrbitalRing.Patches.Logic.OrbitalRing
             }
         }
 
+        internal int FindParticleColliderEntity(PlanetFactory factory)
+        {
+            var assemblers = factory.factorySystem?.assemblerPool;
+            if (assemblers == null) return 0;
+            for (int slot = 0; slot < Capacity; slot++) {
+                var pair = GetPair(slot);
+                int assemblerId = pair.OrbitalStationPoolId;
+                if (pair.stationType != StationType.Assembler || assemblerId <= 0 || assemblerId >= assemblers.Length)
+                    continue;
+
+                ref AssemblerComponent assembler = ref assemblers[assemblerId];
+                int entityId = assembler.entityId;
+                if (assembler.id != assemblerId || entityId <= 0 || entityId >= factory.entityPool.Length) continue;
+                ref EntityData entity = ref factory.entityPool[entityId];
+                if (entity.id == entityId && entity.protoId == ProtoID.I星环对撞机 && entity.assemblerId == assemblerId)
+                    return entityId;
+            }
+            return 0;
+        }
+
         public bool IsOneFull() => (isInsideRingComplete || isOutsideRingComplete);
 
         public bool IsAllFull() => (isInsideRingComplete && isOutsideRingComplete);

@@ -15,8 +15,8 @@ namespace ProjectOrbitalRing.Utils
     /// <summary>管理现有 Nebula 接入的会话、首次载入和操作转发；不接管各端日常模拟。</summary>
     internal static class MultiplayerSync
     {
-        /// <summary>附加到模组握手版本的联机数据格式修订。</summary>
-        internal const int ProtocolVersion = 1;
+        /// <summary>附加到模组握手版本的联机协议修订。</summary>
+        internal const int ProtocolVersion = 3;
         private static bool requestedGlobal;
 
         /// <summary>当前是否为联机主机。</summary>
@@ -140,11 +140,13 @@ namespace ProjectOrbitalRing.Utils
         /// <param name="planetId">目标星球。</param>
         /// <param name="ringId">环索引。</param>
         /// <returns>已存在的仓库，或 null。</returns>
-        internal static OrbitalRingStorage GetStorage(int planetId, int ringId)
+        internal static OrbitalRingStorage GetStorage(int planetId, int ringId, bool requireComplete = false)
         {
             PlanetOrbitalRingData planet = OrbitalStationManager.Instance.GetPlanetOrbitalRingData(planetId);
-            return planet != null && ringId >= 0 && ringId < planet.Rings.Count
-                ? planet.Rings[ringId].orbitalRingStorage : null;
+            if (planet == null || ringId < 0 || ringId >= planet.Rings.Count) return null;
+
+            EquatorRing ring = planet.Rings[ringId];
+            return !requireComplete || ring.IsOneFull() ? ring.orbitalRingStorage : null;
         }
     }
 

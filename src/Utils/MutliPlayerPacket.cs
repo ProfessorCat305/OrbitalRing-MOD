@@ -426,11 +426,14 @@ namespace ProjectOrbitalRing.Utils
     {
         internal static readonly Dictionary<int, byte[]> PendingData = new Dictionary<int, byte[]>();
         private static readonly HashSet<int> LoadingPlanets = new HashSet<int>();
+        private static readonly Dictionary<int, List<Action>> PendingStorageUpdates = new Dictionary<int, List<Action>>();
 
         /// <inheritdoc />
         public override void ProcessPacket(OrbitalRingPlanetData packet, INebulaConnection conn)
         {
             if (IsHost || packet?.BinaryData == null || GameMain.galaxy?.PlanetById(packet.PlanetId) == null) return;
+            // The snapshot includes storage updates sent before it on the same connection.
+            PendingStorageUpdates.Remove(packet.PlanetId);
             PendingData[packet.PlanetId] = packet.BinaryData;
             ProcessBytesLater(packet.PlanetId);
         }
@@ -441,6 +444,21 @@ namespace ProjectOrbitalRing.Utils
         {
             LoadingPlanets.Add(planetId);
             PendingData.Remove(planetId);
+            PendingStorageUpdates.Remove(planetId);
+        }
+
+        internal static void ApplyStorageUpdate(int planetId, Action update)
+        {
+            if (!LoadingPlanets.Contains(planetId) && !PendingData.ContainsKey(planetId)) {
+                update();
+                return;
+            }
+
+            if (!PendingStorageUpdates.TryGetValue(planetId, out var updates)) {
+                updates = new List<Action>();
+                PendingStorageUpdates.Add(planetId, updates);
+            }
+            updates.Add(update);
         }
 
         /// <summary>原版工厂载入完成后恢复插件和星环，包晚到时也能直接恢复。</summary>
@@ -456,6 +474,7 @@ namespace ProjectOrbitalRing.Utils
         {
             PendingData.Clear();
             LoadingPlanets.Clear();
+            PendingStorageUpdates.Clear();
         }
 
         /// <summary>仅在对应工厂就绪后消费附加快照。</summary>
@@ -465,6 +484,7 @@ namespace ProjectOrbitalRing.Utils
             if (!MultiplayerSync.IsClient || LoadingPlanets.Contains(planetId) ||
                 GameMain.galaxy?.PlanetById(planetId)?.factory == null ||
                 !PendingData.Remove(planetId, out byte[] bytes)) return;
+            PendingStorageUpdates.Remove(planetId, out var storageUpdates);
             try {
                 using (IReaderProvider p = NebulaModAPI.GetBinaryReader(bytes)) {
                     MegaAssemblerPatches.ImportPlanetData(p.BinaryReader);
@@ -475,6 +495,10 @@ namespace ProjectOrbitalRing.Utils
                     AssemblerModulePatches.ImportPlanetData(planetId, p.BinaryReader);
                     FarmAssembler.Import(p.BinaryReader);
                     InfiniteTank.Import(p.BinaryReader);
+                }
+
+                if (storageUpdates != null) {
+                    foreach (Action update in storageUpdates) update();
                 }
             } catch (Exception e) when (e is IOException || e is ArgumentException) {
                 ProjectOrbitalRing.LogError($"Cannot import OrbitalRing multiplayer data for planet {planetId}: {e.Message}");

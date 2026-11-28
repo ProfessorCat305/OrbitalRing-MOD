@@ -618,6 +618,12 @@ namespace ProjectOrbitalRing.Utils
             // 轨道反物质堆核心与机甲交互范围改为90
             item = LDB.items.Select(6261);
             item.prefabDesc.selectDistance = 90f;
+
+            // Orbital tracks sit up to 64 m above the surface.
+            const float trackSelectDistance = 90f;
+            LDB.items.Select(ProtoID.I轨道连接组件).prefabDesc.selectDistance = trackSelectDistance;
+            LDB.items.Select(ProtoID.I粒子加速轨道).prefabDesc.selectDistance = trackSelectDistance;
+            LDB.items.Select(ProtoID.I星环电网组件).prefabDesc.selectDistance = trackSelectDistance;
         }
 
 

@@ -53,6 +53,7 @@ namespace ProjectOrbitalRing.Patches.Logic.OrbitalRing
     internal class OrbitalRingStorageCalculate
     {
         private static readonly int OrbitalRingStorageMax = 200000;
+        private const int QianKunStorageMax = 2147480000;
         private static readonly int DefaultStorageLimit200 = 200;
         private static readonly int DefaultStorageLimit100 = 100;
         private static readonly int DefaultStorageLimit50 = 50;
@@ -110,10 +111,8 @@ namespace ProjectOrbitalRing.Patches.Logic.OrbitalRing
 
         internal static int GetEffectiveItemStorageLimit(OrbitalRingStorage orbitalRingStorage, int itemId)
         {
-            if (orbitalRingStorage != null &&
-                TheMountainMovingMappings.GetQianKunItemId(itemId) != itemId &&
-                orbitalRingStorage.storageItem.TryGetValue(itemId, out int[] countAndInc) &&
-                countAndInc[0] > OrbitalRingStorageMax) {
+            if (orbitalRingStorage != null && orbitalRingStorage.storageItem.TryGetValue(itemId, out int[] countAndInc) &&
+                IsQianKunOverflow(itemId, countAndInc[0])) {
                 return OrbitalRingStorageMax;
             }
 
@@ -122,6 +121,98 @@ namespace ProjectOrbitalRing.Patches.Logic.OrbitalRing
             }
 
             return GetDefaultItemStorageLimit(itemId);
+        }
+
+        internal static bool IsQianKunOverflow(int itemId, int count) =>
+            count > StorageHardLimit && TheMountainMovingMappings.GetQianKunItemId(itemId) != itemId;
+
+        internal static int GetQianKunDepositLimit(OrbitalRingStorage storage, int itemId)
+        {
+            foreach (int oreId in TheMountainMovingMappings.OreIdList) {
+                if (oreId != itemId && storage.storageItem.TryGetValue(oreId, out int[] stack) &&
+                    IsQianKunOverflow(oreId, stack[0])) {
+                    return StorageHardLimit;
+                }
+            }
+            return QianKunStorageMax;
+        }
+
+        internal static bool TrySetItemStorageLimit(OrbitalRingStorage storage, int itemId, int limit, bool validateAgainstStock = true)
+        {
+            lock (storage.storageItem) {
+                if (validateAgainstStock && storage.storageItem.TryGetValue(itemId, out int[] stack) && IsQianKunOverflow(itemId, stack[0])) {
+                    return false;
+                }
+
+                limit = Math.Max(0, Math.Min(StorageHardLimit, limit));
+                if (limit == GetDefaultItemStorageLimit(itemId)) {
+                    storage.storageLimit.Remove(itemId);
+                } else {
+                    storage.storageLimit[itemId] = limit;
+                }
+                return true;
+            }
+        }
+
+        internal static int DepositHandItems(OrbitalRingStorage storage, Player player)
+        {
+            int count = player.inhandItemCount;
+            int inc = player.inhandItemInc;
+            int deposited = DepositItem(storage, player.inhandItemId, ref count, ref inc);
+            if (deposited == 0) return 0;
+
+            player.SetHandItemCount_Unsafe(count);
+            player.SetHandItemInc_Unsafe(inc);
+            if (count == 0) player.SetHandItemId_Unsafe(0);
+            return deposited;
+        }
+
+        internal static int DepositItem(OrbitalRingStorage storage, int handItemId, ref int handCount, ref int handInc)
+        {
+            int itemId = TheMountainMovingMappings.GetOreId(handItemId);
+            bool isQianKunItem = itemId != handItemId;
+            lock (storage.storageItem) {
+                storage.storageItem.TryGetValue(itemId, out int[] stack);
+                int currentCount = stack?[0] ?? 0;
+                int limit = isQianKunItem ? GetQianKunDepositLimit(storage, itemId) : GetEffectiveItemStorageLimit(storage, itemId);
+                int acceptedCount = Math.Min(handCount, limit - currentCount);
+                if (acceptedCount <= 0) return 0;
+
+                int remainingCount = handCount;
+                int remainingInc = handInc;
+                int acceptedInc = split_inc(ref remainingCount, ref remainingInc, acceptedCount);
+                int currentInc = stack?[1] ?? 0;
+                if ((long)currentInc + acceptedInc > int.MaxValue) {
+                    return 0;
+                }
+
+                if (stack == null) {
+                    storage.storageItem.Add(itemId, new[] { acceptedCount, acceptedInc });
+                } else {
+                    stack[0] = currentCount + acceptedCount;
+                    stack[1] = currentInc + acceptedInc;
+                }
+                handCount = remainingCount;
+                handInc = remainingInc;
+                return acceptedCount;
+            }
+        }
+
+        internal static int WithdrawItem(OrbitalRingStorage storage, int itemId, int requestedCount, out int inc)
+        {
+            inc = 0;
+            lock (storage.storageItem) {
+                if (requestedCount <= 0 || !storage.storageItem.TryGetValue(itemId, out int[] stack) || stack[0] <= 0) {
+                    return 0;
+                }
+
+                int count = Math.Min(requestedCount, stack[0]);
+                inc = split_inc(ref stack[0], ref stack[1], count);
+                if (stack[0] == 0) {
+                    storage.storageItem.Remove(itemId);
+                }
+                return count;
+            }
         }
 
         [HarmonyPatch(typeof(PlanetTransport), nameof(PlanetTransport.GameTick))]

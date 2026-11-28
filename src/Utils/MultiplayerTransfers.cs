@@ -16,6 +16,7 @@ namespace ProjectOrbitalRing.Utils
         internal const int InstallModule = 0;
         internal const int RemoveModule = 1;
         internal const int DepositStorage = 2;
+        internal const int WithdrawStorage = 3;
         private static long nextRequest;
         private static readonly Dictionary<long, OrbitalRingItemRequest> Pending = new Dictionary<long, OrbitalRingItemRequest>();
 
@@ -91,12 +92,13 @@ namespace ProjectOrbitalRing.Utils
             }
         }
 
-        /// <summary>预留手中的乾坤物品，主机按共享空间的当前容量决定实际接收数量。</summary>
+        /// <summary>预留手持物品，由主机决定共享空间实际接收的数量。</summary>
         /// <param name="planetId">目标星球。</param>
         /// <param name="ringId">目标环。</param>
         /// <param name="player">实际操作者。</param>
         internal static void Deposit(int planetId, int ringId, Player player)
         {
+            if (MultiplayerSync.IsRemoteFactoryRequest) return;
             int itemId = player.inhandItemId;
             int count = player.inhandItemCount;
             player.TakeItemFromPlayer(ref itemId, ref count, out int inc, false, null);
@@ -104,6 +106,15 @@ namespace ProjectOrbitalRing.Utils
             Submit(new OrbitalRingItemRequest {
                 Kind = DepositStorage, PlanetId = planetId, TargetId = ringId,
                 ItemId = itemId, Count = count, Inc = inc, ToHand = true
+            }, player);
+        }
+
+        internal static void Withdraw(int planetId, int ringId, int itemId, int count, Player player)
+        {
+            if (count <= 0) return;
+            Submit(new OrbitalRingItemRequest {
+                Kind = WithdrawStorage, PlanetId = planetId, TargetId = ringId,
+                ItemId = itemId, Count = count, ToHand = true
             }, player);
         }
 
@@ -139,6 +150,10 @@ namespace ProjectOrbitalRing.Utils
                 DepositIntoStorage(request, result);
                 return result;
             }
+            if (request.Kind == WithdrawStorage) {
+                WithdrawFromStorage(request, result);
+                return result;
+            }
             if (!TryGetAssembler(request.PlanetId, request.TargetId, out FactorySystem factory) ||
                 factory.assemblerPool[request.TargetId].entityId != request.EntityId) return result;
             AssemblerModuleData data = AssemblerModulePatches.GetAssemblerModuleData(factory, request.TargetId);
@@ -165,43 +180,48 @@ namespace ProjectOrbitalRing.Utils
             return result;
         }
 
-        /// <summary>按既有规则存入乾坤原矿；共享库存的自动搬运不经过此请求。</summary>
-        /// <param name="request">预留实物的存入请求。</param>
-        /// <param name="result">写入未接收的剩余物品。</param>
         private static void DepositIntoStorage(OrbitalRingItemRequest request, OrbitalRingItemResult result)
         {
-            OrbitalRingStorage storage = MultiplayerSync.GetStorage(request.PlanetId, request.TargetId);
-            int oreId = TheMountainMovingMappings.GetOreId(request.ItemId);
-            if (storage == null || request.Count == 0 || oreId == request.ItemId || LDB.items.Select(oreId) == null) return;
+            OrbitalRingStorage storage = MultiplayerSync.GetStorage(request.PlanetId, request.TargetId, requireComplete: true);
+            int itemId = TheMountainMovingMappings.GetOreId(request.ItemId);
+            if (storage == null || request.Count == 0 || LDB.items.Select(itemId) == null) return;
+
+            int remainingCount = request.Count;
+            int remainingInc = request.Inc;
             SyncOrbitalStorageItem balance;
             lock (storage.storageItem) {
-                storage.storageItem.TryGetValue(oreId, out int[] current);
-                int currentCount = current?[0] ?? 0;
-                int accepted = (int)Math.Min(request.Count, 2147480000L - currentCount);
-                if (accepted <= 0) return;
-                if ((long)currentCount + accepted > OrbitalRingStorageCalculate.StorageHardLimit) {
-                    foreach (var pair in storage.storageItem) {
-                        if (pair.Key != oreId && pair.Value[0] > OrbitalRingStorageCalculate.StorageHardLimit &&
-                            TheMountainMovingMappings.GetQianKunItemId(pair.Key) != pair.Key) return;
-                    }
-                }
-                int remaining = request.Count;
-                int remainingInc = request.Inc;
-                int acceptedInc = PosTool.split_inc(ref remaining, ref remainingInc, accepted);
-                if (current == null) storage.storageItem[oreId] = new[] { accepted, acceptedInc };
-                else {
-                    current[0] += accepted;
-                    current[1] += acceptedInc;
-                }
-                result.Count = remaining;
+                if (OrbitalRingStorageCalculate.DepositItem(storage, request.ItemId, ref remainingCount, ref remainingInc) == 0) return;
+                result.Count = remainingCount;
                 result.Inc = remainingInc;
-                int[] stored = storage.storageItem[oreId];
-                balance = new SyncOrbitalStorageItem {
-                    PlanetId = request.PlanetId, RingId = request.TargetId, ItemId = oreId,
-                    Count = stored[0], Inc = stored[1]
-                };
+                balance = ReadStorageBalance(request, storage, itemId);
             }
             MultiplayerSync.Send(balance);
+        }
+
+        private static void WithdrawFromStorage(OrbitalRingItemRequest request, OrbitalRingItemResult result)
+        {
+            result.Count = 0;
+            result.Inc = 0;
+            OrbitalRingStorage storage = MultiplayerSync.GetStorage(request.PlanetId, request.TargetId, requireComplete: true);
+            if (storage == null || request.Count == 0 || LDB.items.Select(request.ItemId) == null) return;
+
+            SyncOrbitalStorageItem balance;
+            lock (storage.storageItem) {
+                result.Count = OrbitalRingStorageCalculate.WithdrawItem(storage, request.ItemId, request.Count, out int inc);
+                if (result.Count == 0) return;
+                result.Inc = inc;
+                balance = ReadStorageBalance(request, storage, request.ItemId);
+            }
+            MultiplayerSync.Send(balance);
+        }
+
+        private static SyncOrbitalStorageItem ReadStorageBalance(OrbitalRingItemRequest request, OrbitalRingStorage storage, int itemId)
+        {
+            storage.storageItem.TryGetValue(itemId, out int[] stack);
+            return new SyncOrbitalStorageItem {
+                PlanetId = request.PlanetId, RingId = request.TargetId, ItemId = itemId,
+                Count = stack?[0] ?? 0, Inc = stack?[1] ?? 0
+            };
         }
 
         /// <summary>核对网络请求引用的制造台身份，禁止用池中的空槽执行操作。</summary>
@@ -230,30 +250,32 @@ namespace ProjectOrbitalRing.Utils
         private static void Deliver(OrbitalRingItemResult result, Player player)
         {
             if (player == null || result.ItemId <= 0 || result.Count <= 0) return;
-            if (result.ToHand && player.inhandItemId == 0) {
-                player.SetHandItems(result.ItemId, result.Count, result.Inc);
+            if (result.ToHand && player.inhandItemCount == 0) {
+                player.SetHandItemId_Unsafe(result.ItemId);
+                player.SetHandItemCount_Unsafe(result.Count);
+                player.SetHandItemInc_Unsafe(result.Inc);
             } else {
                 player.TryAddItemToPackage(result.ItemId, result.Count, result.Inc, true, 0);
             }
         }
     }
 
-    /// <summary>插件装卸或乾坤物品存入请求；身份使用星球和组件，不传玩家背包对象。</summary>
+    /// <summary>插件装卸或共享仓库物品转移请求。</summary>
     public sealed class OrbitalRingItemRequest
     {
         /// <summary>操作者在当前进程中分配的回执编号。</summary>
         public long RequestId { get; set; }
-        /// <summary>0 安装插件，1 卸下插件，2 存入乾坤物品。</summary>
+        /// <summary>0 安装插件，1 卸下插件，2 存入共享空间，3 从共享空间取出。</summary>
         public int Kind { get; set; }
         /// <summary>目标星球。</summary>
         public int PlanetId { get; set; }
-        /// <summary>制造台编号，或存入请求的环索引。</summary>
+        /// <summary>制造台编号，或仓库转移请求的环索引。</summary>
         public int TargetId { get; set; }
         /// <summary>制造台当前实体身份，防止拆除后的组件编号被复用。</summary>
         public int EntityId { get; set; }
         /// <summary>已预留的实物编号。</summary>
         public int ItemId { get; set; }
-        /// <summary>已预留的实物数量。</summary>
+        /// <summary>已预留的数量，或请求取出的数量。</summary>
         public int Count { get; set; }
         /// <summary>已预留实物携带的总增产点数。</summary>
         public int Inc { get; set; }
